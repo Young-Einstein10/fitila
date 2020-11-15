@@ -1,19 +1,26 @@
 /* eslint-disable no-shadow */
-import React, { Component } from 'react';
-import { Layout, Button, Row, Col } from 'antd';
-import FeatherIcon from 'feather-icons-react';
-import { NavLink, Link } from 'react-router-dom';
-import { Scrollbars } from 'react-custom-scrollbars';
-import { ThemeProvider } from 'styled-components';
-import { connect } from 'react-redux';
-import propTypes from 'prop-types';
-import MenueItems from './MenueItems';
-import TopMenu from './TopMenu';
-import { Div, SmallScreenAuthInfo, SmallScreenSearch, TopMenuSearch } from './style';
-import HeaderSearch from '../components/header-search/header-search';
-import AuthInfo from '../components/utilities/auth-info/info';
+import React, { Component } from "react";
+import { Layout, Button, Row, Col } from "antd";
+import FeatherIcon from "feather-icons-react";
+import { NavLink, Link } from "react-router-dom";
+import { Scrollbars } from "react-custom-scrollbars";
+import { ThemeProvider } from "styled-components";
+import { connect } from "react-redux";
+import propTypes from "prop-types";
+import MenueItems from "./MenueItems";
+import TopMenu from "./TopMenu";
+import {
+  Div,
+  SmallScreenAuthInfo,
+  SmallScreenSearch,
+  TopMenuSearch,
+} from "./style";
+import HeaderSearch from "../components/header-search/header-search";
+import AuthInfo from "../components/utilities/auth-info/info";
+import logo from "../static/svg/logo.svg";
+import burgermenu from "../static/svg/burgermenu.svg";
 
-const { darkTheme } = require('../config/theme/themeVariables');
+const { darkTheme } = require("../config/theme/themeVariables");
 
 const { Header, Footer, Sider, Content } = Layout;
 // const { darkMode } = config;
@@ -32,12 +39,12 @@ const ThemeLayout = WrappedComponent => {
     }
 
     componentDidMount() {
-      window.addEventListener('resize', this.updateDimensions);
+      window.addEventListener("resize", this.updateDimensions);
       this.updateDimensions();
     }
 
     componentWillUnmount() {
-      window.removeEventListener('resize', this.updateDimensions);
+      window.removeEventListener("resize", this.updateDimensions);
     }
 
     updateDimensions() {
@@ -48,10 +55,11 @@ const ThemeLayout = WrappedComponent => {
 
     render() {
       const { collapsed, hide, searchHide, activeSearch } = this.state;
-      const { ChangeLayoutMode, rtl, topMenu } = this.props;
 
-      const left = !rtl ? 'left' : 'right';
-      const darkMode = ChangeLayoutMode;
+      const topMenu = false;
+      const rtl = false;
+      const ChangeLayoutMode = true;
+
       const toggleCollapsed = () => {
         this.setState({
           collapsed: !collapsed,
@@ -88,52 +96,51 @@ const ThemeLayout = WrappedComponent => {
       };
 
       const footerStyle = {
-        padding: '20px 30px 18px',
-        color: 'rgba(0, 0, 0, 0.65)',
-        fontSize: '14px',
-        background: 'rgba(255, 255, 255, .90)',
-        width: '100%',
-        boxShadow: '0 -5px 10px rgba(146,153,184, 0.05)',
+        padding: "20px 30px 18px",
+        color: "rgba(0, 0, 0, 0.65)",
+        fontSize: "14px",
+        background: "rgba(255, 255, 255, .90)",
+        width: "100%",
+        boxShadow: "0 -5px 10px rgba(146,153,184, 0.05)",
       };
 
       const SideBarStyle = {
-        margin: '63px 0 0 0',
-        padding: '15px 15px 55px 15px',
-        overflowY: 'auto',
-        height: '100vh',
-        position: 'fixed',
-        [left]: 0,
+        margin: "63px 0 0 0",
+        padding: "15px 15px 55px 15px",
+        overflowY: "auto",
+        height: "100vh",
+        position: "fixed",
+        left: 0,
         zIndex: 998,
       };
 
       const renderView = ({ style, ...props }) => {
         const customStyle = {
-          marginRight: 'auto',
-          [rtl ? 'marginLeft' : 'marginRight']: '-17px',
+          marginRight: "auto",
+          [rtl ? "marginLeft" : "marginRight"]: "-17px",
         };
         return <div {...props} style={{ ...style, ...customStyle }} />;
       };
 
       const renderThumbVertical = ({ style, ...props }) => {
-        const { ChangeLayoutMode } = this.props;
         const thumbStyle = {
           borderRadius: 6,
-          backgroundColor: ChangeLayoutMode ? '#ffffff16' : '#F1F2F6',
-          [left]: '2px',
+          backgroundColor: ChangeLayoutMode ? "#ffffff16" : "#F1F2F6",
+          left: "2px",
         };
         return <div style={{ ...style, ...thumbStyle }} props={props} />;
       };
 
       const renderTrackVertical = () => {
         const thumbStyle = {
-          position: 'absolute',
-          width: '6px',
-          transition: 'opacity 200ms ease 0s',
+          position: "absolute",
+          width: "6px",
+          transition: "opacity 200ms ease 0s",
           opacity: 0,
-          [rtl ? 'left' : 'right']: '2px',
-          bottom: '2px',
-          top: '2px',
-          borderRadius: '3px',
+          [rtl ? "left" : "right"]: "2px",
+          bottom: "2px",
+          top: "2px",
+          borderRadius: "3px",
         };
         return <div style={thumbStyle} />;
       };
@@ -142,42 +149,49 @@ const ThemeLayout = WrappedComponent => {
         const { ChangeLayoutMode } = this.props;
         const thumbStyle = {
           borderRadius: 6,
-          backgroundColor: ChangeLayoutMode ? '#ffffff16' : '#F1F2F6',
+          backgroundColor: ChangeLayoutMode ? "#ffffff16" : "#F1F2F6",
         };
         return <div style={{ ...style, ...thumbStyle }} props={props} />;
       };
 
       return (
-        <Div darkMode={darkMode}>
+        <Div>
           <Layout className="layout">
             <Header
               style={{
-                position: 'fixed',
-                width: '100%',
+                position: "fixed",
+                width: "100%",
                 top: 0,
-                [!rtl ? 'left' : 'right']: 0,
+                [!rtl ? "left" : "right"]: 0,
               }}
             >
               <Row>
-                <Col lg={!topMenu ? 4 : 3} sm={6} xs={12} className="align-center-v navbar-brand">
+                <Col
+                  lg={!topMenu ? 4 : 3}
+                  sm={6}
+                  xs={12}
+                  className="align-center-v navbar-brand"
+                >
                   {!topMenu || window.innerWidth <= 991 ? (
                     <Button type="link" onClick={toggleCollapsed}>
-                      <img src={require(`../static/img/icon/${collapsed ? 'right.svg' : 'left.svg'}`)} alt="menu" />
+                      <img src={burgermenu} alt="menu" />
                     </Button>
                   ) : null}
+
                   <Link
-                    className={topMenu && window.innerWidth > 991 ? 'striking-logo top-menu' : 'striking-logo'}
-                    to="/admin"
+                    className={
+                      topMenu && window.innerWidth > 991
+                        ? "striking-logo top-menu"
+                        : "striking-logo"
+                    }
+                    to="/"
                   >
-                    <img
-                      src={!darkMode ? require(`../static/img/Logo_Dark.svg`) : require(`../static/img/Logo_white.png`)}
-                      alt=""
-                    />
+                    <img src={logo} alt="Logo" style={{ width: "100px" }} />
                   </Link>
                 </Col>
 
                 <Col lg={!topMenu ? 14 : 15} md={8} sm={0} xs={0}>
-                  {topMenu && window.innerWidth > 991 ? <TopMenu /> : <HeaderSearch rtl={rtl} darkMode={darkMode} />}
+                  {topMenu && window.innerWidth > 991 ? <TopMenu /> : null}
                 </Col>
 
                 <Col lg={6} md={10} sm={0} xs={0}>
@@ -185,7 +199,11 @@ const ThemeLayout = WrappedComponent => {
                     <TopMenuSearch>
                       <div className="top-right-wrap d-flex">
                         <Link
-                          className={`${activeSearch ? 'search-toggle active' : 'search-toggle'}`}
+                          className={`${
+                            activeSearch
+                              ? "search-toggle active"
+                              : "search-toggle"
+                          }`}
                           onClick={() => {
                             toggleSearch();
                           }}
@@ -194,7 +212,13 @@ const ThemeLayout = WrappedComponent => {
                           <FeatherIcon icon="search" />
                           <FeatherIcon icon="x" />
                         </Link>
-                        <div className={`${activeSearch ? 'topMenu-search-form show' : 'topMenu-search-form'}`}>
+                        <div
+                          className={`${
+                            activeSearch
+                              ? "topMenu-search-form show"
+                              : "topMenu-search-form"
+                          }`}
+                        >
                           <form action="">
                             <span className="search-icon">
                               <FeatherIcon icon="search" />
@@ -213,9 +237,18 @@ const ThemeLayout = WrappedComponent => {
                 <Col md={0} sm={18} xs={12}>
                   <>
                     <div className="mobile-action">
-                      <Link className="btn-search" onClick={handleSearchHide} to="#">
-                        {searchHide ? <FeatherIcon icon="search" /> : <FeatherIcon icon="x" />}
-                      </Link>
+                      {/* <Link
+                        className="btn-search"
+                        onClick={handleSearchHide}
+                        to="#"
+                      >
+                        {searchHide ? (
+                          <FeatherIcon icon="search" />
+                        ) : (
+                          <FeatherIcon icon="x" />
+                        )}
+                      </Link> */}
+
                       <Link className="btn-auth" onClick={onShowHide} to="#">
                         <FeatherIcon icon="more-vertical" />
                       </Link>
@@ -224,26 +257,31 @@ const ThemeLayout = WrappedComponent => {
                 </Col>
               </Row>
             </Header>
-
+            {/* 
             <div className="header-more">
               <Row>
                 <Col md={0} sm={24} xs={24}>
                   <div className="small-screen-headerRight">
-                    <SmallScreenSearch hide={searchHide} darkMode={darkMode}>
+                    <SmallScreenSearch hide={searchHide}>
                       <HeaderSearch rtl={rtl} />
                     </SmallScreenSearch>
-                    <SmallScreenAuthInfo hide={hide} darkMode={darkMode}>
+                    <SmallScreenAuthInfo hide={hide}>
                       <AuthInfo rtl={rtl} />
                     </SmallScreenAuthInfo>
                   </div>
                 </Col>
               </Row>
-            </div>
+            </div> */}
 
             <Layout>
               {!topMenu || window.innerWidth <= 991 ? (
                 <ThemeProvider theme={darkTheme}>
-                  <Sider width={280} style={SideBarStyle} collapsed={collapsed} theme={!darkMode ? 'light' : 'dark'}>
+                  <Sider
+                    width={280}
+                    style={SideBarStyle}
+                    collapsed={collapsed}
+                    theme={"light"}
+                  >
                     <Scrollbars
                       className="custom-scrollbar"
                       autoHide
@@ -254,12 +292,10 @@ const ThemeLayout = WrappedComponent => {
                       renderView={renderView}
                       renderTrackVertical={renderTrackVertical}
                     >
-                      <p className="sidebar-nav-title">MAIN MENU</p>
                       <MenueItems
                         topMenu={topMenu}
                         rtl={rtl}
                         toggleCollapsed={toggleCollapsedMobile}
-                        darkMode={darkMode}
                       />
                     </Scrollbars>
                   </Sider>
@@ -272,13 +308,15 @@ const ThemeLayout = WrappedComponent => {
                   <Footer className="admin-footer" style={footerStyle}>
                     <Row>
                       <Col md={12} xs={24}>
-                        <span className="admin-footer__copyright">2020 © AazzTech</span>
+                        <span className="admin-footer__copyright">
+                          2020 ©, Copyright, Enterprise Data Map
+                        </span>
                       </Col>
                       <Col md={12} xs={24}>
                         <div className="admin-footer__links">
-                          <NavLink to="#">About</NavLink>
-                          <NavLink to="#">Team</NavLink>
-                          <NavLink to="#">Contact</NavLink>
+                          <NavLink to="#">Privacy Poilicy</NavLink>
+                          <NavLink to="#">Terms and Condition</NavLink>
+                          <NavLink to="#">Cookie Poilicy</NavLink>
                         </div>
                       </Col>
                     </Row>
@@ -309,6 +347,6 @@ const ThemeLayout = WrappedComponent => {
     changeMenuMode: propTypes.func,
   };
 
-  return connect(mapStateToProps)(LayoutComponent);
+  return LayoutComponent;
 };
 export default ThemeLayout;

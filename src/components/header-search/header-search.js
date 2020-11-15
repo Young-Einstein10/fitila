@@ -5,35 +5,37 @@ import FeatherIcon from 'feather-icons-react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Div } from './header-search-style';
-import { headerSearchAction } from '../../redux/headerSearch/actionCreator';
+// import { headerSearchAction } from '../../redux/headerSearch/actionCreator';
 import { Popover } from '../popup/popup';
 
 const HeaderSearch = ({ darkMode }) => {
   const dispatch = useDispatch();
-  const searchData = useSelector(state => state.headerSearchData);
-  const rtl = useSelector(state => state.ChangeLayoutMode.rtlData);
+  // const searchData = useSelector(state => state.headerSearchData);
+  const rtl = false
 
   const search = e => {
-    dispatch(headerSearchAction(e.target.value));
+    // dispatch(headerSearchAction(e.target.value));
   };
 
-  const content = (
-    <div>
-      {searchData.length ? (
-        searchData.map(group => {
-          const { title, count, id } = group;
-          return (
-            <NavLink key={id} to="#">
-              {title}
-              <span className="certain-search-item-count">{count} people</span>
-            </NavLink>
-          );
-        })
-      ) : (
-        <NavLink to="#">Data Not found....</NavLink>
-      )}
-    </div>
-  );
+  // const content = (
+  //   <div>
+  //     {searchData.length ? (
+  //       searchData.map(group => {
+  //         const { title, count, id } = group;
+  //         return (
+  //           <NavLink key={id} to="#">
+  //             {title}
+  //             <span className="certain-search-item-count">{count} people</span>
+  //           </NavLink>
+  //         );
+  //       })
+  //     ) : (
+  //       <NavLink to="#">Data Not found....</NavLink>
+  //     )}
+  //   </div>
+  // );
+
+  const content = (<span></span>)
 
   return (
     <>

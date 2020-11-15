@@ -41,7 +41,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
       <HeaderStyled>
         <Row style={{ justifyContent: "space-between", alignItems: "center" }}>
           <div className="navItem-left">
-            <Link className={`striking-logo top-menu' `} to="/admin">
+            <Link className={`striking-logo top-menu' `} to="/">
               <img src={Logo} alt="Logo" />
             </Link>
 
@@ -78,7 +78,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
         <Row>
           <Col md={12} xs={24}>
             <span className="admin-footer__copyright">
-              2020, Copyright, Enterprise Data Map
+              2020 ©, Copyright, Enterprise Data Map
             </span>
           </Col>
 
@@ -90,24 +90,6 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
             </div>
           </Col>
         </Row>
-
-        {/* <div>
-          <p>2020, Copyright, Enterprise Data Map</p>
-        </div>
-
-        <ul>
-          <li>
-            <a href="/privacy">Privacy Poilicy</a>
-          </li>
-
-          <li>
-            <a href="/privacy">Terms and Condition</a>
-          </li>
-
-          <li>
-            <a href="/privacy">Cookie Poilicy</a>
-          </li>
-        </ul> */}
       </FooterStyled>
     </Layout>
   );

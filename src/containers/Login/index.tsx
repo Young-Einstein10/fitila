@@ -67,6 +67,7 @@ const Login = () => {
               htmlType="submit"
               type="primary"
               size="large"
+              onClick={() => history.push("/d")}
             >
               Sign In
             </Button>

@@ -1,5 +1,3 @@
-import React from 'react';
-import { PublicRoutes, PrivateRoutes } from './routes';
-import NonAuthLayout from '../containers/NonAuthLayout';
+import { PublicRoutes } from "./routes";
 
-export { PublicRoutes, PrivateRoutes };
+export { PublicRoutes };

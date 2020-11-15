@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { FC, Fragment } from "react";
+import ThemeLayout from "../../adminLayout/withAdminLayout";
 
-const AuthLayout = () => {
-  return (
-    <div>
-      <p></p>
-    </div>
-  );
+const AuthLayout: FC = ({ children }) => {
+  return <Fragment>{children}</Fragment>;
 };
 
-export default AuthLayout;
+export default ThemeLayout(AuthLayout);

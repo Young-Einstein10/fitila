@@ -10,11 +10,8 @@ import { Popover } from '../../popup/popup';
 import Heading from '../../heading/heading';
 
 const MessageBox = () => {
-  const { rtl } = useSelector(state => {
-    return {
-      rtl: state.ChangeLayoutMode.rtlData,
-    };
-  });
+
+  const rtl = false
 
   const renderThumb = ({ style, ...props }) => {
     const thumbStyle = {
