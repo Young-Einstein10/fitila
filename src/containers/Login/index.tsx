@@ -1,15 +1,14 @@
-import { Checkbox, Button, Form } from 'antd';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory, NavLink, Link } from 'react-router-dom';
-import Heading from '../../components/heading/heading';
-import { AuthWrapper } from '../profile/authentication/overview/style';
-import { ReactComponent as Facebook } from '../../static/svg/facebook.svg';
-import { ReactComponent as Twitter } from '../../static/svg/twitter.svg';
-import { ReactComponent as LinkedIn } from '../../static/svg/linkedIn.svg';
-import { ReactComponent as Instagram } from '../../static/svg/instagram.svg';
-
-import { InputStyled } from '../Signup/styled';
+import { Checkbox, Button, Form } from "antd";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory, NavLink, Link } from "react-router-dom";
+import Heading from "../../components/heading/heading";
+import { AuthWrapper } from "../profile/authentication/overview/style";
+import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
+import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
+import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
+import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
+import { InputStyled } from "../Styles";
 
 const Login = () => {
   const history = useHistory();
@@ -22,20 +21,30 @@ const Login = () => {
 
   const handleSubmit = () => {
     // dispatch(login());
-    history.push('/admin');
+    history.push("/admin");
   };
 
   return (
     <AuthWrapper>
       <div className="auth-contents">
-        <Form name="login" form={form} onFinish={handleSubmit} layout="vertical">
+        <Form
+          name="login"
+          form={form}
+          onFinish={handleSubmit}
+          layout="vertical"
+        >
           <Heading className="text-center" as="h3">
             Sign In
           </Heading>
 
           <Form.Item
             name="username"
-            rules={[{ message: 'Please input your username or Email!', required: true }]}
+            rules={[
+              {
+                message: "Please input your username or Email!",
+                required: true,
+              },
+            ]}
             initialValue="name@example.com"
           >
             <InputStyled placeholder="Username or Email Address" />
@@ -53,13 +62,19 @@ const Login = () => {
           </div>
 
           <Form.Item>
-            <Button className="btn-signin" htmlType="submit" type="primary" size="large">
+            <Button
+              className="btn-signin"
+              htmlType="submit"
+              type="primary"
+              size="large"
+            >
               Sign In
             </Button>
           </Form.Item>
 
           <p className="auth-notice">
-            Don&rsquo;t have an account? <NavLink to="/signup">Sign up here</NavLink>
+            Don&rsquo;t have an account?{" "}
+            <NavLink to="/signup">Sign up here</NavLink>
           </p>
 
           <ul className="social-login">
