@@ -1,9 +1,9 @@
 import Styled from "styled-components";
 
 const AdminSectionWrapper = Styled.section`
-  background: #E5E5E5;
+  /* background: #E5E5E5; */
   /* padding: 0 1.3rem 1.3rem; */
-  min-height: calc(100vh - ())
+  /* min-height: calc(100vh - ()) */
 `;
 
 const CardStyleWrapper = Styled.div`

@@ -1,18 +1,20 @@
-import Styled from "styled-components"
+import Styled from "styled-components";
 
 const Main = Styled.div`
-    padding: 0px 30px 20px;
-    min-height: 715px;
+    /* padding: 0px 30px 20px; */
+    padding: 1.3rem;
+    min-height: 600px;
     background-color: rgb(244, 245, 247);
     .ant-card-rtl .ant-card-extra{
                 margin-right: 0 !important;
             }
     .ant-tabs-tab span svg {        
-        ${({ theme }) => (theme.rtl ? 'padding-left' : 'padding-right')}: 5px;
+        ${({ theme }) => (theme.rtl ? "padding-left" : "padding-right")}: 5px;
     }
     /* Picker Under Input */
     .ant-form-item-control-input .ant-picker {
-        padding: ${({ theme }) => (theme.rtl ? '0 0 0 12px' : '0 12px 0 0')} !important;
+        padding: ${({ theme }) =>
+          theme.rtl ? "0 0 0 12px" : "0 12px 0 0"} !important;
     }
 
     /* progressbars */
@@ -28,14 +30,17 @@ const Main = Styled.div`
     }
 
     .ant-progress .ant-progress-outer {
-        ${({ theme }) => (!theme.rtl ? 'margin-right' : 'margin-left')}: 0 !important;
-        ${({ theme }) => (!theme.rtl ? 'padding-right' : 'padding-left')}: 0 !important;
+        ${({ theme }) =>
+          !theme.rtl ? "margin-right" : "margin-left"}: 0 !important;
+        ${({ theme }) =>
+          !theme.rtl ? "padding-right" : "padding-left"}: 0 !important;
     }
 
     .ant-progress .ant-progress-text {
         order: 0;
         margin-left: auto;
-        ${({ theme }) => (theme.rtl ? 'margin-right' : 'margin-left')}: 10px !important;
+        ${({ theme }) =>
+          theme.rtl ? "margin-right" : "margin-left"}: 10px !important;
         align-self: flex-end;
         text-align: center;
     }
@@ -67,7 +72,7 @@ const Main = Styled.div`
     /* // ant alert */
     .ant-alert-closable{
         .ant-alert-message{
-          ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 15px;
+          ${({ theme }) => (theme.rtl ? "margin-left" : "margin-right")}: 15px;
         }
     }
 
@@ -78,7 +83,7 @@ const Main = Styled.div`
     /* // ant Calendar Picker */
     .ant-picker-calendar{
         .ant-badge-status-text{
-            color: ${({ theme }) => theme['gray-color']}
+            color: ${({ theme }) => theme["gray-color"]}
         }
     }
     .ant-picker-calendar-header .ant-picker-calendar-year-select{
@@ -132,7 +137,7 @@ const Main = Styled.div`
             min-height: 500px;
         }
         input::placeholder{
-            color: ${({ theme }) => theme['light-color']};
+            color: ${({ theme }) => theme["light-color"]};
         }
     }
     /* // Modal Buttons */
@@ -141,9 +146,9 @@ const Main = Styled.div`
     }
     /* spinner */
     .ant-spin{
-        ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 20px;
+        ${({ theme }) => (theme.rtl ? "margin-left" : "margin-right")}: 20px;
         &:last-child{
-            ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 0;
+            ${({ theme }) => (theme.rtl ? "margin-left" : "margin-right")}: 0;
         }
     }
 
@@ -168,7 +173,7 @@ const Main = Styled.div`
     .ant-collapse.ant-collapse-icon-position-left .ant-collapse-header{
         color: #5A5F7D;
         padding: 12px 16px 10px 45px;
-        background-color: ${({ theme }) => theme['bg-color-light']};
+        background-color: ${({ theme }) => theme["bg-color-light"]};
     }
     .ant-collapse-content p{
         color: #9299B8;
@@ -247,11 +252,13 @@ const Main = Styled.div`
     .ant-select{
         &.ant-select-multiple{
             .ant-select-selection-item{
-                ${({ theme }) => (!theme.rtl ? 'padding-left' : 'padding-right')}: 8px;
+                ${({ theme }) =>
+                  !theme.rtl ? "padding-left" : "padding-right"}: 8px;
             }
         }
         .ant-select-selection-item{
-            ${({ theme }) => (!theme.rtl ? 'padding-left' : 'padding-right')}: 10px !important;
+            ${({ theme }) =>
+              !theme.rtl ? "padding-left" : "padding-right"}: 10px !important;
         }
         &.ant-select-lg{
             height: 50px;
@@ -262,7 +269,8 @@ const Main = Styled.div`
             }
             .ant-select-selection-item{
                 line-height: 48px !important;
-                ${({ theme }) => (!theme.rtl ? 'padding-left' : 'padding-right')}: 8px;
+                ${({ theme }) =>
+                  !theme.rtl ? "padding-left" : "padding-right"}: 8px;
             }
             &.ant-select-multiple.ant-select-lg .ant-select-selection-item{
                 height: 32px;
@@ -281,7 +289,8 @@ const Main = Styled.div`
     /* // Slider */
     .slider-with-input{
         .ant-slider{
-            ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 15px;
+            ${({ theme }) =>
+              theme.rtl ? "margin-left" : "margin-right"}: 15px;
         }
         .slider-with-input__single{
             margin-bottom: 15px;
@@ -296,7 +305,7 @@ const Main = Styled.div`
             padding: 0 10.2px;
             border: 0 none;
             margin: 5px;
-            color: ${({ theme }) => theme['gray-color']};
+            color: ${({ theme }) => theme["gray-color"]};
             &.ant-tag-has-color{
                 color: #fff !important;
             }
@@ -348,7 +357,7 @@ const Main = Styled.div`
     .ant-menu{
         .ant-menu-submenu-title{
             svg{
-                color: ${({ theme }) => theme['light-color']};
+                color: ${({ theme }) => theme["light-color"]};
             }
         }
     }
@@ -470,7 +479,7 @@ const Main = Styled.div`
         i,
         span.fa{
           font-size: 16px;
-          color: ${({ theme }) => theme['extra-light-color']};
+          color: ${({ theme }) => theme["extra-light-color"]};
         }
         &.starDeactivate{
           i:before{
@@ -480,11 +489,11 @@ const Main = Styled.div`
         &.starActive{
           i,
           span.fa{
-            color: ${({ theme }) => theme['warning-color']};
+            color: ${({ theme }) => theme["warning-color"]};
           }
           i:before,
           span.fa:before{
-            color: ${({ theme }) => theme['warning-color']};
+            color: ${({ theme }) => theme["warning-color"]};
             content: "\f005";
     
           }
@@ -492,7 +501,7 @@ const Main = Styled.div`
     }
 
     .ant-timeline{
-        color: ${({ theme }) => theme['gray-color']};
+        color: ${({ theme }) => theme["gray-color"]};
         .ant-timeline-item-content{
             font-size: 16px;
         }
@@ -501,7 +510,7 @@ const Main = Styled.div`
     
     .ant-rate-content{
         font-weight: 500;
-        color: ${({ theme }) => theme['gray-color']}
+        color: ${({ theme }) => theme["gray-color"]}
     }
 
     .account-card{
@@ -551,7 +560,7 @@ const Main = Styled.div`
     }
 
     .chart-label .label-dot {
-        ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 8px;
+        ${({ theme }) => (theme.rtl ? "margin-left" : "margin-right")}: 8px;
         width: 7px;
         height: 7px;
         border-radius: 50%;
@@ -574,7 +583,7 @@ const Main = Styled.div`
         width: 7px;
         height: 7px;
         border-radius: 50%;
-        ${({ theme }) => (theme.rtl ? 'margin-left' : 'margin-right')}: 10px;
+        ${({ theme }) => (theme.rtl ? "margin-left" : "margin-right")}: 10px;
     }
 
     // Ant comment action
@@ -629,7 +638,7 @@ const Main = Styled.div`
         .emoji-group:before{
             font-size: 12px;
             font-weight: 600;
-            color: ${({ theme }) => theme['dark-color']};
+            color: ${({ theme }) => theme["dark-color"]};
         }
         .emoji-group .emoji-img{
             margin: 5px !important;
@@ -637,5 +646,4 @@ const Main = Styled.div`
     }
 `;
 
-
-export { Main }
+export { Main };

@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import FeatherIcon from "feather-icons-react";
 import PropTypes from "prop-types";
 import { CardFrame } from "./style";
 import Heading from "../../heading/heading";

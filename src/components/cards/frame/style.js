@@ -85,7 +85,7 @@ const CardFrame = Styled(Card)`
   }
   .ant-card-body{
     padding: ${({ bodypadding }) =>
-      bodypadding ? `${bodypadding} !important` : "20px 12px"};
+      bodypadding ? `${bodypadding} !important` : "20px"};
     table{
       .ant-tag{
         line-height: 18px;

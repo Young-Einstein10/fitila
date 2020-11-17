@@ -15,7 +15,7 @@ import Styled from "styled-components";
 import { AdminSectionWrapper } from "../../../../styled";
 import { Child, TabBasic } from "../../../../../../components/tabs/style";
 
-const TableHeaderButtonStyled = Styled(Button)`
+export const TableHeaderButtonStyled = Styled(Button)`
   background: #F7F9FA;
   color: #1D429C;
   font-weight: 700;
@@ -73,7 +73,7 @@ const menu = (
 
 const tableHeader = (
   <div style={{ display: "flex", justifyContent: "space-between" }}>
-    <span>Loan Providers</span>
+    <span>Sub-Category</span>
     <Dropdown overlay={menu}>
       <TableHeaderButtonStyled type="ghost" size="middle">
         Past Month <ArrowDown />
@@ -227,7 +227,7 @@ const data = [
                   justifyContent: "space-between",
                 }}
               >
-                <span>Grant Providers</span>
+                <span>Sub-Category</span>
                 <Dropdown overlay={menu}>
                   <TableHeaderButtonStyled type="ghost" size="middle">
                     Past Month <ArrowDown />
@@ -263,7 +263,7 @@ const data = [
                   justifyContent: "space-between",
                 }}
               >
-                <span>Equity Funders</span>
+                <span>Sub-Category</span>
                 <Dropdown overlay={menu}>
                   <TableHeaderButtonStyled type="ghost" size="middle">
                     Past Month <ArrowDown />
@@ -320,7 +320,11 @@ const Businesses = () => {
                       }
                       buttons={[
                         <div key="1" className="page-header-actions">
-                          <Button size="large" type="ghost">
+                          <Button
+                            style={{ marginRight: "15px" }}
+                            size="large"
+                            type="ghost"
+                          >
                             List Your Business
                           </Button>
 

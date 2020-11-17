@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { ButtonStyledGroup, ButtonStyled } from './styled';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { ButtonStyledGroup, ButtonStyled } from "./styled";
 
 // @Todo props spreading
 
@@ -14,6 +14,7 @@ const Button = props => {
     ghost,
     transparented,
     raised,
+    background,
     squared,
     color,
     social,
@@ -39,6 +40,7 @@ const Button = props => {
       data={type}
       size={size}
       shape={shape}
+      background={background}
       type={type}
       icon={icon}
       color={color}
@@ -53,29 +55,30 @@ const Button = props => {
 };
 
 Button.defaultProps = {
-  type: 'default',
+  type: "default",
 };
 
 Button.propTypes = {
   type: PropTypes.oneOf([
-    'primary',
-    'secondary',
-    'success',
-    'info',
-    'warning',
-    'danger',
-    'link',
-    'dark',
-    'light',
-    'white',
-    'dashed',
-    'error',
-    'default',
+    "primary",
+    "secondary",
+    "success",
+    "info",
+    "warning",
+    "danger",
+    "link",
+    "dark",
+    "light",
+    "white",
+    "dashed",
+    "error",
+    "default",
   ]),
   shape: PropTypes.string,
   icon: PropTypes.string,
   size: PropTypes.string,
   color: PropTypes.string,
+  background: PropTypes.string,
   outlined: PropTypes.bool,
   transparented: PropTypes.bool,
   raised: PropTypes.bool,
@@ -83,7 +86,11 @@ Button.propTypes = {
   social: PropTypes.bool,
   load: PropTypes.bool,
   ghost: PropTypes.bool,
-  children: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.node]),
+  children: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string,
+    PropTypes.node,
+  ]),
 };
 
 const BtnGroup = ({ children }) => {

@@ -1,14 +1,5 @@
 import React, { FunctionComponent } from "react";
-import {
-  Layout,
-  Breadcrumb,
-  Button,
-  Menu,
-  Col,
-  Row,
-  Dropdown,
-  message,
-} from "antd";
+import { Layout, Breadcrumb, Col, Row, Button } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../static/svg/logo.svg";
@@ -17,23 +8,30 @@ import { ReactComponent as LoginIcon } from "../../static/svg/login.svg";
 
 import { FooterStyled, HeaderStyled } from "./styled";
 import Styled from "styled-components";
+import { Dropdown } from "../../components/dropdown/dropdown";
+import { Button as ButtonStyled } from "../../components/buttons/buttons";
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
-const AccountButton = Styled(Button)`
-  backround: #F7F9FA;
+const BusinessButton = Styled(Button)`
+  border: ${({ theme }) => `solid 1px ${theme["primary-color"]}`}
+  color: ${({ theme }) => theme["primary-color"]}
 `;
 
 const NonAuthLayout: FunctionComponent = ({ children }) => {
   const menu = (
-    <Menu onClick={() => {}}>
-      <Menu.Item key="1" icon={<UserIcon />}>
-        <NavLink to="/login">Log In</NavLink>
-      </Menu.Item>
-      <Menu.Item key="2" icon={<LoginIcon />}>
-        <NavLink to="/signup">Sign Up</NavLink>
-      </Menu.Item>
-    </Menu>
+    <div style={{ padding: "10px" }}>
+      <Link to="/login" style={{ background: "#F7F9FA", marginBottom: "15px" }}>
+        <span>
+          <LoginIcon /> Login
+        </span>
+      </Link>
+      <Link to="/signup" style={{ background: "#F7F9FA" }}>
+        <span>
+          <UserIcon /> Sign Up
+        </span>
+      </Link>
+    </div>
   );
 
   return (
@@ -51,14 +49,14 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
           </div>
 
           <div className="navItem-right">
-            <Button size="large" className="listBusiness">
+            <BusinessButton size="large">
               <NavLink to="/business">List Your Business</NavLink>
-            </Button>
+            </BusinessButton>
 
-            <Dropdown className="account-btn" overlay={menu}>
-              <AccountButton size="large">
+            <Dropdown className="account-btn" content={menu}>
+              <ButtonStyled size="large">
                 <UserOutlined /> Account <DownOutlined />
-              </AccountButton>
+              </ButtonStyled>
             </Dropdown>
           </div>
         </Row>
