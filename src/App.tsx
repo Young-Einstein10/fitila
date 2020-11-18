@@ -7,6 +7,7 @@ import config from "./config/config";
 import store from "./redux/store";
 import "./App.less";
 import { setCurrentUser } from "./redux/actions/authActions";
+import BusinessProvider from "./containers/Business/context";
 
 const { theme } = config;
 
@@ -25,9 +26,11 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={{ ...theme }}>
-        <Router>
-          <Routes />
-        </Router>
+        <BusinessProvider>
+          <Router>
+            <Routes />
+          </Router>
+        </BusinessProvider>
       </ThemeProvider>
     </Provider>
   );

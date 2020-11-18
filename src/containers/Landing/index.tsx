@@ -27,13 +27,17 @@ const Landing = () => {
         name="login"
         onFinish={handleSubmit}
         layout="vertical"
-        style={{ paddingTop: "3rem" }}
+        style={{ paddingTop: "6rem" }}
       >
-        <Heading className="text-center" as="h1">
+        <Heading
+          style={{ fontSize: "48px", fontWeight: "bold" }}
+          className="text-center"
+          as="h1"
+        >
           Access Over 6000+ Data Points
         </Heading>
 
-        <p className="text-center">
+        <p style={{ fontSize: "24px" }} className="text-center">
           Gain credible insights into Nigeria's entrepreneurship ecosystem
         </p>
 

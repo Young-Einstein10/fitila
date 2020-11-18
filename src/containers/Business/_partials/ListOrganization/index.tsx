@@ -53,9 +53,13 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
 
               <Form.Item name="sector">
                 <Select placeholder="Sector" allowClear>
-                  <Option value="male">Lagos</Option>
-                  <Option value="female">Ogun</Option>
-                  <Option value="other">Abuja</Option>
+                  <Option value="health">Health</Option>
+                  <Option value="agriculture">Agriculture</Option>
+                  <Option value="creatives">Creatives</Option>
+                  <Option value="education">Education</Option>
+                  <Option value="manufacturers">Manufacturers</Option>
+                  <Option value="ict">ICT</Option>
+                  <Option value="other">Other</Option>
                 </Select>
               </Form.Item>
 
@@ -71,17 +75,16 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
 
               <Form.Item name="business_level">
                 <Select placeholder="Business Level" allowClear>
-                  <Option value="male">Lagos</Option>
-                  <Option value="female">Ogun</Option>
-                  <Option value="other">Abuja</Option>
+                  <Option value="micro">Micro</Option>
+                  <Option value="small">Small</Option>
+                  <Option value="medium">Medium</Option>
                 </Select>
               </Form.Item>
 
               <Form.Item name="startup">
                 <Select placeholder="Are You A StartUp" allowClear>
-                  <Option value="male">Lagos</Option>
-                  <Option value="female">Ogun</Option>
-                  <Option value="other">Abuja</Option>
+                  <Option value="yes">Yes</Option>
+                  <Option value="no">No</Option>
                 </Select>
               </Form.Item>
 
@@ -90,9 +93,9 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                   placeholder=" Number of businesses supported over the last 5 years"
                   allowClear
                 >
-                  <Option value="male">Lagos</Option>
-                  <Option value="female">Ogun</Option>
-                  <Option value="other">Abuja</Option>
+                  <Option value="5-20">5-20</Option>
+                  <Option value="20-50">20-50</Option>
+                  <Option value="50-100">50-100</Option>
                 </Select>
               </Form.Item>
 

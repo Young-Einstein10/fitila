@@ -11,9 +11,12 @@ import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
 import { InputStyled } from "../Styles";
 import { signinUser } from "../../redux/actions/authActions";
 
-const Login = ({ signinUser, history, auth }) => {
+const Login = ({ signinUser, history, auth, location }) => {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
+  const [redirectToReferrer, setRedirectToReferrer] = useState(false);
+
+  const { state } = location;
 
   useEffect(() => {
     if (auth.isAuthhenticated) {
@@ -34,6 +37,10 @@ const Login = ({ signinUser, history, auth }) => {
         setIsLoading(false);
       });
   };
+
+  // if(redirectToReferrer === true) {
+  //   return <Redirect to={ state?.from || "/"} />
+  // }
 
   return (
     <AuthWrapper>

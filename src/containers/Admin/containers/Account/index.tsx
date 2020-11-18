@@ -8,6 +8,7 @@ import { Child, TabBasic } from "../../../../components/tabs/style";
 import { Profile, Deactivate, ModifyAccount, Security } from "./_partials/Main";
 import Activity from "./_partials/Activity";
 import Favorites from "./_partials/Favorites";
+import { NavLink } from "react-router-dom";
 
 const data = [
   {
@@ -76,7 +77,7 @@ const Account = () => {
                       buttons={[
                         <div key="1" className="page-header-actions">
                           <Button size="large" type="primary">
-                            List Your Business
+                            <NavLink to="/business">List Your Business</NavLink>
                           </Button>
                         </div>,
                       ]}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
-import { Form, Button, Select } from "antd";
+import { Form, Button, Select, message, notification } from "antd";
 import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
 import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
 import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
@@ -31,6 +31,9 @@ const Signup = ({ signupUser, history, auth }) => {
     console.log(values);
     signupUser(values)
       .then(res => {
+        notification.success({
+          message: "Your Account Has Been Created Successfully",
+        });
         setIsLoading(false);
         history.push("/d");
       })

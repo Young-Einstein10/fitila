@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import Heading from "../../../../components/heading/heading";
 import { ReactComponent as Enterpreneur } from "../../../../static/svg/enterpreneur.svg";
 import { ReactComponent as Ecosystem } from "../../../../static/svg/ecosystem.svg";
@@ -9,10 +9,13 @@ import { Col, Row } from "antd";
 import { ColStyled, SpanStyled, SpanFooter } from "./styled";
 import { ButtonStyled } from "../../../Styles";
 import { RouteComponentProps } from "react-router-dom";
+import { BusinessContext } from "../../context";
 
 const AddCompany: FC<RouteComponentProps> = ({ history }) => {
   const [isEnterpreneurActive, setIsEnterpreneurActive] = useState("");
   const [isEcosystemActive, setIsEcosystemActive] = useState("");
+
+  const { state, setState } = useContext(BusinessContext);
 
   return (
     <SectionWrapper>
@@ -66,6 +69,7 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
                 </span>
               </ColStyled>
             </Row>
+
             <ButtonStyled
               onClick={() => history.push("/business/listorg")}
               size="large"

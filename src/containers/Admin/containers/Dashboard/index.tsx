@@ -200,7 +200,7 @@ const Dashboard = () => {
           buttons={[
             <div key="1" className="page-header-actions">
               <Button size="large" type="primary">
-                List Your Business
+                <NavLink to="/business">List Your Business</NavLink>
               </Button>
             </div>,
           ]}
