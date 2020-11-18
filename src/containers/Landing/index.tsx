@@ -1,10 +1,12 @@
 import React from "react";
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Form, Input, Row, Select } from "antd";
 import Heading from "../../components/heading/heading";
 import { ReactComponent as Search } from "../../static/svg/search.svg";
 import { SectionWrapper } from "../Styles";
 import "./styles.less";
 import { NavLink } from "react-router-dom";
+
+const { Option } = Select;
 
 const Landing = () => {
   const handleSubmit = () => {};
@@ -54,6 +56,24 @@ const Landing = () => {
             placeholder="Search by Organization, Sector and States"
             style={{ width: "80%" }}
           />
+
+          {/* <Select
+            showSearch
+            style={{ width: "80%" }}
+            placeholder="Select a person"
+            optionFilterProp="children"
+            onChange={() => {}}
+            onFocus={() => {}}
+            onBlur={() => {}}
+            onSearch={() => {}}
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+          >
+            <Option value="jack">Jack</Option>
+            <Option value="lucy">Lucy</Option>
+            <Option value="tom">Tom</Option>
+          </Select> */}
         </Form.Item>
       </Form>
 
@@ -64,6 +84,7 @@ const Landing = () => {
           flexDirection: "column",
           alignItems: "center",
           marginTop: "60px",
+          paddingBottom: "6rem",
         }}
       >
         <p style={{ fontSize: "16px", color: "#1D429C", fontWeight: "bold" }}>
