@@ -2,6 +2,7 @@ import axios from "axios";
 import store from "../../redux/store";
 import { GET_ERRORS, RESET_ERROR } from "../../redux/constants";
 import Auth from "./auth";
+import Business from "./business";
 
 //Staging endpoint
 const axiosInstance = axios.create({
@@ -62,5 +63,6 @@ axiosInstance.interceptors.response.use(
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   auth: new Auth(axiosInstance),
+  business: new Business(axiosInstance),
   HttpClient: axiosInstance,
 };

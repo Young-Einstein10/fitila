@@ -1,17 +1,26 @@
-import React, { FC } from "react";
+import React, { FC, useContext, useEffect } from "react";
 import { Row, Form, Select, Divider, Button } from "antd";
 import { SectionWrapper } from "../../../Styles";
 import { MainColStyled } from "../AddCompany/styled";
 import Heading from "../../../../components/heading/heading";
 import { ButtonStyled, InputStyled } from "../../../Styles";
 import { StepsStyled } from "./styled";
-import { RouteComponentProps } from "react-router-dom";
+import { Redirect, RouteComponentProps } from "react-router-dom";
+import { BusinessContext } from "../../context";
 
 const { Option } = Select;
 const { Step } = StepsStyled;
 
 const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
   const customDot = (dot: any) => dot;
+
+  const { state, setState } = useContext(BusinessContext);
+
+  useEffect(() => {}, [state]);
+
+  if (!state.business_type) {
+    <Redirect to="/business" />;
+  }
 
   return (
     <SectionWrapper className="section-list-organization">
@@ -20,7 +29,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
           <div style={{ marginBottom: "1.5rem" }}>
             <div>
               <Heading className="text-center font-weight-700" as="h3">
-                List your Organization <br /> (Enterpreneur)
+                List your Organization <br /> ({state.business_type})
               </Heading>
 
               <StepsStyled

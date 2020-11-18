@@ -41,6 +41,7 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
                   onClick={() => {
                     setIsEcosystemActive("");
                     setIsEnterpreneurActive("enterpreneur");
+                    setState({ ...state, business_type: "Enterpreneur" });
                   }}
                   className={`enterpreneur ${isEnterpreneurActive ===
                     "enterpreneur" && "active"}`}
@@ -60,6 +61,7 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
                     setIsEnterpreneurActive("");
 
                     setIsEcosystemActive("ecosystem");
+                    setState({ ...state, business_type: "Ecosystem Enabler" });
                   }}
                 >
                   {isEcosystemActive ? <EcosystemColored /> : <Ecosystem />}
@@ -75,6 +77,7 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
               size="large"
               type="primary"
               style={{ marginTop: "3rem" }}
+              disabled={!isEnterpreneurActive && !isEcosystemActive && true}
             >
               Continue
             </ButtonStyled>
