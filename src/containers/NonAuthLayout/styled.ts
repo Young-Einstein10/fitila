@@ -15,6 +15,8 @@ const HeaderStyled = Styled(Header)`
     
     .ant-breadcrumb {
         margin-left: 5rem;
+        color: #000000;
+        font-weight: 700;
     }
 
     .account-btn {
@@ -24,7 +26,7 @@ const HeaderStyled = Styled(Header)`
 
 const FooterStyled = Styled(Footer)`
   height: 64px;
-  background: #F2F2F2;
+  background: #F7F9FA;
   color: #5F6368;
  
           span.admin-footer__copyright{

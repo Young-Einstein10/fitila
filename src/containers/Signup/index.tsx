@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { Form, Button, Select } from "antd";
 import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
@@ -10,37 +10,51 @@ import { AuthWrapper } from "../profile/authentication/overview/style";
 import { Checkbox } from "../../components/checkbox/checkbox";
 import Heading from "../../components/heading/heading";
 import { InputStyled } from "../Styles";
+import { connect } from "react-redux";
+import { signupUser } from "../../redux/actions/authActions";
 
 const { Option } = Select;
 
-const Signup = () => {
-  const history = useHistory();
+const Signup = ({ signupUser, history, auth }) => {
+  const [isLoading, setIsLoading] = useState(false);
 
   const [form] = Form.useForm();
-  const [state, setState] = useState({
-    checked: null,
-  });
 
-  const handleSubmit = () => {
-    // dispatch(login());
-    history.push("/admin");
+  // useEffect(() => {
+  //   if (!auth.isAuthhenticated) {
+  //     history.push("/d");
+  //   }
+  // }, [auth, history]);
+
+  const handleSubmit = values => {
+    setIsLoading(true);
+    console.log(values);
+    signupUser(values)
+      .then(res => {
+        setIsLoading(false);
+        history.push("/d");
+      })
+      .catch((err: any) => {
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   return (
     <AuthWrapper>
       <div className="auth-contents">
         <Form
-          name="login"
+          name="signup"
           form={form}
           onFinish={handleSubmit}
           layout="vertical"
         >
-          <Heading className="text-center" as="h3">
+          <Heading style={{ fontSize: "40px" }} className="text-center" as="h3">
             Sign Up
           </Heading>
 
           <Form.Item
-            name="firstname"
+            name="first_name"
             rules={[
               { message: "Please input your firstname !", required: true },
             ]}
@@ -49,7 +63,7 @@ const Signup = () => {
           </Form.Item>
 
           <Form.Item
-            name="lastname"
+            name="last_name"
             rules={[
               { message: "Please input your lastname !", required: true },
             ]}
@@ -64,10 +78,10 @@ const Signup = () => {
             <InputStyled placeholder="Email Address" />
           </Form.Item>
 
-          <Form.Item name="gender" rules={[{ required: true }]}>
+          <Form.Item name="role" rules={[{ required: true }]}>
             <Select placeholder="Choose Your Role" allowClear>
-              <Option value="male">male</Option>
-              <Option value="female">female</Option>
+              <Option value="male">Enterpreneur</Option>
+              <Option value="female">Ecosysytem Enabler</Option>
               <Option value="other">other</Option>
             </Select>
           </Form.Item>
@@ -76,12 +90,12 @@ const Signup = () => {
             <InputStyled.Password placeholder="Password" />
           </Form.Item>
 
-          <div className="auth-form-action">
+          {/* <div className="auth-form-action">
             <Checkbox onChange={() => {}}>Remember Me</Checkbox>
             <NavLink className="forgot-pass-link" to="#">
               Forgot password?
             </NavLink>
-          </div>
+          </div> */}
 
           <Form.Item>
             <Button
@@ -89,8 +103,9 @@ const Signup = () => {
               htmlType="submit"
               type="primary"
               size="large"
+              loading={isLoading}
             >
-              Sign In
+              Sign Up
             </Button>
           </Form.Item>
 
@@ -126,4 +141,8 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+const mapStateToProps = (state: any) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { signupUser })(Signup);

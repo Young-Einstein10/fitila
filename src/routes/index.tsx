@@ -32,40 +32,35 @@ const NotFound = () => {
 const Routes = () => {
   return (
     <Switch>
-      {/* <Fragment>
-        <Switch> */}
       <AuthRoute exact path="/d" component={Dashboard} />
-      <AuthRoute exact path="/d/organizations" component={Organizations} />
-      <AuthRoute exact path="/d/states" component={States} />
-      <AuthRoute exact path="/d/account" component={Account} />
-      <AuthRoute exact path="/d/contact" component={Contact} />
-      <AuthRoute exact path="/d/about" component={About} />
-      <AuthRoute exact path="/d/help" component={Help} />
-      <AuthRoute exact path="/d/profile" component={Profile} />
-      <AuthRoute exact path="/d/segments/training" component={Training} />
+      <AuthRoute path="/d/organizations" component={Organizations} />
+      <AuthRoute path="/d/states" component={States} />
+      <AuthRoute path="/d/account" component={Account} />
+      <AuthRoute path="/d/contact" component={Contact} />
+      <AuthRoute path="/d/about" component={About} />
+      <AuthRoute path="/d/help" component={Help} />
+      <AuthRoute path="/d/profile" component={Profile} />
+      <AuthRoute path="/d/segments/training" component={Training} />
       <AuthRoute
-        exact
         path="/d/segments/businessSupport"
         component={BusinessSupport}
       />
-      <AuthRoute exact path="/d/segments/funding" component={Funding} />
-      <AuthRoute exact path="/d/segments/businesses" component={Businesses} />
-      {/* </Switch>
-      </Fragment> */}
+      <AuthRoute path="/d/segments/funding" component={Funding} />
+      <AuthRoute path="/d/segments/businesses" component={Businesses} />
 
       <NonAuthLayout>
-        {/* <Switch> */}
-        <Route exact path="/business" component={Business} />
-        <Route exact path={`/business/listorg`} component={ListOrganization} />
-        <Route exact path={`/business/uploads`} component={Uploads} />
-        <Route exact path={`/business/preview`} component={Preview} />
-        <Route exact path={`/business/success`} component={Success} />
+        <Switch>
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/business" component={Business} />
+          <Route path={`/business/listorg`} component={ListOrganization} />
+          <Route path={`/business/uploads`} component={Uploads} />
+          <Route path={`/business/preview`} component={Preview} />
+          <Route path={`/business/success`} component={Success} />
 
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup} />
-        <Route exact path="/" component={Landing} />
-        <Route path="*" component={NotFound} />
-        {/* </Switch> */}
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="*" component={NotFound} />
+        </Switch>
       </NonAuthLayout>
     </Switch>
   );

@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from "react";
 import { Checkbox, Button, Form } from "antd";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory, NavLink, Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { NavLink, Link, Redirect } from "react-router-dom";
 import Heading from "../../components/heading/heading";
 import { AuthWrapper } from "../profile/authentication/overview/style";
 import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
@@ -9,19 +9,30 @@ import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
 import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
 import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
 import { InputStyled } from "../Styles";
+import { signinUser } from "../../redux/actions/authActions";
 
-const Login = () => {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  // const isLoading = useSelector(state => state.auth.loading);
+const Login = ({ signinUser, history, auth }) => {
   const [form] = Form.useForm();
-  const [state, setState] = useState({
-    checked: null,
-  });
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = () => {
-    // dispatch(login());
-    history.push("/admin");
+  useEffect(() => {
+    if (auth.isAuthhenticated) {
+      <Redirect to="/d" />;
+    }
+  }, [auth]);
+
+  const handleSubmit = values => {
+    setIsLoading(true);
+    console.log(values);
+    signinUser(values)
+      .then(res => {
+        setIsLoading(false);
+        history.push("/d");
+      })
+      .catch((err: any) => {
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -33,24 +44,23 @@ const Login = () => {
           onFinish={handleSubmit}
           layout="vertical"
         >
-          <Heading className="text-center" as="h3">
+          <Heading style={{ fontSize: "4opx" }} className="text-center" as="h3">
             Sign In
           </Heading>
 
           <Form.Item
-            name="username"
+            name="email"
             rules={[
               {
-                message: "Please input your username or Email!",
+                message: "Please input your Email!",
                 required: true,
               },
             ]}
-            initialValue="name@example.com"
           >
-            <InputStyled placeholder="Username or Email Address" />
+            <InputStyled placeholder="Email Address" />
           </Form.Item>
 
-          <Form.Item name="password" initialValue="123456">
+          <Form.Item name="password">
             <InputStyled.Password placeholder="Password" />
           </Form.Item>
 
@@ -67,7 +77,8 @@ const Login = () => {
               htmlType="submit"
               type="primary"
               size="large"
-              onClick={() => history.push("/d")}
+              loading={isLoading}
+              // onClick={() => history.push("/d")}
             >
               Sign In
             </Button>
@@ -106,4 +117,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state: any) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { signinUser })(Login);

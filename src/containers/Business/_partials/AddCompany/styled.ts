@@ -10,6 +10,68 @@ const SpanStyled = Styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &.active {
+    background: #FFF4EC
+ 
+      svg {
+     
+        path:nth-child(2) {            
+          fill: #ffdec6
+        }
+
+        path:nth-child(3) {            
+          fill: #E7833B
+        }
+
+        path:nth-child(4) {            
+          fill: #CF702A;
+        }
+      }
+  }
+  
+  &:hover, &:active {
+    background: #FFF4EC
+ 
+      svg {
+     
+        path:nth-child(2) {            
+          fill: #ffdec6
+        }
+
+        path:nth-child(3) {            
+          fill: #E7833B
+        }
+
+        path:nth-child(4) {            
+          fill: #CF702A;
+        }
+      }
+
+    
+  }
+
+
+  /* &:nth-child(2):hover, &:nth-child(2):active {
+    background: #FFF4EC
+ 
+      svg {
+     
+        path:nth-child(2) {            
+          fill: #ffdec6
+        }
+
+        path:nth-child(3) {            
+          fill: #E7833B
+        }
+
+        path:nth-child(4) {            
+          fill: #CF702A;
+        }
+      }
+
+    
+  } */
 `;
 
 const ColStyled = Styled(Col)`

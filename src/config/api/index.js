@@ -1,13 +1,66 @@
-/**
- * It's suggested to configure the RESTful endpoints in this file
- * so that there is only one source of truth, future update of endpoints
- * could be done from here without refactoring on multiple places throughout the app
- */
-const API = {
-  auth: {
-    login: '/login',
-    signUp: '/signup',
-  },
-};
+import axios from "axios";
+import store from "../../redux/store";
+import { GET_ERRORS, RESET_ERROR } from "../../redux/constants";
+import Auth from "./auth";
 
-export { API };
+//Staging endpoint
+const axiosInstance = axios.create({
+  baseURL: "https://fitilla.pythonanywhere.com/api/v1",
+});
+
+//Intercept For Error reset
+axiosInstance.interceptors.request.use(
+  function(config) {
+    // Reset error state before make a fresh API call
+    store.dispatch({
+      type: RESET_ERROR,
+    });
+
+    return config;
+  },
+  function(error) {
+    return Promise.reject(error);
+  }
+);
+
+//Intercept For Errors
+axiosInstance.interceptors.response.use(
+  function(response) {
+    // Do something with response data
+    return response;
+  },
+  function(error) {
+    console.log(error.response);
+    // Do something with response error
+    const errorResponse = error.response;
+    const errorRequest = error.request;
+
+    errorResponse &&
+      store.dispatch({
+        type: GET_ERRORS,
+        payload: {
+          message: error.errorResponse
+            ? errorResponse.data && Array.isArray(errorResponse.data.errors)
+              ? errorResponse.data.errors[0]
+              : errorResponse.data.message
+            : errorResponse.data.error,
+          fullMessage: errorResponse
+            ? errorResponse.data &&
+              Array.isArray(errorResponse.data.full_messages)
+              ? errorResponse.data.full_messages[0]
+              : errorResponse.data.full_messages
+            : error.message,
+          errors: errorResponse && errorResponse.data.error,
+          statusText: errorResponse && errorResponse.statusText,
+        },
+      });
+
+    return Promise.reject(error);
+  }
+);
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
+  auth: new Auth(axiosInstance),
+  HttpClient: axiosInstance,
+};

@@ -3,25 +3,31 @@ import { useSelector } from "react-redux";
 import { Route, Redirect, RouteProps } from "react-router-dom";
 import AuthLayout from "../containers/AuthLayout";
 
-const AuthRoute: FC<RouteProps> = ({ component: Component, ...rest }: any) => {
+const AuthRoute: FC<RouteProps> = ({ component, path, ...rest }: any) => {
   const auth = useSelector((state: any) => state.auth);
 
-  if (!auth.isAuthenticated) {
-    return <Redirect to="/" />;
-  }
-
-  return (
-    <Route
-      {...rest}
-      render={props => {
-        return (
-          <AuthLayout>
-            <Component {...props} />
-          </AuthLayout>
-        );
-      }}
-    />
+  return auth.isAuthenticated ? (
+    <AuthLayout>
+      <Route component={component} path={path} {...rest} />
+    </AuthLayout>
+  ) : (
+    <Redirect to="/login" />
   );
+
+  // return (
+  //   <Route
+  //     {...rest}
+  //     render={props => {
+  //       auth.isAuthenticated ? (
+  //         <AuthLayout>
+  //           <Component {...props} />
+  //         </AuthLayout>
+  //       ) : (
+  //         <Redirect to="/login" />
+  //       );
+  //     }}
+  //   />
+  // );
 };
 
 export default AuthRoute;

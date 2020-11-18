@@ -24,7 +24,7 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
 
               <StepsStyled
                 labelPlacement="vertical"
-                current={0}
+                current={2}
                 progressDot={customDot}
               >
                 <Step description="Details" />

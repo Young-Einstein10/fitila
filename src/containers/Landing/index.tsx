@@ -4,19 +4,20 @@ import Heading from "../../components/heading/heading";
 import { ReactComponent as Search } from "../../static/svg/search.svg";
 import { SectionWrapper } from "../Styles";
 import "./styles.less";
+import { NavLink } from "react-router-dom";
 
 const Landing = () => {
   const handleSubmit = () => {};
 
   const links = [
-    "Business Support",
-    "Training",
-    "Funding",
-    "Market Access",
-    "Research",
-    "Policy Regulation",
-    "Resources",
-    "Businesses",
+    { name: "Business Support", url: "/d/segments/businessSupport" },
+    { name: "Training", url: "/d/segments/training" },
+    { name: "Funding", url: "/d/segments/funding" },
+    { name: "Market Access", url: "/d/segments/marketAccess" },
+    { name: "Research", url: "/d/segments/research" },
+    { name: "Policy Regulation", url: "/d/segments/policyRegulation" },
+    { name: "Resources", url: "/d/segments/resources" },
+    { name: "Businesses", url: "/d/segments/businesses" },
   ];
 
   return (
@@ -74,20 +75,22 @@ const Landing = () => {
         >
           {links.map((business, key) => (
             <Col key={key} className="text-center">
-              <Button
-                type="primary"
-                icon={<Search style={{ marginRight: "10px" }} />}
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  color: "#BF1E2E",
-                  background: "#FFECDD",
-                  marginLeft: "15px",
-                  marginTop: "20px",
-                }}
-              >
-                {business}
-              </Button>
+              <NavLink to={business.url}>
+                <Button
+                  type="primary"
+                  icon={<Search style={{ marginRight: "10px" }} />}
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    color: "#BF1E2E",
+                    background: "#FFECDD",
+                    marginLeft: "15px",
+                    marginTop: "20px",
+                  }}
+                >
+                  {business.name}
+                </Button>
+              </NavLink>
             </Col>
           ))}
         </Row>

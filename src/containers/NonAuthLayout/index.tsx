@@ -9,18 +9,33 @@ import { ReactComponent as LoginIcon } from "../../static/svg/login.svg";
 import { FooterStyled, HeaderStyled } from "./styled";
 import Styled from "styled-components";
 import { Dropdown } from "../../components/dropdown/dropdown";
-import { Button as ButtonStyled } from "../../components/buttons/buttons";
+// import { Button as ButtonStyled } from "../../components/buttons/buttons";
 
 const { Content } = Layout;
 
 const BusinessButton = Styled(Button)`
   border: ${({ theme }) => `solid 1px ${theme["primary-color"]}`}
   color: ${({ theme }) => theme["primary-color"]}
+  margin-right: 15px;
+`;
+
+const ButtonStyled = Styled(Button)`
+  background: #F7F9FA
+  color: #000000;
+  font-weight: 700;
+  border: 0;
+
+  &:hover, &:active {
+   background: #F7F9FA
+  color: #000000;
+  font-weight: 700;
+  border: 0;
+  }
 `;
 
 const NonAuthLayout: FunctionComponent = ({ children }) => {
   const menu = (
-    <div style={{ padding: "10px" }}>
+    <div style={{ padding: "20px" }}>
       <Link to="/login" style={{ background: "#F7F9FA", marginBottom: "15px" }}>
         <span>
           <LoginIcon /> Login
@@ -54,8 +69,9 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
             </BusinessButton>
 
             <Dropdown className="account-btn" content={menu}>
-              <ButtonStyled size="large">
-                <UserOutlined /> Account <DownOutlined />
+              <ButtonStyled size="large" type="primary">
+                <UserOutlined style={{ marginRight: "10px" }} /> Account{" "}
+                <DownOutlined />
               </ButtonStyled>
             </Dropdown>
           </div>

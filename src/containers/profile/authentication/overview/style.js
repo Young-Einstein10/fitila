@@ -1,4 +1,4 @@
-import Styled from 'styled-components';
+import Styled from "styled-components";
 
 const Content = Styled.div`
     padding: 100px;
@@ -38,7 +38,7 @@ const AuthWrapper = Styled.div`
   .auth-notice{
     text-align: center;
     font-weight: 500;
-    color: ${({ theme }) => theme['dark-color']};
+    color: ${({ theme }) => theme["dark-color"]};
     @media only screen and (max-width: 767px){
       text-align: center;
       margin-top: 15px;
@@ -76,7 +76,7 @@ const AuthWrapper = Styled.div`
           margin-bottom: 28px;
         }
         input::placeholder{
-          color: ${({ theme }) => theme['extra-light-color']};
+          color: ${({ theme }) => theme["extra-light-color"]};
         }
       }
       .auth-form-action{
@@ -101,7 +101,7 @@ const AuthWrapper = Styled.div`
     }
     .form-divider{
       font-size: 13px;
-      color: ${({ theme }) => theme['gray-solid']};
+      color: ${({ theme }) => theme["gray-solid"]};
       text-align: center;
       position: relative;
       margin-bottom: 25px;
@@ -114,7 +114,7 @@ const AuthWrapper = Styled.div`
         transform: translateY(-50%);
         z-index: 1;
         height: 1px;
-        background: ${({ theme }) => theme['border-color-light']};
+        background: ${({ theme }) => theme["border-color-light"]};
       }
       span{
         background: #fff;
@@ -138,7 +138,7 @@ const AuthWrapper = Styled.div`
       &.signin-social{
         li{
           a{
-            box-shadow: 0 5px 15px ${({ theme }) => theme['light-color']}10;
+            box-shadow: 0 5px 15px ${({ theme }) => theme["light-color"]}10;
             background-color: #fff;
           }
         }
@@ -149,16 +149,16 @@ const AuthWrapper = Styled.div`
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 6px;
-          height: 48px;
-          padding: 0 15px;
-          border: 1px solid ${({ theme }) => theme['border-color-light']};
-          background: ${({ theme }) => theme['bg-color-light']};
-          color: ${({ theme }) => theme['text-color']};
+          /* border-radius: 6px; */
+          /* height: 48px; */
+          /* padding: 0 15px; */
+          /* border: 1px solid ${({ theme }) => theme["border-color-light"]}; */
+          /* background: ${({ theme }) => theme["bg-color-light"]}; */
+          color: ${({ theme }) => theme["text-color"]};
           font-weight: 500;
           @media only screen and (max-width: 379px){
-            height: 44px;
-            padding: 0 12px;
+            /* height: 44px;
+            padding: 0 12px; */
           }
           span:not(.anticon){
             display: inline-block;
