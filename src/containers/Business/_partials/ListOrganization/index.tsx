@@ -14,6 +14,8 @@ const { Step } = StepsStyled;
 const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
   const customDot = (dot: any) => dot;
 
+  const [form] = Form.useForm();
+
   const { state, setState } = useContext(BusinessContext);
 
   useEffect(() => {}, [state]);
@@ -21,6 +23,12 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
   if (!state.business_type) {
     <Redirect to="/business" />;
   }
+
+  const handleSubmit = values => {
+    console.log(values);
+    setState({ ...state, ...values });
+    history.push("/business/uploads");
+  };
 
   return (
     <SectionWrapper className="section-list-organization">
@@ -43,8 +51,13 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
               </StepsStyled>
             </div>
 
-            <Form layout="vertical" className="list-organization">
-              <Form.Item name="organization_name">
+            <Form
+              form={form}
+              onFinish={handleSubmit}
+              layout="vertical"
+              className="list-organization"
+            >
+              <Form.Item name="name">
                 <InputStyled placeholder="Organization Name" />
               </Form.Item>
 
@@ -60,7 +73,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 <InputStyled placeholder="State Address" />
               </Form.Item>
 
-              <Form.Item name="sector">
+              <Form.Item name="business_sector">
                 <Select placeholder="Sector" allowClear>
                   <Option value="health">Health</Option>
                   <Option value="agriculture">Agriculture</Option>
@@ -72,11 +85,11 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 </Select>
               </Form.Item>
 
-              <Form.Item name="zone">
+              <Form.Item name="town">
                 <Select placeholder="Zone" allowClear>
-                  <Option value="male">Lagos</Option>
-                  <Option value="female">Ogun</Option>
-                  <Option value="other">Abuja</Option>
+                  <Option value="male">Zone A</Option>
+                  <Option value="female">Zone B</Option>
+                  <Option value="other">Zone C</Option>
                 </Select>
               </Form.Item>
 
@@ -97,7 +110,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 </Select>
               </Form.Item>
 
-              <Form.Item name="no_business_supported">
+              <Form.Item name="num_supported_business">
                 <Select
                   placeholder=" Number of businesses supported over the last 5 years"
                   allowClear
@@ -108,7 +121,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 </Select>
               </Form.Item>
 
-              <Form.Item name="website_address">
+              <Form.Item name="website">
                 <InputStyled placeholder="Website Address" />
               </Form.Item>
 
@@ -128,17 +141,19 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
               <Divider />
 
               {[
-                "Facebook Url",
-                "Instagram Url",
-                "Twitter Url",
-                "LinkedIn Url",
+                { name: "Facebook Url", key: "facebook" },
+                { name: "Instagram Url", key: "instagram" },
+                { name: "Twitter Url", key: "twitter" },
+                { name: "LinkedIn Url", key: "linkedin" },
               ].map((inputField, key) => (
-                <Form.Item key={key} name={inputField}>
-                  <InputStyled placeholder={inputField} />
+                <Form.Item key={key} name={inputField.key}>
+                  <InputStyled placeholder={inputField.name} />
                 </Form.Item>
               ))}
 
-              <p>Press Realeases, Web mentions</p>
+              <p style={{ fontWeight: "bold" }}>
+                Press Realeases, Web mentions
+              </p>
 
               {["Url 1", "Url 2", "Url 3"].map((url, key) => (
                 <Form.Item key={key} name={url}>
@@ -162,7 +177,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                   htmlType="submit"
                   type="primary"
                   size="large"
-                  onClick={() => history.push("/business/uploads")}
+                  // onClick={() => history.push("")}
                 >
                   Continue
                 </ButtonStyled>
