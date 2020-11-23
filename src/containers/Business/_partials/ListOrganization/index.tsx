@@ -56,6 +56,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
     ],
     enterprises: [],
   });
+  const [subSegmentList, setSubSegmentList] = useState([]);
 
   const customDot = (dot: any) => dot;
 
@@ -75,8 +76,13 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
     history.push("/business/uploads");
   };
 
-  const updateSubSegment = e => {
-    console.log(e);
+  const updateSubSegment = value => {
+    value = value
+      .toLowerCase()
+      .split(" ")
+      .join("_");
+    console.log(value);
+    setSubSegmentList(ecosystemDropdown[value]);
   };
 
   return (
@@ -139,20 +145,20 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                       placeholder="Ecosystem Segment"
                       allowClear
                     >
-                      <Option value="Business Support">Business Support</Option>
-                      <Option value="Enterpreneurship Training">
-                        Enterpreneurship Training
-                      </Option>
-                      <Option value="Funding">Funding</Option>
-                      <Option value="Market Access">Market Access</Option>
-                      <Option value="Policy and Regulation">
-                        Policy and Regulation
-                      </Option>
-                      <Option value="Resources">Resources</Option>
-                      <Option value="Research and Development">
-                        Research and Development
-                      </Option>
-                      <Option value="Enterprises">Enterprises</Option>
+                      {Object.keys(ecosystemDropdown).map((ecosystem, key) => (
+                        <Option
+                          key={key}
+                          value={ecosystem
+                            .split("_")
+                            .join(" ")
+                            .toLocaleUpperCase()}
+                        >
+                          {ecosystem
+                            .split("_")
+                            .join(" ")
+                            .toLocaleUpperCase()}
+                        </Option>
+                      ))}
                     </Select>
                   </Form.Item>
                 )}
@@ -160,22 +166,15 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 {state.business_type === "Ecosystem Enabler" && (
                   <Form.Item name="sub_segment">
                     <Select placeholder="Sub-Segment" allowClear>
-                      <Option value="Business Advisory and Consulting Organizations">
-                        Business Advisory and Consulting Organizations
-                      </Option>
-
-                      <Option value="Mentoring (Individuals & Organizations)">
-                        Mentoring (Individuals & Organizations)
-                      </Option>
-
-                      <Option value="Incubators">Incubators</Option>
-                      <Option value="Accelerators">Accelerators</Option>
-                      <Option value="Churches/Mosques">Churches/Mosques</Option>
-                      <Option value="Resources">Resources</Option>
-                      <Option value="Research and Development">
-                        Research and Development
-                      </Option>
-                      <Option value="Enterprises">Enterprises</Option>
+                      {subSegmentList.map((segment, key) => (
+                        <Option
+                          key={key}
+                          value={segment}
+                          style={{ textTransform: "capitalize" }}
+                        >
+                          {segment}
+                        </Option>
+                      ))}
                     </Select>
                   </Form.Item>
                 )}
