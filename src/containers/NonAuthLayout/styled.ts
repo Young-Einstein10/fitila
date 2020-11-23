@@ -2,10 +2,22 @@ import { Layout } from "antd";
 import Styled from "styled-components";
 const { Header, Footer } = Layout;
 
+
+const LayoutStyled = Styled(Layout)`
+    & header.ant-layout-header {
+        box-shadow: 0px 2px 8px rgba(53,55,81,0.04);
+        padding: 0 40px;
+    }
+`
+
 const HeaderStyled = Styled(Header)`    
-    min-height: 64px;
-    box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
-    padding: 0.2rem 3rem;
+
+    .ant-layout-header {
+        min-height: 64px;
+        /* box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04) !important; */
+        padding: 0.2rem 3rem;
+
+    }
 
     .navItem-left,
     .navItem-right {
@@ -25,9 +37,13 @@ const HeaderStyled = Styled(Header)`
 `;
 
 const FooterStyled = Styled(Footer)`
-  height: 64px;
-  background: #F7F9FA;
-  color: #5F6368;
+
+  &.ant-layout-footer {
+    height: 64px;
+    background: #F2F2F2;
+    color: #5F6368;
+
+  }
  
           span.admin-footer__copyright{
               display: inline-block;
@@ -55,4 +71,4 @@ const FooterStyled = Styled(Footer)`
       
 `;
 
-export { HeaderStyled, FooterStyled };
+export { LayoutStyled, HeaderStyled, FooterStyled };

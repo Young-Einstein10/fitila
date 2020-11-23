@@ -14,33 +14,38 @@ import { signinUser } from "../../redux/actions/authActions";
 const Login = ({ signinUser, history, auth, location }) => {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
-  const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
   const { state } = location;
 
   useEffect(() => {
     if (auth.isAuthhenticated) {
-      <Redirect to="/d" />;
+      // if (auth.isAuthhenticated) {
+      //   if (state && state.next) {
+      //     <Redirect to={state.next} />;
+      //   }
+      //   <Redirect to="/" />;
+      // }
+      <Redirect to={state?.next || "/d"} />;
     }
-  }, [auth]);
+  }, [auth, state]);
 
   const handleSubmit = values => {
     setIsLoading(true);
-    console.log(values);
+    // console.log(values);
     signinUser(values)
       .then(res => {
         setIsLoading(false);
-        history.push("/d");
+        if (state && state.next) {
+          history.push(state.next);
+        } else {
+          history.push("/d");
+        }
       })
       .catch((err: any) => {
         console.log(err);
         setIsLoading(false);
       });
   };
-
-  // if(redirectToReferrer === true) {
-  //   return <Redirect to={ state?.from || "/"} />
-  // }
 
   return (
     <AuthWrapper>

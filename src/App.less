@@ -5,20 +5,32 @@ body {
   font-size: 16px;
 }
 
-input.ant-input,
-.ant-select-selector,
-.ant-input-affix-wrapper {
-  background-color: #F9F9F9;
+.section-list-organization,
+.preview-section,
+.business-uploads {
+
+  input.ant-input,
+  .ant-form-item-control-input-content textarea.ant-intput,
+  .ant-select-selector,
+  .ant-input-affix-wrapper {
+    background-color: #F9F9F9;
+  }
+
+
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: #F9F9F9;
+  }
 }
 
-.ant-select:not(.ant-select-customize-input) .ant-select-selector {
-  background-color: #F9F9F9;
+
+.section-landing {
+
+  .ant-btn-icon-only.ant-btn-lg {
+    height: 50px;
+    width: 50px;
+  }
 }
 
-.ant-btn-icon-only.ant-btn-lg {
-  height: 50px;
-  width: 50px;
-}
 
 .font-weight-700 {
   font-weight: 700;
@@ -48,7 +60,6 @@ section.section-landing {
   &.ant-input,
   #login_password,
   &.ant-input-affix-wrapper>input.ant-input {
-
     background-color: #F9F9F9;
   }
 }

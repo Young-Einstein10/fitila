@@ -210,57 +210,166 @@ const Dashboard = () => {
           gutter={{ xs: 8, sm: 16, md: 24, lg: 24 }}
           style={{ padding: "0 1.3rem 1.3rem" }}
         >
-          {[1, 2, 3, 4].map((item, key) => (
-            <Col key={key} span={6}>
-              <Dropdown overlay={menu}>
-                <Button
-                  style={{
-                    width: "100%",
-                    padding: "1.5rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <FilterOutlined style={{ marginRight: "15px" }} /> Filter By
-                  Zones <ArrowDown style={{ marginLeft: "15px" }} />
-                </Button>
-              </Dropdown>
-            </Col>
-          ))}
+          <Col span={6}>
+            <Dropdown overlay={menu}>
+              <Button
+                style={{
+                  width: "100%",
+                  padding: "1.5rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <FilterOutlined style={{ marginRight: "15px" }} /> Filter By
+                States <ArrowDown style={{ marginLeft: "15px" }} />
+              </Button>
+            </Dropdown>
+          </Col>
+
+          <Col span={6}>
+            <Dropdown overlay={menu}>
+              <Button
+                style={{
+                  width: "100%",
+                  padding: "1.5rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <FilterOutlined style={{ marginRight: "15px" }} /> Filter By
+                LGA's <ArrowDown style={{ marginLeft: "15px" }} />
+              </Button>
+            </Dropdown>
+          </Col>
+
+          <Col span={6}>
+            <Dropdown overlay={menu}>
+              <Button
+                style={{
+                  width: "100%",
+                  padding: "1.5rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <FilterOutlined style={{ marginRight: "15px" }} /> Filter By
+                Sector <ArrowDown style={{ marginLeft: "15px" }} />
+              </Button>
+            </Dropdown>
+          </Col>
         </Row>
       </div>
 
       <Main style={{ padding: "1.3rem" }}>
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-          {[1, 2, 3, 4].map((_, key) => (
-            <Col key={key} span={6}>
-              <Card>
-                <p style={{ color: "#81868C", borderRadius: "4px" }}>
-                  Number of Organizations
-                </p>
+          <Col span={6}>
+            <Card>
+              <p style={{ color: "#81868C", borderRadius: "4px" }}>
+                Number of Organizations
+              </p>
 
-                <div
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
+                    fontSize: "48px",
+                    fontWeight: "bold",
+                    marginBottom: "0px",
                   }}
                 >
-                  <p
-                    style={{
-                      fontSize: "48px",
-                      fontWeight: "bold",
-                      marginBottom: "0px",
-                    }}
-                  >
-                    36
-                  </p>
-                  <Icon1 />
-                </div>
-              </Card>
-            </Col>
-          ))}
+                  863
+                </p>
+                <Icon1 />
+              </div>
+            </Card>
+          </Col>
+
+          <Col span={6}>
+            <Card>
+              <p style={{ color: "#81868C", borderRadius: "4px" }}>
+                Number of States
+              </p>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "48px",
+                    fontWeight: "bold",
+                    marginBottom: "0px",
+                  }}
+                >
+                  36
+                </p>
+                <Icon1 />
+              </div>
+            </Card>
+          </Col>
+
+          <Col span={6}>
+            <Card>
+              <p style={{ color: "#81868C", borderRadius: "4px" }}>Locations</p>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "48px",
+                    fontWeight: "bold",
+                    marginBottom: "0px",
+                  }}
+                >
+                  376
+                </p>
+                <Icon1 />
+              </div>
+            </Card>
+          </Col>
+
+          <Col span={6}>
+            <Card>
+              <p style={{ color: "#81868C", borderRadius: "4px" }}>
+                Estimated Market Size
+              </p>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "48px",
+                    fontWeight: "bold",
+                    marginBottom: "0px",
+                  }}
+                >
+                  ₦9.5B
+                </p>
+                <Icon1 />
+              </div>
+            </Card>
+          </Col>
         </Row>
 
         <Row gutter={25} style={{ marginTop: "2rem" }}>
@@ -335,7 +444,7 @@ const Dashboard = () => {
         <Row gutter={24} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
             <Cards
-              title="Explore by ecosystem segments"
+              title="Explore by Ecosystem States"
               size="large"
               more={content}
             >
@@ -349,35 +458,25 @@ const Dashboard = () => {
 
         <Row gutter={16} style={{ marginTop: "2rem" }}>
           <Col span={8}>
-            <Cards
-              title="Explore by ecosystem segments"
-              size="large"
-              more={content}
-            >
+            <Cards title="2020 Investments" size="large" more={content}>
               <div
                 className="states-lga"
                 style={{ background: "#B1E2CB", height: "330px" }}
               ></div>
             </Cards>
           </Col>
+
           <Col span={8}>
-            <Cards
-              title="Explore by ecosystem segments"
-              size="large"
-              more={content}
-            >
+            <Cards title="Female Led Startups" size="large" more={content}>
               <div
                 className="states-lga"
                 style={{ background: "#B1E2CB", height: "330px" }}
               ></div>
             </Cards>
           </Col>
+
           <Col span={8}>
-            <Cards
-              title="Explore by ecosystem segments"
-              size="large"
-              more={content}
-            >
+            <Cards title="Funding by Sector" size="large" more={content}>
               <div
                 className="states-lga"
                 style={{ background: "#B1E2CB", height: "330px" }}

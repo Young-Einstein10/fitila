@@ -8,7 +8,7 @@ import { ThemeProvider } from "styled-components";
 import propTypes from "prop-types";
 import MenueItems from "./MenueItems";
 import TopMenu from "./TopMenu";
-import { Div, TopMenuSearch } from "./style";
+import { Div, TopMenuSearch, SidebarFooterStyled } from "./style";
 import AuthInfo from "../../components/utilities/auth-info/info";
 import logo from "../../static/svg/logo.svg";
 import burgermenu from "../../static/svg/burgermenu.svg";
@@ -91,9 +91,8 @@ const ThemeLayout = WrappedComponent => {
       const footerStyle = {
         padding: "20px 30px 18px",
         color: "rgba(0, 0, 0, 0.65)",
-        fontSize: "14px",
-        background: "rgba(255, 255, 255, .90)",
-        width: "100%",
+        fontSize: "16px",
+        background: "#F2F2F2",
         boxShadow: "0 -5px 10px rgba(146,153,184, 0.05)",
       };
 
@@ -105,6 +104,8 @@ const ThemeLayout = WrappedComponent => {
         position: "fixed",
         left: 0,
         zIndex: 998,
+        boxShadow: "0px 2px 8px rgba(53, 55, 81, 0.08)",
+        background: "#fff",
       };
 
       const renderView = ({ style, ...props }) => {
@@ -156,6 +157,7 @@ const ThemeLayout = WrappedComponent => {
                 width: "100%",
                 top: 0,
                 [!rtl ? "left" : "right"]: 0,
+                background: "#fffyy",
               }}
             >
               <Row>
@@ -270,7 +272,7 @@ const ThemeLayout = WrappedComponent => {
               {!topMenu || window.innerWidth <= 991 ? (
                 <ThemeProvider theme={darkTheme}>
                   <Sider
-                    width={280}
+                    width={220}
                     style={SideBarStyle}
                     collapsed={collapsed}
                     theme={"light"}
@@ -290,6 +292,17 @@ const ThemeLayout = WrappedComponent => {
                         rtl={rtl}
                         toggleCollapsed={toggleCollapsedMobile}
                       />
+
+
+                    <SidebarFooterStyled>
+                      <p >2020, Copyright, Enterprise Data Map</p>
+
+                      <ul>
+                        <li>Privacy Policy</li>
+                        <li>Terms and Conditions</li>
+                        <li>Cookie Policy</li>
+                      </ul>
+                    </SidebarFooterStyled>
                     </Scrollbars>
                   </Sider>
                 </ThemeProvider>
@@ -322,14 +335,6 @@ const ThemeLayout = WrappedComponent => {
       );
     }
   }
-
-  const mapStateToProps = state => {
-    return {
-      ChangeLayoutMode: state.ChangeLayoutMode.data,
-      rtl: state.ChangeLayoutMode.rtlData,
-      topMenu: state.ChangeLayoutMode.topMenu,
-    };
-  };
 
   LayoutComponent.propTypes = {
     ChangeLayoutMode: propTypes.bool,

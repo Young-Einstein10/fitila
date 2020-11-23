@@ -1,10 +1,39 @@
 import React from "react";
-import { Button, Col, Form, Input, Row, Select } from "antd";
+import { Button, Col, Form, Row, Select } from "antd";
 import Heading from "../../components/heading/heading";
 import { ReactComponent as Search } from "../../static/svg/search.svg";
+import { ReactComponent as SelectSearchIcon } from "../../static/svg/selectSearchIcon.svg";
 import { SectionWrapper } from "../Styles";
 import "./styles.less";
 import { NavLink } from "react-router-dom";
+import Styled from "styled-components";
+
+const ButtonStyled = Styled(Button)`
+  font-size: 14px;
+  font-weight: bold;
+  color: #BF1E2E;
+  background:#FFECDD;
+  margin-left: 15px;
+  margin-top: 20px;
+  box-shadow: none;
+  text-shadow: none;
+  border: 0;
+
+  &:hover {
+    background: #FFECDD;
+    color: #BF1E2E;
+  }
+`;
+
+const SelectStyled = Styled(Select)`
+  width: 898px !important;
+
+  & span.ant-select-arrow {
+    top: 43%;
+    width: 21px;
+    height: 21px;
+  }
+`;
 
 const { Option } = Select;
 
@@ -39,7 +68,10 @@ const Landing = () => {
           Access Over 6000+ Data Points
         </Heading>
 
-        <p style={{ fontSize: "24px" }} className="text-center">
+        <p
+          style={{ fontSize: "24px", color: "#696969" }}
+          className="text-center"
+        >
           Gain credible insights into Nigeria's entrepreneurship ecosystem
         </p>
 
@@ -51,16 +83,16 @@ const Landing = () => {
             justifyContent: "center",
           }}
         >
-          <Input.Search
+          {/* <Input.Search
             size="large"
             placeholder="Search by Organization, Sector and States"
             style={{ width: "80%" }}
-          />
+          /> */}
 
-          {/* <Select
+          <SelectStyled
+            suffixIcon={<SelectSearchIcon />}
             showSearch
-            style={{ width: "80%" }}
-            placeholder="Select a person"
+            placeholder="Search by Organization, Sector and States"
             optionFilterProp="children"
             onChange={() => {}}
             onFocus={() => {}}
@@ -73,7 +105,7 @@ const Landing = () => {
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
             <Option value="tom">Tom</Option>
-          </Select> */}
+          </SelectStyled>
         </Form.Item>
       </Form>
 
@@ -87,7 +119,7 @@ const Landing = () => {
           paddingBottom: "6rem",
         }}
       >
-        <p style={{ fontSize: "16px", color: "#1D429C", fontWeight: "bold" }}>
+        <p style={{ fontSize: "16px", color: "#1D429C" }}>
           Explore ecosystem players by segment
         </p>
 
@@ -101,20 +133,10 @@ const Landing = () => {
           {links.map((business, key) => (
             <Col key={key} className="text-center">
               <NavLink to={business.url}>
-                <Button
-                  type="primary"
-                  icon={<Search style={{ marginRight: "10px" }} />}
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                    color: "#BF1E2E",
-                    background: "#FFECDD",
-                    marginLeft: "15px",
-                    marginTop: "20px",
-                  }}
-                >
+                <ButtonStyled>
                   {business.name}
-                </Button>
+                  <Search style={{ marginLeft: "10px" }} />
+                </ButtonStyled>
               </NavLink>
             </Col>
           ))}

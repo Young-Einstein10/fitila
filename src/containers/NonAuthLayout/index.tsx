@@ -1,12 +1,13 @@
 import React, { FunctionComponent } from "react";
 import { Layout, Breadcrumb, Col, Row, Button } from "antd";
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../static/svg/logo.svg";
-import { ReactComponent as UserIcon } from "../../static/svg/user.svg";
+import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
 import { ReactComponent as LoginIcon } from "../../static/svg/login.svg";
+import { ReactComponent as UserIcon } from "../../static/svg/usericon.svg";
 
-import { FooterStyled, HeaderStyled } from "./styled";
+import { FooterStyled, HeaderStyled, LayoutStyled } from "./styled";
 import Styled from "styled-components";
 import { Dropdown } from "../../components/dropdown/dropdown";
 // import { Button as ButtonStyled } from "../../components/buttons/buttons";
@@ -16,7 +17,7 @@ const { Content } = Layout;
 const BusinessButton = Styled(Button)`
   border: ${({ theme }) => `solid 1px ${theme["primary-color"]}`}
   color: ${({ theme }) => theme["primary-color"]}
-  margin-right: 15px;
+  margin-right: 2rem;
 `;
 
 const ButtonStyled = Styled(Button)`
@@ -33,24 +34,34 @@ const ButtonStyled = Styled(Button)`
   }
 `;
 
+const LinkStyled = Styled(Link)`
+  background: #F7F9FA; 
+  
+  span {
+    display: flex;
+    align-items: center;
+  }
+`;
+
 const NonAuthLayout: FunctionComponent = ({ children }) => {
   const menu = (
     <div style={{ padding: "20px" }}>
-      <Link to="/login" style={{ background: "#F7F9FA", marginBottom: "15px" }}>
+      <LinkStyled to="/login">
         <span>
           <LoginIcon /> Login
         </span>
-      </Link>
-      <Link to="/signup" style={{ background: "#F7F9FA" }}>
+      </LinkStyled>
+
+      <LinkStyled to="/signup">
         <span>
-          <UserIcon /> Sign Up
+          <UserPlus /> Sign Up
         </span>
-      </Link>
+      </LinkStyled>
     </div>
   );
 
   return (
-    <Layout className="layout nonAuthLayout">
+    <LayoutStyled className="layout nonAuthLayout">
       <HeaderStyled>
         <Row style={{ justifyContent: "space-between", alignItems: "center" }}>
           <div className="navItem-left">
@@ -70,7 +81,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
 
             <Dropdown className="account-btn" content={menu}>
               <ButtonStyled size="large" type="primary">
-                <UserOutlined style={{ marginRight: "10px" }} /> Account{" "}
+                <UserIcon style={{ marginRight: "10px" }} /> Account{" "}
                 <DownOutlined />
               </ButtonStyled>
             </Dropdown>
@@ -105,7 +116,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
           </Col>
         </Row>
       </FooterStyled>
-    </Layout>
+    </LayoutStyled>
   );
 };
 

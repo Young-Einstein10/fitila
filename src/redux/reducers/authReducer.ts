@@ -11,7 +11,6 @@ export default (state = initialState, action) => {
 
   switch (type) {
     case SET_CURRENT_USER:
-      console.log("UPDATED STATE");
       return {
         ...state,
         isAuthenticated: true,

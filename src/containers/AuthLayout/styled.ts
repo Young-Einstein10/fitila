@@ -1,10 +1,11 @@
 import Styled from "styled-components";
 
-const Main = Styled.div`
+const Main = Styled.div<{ background?: string }>`
     /* padding: 0px 30px 20px; */
     padding: 1.3rem;
     min-height: 600px;
-    background-color: rgb(244, 245, 247);
+    background-color: ${({ background }) =>
+      background ? background : "rgb(244, 245, 247)"};
     .ant-card-rtl .ant-card-extra{
                 margin-right: 0 !important;
             }

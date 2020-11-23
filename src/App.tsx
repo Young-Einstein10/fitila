@@ -11,26 +11,22 @@ import BusinessProvider from "./containers/Business/context";
 
 const { theme } = config;
 
-const token = localStorage.getItem("access-token");
-const userDetails = localStorage.getItem("userDetails");
+const userData = JSON.parse(localStorage.getItem("userData"));
 
-const access_token = JSON.parse(token!);
-if (access_token !== "undefined" && access_token !== null) {
-  const user_Details = JSON.parse(userDetails!);
-
-  // // Set user and isAuthenticated
-  store.dispatch(setCurrentUser(user_Details));
+const access_token = userData && userData.token;
+if (access_token) {
+  store.dispatch(setCurrentUser(userData));
 }
 
 function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={{ ...theme }}>
-        <BusinessProvider>
-          <Router>
+        <Router>
+          <BusinessProvider>
             <Routes />
-          </Router>
-        </BusinessProvider>
+          </BusinessProvider>
+        </Router>
       </ThemeProvider>
     </Provider>
   );

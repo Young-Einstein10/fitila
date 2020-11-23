@@ -13,7 +13,7 @@ export const signinUser = (userData: {
       data: { data },
     } = res;
 
-    localStorage.setItem("userDetails", JSON.stringify(data));
+    localStorage.setItem("userData", JSON.stringify(data));
 
     dispatch(setCurrentUser({ ...data }));
   }

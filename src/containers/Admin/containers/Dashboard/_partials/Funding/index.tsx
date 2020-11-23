@@ -97,7 +97,7 @@ const dataSource = [
     funding: "$2.4M",
   },
   {
-    key: "1",
+    key: "2",
     rank: "01",
     company: "Paystack",
     ceo_founder: "Sundar Pichai",
@@ -108,7 +108,7 @@ const dataSource = [
     funding: "$2.4M",
   },
   {
-    key: "1",
+    key: "3",
     rank: "01",
     company: "Paystack",
     ceo_founder: "Sundar Pichai",
@@ -119,7 +119,7 @@ const dataSource = [
     funding: "$2.4M",
   },
   {
-    key: "1",
+    key: "4",
     rank: "01",
     company: "Paystack",
     ceo_founder: "Sundar Pichai",
@@ -130,7 +130,7 @@ const dataSource = [
     funding: "$2.4M",
   },
   {
-    key: "1",
+    key: "5",
     rank: "01",
     company: "Paystack",
     ceo_founder: "Sundar Pichai",
@@ -326,7 +326,11 @@ const Funding = () => {
                             List Your Business
                           </Button>
 
-                          <Button size="large" type="primary">
+                          <Button
+                            size="large"
+                            type="primary"
+                            style={{ marginLeft: "15px" }}
+                          >
                             View Businesses
                           </Button>
                         </div>,

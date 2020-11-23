@@ -14,7 +14,8 @@ import BusinessSupport from "../containers/Admin/containers/Dashboard/_partials/
 import Funding from "../containers/Admin/containers/Dashboard/_partials/Funding";
 import Training from "../containers/Admin/containers/Dashboard/_partials/Training";
 import Profile from "../containers/Admin/containers/Profile";
-import Business from "../containers/Business";
+// import {Business} from "../containers/Business";
+import AddCompany from "../containers/Business/_partials/AddCompany";
 import ListOrganization from "../containers/Business/_partials/ListOrganization";
 import Preview from "../containers/Business/_partials/Preview";
 import Success from "../containers/Business/_partials/Success";
@@ -48,14 +49,15 @@ const Routes = () => {
       <AuthRoute path="/d/segments/funding" component={Funding} />
       <AuthRoute path="/d/segments/businesses" component={Businesses} />
 
+      <AuthRoute exact path="/business" component={AddCompany} />
+      <AuthRoute path={`/business/listorg`} component={ListOrganization} />
+      <AuthRoute path={`/business/uploads`} component={Uploads} />
+      <AuthRoute path={`/business/preview`} component={Preview} />
+      <AuthRoute path={`/business/success`} component={Success} />
+
       <NonAuthLayout>
         <Switch>
           <Route exact path="/" component={Landing} />
-          <Route exact path="/business" component={Business} />
-          <Route path={`/business/listorg`} component={ListOrganization} />
-          <Route path={`/business/uploads`} component={Uploads} />
-          <Route path={`/business/preview`} component={Preview} />
-          <Route path={`/business/success`} component={Success} />
 
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
