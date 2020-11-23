@@ -102,9 +102,10 @@ const Landing = () => {
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
           >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+            <Option value="jack">Paystack</Option>
+            <Option value="lucy">FarmCrowdy</Option>
+            <Option value="tom">Andela</Option>
+            <Option value="tom">Tech Cabal</Option>
           </SelectStyled>
         </Form.Item>
       </Form>
