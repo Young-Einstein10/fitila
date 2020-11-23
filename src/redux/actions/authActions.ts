@@ -15,6 +15,17 @@ export const signinUser = (userData: {
 
     localStorage.setItem("userData", JSON.stringify(data));
 
+    // setAuthToken(headers);
+
+    if (data.token) {
+      api.HttpClient.defaults.headers.common.authorization = `Bearer ${data.token}`;
+
+      api.HttpClient.defaults.headers.common["Content-Type"] =
+        "application/json";
+    } else {
+      api.HttpClient.defaults.headers.common = {};
+    }
+
     dispatch(setCurrentUser({ ...data }));
   }
 };

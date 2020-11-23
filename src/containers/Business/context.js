@@ -24,7 +24,7 @@ const BusinessProvider = ({ children }) => {
     twitter: "",
     cac_doc: "",
     gov_id: "",
-    is_entrepreneur: false,
+    is_enterpreneur: false,
     is_ecosystem: false,
     user: null,
   });

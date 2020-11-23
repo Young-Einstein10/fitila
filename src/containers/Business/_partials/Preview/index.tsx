@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useContext } from "react";
-import { Row } from "antd";
+import { Row, Form } from "antd";
 import { SectionWrapper } from "../../../Styles";
 import { MainColStyled } from "../AddCompany/styled";
 import { WithBusinessProvider } from "../../index";
@@ -11,39 +11,45 @@ import { RouteComponentProps } from "react-router-dom";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import { BusinessContext } from "../../context";
+import api from "../../../../config/api";
 
 const { Step } = StepsStyled;
 
 const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
   const customDot = (dot: any) => dot;
 
+  const { state } = useContext(BusinessContext);
+
   const {
-    state: {
-      business_type,
-      organization_name,
-      founders_name,
-      address,
-      state,
-      ecosystem,
-      sub_segment,
-      business_sector,
-      business_level,
-      is_startup,
-      num_supported_business,
-      website,
-      email,
-      phone,
-      facebook,
-      instagram,
-      linkedin,
-      twitter,
-      cac_doc,
-      gov_id,
-      is_entrepreneur,
-      is_ecosystem,
-    },
-    setState,
-  } = useContext(BusinessContext);
+    business_type,
+    organization_name,
+    founders_name,
+    address,
+    state: organization_state,
+    ecosystem,
+    sub_segment,
+    business_sector,
+    business_level,
+    is_startup,
+    num_supported_business,
+    website,
+    email,
+    phone,
+    facebook,
+    instagram,
+    linkedin,
+    twitter,
+    cac_doc,
+    gov_id,
+  } = state;
+
+  const handleSubmit = async () => {
+    // const res = await api.business.addBusiness(state);
+
+    // console.log(res.data);
+
+    history.push("/business/success");
+  };
 
   return (
     <AdminSectionWrapper className="preview-section" background="#fff">
@@ -95,7 +101,7 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
                 <p>
                   <strong>State:</strong>
                   <br />
-                  {state}
+                  {organization_state}
                 </p>
 
                 <p>
@@ -236,7 +242,7 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
                 size="large"
                 htmlType="submit"
                 type="primary"
-                onClick={() => history.push("/business/success")}
+                onClick={() => handleSubmit()}
               >
                 Submit
               </ButtonStyled>

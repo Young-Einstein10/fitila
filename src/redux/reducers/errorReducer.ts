@@ -1,10 +1,11 @@
-import { GET_ERRORS, RESET_ERROR } from '../constants';
-import { message } from 'antd';
-import { ActionType } from '../constants/types';
+import { GET_ERRORS, RESET_ERROR } from "../constants";
+import { message } from "antd";
+import { ActionType } from "../constants/types";
 
 const toastMessageDuration = 5; //sec
 const initialState = null;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, action: ActionType) => {
   const { payload, type } = action;
 

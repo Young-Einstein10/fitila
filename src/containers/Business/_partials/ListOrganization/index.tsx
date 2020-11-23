@@ -126,9 +126,11 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
 
                 <Form.Item name="state">
                   <Select placeholder="State" allowClear>
-                    <Option value="male">Lagos</Option>
-                    <Option value="female">Ogun</Option>
-                    <Option value="other">Abuja</Option>
+                    <Option value="Lagos">Lagos</Option>
+                    <Option value="Ogun">Ogun</Option>
+                    <Option value="Abuja">Abuja</Option>
+                    <Option value="Kano">Kano</Option>
+                    <Option value="Kaduna">Kaduna</Option>
                   </Select>
                 </Form.Item>
 
@@ -182,13 +184,13 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 {state.business_type === "Enterpreneur" && (
                   <Form.Item name="business_sector">
                     <Select placeholder="Sector" allowClear>
-                      <Option value="health">Health</Option>
-                      <Option value="agriculture">Agriculture</Option>
-                      <Option value="creatives">Creatives</Option>
-                      <Option value="education">Education</Option>
-                      <Option value="manufacturers">Manufacturers</Option>
-                      <Option value="ict">ICT</Option>
-                      <Option value="other">Other</Option>
+                      <Option value="Health">Health</Option>
+                      <Option value="Agriculture">Agriculture</Option>
+                      <Option value="Creatives">Creatives</Option>
+                      <Option value="Education">Education</Option>
+                      <Option value="Manufacturers">Manufacturers</Option>
+                      <Option value="ICT">ICT</Option>
+                      <Option value="Other">Other</Option>
                     </Select>
                   </Form.Item>
                 )}
@@ -196,9 +198,9 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 {state.business_type === "Enterpreneur" && (
                   <Form.Item name="business_level">
                     <Select placeholder="Business Level" allowClear>
-                      <Option value="micro">Micro</Option>
-                      <Option value="small">Small</Option>
-                      <Option value="medium">Medium</Option>
+                      <Option value="Micro">Micro</Option>
+                      <Option value="Small">Small</Option>
+                      <Option value="Medium">Medium</Option>
                     </Select>
                   </Form.Item>
                 )}
@@ -222,6 +224,8 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                     <Option value="5-20">5-20</Option>
                     <Option value="20-50">20-50</Option>
                     <Option value="50-100">50-100</Option>
+                    <Option value="100-500">100-500</Option>
+                    <Option value="500-1000">500-1000</Option>
                   </Select>
                 </Form.Item>
 
