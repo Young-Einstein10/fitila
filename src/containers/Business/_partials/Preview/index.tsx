@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useContext } from "react";
-import { Row, Form } from "antd";
+import React, { FunctionComponent, useContext, useState } from "react";
+import { Row, Form, notification } from "antd";
 import { SectionWrapper } from "../../../Styles";
 import { MainColStyled } from "../AddCompany/styled";
 import { WithBusinessProvider } from "../../index";
@@ -16,6 +16,7 @@ import api from "../../../../config/api";
 const { Step } = StepsStyled;
 
 const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const customDot = (dot: any) => dot;
 
   const { state } = useContext(BusinessContext);
@@ -44,11 +45,18 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
   } = state;
 
   const handleSubmit = async () => {
-    // const res = await api.business.addBusiness(state);
+    setIsLoading(true);
+    const res = await api.business.addBusiness(state);
 
-    // console.log(res.data);
+    if (res && res.status === 201) {
+      setIsLoading(false);
+      notification.success({
+        message: "Your Business Have Been Added to our Database Succesfully.",
+      });
+      history.push("/business/success");
+    }
 
-    history.push("/business/success");
+    console.log(res.data);
   };
 
   return (
@@ -242,6 +250,7 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
                 size="large"
                 htmlType="submit"
                 type="primary"
+                loading={isLoading}
                 onClick={() => handleSubmit()}
               >
                 Submit

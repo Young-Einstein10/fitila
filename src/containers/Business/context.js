@@ -5,8 +5,8 @@ export const BusinessContext = React.createContext();
 const BusinessProvider = ({ children }) => {
   const [state, setState] = useState({
     business_type: "",
-    organization_name: "",
-    founders_name: "",
+    name: "",
+    ceo_name: "",
     address: "",
     state: "",
     ecosystem: "",

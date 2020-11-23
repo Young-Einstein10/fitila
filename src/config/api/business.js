@@ -6,4 +6,8 @@ export default class Business {
   addBusiness(data) {
     return this.client.post("/organizations/", data);
   }
+
+  getEcosystem() {
+    return this.client.get("/ecosystem");
+  }
 }

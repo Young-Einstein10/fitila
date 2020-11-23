@@ -36,6 +36,7 @@ const ButtonStyled = Styled(Button)`
 
 const LinkStyled = Styled(Link)`
   background: #F7F9FA; 
+  margin-bottom: "10px"
   
   span {
     display: flex;
@@ -80,7 +81,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
             </BusinessButton>
 
             <Dropdown className="account-btn" content={menu}>
-              <ButtonStyled size="large" type="primary">
+              <ButtonStyled size="large">
                 <UserIcon style={{ marginRight: "10px" }} /> Account{" "}
                 <DownOutlined />
               </ButtonStyled>

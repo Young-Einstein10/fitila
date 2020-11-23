@@ -74,7 +74,7 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
                       setState({
                         ...state,
                         business_type: "Ecosystem Enabler",
-                        is_ecossytem: true,
+                        is_ecosytem: true,
                         is_enterpreneur: false,
                       });
                     }}

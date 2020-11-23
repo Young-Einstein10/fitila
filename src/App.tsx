@@ -8,6 +8,7 @@ import store from "./redux/store";
 import "./App.less";
 import { setCurrentUser } from "./redux/actions/authActions";
 import BusinessProvider from "./containers/Business/context";
+import api from "./config/api";
 
 const { theme } = config;
 
@@ -16,6 +17,8 @@ const userData = JSON.parse(localStorage.getItem("userData"));
 const access_token = userData && userData.token;
 if (access_token) {
   store.dispatch(setCurrentUser(userData));
+
+  api.HttpClient.defaults.headers.common.authorization = `Bearer ${access_token}`;
 }
 
 function App() {

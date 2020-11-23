@@ -10,6 +10,7 @@ import { WithBusinessProvider } from "../../index";
 import { BusinessContext } from "../../context";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
+import api from "../../../../config/api";
 
 const { Option } = Select;
 const { Step } = StepsStyled;
@@ -57,6 +58,8 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
     enterprises: [],
   });
   const [subSegmentList, setSubSegmentList] = useState([]);
+  const [ecosystem, setEcosystem] = useState([]);
+  const [subSegment, setSubSegment] = useState([]);
 
   const customDot = (dot: any) => dot;
 
@@ -68,21 +71,61 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
     if (!state.business_type) {
       <Redirect to="/business" />;
     }
+
+    const getEcosystem = async () => {
+      const res = await api.business.getEcosystem();
+
+      if (res && res.status === 200) {
+        const { data } = res.data;
+
+        setEcosystem(data);
+      }
+    };
+
+    getEcosystem();
   }, [state]);
 
   const handleSubmit = values => {
     console.log(values);
-    setState({ ...state, ...values });
+
+    const selectedEcosystem = ecosystem.filter(
+      eco => eco.name === values.ecosystem
+    );
+
+    let selectedSubEcosystem = [];
+
+    if (state.business_type === "Ecosystem Enabler") {
+      selectedSubEcosystem = selectedEcosystem[0].sub_ecosystem.filter(
+        sub_eco => sub_eco.name === values.sub_segment
+      );
+
+      setState({
+        ...state,
+        ...values,
+        ecosystem: selectedEcosystem[0].id,
+        sub_segment: selectedSubEcosystem[0].id,
+      });
+    } else {
+      setState({
+        ...state,
+        ...values,
+      });
+    }
+
     history.push("/business/uploads");
   };
 
   const updateSubSegment = value => {
-    value = value
-      .toLowerCase()
-      .split(" ")
-      .join("_");
-    console.log(value);
-    setSubSegmentList(ecosystemDropdown[value]);
+    // value = value
+    //   .toLowerCase()
+    //   .split(" ")
+    //   .join("_");
+    // console.log(value);
+    // setSubSegmentList(ecosystemDropdown[value]);
+
+    const selectedEcosystem = ecosystem.filter(eco => eco.name === value);
+
+    setSubSegment(selectedEcosystem[0].sub_ecosystem);
   };
 
   return (
@@ -116,11 +159,11 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 layout="vertical"
                 className="list-organization"
               >
-                <Form.Item name="organization_name">
+                <Form.Item name="name">
                   <InputStyled placeholder="Organization Name" />
                 </Form.Item>
 
-                <Form.Item name="founders_name">
+                <Form.Item name="ceo_name">
                   <InputStyled placeholder="CEO/Founder's Name" />
                 </Form.Item>
 
@@ -147,7 +190,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                       placeholder="Ecosystem Segment"
                       allowClear
                     >
-                      {Object.keys(ecosystemDropdown).map((ecosystem, key) => (
+                      {/* {Object.keys(ecosystemDropdown).map((ecosystem, key) => (
                         <Option
                           key={key}
                           value={ecosystem
@@ -160,6 +203,12 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                             .join(" ")
                             .toLocaleUpperCase()}
                         </Option>
+                      ))} */}
+
+                      {ecosystem.map((eco, key) => (
+                        <Option key={eco.id} value={eco.name}>
+                          {eco.name}
+                        </Option>
                       ))}
                     </Select>
                   </Form.Item>
@@ -168,13 +217,19 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 {state.business_type === "Ecosystem Enabler" && (
                   <Form.Item name="sub_segment">
                     <Select placeholder="Sub-Segment" allowClear>
-                      {subSegmentList.map((segment, key) => (
+                      {/* {subSegmentList.map((segment, key) => (
                         <Option
                           key={key}
                           value={segment}
                           style={{ textTransform: "capitalize" }}
                         >
                           {segment}
+                        </Option>
+                      ))} */}
+
+                      {subSegment.map(segment => (
+                        <Option key={segment.id} value={segment.name}>
+                          {segment.name}
                         </Option>
                       ))}
                     </Select>
