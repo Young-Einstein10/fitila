@@ -49,9 +49,9 @@ export const signupUser = (userData: {
 };
 
 // Logout
-export const signoutUser = () => (dispatch: any) => {
+export const logout = () => async (dispatch: any) => {
   // Remove token from localStorage
-  localStorage.removeItem("userDetails");
+  localStorage.removeItem("userData");
 
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));

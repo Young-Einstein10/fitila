@@ -1,7 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Menu } from "antd";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
+import { logout } from "../../redux/actions/authActions";
 import { ReactComponent as DashboardIcon } from "../../static/svg/dashboardIcon.svg";
 import { ReactComponent as OrganizationNavIcon } from "../../static/svg/orgNavIcon.svg";
 import { ReactComponent as HelpNavIcon } from "../../static/svg/helpNavIcon.svg";
@@ -10,9 +12,7 @@ import { ReactComponent as ContactNavIcon } from "../../static/svg/contactNavIco
 import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.svg";
 import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.svg";
 
-import propTypes from "prop-types";
-
-const MenuItems = ({ darkMode, topMenu, toggleCollapsed }) => {
+const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout }) => {
   const { path } = useRouteMatch();
   const pathName = window.location.pathname;
   const pathArray = pathName.split(path);
@@ -87,7 +87,14 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed }) => {
       </Menu.Item>
 
       <Menu.Item icon={<LogOutNavIcon />} key="Log_Out">
-        <NavLink onClick={toggleCollapsed} to={`${path}`}>
+        <NavLink
+          onClick={() => {
+            toggleCollapsed();
+
+            logout().then(() => {});
+          }}
+          to="#"
+        >
           Log Out
         </NavLink>
       </Menu.Item>
@@ -95,9 +102,4 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed }) => {
   );
 };
 
-MenuItems.propTypes = {
-  darkMode: propTypes.bool,
-  topMenu: propTypes.bool,
-};
-
-export default MenuItems;
+export default connect(null, { logout })(MenuItems);
