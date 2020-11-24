@@ -1,17 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Dropdown,
-  Menu,
-  Row,
-  Space,
-  Table,
-  Spin,
-} from "antd";
+import { Button, Col, Dropdown, Menu, Row, Space, Table, Spin } from "antd";
 import { connect } from "react-redux";
-import { UserOutlined } from "@ant-design/icons";
 import FeatherIcon from "feather-icons-react";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
@@ -22,34 +11,16 @@ import {
   getEcosystem,
   getOrganization,
 } from "../../../../redux/actions/businessActions";
-import { ReactComponent as FilterOutlined } from "../../../../static/svg/filter.svg";
-import { ReactComponent as Icon1 } from "../../../../static/svg/icon1.svg";
 import { ReactComponent as BriefCase } from "../../../../static/svg/briefcase.svg";
+import { UserOutlined } from "@ant-design/icons";
 import { ReactComponent as ArrowDown } from "../../../../static/svg/arrowDown.svg";
-import { CardSegmentStyled } from "./styled";
-import Styled from "styled-components";
-
-const TableHeaderButtonStyled = Styled(Button)`
-  background: #F7F9FA;
-  color: #1D429C;
-  font-weight: 700;
-  border: 0;
-
-  &:hover {
-    background: #F7F9FA;
-    color: #1D429C;
-    border-color: #F7F9FA;
-  }
-
-  svg {
-    margin-left: 25px
-  }
-`;
-
-const ViewProfileBtnStyled = Styled(Button)`
-  color: #FF6D00
-  border: 1px solid #FF6D00
-`;
+import {
+  CardSegmentStyled,
+  TableHeaderButtonStyled,
+  ViewProfileBtnStyled,
+} from "./styled";
+import SummaryData from "./_partials/SummaryData";
+import FilterOption from "./_partials/Filter";
 
 const content = (
   <>
@@ -186,171 +157,11 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
           ]}
         />
 
-        <Row
-          gutter={{ xs: 8, sm: 16, md: 24, lg: 24 }}
-          style={{ padding: "0 1.3rem 1.3rem" }}
-        >
-          <Col span={6}>
-            <Dropdown overlay={menu}>
-              <Button
-                style={{
-                  width: "100%",
-                  padding: "1.5rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <FilterOutlined style={{ marginRight: "15px" }} /> Filter By
-                States <ArrowDown style={{ marginLeft: "15px" }} />
-              </Button>
-            </Dropdown>
-          </Col>
-
-          <Col span={6}>
-            <Dropdown overlay={menu}>
-              <Button
-                style={{
-                  width: "100%",
-                  padding: "1.5rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <FilterOutlined style={{ marginRight: "15px" }} /> Filter By
-                LGA's <ArrowDown style={{ marginLeft: "15px" }} />
-              </Button>
-            </Dropdown>
-          </Col>
-
-          <Col span={6}>
-            <Dropdown overlay={menu}>
-              <Button
-                style={{
-                  width: "100%",
-                  padding: "1.5rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <FilterOutlined style={{ marginRight: "15px" }} /> Filter By
-                Sector <ArrowDown style={{ marginLeft: "15px" }} />
-              </Button>
-            </Dropdown>
-          </Col>
-        </Row>
+        <FilterOption />
       </div>
 
       <Main style={{ padding: "1.3rem" }}>
-        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-          <Col span={6}>
-            <Card>
-              <p style={{ color: "#81868C", borderRadius: "4px" }}>
-                Number of Organizations
-              </p>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "48px",
-                    fontWeight: "bold",
-                    marginBottom: "0px",
-                  }}
-                >
-                  {business.organization.length}
-                </p>
-                <Icon1 />
-              </div>
-            </Card>
-          </Col>
-
-          <Col span={6}>
-            <Card>
-              <p style={{ color: "#81868C", borderRadius: "4px" }}>
-                Number of States
-              </p>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "48px",
-                    fontWeight: "bold",
-                    marginBottom: "0px",
-                  }}
-                >
-                  5
-                </p>
-                <Icon1 />
-              </div>
-            </Card>
-          </Col>
-
-          <Col span={6}>
-            <Card>
-              <p style={{ color: "#81868C", borderRadius: "4px" }}>Locations</p>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "48px",
-                    fontWeight: "bold",
-                    marginBottom: "0px",
-                  }}
-                >
-                  376
-                </p>
-                <Icon1 />
-              </div>
-            </Card>
-          </Col>
-
-          <Col span={6}>
-            <Card>
-              <p style={{ color: "#81868C", borderRadius: "4px" }}>
-                Estimated Market Size
-              </p>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "48px",
-                    fontWeight: "bold",
-                    marginBottom: "0px",
-                  }}
-                >
-                  ₦9.5B
-                </p>
-                <Icon1 />
-              </div>
-            </Card>
-          </Col>
-        </Row>
+        <SummaryData business={business} />
 
         {/* ECOSYSTEMS */}
         <Row gutter={25} style={{ marginTop: "2rem" }}>

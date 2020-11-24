@@ -1,21 +1,20 @@
 import React from "react";
-import { Button, Dropdown, Row, Menu, Col, Table, Space, Card } from "antd";
+import { connect } from "react-redux";
+import { Button, Dropdown, Row, Menu, Col, Table, Space } from "antd";
 import FeatherIcon from "feather-icons-react";
 
 import { UserOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../../../components/page-headers/page-headers";
-import { ReactComponent as FilterOutlined } from "../../../../../../static/svg/filter.svg";
 import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
-import { ReactComponent as Icon1 } from "../../../../../../static/svg/icon1.svg";
-
 import { ReactComponent as BusinessSupportIcon } from "../../../../../../static/svg/businessSupport.svg";
 import { Main } from "../../../../../AuthLayout/styled";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Styled from "styled-components";
 import { AdminSectionWrapper } from "../../../../styled";
-import { Tab } from "../../../../../../components/tabs/tabs";
 import { Child, TabBasic } from "../../../../../../components/tabs/style";
+import SummaryData from "../SummaryData";
+import { ViewProfileBtnStyled } from "../../styled";
 
 const TableHeaderButtonStyled = Styled(Button)`
   background: #F7F9FA;
@@ -184,155 +183,88 @@ const columns = [
     key: "funding",
   },
   {
-    title: "Action",
+    // title: "Action",
     key: "action",
-    render: () => (
+    render: (record, key) => (
       <Space size="middle">
-        <Button>View Profile</Button>
+        <ViewProfileBtnStyled>
+          <Link to={`/d/profile/${record.key}`}>View Profile</Link>
+        </ViewProfileBtnStyled>
       </Space>
     ),
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    title: "Business Advisory",
-    tabTitle: "Business Advisory",
-    content: (
-      <Row gutter={15}>
-        <Col xs={24}>
-          <Cards title={tableHeader} more={content}>
-            <Table
-              className="table-responsive"
-              pagination={false}
-              dataSource={dataSource}
-              columns={columns}
-            />
-          </Cards>
-        </Col>
-      </Row>
-    ),
+const Segment = ({
+  match: {
+    params: { name },
   },
-  {
-    id: 2,
-    title: "Mentoring",
-    tabTitle: "Mentoring",
-    content: (
-      <Row gutter={15}>
-        <Col xs={24}>
-          <Cards
-            title={
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <span>Mentoring</span>
-                <Dropdown overlay={menu}>
-                  <TableHeaderButtonStyled type="ghost" size="middle">
-                    Past Month <ArrowDown />
-                  </TableHeaderButtonStyled>
-                </Dropdown>
-              </div>
-            }
-            more={content}
-          >
-            <Table
-              className="table-responsive"
-              pagination={false}
-              dataSource={dataSource}
-              columns={columns}
-            />
-          </Cards>
-        </Col>
-      </Row>
-    ),
-  },
-  {
-    id: 3,
-    title: "Incubators",
-    tabTitle: "Incubators",
-    content: (
-      <Row gutter={15}>
-        <Col xs={24}>
-          <Cards
-            title={
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <span>Incubators</span>
-                <Dropdown overlay={menu}>
-                  <TableHeaderButtonStyled type="ghost" size="middle">
-                    Past Month <ArrowDown />
-                  </TableHeaderButtonStyled>
-                </Dropdown>
-              </div>
-            }
-            more={content}
-          >
-            <Table
-              className="table-responsive"
-              pagination={false}
-              dataSource={dataSource}
-              columns={columns}
-            />
-          </Cards>
-        </Col>
-      </Row>
-    ),
-  },
-  {
-    id: 4,
-    title: "Churches/Mosques",
-    tabTitle: "Churches/Mosques",
-    content: (
-      <Row gutter={15}>
-        <Col xs={24}>
-          <Cards
-            title={
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <span>Churches / Mosques</span>
-                <Dropdown overlay={menu}>
-                  <TableHeaderButtonStyled type="ghost" size="middle">
-                    Past Month <ArrowDown />
-                  </TableHeaderButtonStyled>
-                </Dropdown>
-              </div>
-            }
-            more={content}
-          >
-            <Table
-              className="table-responsive"
-              pagination={false}
-              dataSource={dataSource}
-              columns={columns}
-            />
-          </Cards>
-        </Col>
-      </Row>
-    ),
-  },
-];
-
-const Segment = () => {
+  business,
+}) => {
   let counter = 0;
+
+  let pageHeader = name.split("_").join(" ");
+
+  const currentEcosystem = business.ecosystem.filter(
+    eco =>
+      eco.name
+        .split(" ")
+        .join("_")
+        .toLowerCase() === name
+  );
+
+  const { sub_ecosystem } = currentEcosystem.length && currentEcosystem[0];
+
+  const tabData = sub_ecosystem.map(subecosystem => {
+    return {
+      id: subecosystem.id,
+      title: subecosystem.name,
+      tabTitle: subecosystem.name,
+      content: (
+        <Row gutter={15} style={{ marginTop: "2rem" }}>
+          <Col xs={24}>
+            <Cards title={tableHeader} more={content}>
+              <Table
+                className="table-responsive"
+                pagination={false}
+                dataSource={dataSource}
+                columns={columns}
+              />
+            </Cards>
+          </Col>
+        </Row>
+      ),
+    };
+  });
+
+  // const data = [
+  //   {
+  //     id: 1,
+  //     title: "Business Advisory",
+  //     tabTitle: "Business Advisory",
+  //     content: (
+  //       <Row gutter={15}>
+  //         <Col xs={24}>
+  //           <Cards title={tableHeader} more={content}>
+  //             <Table
+  //               className="table-responsive"
+  //               pagination={false}
+  //               dataSource={dataSource}
+  //               columns={columns}
+  //             />
+  //           </Cards>
+  //         </Col>
+  //       </Row>
+  //     ),
+  //   },
+  // ];
 
   return (
     <AdminSectionWrapper>
       <Row gutter={25}>
         <Col span={24}>
           <TabBasic defaultActiveKey="1" tabPosition={"top"}>
-            {data.map(item => {
+            {tabData.map(item => {
               const { content: tabContent, tabTitle } = item;
               counter += 1;
               return (
@@ -349,12 +281,13 @@ const Segment = () => {
                               display: "flex",
                               alignItems: "center",
                               marginBottom: "0",
+                              textTransform: "capitalize",
                             }}
                           >
                             <BusinessSupportIcon
                               style={{ marginRight: "15px" }}
                             />{" "}
-                            Segment
+                            {pageHeader}
                           </p>
                         </div>
                       }
@@ -363,48 +296,22 @@ const Segment = () => {
                           <Button size="large" type="primary">
                             <NavLink to="/business">List Your Business</NavLink>
                           </Button>
+
+                          {pageHeader === "Funding" && (
+                            <Button size="large" type="primary">
+                              View Businesses
+                            </Button>
+                          )}
                         </div>,
                       ]}
+                      style={{ paddingLeft: 0, paddingRight: 0 }}
                     />
 
-                    <Row
-                      gutter={{ xs: 8, sm: 16, md: 24, lg: 24 }}
-                      style={{ padding: "0 1.3rem 1.3rem" }}
-                    >
-                      {[1, 2, 3, 4].map((item, key) => (
-                        <Col key={key} span={6}>
-                          <Card>
-                            <p
-                              style={{ color: "#81868C", borderRadius: "4px" }}
-                            >
-                              Number of Organizations
-                            </p>
-
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                              }}
-                            >
-                              <p
-                                style={{
-                                  fontSize: "48px",
-                                  fontWeight: "bold",
-                                  marginBottom: "0px",
-                                }}
-                              >
-                                36
-                              </p>
-                              <Icon1 />
-                            </div>
-                          </Card>
-                        </Col>
-                      ))}
-                    </Row>
+                    <SummaryData business={business} />
                   </div>
 
-                  <Main>{tabContent}</Main>
+                  {/* <Main>{tabContent}</Main> */}
+                  {tabContent}
                 </Child>
               );
             })}
@@ -415,4 +322,8 @@ const Segment = () => {
   );
 };
 
-export default Segment;
+const mapStateToProps = state => ({
+  business: state.business,
+});
+
+export default connect(mapStateToProps, null)(Segment);
