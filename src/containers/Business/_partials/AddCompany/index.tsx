@@ -82,7 +82,7 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
                     {isEcosystemActive ? <EcosystemColored /> : <Ecosystem />}
                   </SpanStyled>
                   <span style={{ marginTop: "15px" }}>
-                    I am an Ecosystem Enabler
+                    I am an Ecosystem Player
                   </span>
                 </ColStyled>
               </Row>

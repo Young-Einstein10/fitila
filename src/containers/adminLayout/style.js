@@ -997,10 +997,9 @@ const TopMenuStyle = Styled.div`
     }
 `;
 
-
 const SidebarFooterStyled = Styled.footer`
     font-size: 12px;
-    maargin-top: 2rem;
+    margin-top: 3rem;
     color: #81868C;
 
     p {
@@ -1013,7 +1012,7 @@ const SidebarFooterStyled = Styled.footer`
         margin-left: 20px;
         padding: 0;
     }
-`
+`;
 
 export {
   Div,
@@ -1022,5 +1021,5 @@ export {
   ModeSwitch,
   TopMenuStyle,
   TopMenuSearch,
-  SidebarFooterStyled
+  SidebarFooterStyled,
 };

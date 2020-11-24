@@ -50,11 +50,7 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
 
     if (res && res.status === 201) {
       setIsLoading(false);
-      notification.success({
-        message: `Thank you for listing your ${
-          business_type === "Enterpreneur" ? "Business" : "Organization"
-        } on the Enterprise Data Map. A confirmation link has been sent to your email. Please follow the link to complete this process.`,
-      });
+
       history.push("/business/success");
     }
 

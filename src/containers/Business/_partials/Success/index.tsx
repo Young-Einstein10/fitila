@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Row, Col } from "antd";
 import Heading from "../../../../components/heading/heading";
 import Styled from "styled-components";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
+import { BusinessContext } from "../../context";
 
 const FooterStyled = Styled(Button)`
   color: ${({ theme }) => theme["dark-color"]};
@@ -11,6 +12,8 @@ const FooterStyled = Styled(Button)`
 `;
 
 const Success = () => {
+  const { state } = useContext(BusinessContext);
+
   return (
     <AdminSectionWrapper
       className="section-sdd-business-success"
@@ -25,9 +28,11 @@ const Success = () => {
               </Heading>
 
               <p>
-                Turpis blandit convallis faucibus odio lobortis auctor cursus.
-                Scelerisque libero dictum ut velit metus etiam nunc tincidunt
-                quis. we’ll get back to you via the email you provided
+                {`Thank you for listing your ${
+                  state.business_type === "Enterpreneur"
+                    ? "Business"
+                    : "Organization"
+                } on the Enterprise Data Map. A confirmation link has been sent to your email. Please follow the link to complete this process.`}
               </p>
             </div>
 

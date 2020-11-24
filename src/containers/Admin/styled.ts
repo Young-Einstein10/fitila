@@ -5,6 +5,30 @@ const AdminSectionWrapper = Styled.section<{ background?: string }>`
   /* padding: 0 1.3rem 1.3rem; */
   /* min-height: calc(100vh - ()) */
 
+  button {
+      &.ant-btn-lg{
+        font-size: 16px;
+        font-weight: 500;
+        border-radius: 4px;
+        height: 40px;
+      }
+  }
+
+  &.section-add-business, 
+  &.section-list-organization,
+  &.preview-section,
+  &.business-uploads,
+  &.section-sdd-business-success {
+
+    button {
+      &.ant-btn-lg{
+     
+        height: ${({ theme }) => theme["btn-height-large"]};
+      }
+    }
+  }
+
+
   .text-center {
     text-align: center;
   }

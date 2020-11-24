@@ -57,11 +57,11 @@ const LinkStyled = Styled(Link)`
 const NonAuthLayout: FunctionComponent = ({ children }) => {
   const menu = (
     <div style={{ padding: "20px" }}>
-      <LinkStyled to="/login">
+      {/* <LinkStyled to="/login">
         <span>
           <LoginIcon style={{ marginRight: "20px" }} /> Login
         </span>
-      </LinkStyled>
+      </LinkStyled> */}
 
       <LinkStyled to="/signup">
         <span>
@@ -92,7 +92,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
 
             <Dropdown className="account-btn" content={menu}>
               <ButtonStyled size="large">
-                <UserIcon style={{ marginRight: "10px" }} /> Account{" "}
+                <UserIcon style={{ marginRight: "10px" }} /> Sign In{" "}
                 <DownOutlined />
               </ButtonStyled>
             </Dropdown>

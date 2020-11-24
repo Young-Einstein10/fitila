@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink, useHistory } from "react-router-dom";
-import { Form, Button, Select, message, notification } from "antd";
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { Form, Button, Select, notification } from "antd";
 import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
 import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
 import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
 import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
 
-import { AuthWrapper } from "../profile/authentication/overview/style";
-import { Checkbox } from "../../components/checkbox/checkbox";
+import { AuthWrapper } from "../Styles";
 import Heading from "../../components/heading/heading";
 import { InputStyled } from "../Styles";
 import { connect } from "react-redux";

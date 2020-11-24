@@ -8,8 +8,7 @@ import { ThemeProvider } from "styled-components";
 import propTypes from "prop-types";
 import MenueItems from "./MenueItems";
 import TopMenu from "./TopMenu";
-import { Div, TopMenuSearch, SidebarFooterStyled } from "./style";
-import AuthInfo from "../../components/utilities/auth-info/info";
+import { Div, SidebarFooterStyled } from "./style";
 import logo from "../../static/svg/logo.svg";
 import burgermenu from "../../static/svg/burgermenu.svg";
 
@@ -24,9 +23,6 @@ const ThemeLayout = WrappedComponent => {
       super(props);
       this.state = {
         collapsed: false,
-        hide: true,
-        searchHide: true,
-        activeSearch: false,
       };
       this.updateDimensions = this.updateDimensions.bind(this);
     }
@@ -47,7 +43,7 @@ const ThemeLayout = WrappedComponent => {
     }
 
     render() {
-      const { collapsed, hide, searchHide, activeSearch } = this.state;
+      const { collapsed } = this.state;
 
       const topMenu = false;
       const rtl = false;
@@ -65,27 +61,6 @@ const ThemeLayout = WrappedComponent => {
             collapsed: !collapsed,
           });
         }
-      };
-
-      const onShowHide = () => {
-        this.setState({
-          hide: !hide,
-          searchHide: true,
-        });
-      };
-
-      const toggleSearch = () => {
-        this.setState({
-          activeSearch: !activeSearch,
-        });
-      };
-
-      const handleSearchHide = e => {
-        e.preventDefault();
-        this.setState({
-          searchHide: !searchHide,
-          hide: true,
-        });
       };
 
       const footerStyle = {
@@ -156,18 +131,18 @@ const ThemeLayout = WrappedComponent => {
                 position: "fixed",
                 width: "100%",
                 top: 0,
-                [!rtl ? "left" : "right"]: 0,
-                background: "#fffyy",
+                left: 0,
+                background: "#fff",
               }}
             >
-              <Row>
-                <Col
-                  lg={!topMenu ? 4 : 3}
-                  sm={6}
-                  xs={12}
-                  className="align-center-v navbar-brand"
-                >
-                  {!topMenu || window.innerWidth <= 991 ? (
+              <Row
+                style={{
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>
+                  {window.innerWidth <= 991 ? (
                     <Button type="link" onClick={toggleCollapsed}>
                       <img src={burgermenu} alt="menu" />
                     </Button>
@@ -183,90 +158,28 @@ const ThemeLayout = WrappedComponent => {
                   >
                     <img src={logo} alt="Logo" style={{ width: "100px" }} />
                   </Link>
-                </Col>
+                </div>
 
-                <Col lg={!topMenu ? 14 : 15} md={8} sm={0} xs={0}>
-                  {topMenu && window.innerWidth > 991 ? <TopMenu /> : null}
-                </Col>
-
-                <Col lg={6} md={10} sm={0} xs={0}>
-                  {topMenu && window.innerWidth > 991 ? (
-                    <TopMenuSearch>
-                      <div className="top-right-wrap d-flex">
-                        <Link
-                          className={`${
-                            activeSearch
-                              ? "search-toggle active"
-                              : "search-toggle"
-                          }`}
-                          onClick={() => {
-                            toggleSearch();
-                          }}
-                          to="#"
-                        >
-                          <FeatherIcon icon="search" />
-                          <FeatherIcon icon="x" />
-                        </Link>
-                        <div
-                          className={`${
-                            activeSearch
-                              ? "topMenu-search-form show"
-                              : "topMenu-search-form"
-                          }`}
-                        >
-                          <form action="">
-                            <span className="search-icon">
-                              <FeatherIcon icon="search" />
-                            </span>
-                            <input type="text" name="search" />
-                          </form>
-                        </div>
-                        <AuthInfo />
-                      </div>
-                    </TopMenuSearch>
-                  ) : (
-                    <AuthInfo />
-                  )}
-                </Col>
-
-                <Col md={0} sm={18} xs={12}>
-                  <>
-                    <div className="mobile-action">
-                      {/* <Link
-                        className="btn-search"
-                        onClick={handleSearchHide}
-                        to="#"
-                      >
-                        {searchHide ? (
-                          <FeatherIcon icon="search" />
-                        ) : (
-                          <FeatherIcon icon="x" />
-                        )}
-                      </Link> */}
-
-                      <Link className="btn-auth" onClick={onShowHide} to="#">
-                        <FeatherIcon icon="more-vertical" />
-                      </Link>
-                    </div>
-                  </>
-                </Col>
+                <Button
+                  size="large"
+                  style={{
+                    background: "#F7F9FA",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      height: "35px",
+                      width: "35px",
+                      borderRadius: "50px",
+                      marginRight: "10px",
+                    }}
+                  ></span>
+                  Shola. L
+                </Button>
               </Row>
             </Header>
-            {/* 
-            <div className="header-more">
-              <Row>
-                <Col md={0} sm={24} xs={24}>
-                  <div className="small-screen-headerRight">
-                    <SmallScreenSearch hide={searchHide}>
-                      <HeaderSearch rtl={rtl} />
-                    </SmallScreenSearch>
-                    <SmallScreenAuthInfo hide={hide}>
-                      <AuthInfo rtl={rtl} />
-                    </SmallScreenAuthInfo>
-                  </div>
-                </Col>
-              </Row>
-            </div> */}
 
             <Layout>
               {!topMenu || window.innerWidth <= 991 ? (
@@ -293,16 +206,15 @@ const ThemeLayout = WrappedComponent => {
                         toggleCollapsed={toggleCollapsedMobile}
                       />
 
+                      <SidebarFooterStyled>
+                        <p>2020, Copyright, Enterprise Data Map</p>
 
-                    <SidebarFooterStyled>
-                      <p >2020, Copyright, Enterprise Data Map</p>
-
-                      <ul>
-                        <li>Privacy Policy</li>
-                        <li>Terms and Conditions</li>
-                        <li>Cookie Policy</li>
-                      </ul>
-                    </SidebarFooterStyled>
+                        <ul>
+                          <li>Privacy Policy</li>
+                          <li>Terms and Conditions</li>
+                          <li>Cookie Policy</li>
+                        </ul>
+                      </SidebarFooterStyled>
                     </Scrollbars>
                   </Sider>
                 </ThemeProvider>

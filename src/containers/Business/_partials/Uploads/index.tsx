@@ -57,9 +57,21 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                   <InputStyled placeholder="Business RC Number" />
                 </Form.Item>
 
-                <Form.Item name="gov_id">
-                  <InputStyled placeholder="Government ID" />
+                <Form.Item name="num_of_employees">
+                  <InputStyled placeholder="Number of Employees" />
                 </Form.Item>
+
+                <Form.Item name="funding">
+                  <InputStyled placeholder="Funding" />
+                </Form.Item>
+
+                <Form.Item name="company_valuation">
+                  <InputStyled placeholder="Company Valuation" />
+                </Form.Item>
+
+                {/* <Form.Item name="gov_id">
+                  <InputStyled placeholder="Government ID" />
+                </Form.Item> */}
 
                 <Form.Item name="other_info">
                   <InputStyled.TextArea placeholder="Other Information" />

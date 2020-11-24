@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Checkbox, Button, Form } from "antd";
 import { connect } from "react-redux";
-import { NavLink, Link, Redirect } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import Heading from "../../components/heading/heading";
-import { AuthWrapper } from "../profile/authentication/overview/style";
+import { AuthWrapper } from "../Styles";
 import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
 import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
 import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
