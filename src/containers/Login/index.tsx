@@ -18,16 +18,14 @@ const Login = ({ signinUser, history, auth, location }) => {
   const { state } = location;
 
   useEffect(() => {
-    if (auth.isAuthhenticated) {
-      // if (auth.isAuthhenticated) {
-      //   if (state && state.next) {
-      //     <Redirect to={state.next} />;
-      //   }
-      //   <Redirect to="/" />;
-      // }
-      <Redirect to={state?.next || "/d"} />;
+    if (auth.isAuthenticated) {
+      if (state && state.next) {
+        history.push(state.next);
+      } else {
+        history.push("/d");
+      }
     }
-  }, [auth, state]);
+  }, [auth, state, history]);
 
   const handleSubmit = values => {
     setIsLoading(true);

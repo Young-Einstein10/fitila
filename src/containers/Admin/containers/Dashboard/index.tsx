@@ -1,12 +1,27 @@
-import { Button, Card, Col, Dropdown, Menu, Row, Space, Table } from "antd";
+import React, { Fragment, useEffect, useState } from "react";
+import {
+  Button,
+  Card,
+  Col,
+  Dropdown,
+  Menu,
+  Row,
+  Space,
+  Table,
+  Spin,
+} from "antd";
+import { connect } from "react-redux";
 import { UserOutlined } from "@ant-design/icons";
 import FeatherIcon from "feather-icons-react";
-import React, { Fragment } from "react";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
 import { Link, NavLink } from "react-router-dom";
+import {
+  getEcosystem,
+  getOrganization,
+} from "../../../../redux/actions/businessActions";
 import { ReactComponent as FilterOutlined } from "../../../../static/svg/filter.svg";
 import { ReactComponent as Icon1 } from "../../../../static/svg/icon1.svg";
 import { ReactComponent as BriefCase } from "../../../../static/svg/briefcase.svg";
@@ -83,7 +98,7 @@ const dataSource = [
     funding: "$2.4M",
   },
   {
-    key: "1",
+    key: "2",
     rank: "01",
     company: "Paystack",
     ceo_founder: "Sundar Pichai",
@@ -94,7 +109,7 @@ const dataSource = [
     funding: "$2.4M",
   },
   {
-    key: "1",
+    key: "3",
     rank: "01",
     company: "Paystack",
     ceo_founder: "Sundar Pichai",
@@ -105,7 +120,7 @@ const dataSource = [
     funding: "$2.4M",
   },
   {
-    key: "1",
+    key: "4",
     rank: "01",
     company: "Paystack",
     ceo_founder: "Sundar Pichai",
@@ -116,7 +131,7 @@ const dataSource = [
     funding: "$2.4M",
   },
   {
-    key: "1",
+    key: "5",
     rank: "01",
     company: "Paystack",
     ceo_founder: "Sundar Pichai",
@@ -191,7 +206,23 @@ const tableHeader = (
   </div>
 );
 
-const Dashboard = () => {
+const Dashboard = ({ business, getEcosystem, getOrganization }) => {
+  const [isEcosystemLoading, setIsEcosystemLoading] = useState(false);
+  const [isOrganizationLoading, setIsOrganizationLoading] = useState(false);
+
+  useEffect(() => {
+    setIsEcosystemLoading(true);
+    setIsOrganizationLoading(true);
+
+    getEcosystem()
+      .then(res => setIsEcosystemLoading(false))
+      .catch(err => setIsEcosystemLoading(false));
+
+    getOrganization()
+      .then(res => setIsOrganizationLoading(false))
+      .catch(err => setIsOrganizationLoading(false));
+  }, [getEcosystem, getOrganization]);
+
   return (
     <AdminSectionWrapper>
       <div style={{ background: "#F4F4F4" }}>
@@ -285,7 +316,7 @@ const Dashboard = () => {
                     marginBottom: "0px",
                   }}
                 >
-                  863
+                  {business.organization.length}
                 </p>
                 <Icon1 />
               </div>
@@ -312,7 +343,7 @@ const Dashboard = () => {
                     marginBottom: "0px",
                   }}
                 >
-                  36
+                  5
                 </p>
                 <Icon1 />
               </div>
@@ -372,6 +403,7 @@ const Dashboard = () => {
           </Col>
         </Row>
 
+        {/* ECOSYSTEMS */}
         <Row gutter={25} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
             <Cards
@@ -379,68 +411,81 @@ const Dashboard = () => {
               size="large"
               more={content}
             >
-              <Row gutter={[16, 16]}>
-                {[
-                  {
-                    name: "Business Support",
-                    key: "businessSupport",
-                    iconUrl: "",
-                  },
-                  {
-                    name: "Training",
-                    key: "training",
-                    iconUrl: "",
-                  },
-                  {
-                    name: "Funding",
-                    key: "funding",
-                    iconUrl: "",
-                  },
-                  {
-                    name: "Market Access",
-                    key: "market",
-                    iconUrl: "",
-                  },
-                  {
-                    name: "Policy & Regulation",
-                    key: "policy",
-                    iconUrl: "",
-                  },
-                  {
-                    name: "Resources",
-                    key: "resources",
-                    iconUrl: "",
-                  },
-                  {
-                    name: "Rsearch",
-                    key: "research",
-                    iconUrl: "",
-                  },
-                  {
-                    name: "Businesses",
-                    key: "businesses",
-                    iconUrl: "",
-                  },
-                ].map((item, key) => (
-                  <Col className="gutter-row" span={6} key={key}>
-                    <Link to={`/d/segments/${item.key}`}>
-                      <CardSegmentStyled>
-                        <BriefCase />
+              {isEcosystemLoading ? (
+                <Row
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "200px",
+                  }}
+                >
+                  <Spin />
+                </Row>
+              ) : (
+                <Row gutter={[16, 16]}>
+                  {[
+                    {
+                      name: "Business Support",
+                      key: "businessSupport",
+                      iconUrl: "",
+                    },
+                    {
+                      name: "Training",
+                      key: "training",
+                      iconUrl: "",
+                    },
+                    {
+                      name: "Funding",
+                      key: "funding",
+                      iconUrl: "",
+                    },
+                    {
+                      name: "Market Access",
+                      key: "market",
+                      iconUrl: "",
+                    },
+                    {
+                      name: "Policy & Regulation",
+                      key: "policy",
+                      iconUrl: "",
+                    },
+                    {
+                      name: "Resources",
+                      key: "resources",
+                      iconUrl: "",
+                    },
+                    {
+                      name: "Rsearch",
+                      key: "research",
+                      iconUrl: "",
+                    },
+                    {
+                      name: "Businesses",
+                      key: "businesses",
+                      iconUrl: "",
+                    },
+                  ].map((item, key) => (
+                    <Col className="gutter-row" span={6} key={key}>
+                      <Link to={`/d/segments/${item.key}`}>
+                        <CardSegmentStyled>
+                          <BriefCase />
 
-                        <div>
-                          <strong>{item.name}</strong>
-                          <br />
-                          <span>05 Sub-classes</span>
-                        </div>
-                      </CardSegmentStyled>
-                    </Link>
-                  </Col>
-                ))}
-              </Row>
+                          <div>
+                            <strong>{item.name}</strong>
+                            <br />
+                            <span>05 Sub-classes</span>
+                          </div>
+                        </CardSegmentStyled>
+                      </Link>
+                    </Col>
+                  ))}
+                </Row>
+              )}
             </Cards>
           </Col>
         </Row>
 
+        {/* STATES */}
         <Row gutter={24} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
             <Cards
@@ -493,6 +538,7 @@ const Dashboard = () => {
                 pagination={false}
                 dataSource={dataSource}
                 columns={columns}
+                loading={isOrganizationLoading}
               />
             </Cards>
           </Col>
@@ -502,4 +548,10 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  business: state.business,
+});
+
+export default connect(mapStateToProps, { getEcosystem, getOrganization })(
+  Dashboard
+);

@@ -12,6 +12,7 @@ import {
 import Businesses from "../containers/Admin/containers/Dashboard/_partials/Businesses";
 import BusinessSupport from "../containers/Admin/containers/Dashboard/_partials/BusinessSupport";
 import Funding from "../containers/Admin/containers/Dashboard/_partials/Funding";
+import Segment from "../containers/Admin/containers/Dashboard/_partials/Segments";
 import Training from "../containers/Admin/containers/Dashboard/_partials/Training";
 import Profile from "../containers/Admin/containers/Profile";
 // import {Business} from "../containers/Business";
@@ -48,6 +49,7 @@ const Routes = () => {
       />
       <AuthRoute path="/d/segments/funding" component={Funding} />
       <AuthRoute path="/d/segments/businesses" component={Businesses} />
+      <AuthRoute path="/d/segments/:name" component={Segment} />
 
       <AuthRoute exact path="/business" component={AddCompany} />
       <AuthRoute path={`/business/listorg`} component={ListOrganization} />

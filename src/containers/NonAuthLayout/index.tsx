@@ -36,11 +36,21 @@ const ButtonStyled = Styled(Button)`
 
 const LinkStyled = Styled(Link)`
   background: #F7F9FA; 
-  margin-bottom: "10px"
   
+  &:first-child {
+    margin-bottom: 10px
+  }
+  
+  &:hover {
+    background:  #F7F9FA;
+  }
+
   span {
     display: flex;
     align-items: center;
+    color: #000
+    font-weight: normal;
+    font-size: 16px
   }
 `;
 
@@ -49,13 +59,13 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
     <div style={{ padding: "20px" }}>
       <LinkStyled to="/login">
         <span>
-          <LoginIcon /> Login
+          <LoginIcon style={{ marginRight: "20px" }} /> Login
         </span>
       </LinkStyled>
 
       <LinkStyled to="/signup">
         <span>
-          <UserPlus /> Sign Up
+          <UserPlus style={{ marginRight: "20px" }} /> Sign Up
         </span>
       </LinkStyled>
     </div>
@@ -77,7 +87,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
 
           <div className="navItem-right">
             <BusinessButton size="large">
-              <NavLink to="/business">List Your Business</NavLink>
+              <NavLink to="/business">List Your Organization</NavLink>
             </BusinessButton>
 
             <Dropdown className="account-btn" content={menu}>

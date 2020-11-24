@@ -60,6 +60,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
   const [subSegmentList, setSubSegmentList] = useState([]);
   const [ecosystem, setEcosystem] = useState([]);
   const [subSegment, setSubSegment] = useState([]);
+  const [num_supported_business, setNum_supported_business] = useState();
 
   const customDot = (dot: any) => dot;
 
@@ -128,6 +129,12 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
     setSubSegment(selectedEcosystem[0].sub_ecosystem);
   };
 
+  const onNumberOfBusinessChange = value => {
+    if (value === "Above 1000") {
+      setNum_supported_business(value);
+    }
+  };
+
   return (
     <AdminSectionWrapper
       className="section-list-organization"
@@ -139,7 +146,11 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
             <div style={{ marginBottom: "1.5rem" }}>
               <div>
                 <Heading className="text-center font-weight-700" as="h3">
-                  List your Organization <br /> ({state.business_type})
+                  List your{" "}
+                  {state.business_type === "Enterpreneur"
+                    ? "Business"
+                    : "Organization"}{" "}
+                  <br /> ({state.business_type})
                 </Heading>
 
                 <StepsStyled
@@ -160,7 +171,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 className="list-organization"
               >
                 <Form.Item name="name">
-                  <InputStyled placeholder="Organization Name" />
+                  <InputStyled placeholder="Business Name" />
                 </Form.Item>
 
                 <Form.Item name="ceo_name">
@@ -271,18 +282,30 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
 
                 <Divider />
 
-                <Form.Item name="num_supported_business">
-                  <Select
-                    placeholder=" Number of businesses supported over the last 5 years"
-                    allowClear
-                  >
-                    <Option value="5-20">5-20</Option>
-                    <Option value="20-50">20-50</Option>
-                    <Option value="50-100">50-100</Option>
-                    <Option value="100-500">100-500</Option>
-                    <Option value="500-1000">500-1000</Option>
-                  </Select>
-                </Form.Item>
+                {state.business_type === "Ecosystem Enabler" && (
+                  <Form.Item name="num_supported_business">
+                    <Select
+                      placeholder=" Number of businesses supported over the last 5 years"
+                      onChange={e => onNumberOfBusinessChange(e)}
+                      allowClear
+                    >
+                      <Option value="1-100">1-100</Option>
+                      <Option value="101-200">101-200</Option>
+                      <Option value="201-300">201-300</Option>
+                      <Option value="301-400">301-400</Option>
+                      <Option value="401-500">401-500</Option>
+                      <Option value="501-600">501-1000</Option>
+                      <Option value="Above 1000">Above 1000</Option>
+                    </Select>
+                  </Form.Item>
+                )}
+
+                {state.business_type === "Ecosystem Enabler" &&
+                  num_supported_business === "Above 1000" && (
+                    <Form.Item name="num_supported_business">
+                      <InputStyled type="number" />
+                    </Form.Item>
+                  )}
 
                 <Form.Item name="website">
                   <InputStyled placeholder="Website Address" />
@@ -300,8 +323,6 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 <Form.Item name="phone">
                   <InputStyled placeholder="Phone Number" />
                 </Form.Item>
-
-                <Divider />
 
                 {[
                   { name: "Facebook Url", key: "facebook" },

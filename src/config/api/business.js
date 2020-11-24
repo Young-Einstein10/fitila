@@ -10,4 +10,12 @@ export default class Business {
   getEcosystem() {
     return this.client.get("/ecosystem");
   }
+
+  getOrganization() {
+    return this.client.get("/organizations");
+  }
+
+  getSubEcosystem() {
+    return this.client.get("/sub_ecosystem");
+  }
 }
