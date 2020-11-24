@@ -46,6 +46,11 @@ const TableHeaderButtonStyled = Styled(Button)`
   }
 `;
 
+const ViewProfileBtnStyled = Styled(Button)`
+  color: #FF6D00
+  border: 1px solid #FF6D00
+`;
+
 const content = (
   <>
     <NavLink to="#">
@@ -84,64 +89,6 @@ const menu = (
     </Menu.Item>
   </Menu>
 );
-
-const dataSource = [
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "2",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "3",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "4",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "5",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-];
 
 const columns = [
   {
@@ -187,9 +134,11 @@ const columns = [
   {
     // title: "Action",
     key: "action",
-    render: () => (
+    render: (record, key) => (
       <Space size="middle">
-        <Button>View Profile</Button>
+        <ViewProfileBtnStyled>
+          <Link to={`/d/profile/${record.key}`}>View Profile</Link>
+        </ViewProfileBtnStyled>
       </Space>
     ),
   },
@@ -423,55 +372,19 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
                 </Row>
               ) : (
                 <Row gutter={[16, 16]}>
-                  {[
-                    {
-                      name: "Business Support",
-                      key: "businessSupport",
-                      iconUrl: "",
-                    },
-                    {
-                      name: "Training",
-                      key: "training",
-                      iconUrl: "",
-                    },
-                    {
-                      name: "Funding",
-                      key: "funding",
-                      iconUrl: "",
-                    },
-                    {
-                      name: "Market Access",
-                      key: "market",
-                      iconUrl: "",
-                    },
-                    {
-                      name: "Policy & Regulation",
-                      key: "policy",
-                      iconUrl: "",
-                    },
-                    {
-                      name: "Resources",
-                      key: "resources",
-                      iconUrl: "",
-                    },
-                    {
-                      name: "Rsearch",
-                      key: "research",
-                      iconUrl: "",
-                    },
-                    {
-                      name: "Businesses",
-                      key: "businesses",
-                      iconUrl: "",
-                    },
-                  ].map((item, key) => (
-                    <Col className="gutter-row" span={6} key={key}>
-                      <Link to={`/d/segments/${item.key}`}>
+                  {business.ecosystem.map(ecosystem => (
+                    <Col className="gutter-row" span={6} key={ecosystem.id}>
+                      <Link
+                        to={`/d/segments/${ecosystem.name
+                          .split(" ")
+                          .join("_")
+                          .toLowerCase()}`}
+                      >
                         <CardSegmentStyled>
                           <BriefCase />
 
                           <div>
-                            <strong>{item.name}</strong>
+                            <strong>{ecosystem.name}</strong>
                             <br />
                             <span>05 Sub-classes</span>
                           </div>
@@ -536,7 +449,19 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
               <Table
                 className="table-responsive"
                 pagination={false}
-                dataSource={dataSource}
+                dataSource={business.organization.map(org => {
+                  return {
+                    key: org.id,
+                    rank: org.id,
+                    company: org.name,
+                    ceo_founder: org.ceo_name,
+                    state: org.state,
+                    sectors: org.sector,
+                    market_cap: org.market_cap || null,
+                    employees: org.employess || null,
+                    funding: org.funding || null,
+                  };
+                })}
                 columns={columns}
                 loading={isOrganizationLoading}
               />
