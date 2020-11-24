@@ -75,8 +75,8 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout }) => {
       </Menu.Item>
 
       <Menu.Item icon={<AboutNavIcon />} key="About">
-        <NavLink onClick={toggleCollapsed} to={`/d/about`}>
-          About
+        <NavLink onClick={toggleCollapsed} to={`/d/project_brief`}>
+          Project Brief
         </NavLink>
       </Menu.Item>
 

@@ -9,7 +9,14 @@ const About = () => {
   return (
     <AdminSectionWrapper>
       <div>
-        <PageHeader title={<Heading as="h2">About</Heading>} />
+        <PageHeader
+          title={
+            <Heading as="h2" style={{ fontSize: "30px", fontWeight: "bold" }}>
+              Project Brief
+            </Heading>
+          }
+          style={{ marginBottom: "0" }}
+        />
       </div>
 
       <Main>

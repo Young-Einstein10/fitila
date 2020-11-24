@@ -1,33 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { Button, Dropdown, Row, Menu, Col, Table, Space } from "antd";
 import FeatherIcon from "feather-icons-react";
-
 import { UserOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
+import { getOrganization } from "../../../../redux/actions/businessActions";
 import { AdminSectionWrapper } from "../../styled";
 import { ReactComponent as FilterOutlined } from "../../../../static/svg/filter.svg";
 import { ReactComponent as ArrowDown } from "../../../../static/svg/arrowDown.svg";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
-import { NavLink } from "react-router-dom";
-import Styled from "styled-components";
-
-const TableHeaderButtonStyled = Styled(Button)`
-  background: #F7F9FA;
-  color: #1D429C;
-  font-weight: 700;
-  border: 0;
-
-  &:hover {
-    background: #F7F9FA;
-    color: #1D429C;
-    border-color: #F7F9FA;
-  }
-
-  svg {
-    margin-left: 25px
-  }
-`;
+import { Link, NavLink } from "react-router-dom";
+import {
+  TableHeaderButtonStyled,
+  ViewProfileBtnStyled,
+} from "../Dashboard/styled";
 
 const content = (
   <>
@@ -67,64 +54,6 @@ const menu = (
     </Menu.Item>
   </Menu>
 );
-
-const dataSource = [
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-];
 
 const columns = [
   {
@@ -168,11 +97,13 @@ const columns = [
     key: "funding",
   },
   {
-    title: "Action",
+    // title: "Action",
     key: "action",
-    render: () => (
+    render: (record, key) => (
       <Space size="middle">
-        <Button>View Profile</Button>
+        <ViewProfileBtnStyled>
+          <Link to={`/d/profile/${record.key}`}>View Profile</Link>
+        </ViewProfileBtnStyled>
       </Space>
     ),
   },
@@ -189,7 +120,17 @@ const tableHeader = (
   </div>
 );
 
-const Organizations = () => {
+const Organizations = ({ getOrganization, organization }) => {
+  const [isOrganizationLoading, setIsOrganizationLoading] = useState(false);
+
+  useEffect(() => {
+    setIsOrganizationLoading(true);
+
+    getOrganization()
+      .then(res => setIsOrganizationLoading(false))
+      .catch(err => setIsOrganizationLoading(false));
+  }, [getOrganization]);
+
   return (
     <AdminSectionWrapper>
       <div>
@@ -236,8 +177,21 @@ const Organizations = () => {
               <Table
                 className="table-responsive"
                 pagination={false}
-                dataSource={dataSource}
+                dataSource={organization.map(org => {
+                  return {
+                    key: org.id,
+                    rank: org.id,
+                    company: org.name,
+                    ceo_founder: org.ceo_name,
+                    state: org.state,
+                    sectors: org.sector,
+                    market_cap: org.market_cap || null,
+                    employees: org.employess || null,
+                    funding: org.funding || null,
+                  };
+                })}
                 columns={columns}
+                loading={isOrganizationLoading}
               />
             </Cards>
           </Col>
@@ -247,4 +201,8 @@ const Organizations = () => {
   );
 };
 
-export default Organizations;
+const mapStateToProps = state => ({
+  organization: state.business.organization,
+});
+
+export default connect(mapStateToProps, { getOrganization })(Organizations);

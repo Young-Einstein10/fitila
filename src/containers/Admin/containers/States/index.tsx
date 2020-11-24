@@ -1,32 +1,18 @@
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { Button, Col, Row, Table, Dropdown, Menu, Space } from "antd";
-import React from "react";
 import FeatherIcon from "feather-icons-react";
-
+import { UserOutlined } from "@ant-design/icons";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
-import { NavLink } from "react-router-dom";
-import { UserOutlined } from "@ant-design/icons";
+import { Link, NavLink } from "react-router-dom";
 import { ReactComponent as ArrowDown } from "../../../../static/svg/arrowDown.svg";
-import Styled from "styled-components";
-
-const TableHeaderButtonStyled = Styled(Button)`
-  background: #F7F9FA;
-  color: #1D429C;
-  font-weight: 700;
-  border: 0;
-
-  &:hover {
-    background: #F7F9FA;
-    color: #1D429C;
-    border-color: #F7F9FA;
-  }
-
-  svg {
-    margin-left: 25px
-  }
-`;
+import {
+  TableHeaderButtonStyled,
+  ViewProfileBtnStyled,
+} from "../Dashboard/styled";
 
 const content = (
   <>
@@ -66,64 +52,6 @@ const menu = (
     </Menu.Item>
   </Menu>
 );
-
-const dataSource = [
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-];
 
 const columns = [
   {
@@ -169,9 +97,11 @@ const columns = [
   {
     // title: "Action",
     key: "action",
-    render: () => (
+    render: (record, key) => (
       <Space size="middle">
-        <Button>View Profile</Button>
+        <ViewProfileBtnStyled>
+          <Link to={`/d/profile/${record.key}`}>View Profile</Link>
+        </ViewProfileBtnStyled>
       </Space>
     ),
   },
@@ -188,7 +118,16 @@ const tableHeader = (
   </div>
 );
 
-const States = () => {
+const States = ({ organization }) => {
+  const [isOrganizationLoading, setIsOrganizationLoading] = useState(false);
+
+  useEffect(() => {
+    setIsOrganizationLoading(true);
+    if (organization.length > 0) {
+      setIsOrganizationLoading(false);
+    }
+  }, [organization]);
+
   return (
     <AdminSectionWrapper>
       <div>
@@ -226,8 +165,21 @@ const States = () => {
               <Table
                 className="table-responsive"
                 pagination={false}
-                dataSource={dataSource}
+                dataSource={organization.map(org => {
+                  return {
+                    key: org.id,
+                    rank: org.id,
+                    company: org.name,
+                    ceo_founder: org.ceo_name,
+                    state: org.state,
+                    sectors: org.sector,
+                    market_cap: org.market_cap || null,
+                    employees: org.employess || null,
+                    funding: org.funding || null,
+                  };
+                })}
                 columns={columns}
+                loading={isOrganizationLoading}
               />
             </Cards>
           </Col>
@@ -237,4 +189,8 @@ const States = () => {
   );
 };
 
-export default States;
+const mapStateToProps = state => ({
+  organization: state.business.organization,
+});
+
+export default connect(mapStateToProps, null)(States);
