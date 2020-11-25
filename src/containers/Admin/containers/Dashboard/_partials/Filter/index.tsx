@@ -19,11 +19,11 @@ const FilterOption = ({ business }) => {
 
   const stateData = (
     <Menu onClick={() => {}}>
-      <Menu.Item key="1">Lagos</Menu.Item>
-      <Menu.Item key="2">Ogun</Menu.Item>
-      <Menu.Item key="3">Abuja</Menu.Item>
-      <Menu.Item key="4">Kano</Menu.Item>
-      <Menu.Item key="5">Kaduna</Menu.Item>
+      <Menu.Item key="11">Lagos</Menu.Item>
+      <Menu.Item key="21">Ogun</Menu.Item>
+      <Menu.Item key="31">Abuja</Menu.Item>
+      <Menu.Item key="41">Kano</Menu.Item>
+      <Menu.Item key="51">Kaduna</Menu.Item>
     </Menu>
   );
 
