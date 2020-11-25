@@ -81,11 +81,11 @@ const columns = [
     dataIndex: "sectors",
     key: "sectors",
   },
-  {
-    title: "Market Cap",
-    dataIndex: "market_cap",
-    key: "market_cap",
-  },
+  // {
+  //   title: "Market Cap",
+  //   dataIndex: "market_cap",
+  //   key: "market_cap",
+  // },
   {
     title: "Employees",
     dataIndex: "employees",
@@ -177,10 +177,10 @@ const Organizations = ({ getOrganization, organization }) => {
               <Table
                 className="table-responsive"
                 pagination={false}
-                dataSource={organization.map(org => {
+                dataSource={organization.map((org, key) => {
                   return {
-                    key: org.id,
-                    rank: org.id,
+                    key: key,
+                    rank: key + 1,
                     company: org.name,
                     ceo_founder: org.ceo_name,
                     state: org.state,

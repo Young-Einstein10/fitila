@@ -46,3 +46,9 @@ export const getOrganization = () => async dispatch => {
 
   return Promise.resolve(res);
 };
+
+export const addOrganization = data => async dispatch => {
+  const res = await api.business.addBusiness(data);
+
+  return Promise.resolve(res);
+};

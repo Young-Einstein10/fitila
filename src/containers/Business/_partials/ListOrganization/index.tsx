@@ -25,6 +25,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
       "Acceleratorss",
       "Churches/Mosques",
     ],
+    business_advisory: ["Mentoring", "Legal", "Tax", "HR", "Book-Keeping"],
     enterpreneurship_training: [
       "Enterprise Support Organizations",
       "Incubators",
@@ -89,17 +90,15 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
   }, [state]);
 
   const handleSubmit = values => {
-    console.log(values);
-
     if (values.num_supported_business === "Above 1000") {
       values.num_supported_business = values.num_supported_business_custom;
     }
 
-    values.is_startup = values.is_startup === "Yes" ? true : false;
-
     const selectedEcosystem = ecosystem.filter(
       eco => eco.name === values.ecosystem
     );
+
+    console.log(values);
 
     let selectedSubEcosystem = [];
 
@@ -236,7 +235,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 )}
 
                 {state.business_type === "Ecosystem Enabler" && (
-                  <Form.Item name="sub_segment">
+                  <Form.Item name="sub_ecosystem">
                     <Select placeholder="Sub-Segment" allowClear>
                       {/* {subSegmentList.map((segment, key) => (
                         <Option
@@ -253,6 +252,30 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                           {segment.name}
                         </Option>
                       ))}
+                    </Select>
+                  </Form.Item>
+                )}
+
+                {state.business_type === "Ecosystem Enabler" && (
+                  <Form.Item name="sub_ecosystem_sub_class">
+                    <Select placeholder="Sub-Class" allowClear>
+                      {/* {subSegmentList.map((segment, key) => (
+                        <Option
+                          key={key}
+                          value={segment}
+                          style={{ textTransform: "capitalize" }}
+                        >
+                          {segment}
+                        </Option>
+                      ))} */}
+
+                      {ecosystemDropdown.business_advisory.map(
+                        (subclass, key) => (
+                          <Option key={key} value={subclass}>
+                            {subclass}
+                          </Option>
+                        )
+                      )}
                     </Select>
                   </Form.Item>
                 )}
@@ -315,7 +338,10 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                         name="currency_value"
                         style={{ width: "100%" }}
                       >
-                        <InputStyled type="number" />
+                        <InputStyled
+                          placeholder="Compnay Valuation"
+                          type="number"
+                        />
                       </Form.Item>
                     </InputGroup>
                   </Form.Item>

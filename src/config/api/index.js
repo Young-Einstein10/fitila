@@ -44,7 +44,7 @@ axiosInstance.interceptors.response.use(
             ? errorResponse.data && Array.isArray(errorResponse.data.errors)
               ? errorResponse.data.errors[0]
               : errorResponse.data.message
-            : errorResponse.data.error,
+            : errorResponse.data.error[0],
           fullMessage: errorResponse
             ? errorResponse.data &&
               Array.isArray(errorResponse.data.full_messages)

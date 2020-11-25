@@ -87,11 +87,11 @@ const columns = [
     dataIndex: "sectors",
     key: "sectors",
   },
-  {
-    title: "Market Cap",
-    dataIndex: "market_cap",
-    key: "market_cap",
-  },
+  // {
+  //   title: "Market Cap",
+  //   dataIndex: "market_cap",
+  //   key: "market_cap",
+  // },
   {
     title: "Employees",
     dataIndex: "employees",
@@ -267,17 +267,17 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
               <Table
                 className="table-responsive"
                 pagination={false}
-                dataSource={business.organization.map(org => {
+                dataSource={business.organization.map((org, key) => {
                   return {
-                    key: org.id,
-                    rank: org.id,
+                    key: key,
+                    rank: key + 1,
                     company: org.name,
                     ceo_founder: org.ceo_name,
                     state: org.state,
                     sectors: org.sector,
-                    market_cap: org.market_cap || null,
-                    employees: org.employess || null,
-                    funding: org.funding || null,
+                    market_cap: org.market_cap,
+                    employees: org.num_of_employees,
+                    funding: org.funding,
                   };
                 })}
                 columns={columns}

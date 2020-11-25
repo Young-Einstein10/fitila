@@ -37,9 +37,7 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
   };
 
   const onNumberOfEmployeesChange = value => {
-    if (value === "Above 1000") {
-      setNum_of_employees_custom(value);
-    }
+    setNum_of_employees_custom(value);
   };
 
   return (
@@ -113,7 +111,7 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                     </Form.Item>
 
                     <Form.Item name="currency_value" style={{ width: "100%" }}>
-                      <InputStyled type="number" />
+                      <InputStyled placeholder="Funding" type="number" />
                     </Form.Item>
                   </InputGroup>
                 </Form.Item>

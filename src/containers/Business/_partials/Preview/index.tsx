@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useContext, useState } from "react";
 import { Row, Form, notification } from "antd";
+import { connect } from "react-redux";
 import { SectionWrapper } from "../../../Styles";
 import { MainColStyled } from "../AddCompany/styled";
 import { WithBusinessProvider } from "../../index";
@@ -12,10 +13,11 @@ import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import { BusinessContext } from "../../context";
 import api from "../../../../config/api";
+import { addOrganization } from "../../../../redux/actions/businessActions";
 
 const { Step } = StepsStyled;
 
-const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
+const Preview = ({ history, addOrganization }) => {
   const [isLoading, setIsLoading] = useState(false);
   const customDot = (dot: any) => dot;
 
@@ -24,7 +26,7 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
   const {
     business_type,
     organization_name,
-    founders_name,
+    ceo_name,
     address,
     state: organization_state,
     ecosystem,
@@ -50,13 +52,18 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
 
   const handleSubmit = async () => {
     setIsLoading(true);
+
+    addOrganization({ ...state, sub_ecosystem_sub_class: "Legal" })
+      .then(res => {
+        if (res && res.status === 201) {
+          setIsLoading(false);
+
+          history.push("/business/success");
+        }
+      })
+      .catch(err => setIsLoading(false));
+
     const res = await api.business.addBusiness(state);
-
-    if (res && res.status === 201) {
-      setIsLoading(false);
-
-      history.push("/business/success");
-    }
 
     console.log(res.data);
   };
@@ -105,7 +112,7 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
                 <p>
                   <strong>Founder's Name:</strong>
                   <br />
-                  {founders_name}
+                  {ceo_name}
                 </p>
 
                 <p>
@@ -289,4 +296,4 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
   );
 };
 
-export default Preview;
+export default connect(null, { addOrganization })(Preview);
