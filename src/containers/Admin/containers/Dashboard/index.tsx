@@ -74,8 +74,26 @@ const columns = [
   },
   {
     title: "Ceo/Founder",
-    dataIndex: "ceo_founder",
-    key: "ceo_founder",
+    dataIndex: "ceo_name",
+    key: "ceo_name",
+    render: text => (
+      <Space size="middle" style={{ display: "flex", alignItems: "center" }}>
+        <>
+          <p
+            className="img_placeholder"
+            style={{
+              width: "30px",
+              height: "30px",
+              borderRadius: "50px",
+              background: "#e6e6e6",
+              // marginRight: "10px",
+              marginBottom: 0,
+            }}
+          ></p>
+          <span>{text}</span>
+        </>
+      </Space>
+    ),
   },
   {
     title: "State",
@@ -129,6 +147,8 @@ const tableHeader = (
 const Dashboard = ({ business, getEcosystem, getOrganization }) => {
   const [isEcosystemLoading, setIsEcosystemLoading] = useState(false);
   const [isOrganizationLoading, setIsOrganizationLoading] = useState(false);
+
+  const { segments } = business;
 
   useEffect(() => {
     setIsEcosystemLoading(true);
@@ -272,7 +292,7 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
                     key: key,
                     rank: key + 1,
                     company: org.name,
-                    ceo_founder: org.ceo_name,
+                    ceo_name: org.ceo_name,
                     state: org.state,
                     sectors: org.sector,
                     market_cap: org.market_cap,

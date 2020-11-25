@@ -154,8 +154,26 @@ const columns = [
   },
   {
     title: "Ceo/Founder",
-    dataIndex: "ceo_founder",
-    key: "ceo_founder",
+    dataIndex: "ceo_name",
+    key: "ceo_name",
+    render: text => (
+      <Space size="middle" style={{ display: "flex", alignItems: "center" }}>
+        <>
+          <p
+            className="img_placeholder"
+            style={{
+              width: "30px",
+              height: "30px",
+              borderRadius: "50px",
+              background: "#e6e6e6",
+              // marginRight: "10px",
+              marginBottom: 0,
+            }}
+          ></p>
+          <span>{text}</span>
+        </>
+      </Space>
+    ),
   },
   {
     title: "State",
@@ -227,7 +245,19 @@ const Segment = ({
               <Table
                 className="table-responsive"
                 pagination={false}
-                dataSource={dataSource}
+                dataSource={business.organization.map((org, key) => {
+                  return {
+                    key: key,
+                    rank: key + 1,
+                    company: org.name,
+                    ceo_name: org.ceo_name,
+                    state: org.state,
+                    sectors: org.sector,
+                    market_cap: org.market_cap,
+                    employees: org.num_of_employees,
+                    funding: org.funding,
+                  };
+                })}
                 columns={columns}
               />
             </Cards>

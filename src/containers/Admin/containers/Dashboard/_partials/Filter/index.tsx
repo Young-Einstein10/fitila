@@ -13,7 +13,7 @@ const FilterOption = ({ business }) => {
       <Menu.Item key="4">Education</Menu.Item>
       <Menu.Item key="5">Manufacturers</Menu.Item>
       <Menu.Item key="6">ICT</Menu.Item>
-      <Menu.Item key="5">Finance</Menu.Item>
+      <Menu.Item key="7">Finance</Menu.Item>
     </Menu>
   );
 
@@ -28,7 +28,7 @@ const FilterOption = ({ business }) => {
   );
 
   const businessData = (
-    <Menu>
+    <Menu onClick={() => {}}>
       {business.organization.map((org, key) => {
         return <Menu.Item key={key}>{org.name}</Menu.Item>;
       })}

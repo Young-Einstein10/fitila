@@ -64,6 +64,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
   const [subSegment, setSubSegment] = useState([]);
   const [num_supported_business, setNum_supported_business] = useState();
   const [is_startUp, setIs_Startup] = useState(false);
+  const [subEcosystemSubClass, setSubEcosystemSubClass] = useState("");
 
   const customDot = (dot: any) => dot;
 
@@ -88,6 +89,8 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
 
     getEcosystem();
   }, [state]);
+
+  const handleSubEcosystemChange = value => setSubEcosystemSubClass(value);
 
   const handleSubmit = values => {
     if (values.num_supported_business === "Above 1000") {
@@ -236,7 +239,11 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
 
                 {state.business_type === "Ecosystem Enabler" && (
                   <Form.Item name="sub_ecosystem">
-                    <Select placeholder="Sub-Segment" allowClear>
+                    <Select
+                      onChange={e => handleSubEcosystemChange(e)}
+                      placeholder="Sub-Segment"
+                      allowClear
+                    >
                       {/* {subSegmentList.map((segment, key) => (
                         <Option
                           key={key}
@@ -256,10 +263,11 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                   </Form.Item>
                 )}
 
-                {state.business_type === "Ecosystem Enabler" && (
-                  <Form.Item name="sub_ecosystem_sub_class">
-                    <Select placeholder="Sub-Class" allowClear>
-                      {/* {subSegmentList.map((segment, key) => (
+                {state.business_type === "Ecosystem Enabler" &&
+                  subEcosystemSubClass === "Business Advisory" && (
+                    <Form.Item name="sub_ecosystem_sub_class">
+                      <Select placeholder="Sub-Class" allowClear>
+                        {/* {subSegmentList.map((segment, key) => (
                         <Option
                           key={key}
                           value={segment}
@@ -269,16 +277,16 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                         </Option>
                       ))} */}
 
-                      {ecosystemDropdown.business_advisory.map(
-                        (subclass, key) => (
-                          <Option key={key} value={subclass}>
-                            {subclass}
-                          </Option>
-                        )
-                      )}
-                    </Select>
-                  </Form.Item>
-                )}
+                        {ecosystemDropdown.business_advisory.map(
+                          (subclass, key) => (
+                            <Option key={key} value={subclass}>
+                              {subclass}
+                            </Option>
+                          )
+                        )}
+                      </Select>
+                    </Form.Item>
+                  )}
 
                 {state.business_type === "Enterpreneur" && (
                   <Form.Item name="business_sector">

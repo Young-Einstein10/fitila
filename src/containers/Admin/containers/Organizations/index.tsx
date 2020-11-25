@@ -15,6 +15,7 @@ import {
   TableHeaderButtonStyled,
   ViewProfileBtnStyled,
 } from "../Dashboard/styled";
+import Filter from "../Dashboard/_partials/Filter";
 
 const content = (
   <>
@@ -145,29 +146,7 @@ const Organizations = ({ getOrganization, organization }) => {
           ]}
         />
 
-        <Row
-          gutter={{ xs: 8, sm: 16, md: 24, lg: 24 }}
-          style={{ padding: "0 1.3rem 1.3rem" }}
-        >
-          {[1, 2, 3, 4].map((item, key) => (
-            <Col key={key} span={6}>
-              <Dropdown overlay={menu}>
-                <Button
-                  style={{
-                    width: "100%",
-                    padding: "1.5rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <FilterOutlined style={{ marginRight: "15px" }} /> Filter By
-                  Zones <ArrowDown style={{ marginLeft: "15px" }} />
-                </Button>
-              </Dropdown>
-            </Col>
-          ))}
-        </Row>
+        <Filter />
       </div>
 
       <Main>

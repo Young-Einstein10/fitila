@@ -55,7 +55,7 @@ const ThemeLayout = WrappedComponent => {
       };
 
       const toggleCollapsedMobile = () => {
-        if (window.innerWidth <= 990) {
+        if (window.innerWidth <= 1200) {
           this.setState({
             collapsed: !collapsed,
           });

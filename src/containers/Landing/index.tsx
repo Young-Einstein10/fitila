@@ -42,7 +42,12 @@ const SelectStyled = Styled(Select)`
 
 const { Option } = Select;
 
-const Landing = ({ auth, business, getEcosystem, getOrganization }) => {
+const Landing = ({
+  auth,
+  business: { segments },
+  getEcosystem,
+  getOrganization,
+}) => {
   useEffect(() => {
     if (auth.isAuthenticated) {
       getEcosystem();
@@ -144,7 +149,7 @@ const Landing = ({ auth, business, getEcosystem, getOrganization }) => {
             justifyContent: "center",
           }}
         >
-          {auth.isAuthenticated
+          {/* {auth.isAuthenticated
             ? business.ecosystem.map((eco, key) => (
                 <Col key={key} className="text-center">
                   <NavLink
@@ -174,7 +179,23 @@ const Landing = ({ auth, business, getEcosystem, getOrganization }) => {
                     </ButtonStyled>
                   </NavLink>
                 </Col>
-              ))}
+              ))} */}
+
+          {segments.map((segment, key) => (
+            <Col key={key} className="text-center">
+              <NavLink
+                to={`/d/segments/${segment.name
+                  .split(" ")
+                  .join("_")
+                  .toLowerCase()}`}
+              >
+                <ButtonStyled>
+                  {segment.name}
+                  <Search style={{ marginLeft: "10px" }} />
+                </ButtonStyled>
+              </NavLink>
+            </Col>
+          ))}
         </Row>
       </div>
     </SectionWrapper>
