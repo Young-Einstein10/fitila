@@ -34,8 +34,8 @@ const FilterOption = () => {
               justifyContent: "center",
             }}
           >
-            <FilterOutlined style={{ marginRight: "15px" }} /> Filter By States{" "}
-            <ArrowDown style={{ marginLeft: "15px" }} />
+            <FilterOutlined style={{ marginRight: "15px" }} /> Filter By
+            Organization <ArrowDown style={{ marginLeft: "15px" }} />
           </Button>
         </Dropdown>
       </Col>
@@ -51,7 +51,7 @@ const FilterOption = () => {
               justifyContent: "center",
             }}
           >
-            <FilterOutlined style={{ marginRight: "15px" }} /> Filter By LGA's{" "}
+            <FilterOutlined style={{ marginRight: "15px" }} /> Filter By States{" "}
             <ArrowDown style={{ marginLeft: "15px" }} />
           </Button>
         </Dropdown>

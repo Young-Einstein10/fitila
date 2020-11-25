@@ -2,11 +2,13 @@ import { Card, Button } from "antd";
 import Styled from "styled-components";
 
 const CardSegmentStyled = Styled(Card)`
+  height: 100%;
 
   .ant-card-body {
     background: #F8F8F8;
     display: flex;
     align-items: center;
+    height: 100%;
 
     div {
       margin-left: 20px;

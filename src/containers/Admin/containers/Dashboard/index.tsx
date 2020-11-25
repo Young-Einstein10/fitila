@@ -182,9 +182,14 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
                   <Spin />
                 </Row>
               ) : (
-                <Row gutter={[16, 16]}>
+                <Row gutter={[24, 24]}>
                   {business.ecosystem.map(ecosystem => (
-                    <Col className="gutter-row" span={6} key={ecosystem.id}>
+                    <Col
+                      className="gutter-row"
+                      span={6}
+                      key={ecosystem.id}
+                      style={{ minHeight: "122px" }}
+                    >
                       <Link
                         to={`/d/segments/${ecosystem.name
                           .split(" ")
@@ -197,7 +202,9 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
                           <div>
                             <strong>{ecosystem.name}</strong>
                             <br />
-                            <span>05 Sub-classes</span>
+                            <span>
+                              {ecosystem.sub_ecosystem.length} Sub-Classes
+                            </span>
                           </div>
                         </CardSegmentStyled>
                       </Link>

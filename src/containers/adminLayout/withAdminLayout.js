@@ -1,14 +1,13 @@
 /* eslint-disable no-shadow */
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Layout, Button, Row, Col } from "antd";
-import FeatherIcon from "feather-icons-react";
 import { NavLink, Link } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
 import { ThemeProvider } from "styled-components";
 import propTypes from "prop-types";
 import MenueItems from "./MenueItems";
-import TopMenu from "./TopMenu";
-import { Div, SidebarFooterStyled } from "./style";
+import { CurrentUserButton, Div, SidebarFooterStyled } from "./style";
 import logo from "../../static/svg/logo.svg";
 import burgermenu from "../../static/svg/burgermenu.svg";
 
@@ -160,24 +159,11 @@ const ThemeLayout = WrappedComponent => {
                   </Link>
                 </div>
 
-                <Button
-                  size="large"
-                  style={{
-                    background: "#F7F9FA",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <span
-                    style={{
-                      height: "35px",
-                      width: "35px",
-                      borderRadius: "50px",
-                      marginRight: "10px",
-                    }}
-                  ></span>
-                  Shola. L
-                </Button>
+                <CurrentUserButton size="large">
+                  <span></span>
+                  {this.props.auth.user.first_name}{" "}
+                  {this.props.auth.user.last_name}
+                </CurrentUserButton>
               </Row>
             </Header>
 
@@ -248,15 +234,11 @@ const ThemeLayout = WrappedComponent => {
     }
   }
 
-  LayoutComponent.propTypes = {
-    ChangeLayoutMode: propTypes.bool,
-    rtl: propTypes.bool,
-    topMenu: propTypes.bool,
-    changeRtl: propTypes.func,
-    changeLayout: propTypes.func,
-    changeMenuMode: propTypes.func,
-  };
+  const mapStateTopProps = state => ({
+    auth: state.auth,
+  });
 
-  return LayoutComponent;
+  return connect(mapStateTopProps, null)(LayoutComponent);
 };
+
 export default ThemeLayout;
