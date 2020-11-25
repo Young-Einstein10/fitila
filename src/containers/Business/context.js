@@ -10,7 +10,7 @@ const BusinessProvider = ({ children }) => {
     ceo_image: null,
     company_logo: null,
     sub_ecosystem: "",
-    sub_ecosystem_sub_class: "",
+    sub_ecosystem_sub_class: null,
     address: "",
     state: "",
     ecosystem: "",

@@ -10,6 +10,7 @@ const initialState = {
   organization: [],
   segments: [
     {
+      id: 1,
       name: "Business Support",
       description:
         "Organizations providing support services that enable businesses grow",
@@ -35,6 +36,8 @@ const initialState = {
       ],
     },
     {
+      id: 2,
+
       name: "Training",
       description:
         "Organizations providing entrepreneurship training for businesses",
@@ -73,6 +76,8 @@ const initialState = {
     },
 
     {
+      id: 3,
+
       name: "Funding",
       description:
         "Organizations providing funds to support business growth and/or expansion",
@@ -99,6 +104,8 @@ const initialState = {
     },
 
     {
+      id: 4,
+
       name: "Market Access",
       description:
         "Organizations or platforms enabling businesses gain access to new or more customers",
@@ -119,6 +126,8 @@ const initialState = {
     },
 
     {
+      id: 5,
+
       name: "Research & Development",
       description:
         "Organizations involved in entrepreneurship research, innovation and design",
@@ -145,6 +154,8 @@ const initialState = {
     },
 
     {
+      id: 6,
+
       name: "Policy and Regulation",
       description:
         "Organizations involved in entrepreneurship policy design, review or implementation, regulatory organizations, policy advocacy organizations etc.",
@@ -169,6 +180,8 @@ const initialState = {
     },
 
     {
+      id: 7,
+
       name: "Resources",
       description:
         "Organizations that provide or host resources that businesses need on their entrepreneurship journey",
@@ -187,6 +200,8 @@ const initialState = {
     },
 
     {
+      id: 8,
+
       name: "MSMEs and Startups",
       description: "",
       sub_class: [],

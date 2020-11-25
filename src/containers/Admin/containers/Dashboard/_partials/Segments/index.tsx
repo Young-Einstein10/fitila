@@ -33,6 +33,26 @@ const TableHeaderButtonStyled = Styled(Button)`
   }
 `;
 
+const generateTableTitle = title => {
+  const template = (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
+      <span>{title}</span>
+      <Dropdown overlay={menu}>
+        <TableHeaderButtonStyled type="ghost" size="middle">
+          Past Month <ArrowDown />
+        </TableHeaderButtonStyled>
+      </Dropdown>
+    </div>
+  );
+
+  return template;
+};
+
 const content = (
   <>
     <NavLink to="#">
@@ -186,26 +206,9 @@ const Segment = ({
           <Fragment>
             {subecosystem.sub_class.length &&
               subecosystem.sub_class.map((subclass, key) => (
-                <Row gutter={15} style={{ marginTop: "2rem" }}>
+                <Row key={key} gutter={15} style={{ marginTop: "2rem" }}>
                   <Col xs={24}>
-                    <Cards
-                      title={
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <span>{subclass}</span>
-                          <Dropdown overlay={menu}>
-                            <TableHeaderButtonStyled type="ghost" size="middle">
-                              Past Month <ArrowDown />
-                            </TableHeaderButtonStyled>
-                          </Dropdown>
-                        </div>
-                      }
-                      more={content}
-                    >
+                    <Cards title={generateTableTitle(subclass)} more={content}>
                       <Table
                         className="table-responsive"
                         pagination={false}
@@ -232,21 +235,7 @@ const Segment = ({
             <Row gutter={15} style={{ marginTop: "2rem" }}>
               <Col xs={24}>
                 <Cards
-                  title={
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <span>{subecosystem.name}</span>
-                      <Dropdown overlay={menu}>
-                        <TableHeaderButtonStyled type="ghost" size="middle">
-                          Past Month <ArrowDown />
-                        </TableHeaderButtonStyled>
-                      </Dropdown>
-                    </div>
-                  }
+                  title={generateTableTitle(subecosystem.name)}
                   more={content}
                 >
                   <Table
