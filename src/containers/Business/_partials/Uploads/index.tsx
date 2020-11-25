@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useContext } from "react";
-import { Row, Form } from "antd";
+import React, { FunctionComponent, useContext, useState } from "react";
+import { Row, Form, Select } from "antd";
 import { MainColStyled } from "../AddCompany/styled";
 
 import Heading from "../../../../components/heading/heading";
@@ -11,8 +11,12 @@ import { Main } from "../../../AuthLayout/styled";
 import { BusinessContext } from "../../context";
 
 const { Step } = StepsStyled;
+const InputGroup = InputStyled.Group;
+const Option = Select.Option;
 
 const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
+  const [num_of_employees_custom, setNum_of_employees_custom] = useState();
+
   const customDot = (dot: any) => dot;
 
   const [form] = Form.useForm();
@@ -20,9 +24,22 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
   const { state, setState } = useContext(BusinessContext);
 
   const handleSubmit = values => {
+    if (values.num_of_employees === "Above 1000") {
+      values.num_of_employees = values.num_of_employees_custom;
+    }
     console.log(values);
-    setState({ ...state, ...values });
+    setState({
+      ...state,
+      ...values,
+      funding: `${values.currency}${values.currency_value}`,
+    });
     history.push("/business/preview");
+  };
+
+  const onNumberOfEmployeesChange = value => {
+    if (value === "Above 1000") {
+      setNum_of_employees_custom(value);
+    }
   };
 
   return (
@@ -53,20 +70,52 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                 className="uploads"
                 layout="vertical"
               >
+                {/* <Form.Item name="cac_doc">
+                  <InputStyled placeholder="Business RC Number" />
+                </Form.Item> */}
+
                 <Form.Item name="cac_doc">
                   <InputStyled placeholder="Business RC Number" />
                 </Form.Item>
 
                 <Form.Item name="num_of_employees">
-                  <InputStyled placeholder="Number of Employees" />
+                  <Select
+                    placeholder="Number of Employees"
+                    onChange={e => onNumberOfEmployeesChange(e)}
+                    allowClear
+                  >
+                    <Option value="1-100">1-100</Option>
+                    <Option value="101-200">101-200</Option>
+                    <Option value="201-300">201-300</Option>
+                    <Option value="301-400">301-400</Option>
+                    <Option value="401-500">401-500</Option>
+                    <Option value="501-600">501-1000</Option>
+                    <Option value="Above 1000">Above 1000</Option>
+                  </Select>
                 </Form.Item>
+
+                {num_of_employees_custom === "Above 1000" && (
+                  <Form.Item name="num_of_employees_custom">
+                    <InputStyled
+                      placeholder="Number of Employees"
+                      type="number"
+                    />
+                  </Form.Item>
+                )}
 
                 <Form.Item name="funding">
-                  <InputStyled placeholder="Funding" />
-                </Form.Item>
+                  <InputGroup compact style={{ display: "flex" }}>
+                    <Form.Item initialValue="₦" name="currency">
+                      <Select>
+                        <Option value="₦">₦</Option>
+                        <Option value="$">$</Option>
+                      </Select>
+                    </Form.Item>
 
-                <Form.Item name="company_valuation">
-                  <InputStyled placeholder="Company Valuation" />
+                    <Form.Item name="currency_value" style={{ width: "100%" }}>
+                      <InputStyled type="number" />
+                    </Form.Item>
+                  </InputGroup>
                 </Form.Item>
 
                 {/* <Form.Item name="gov_id">

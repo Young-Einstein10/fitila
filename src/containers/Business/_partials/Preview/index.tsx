@@ -28,11 +28,16 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
     address,
     state: organization_state,
     ecosystem,
+    sub_ecosystem,
+    sub_ecosystem_sub_class,
     sub_segment,
     business_sector,
     business_level,
     is_startup,
+    company_valuation,
+    funding,
     num_supported_business,
+    num_of_employees,
     website,
     email,
     phone,
@@ -41,7 +46,6 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
     linkedin,
     twitter,
     cac_doc,
-    gov_id,
   } = state;
 
   const handleSubmit = async () => {
@@ -124,6 +128,14 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
                   </p>
                 )}
 
+                {/* {business_type === "Ecosystem Enabler" && (
+                  <p>
+                    <strong>Sub-Ecosystem:</strong>
+                    <br />
+                    {sub_ecosystem}
+                  </p>
+                )} */}
+
                 {business_type === "Ecosystem Enabler" && (
                   <p>
                     <strong>Sub-Segement of Ecosystem:</strong>
@@ -156,12 +168,40 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
                   </p>
                 )}
 
+                {business_type === "Enterpreneur" && is_startup && (
+                  <p>
+                    <strong>Company Valuation:</strong>
+                    <br />
+                    {company_valuation}
+                  </p>
+                )}
+
                 <p>
                   <strong>
                     Number of businesses supported over the last 5 years:
                   </strong>
                   <br />
                   {num_supported_business}
+                </p>
+
+                {
+                  <p>
+                    <strong>Funding:</strong>
+                    <br />
+                    {funding}
+                  </p>
+                }
+
+                <p>
+                  <strong>CAC Registration Number:</strong>
+                  <br />
+                  {cac_doc}
+                </p>
+
+                <p>
+                  <strong>Number of Employees:</strong>
+                  <br />
+                  {num_of_employees}
                 </p>
 
                 <p>
@@ -230,18 +270,6 @@ const Preview: FunctionComponent<RouteComponentProps> = ({ history }) => {
                   <br />
                   Luminate, Bill & Melinda Gates, Ford
                 </p> */}
-
-                <p>
-                  <strong>CAC Registration Number:</strong>
-                  <br />
-                  {cac_doc}
-                </p>
-
-                <p>
-                  <strong>Government ID:</strong>
-                  <br />
-                  {gov_id}
-                </p>
               </div>
 
               <ButtonStyled

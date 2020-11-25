@@ -141,7 +141,7 @@ const ThemeLayout = WrappedComponent => {
                 }}
               >
                 <div>
-                  {window.innerWidth <= 991 ? (
+                  {window.innerWidth <= 1200 ? (
                     <Button type="link" onClick={toggleCollapsed}>
                       <img src={burgermenu} alt="menu" />
                     </Button>

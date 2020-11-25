@@ -14,6 +14,7 @@ import api from "../../../../config/api";
 
 const { Option } = Select;
 const { Step } = StepsStyled;
+const InputGroup = InputStyled.Group;
 
 const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
   const [ecosystemDropdown, setEcosystemDropdown] = useState({
@@ -61,6 +62,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
   const [ecosystem, setEcosystem] = useState([]);
   const [subSegment, setSubSegment] = useState([]);
   const [num_supported_business, setNum_supported_business] = useState();
+  const [is_startUp, setIs_Startup] = useState(false);
 
   const customDot = (dot: any) => dot;
 
@@ -89,6 +91,12 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
   const handleSubmit = values => {
     console.log(values);
 
+    if (values.num_supported_business === "Above 1000") {
+      values.num_supported_business = values.num_supported_business_custom;
+    }
+
+    values.is_startup = values.is_startup === "Yes" ? true : false;
+
     const selectedEcosystem = ecosystem.filter(
       eco => eco.name === values.ecosystem
     );
@@ -103,6 +111,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
       setState({
         ...state,
         ...values,
+        company_valuation: `${values.currency}${values.currency_value}`,
         ecosystem: selectedEcosystem[0].id,
         sub_segment: selectedSubEcosystem[0].id,
       });
@@ -110,6 +119,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
       setState({
         ...state,
         ...values,
+        company_valuation: `${values.currency}${values.currency_value}`,
       });
     }
 
@@ -274,14 +284,42 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
 
                 {state.business_type === "Enterpreneur" && (
                   <Form.Item name="is_startup">
-                    <Select placeholder="Are You A StartUp" allowClear>
+                    <Select
+                      onChange={e => {
+                        if (e === "Yes") {
+                          setIs_Startup(true);
+                        } else {
+                          setIs_Startup(false);
+                        }
+                      }}
+                      placeholder="Are You A StartUp"
+                      allowClear
+                    >
                       <Option value="Yes">Yes</Option>
                       <Option value="No">No</Option>
                     </Select>
                   </Form.Item>
                 )}
 
-                <Divider />
+                {state.business_type === "Enterpreneur" && is_startUp && (
+                  <Form.Item name="company_valuation">
+                    <InputGroup compact style={{ display: "flex" }}>
+                      <Form.Item initialValue="₦" name="currency">
+                        <Select>
+                          <Option value="₦">₦</Option>
+                          <Option value="$">$</Option>
+                        </Select>
+                      </Form.Item>
+
+                      <Form.Item
+                        name="currency_value"
+                        style={{ width: "100%" }}
+                      >
+                        <InputStyled type="number" />
+                      </Form.Item>
+                    </InputGroup>
+                  </Form.Item>
+                )}
 
                 {state.business_type === "Ecosystem Enabler" && (
                   <Form.Item name="num_supported_business">
@@ -303,7 +341,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
 
                 {state.business_type === "Ecosystem Enabler" &&
                   num_supported_business === "Above 1000" && (
-                    <Form.Item name="num_supported_business">
+                    <Form.Item name="num_supported_business_custom">
                       <InputStyled type="number" />
                     </Form.Item>
                   )}
@@ -320,6 +358,8 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 >
                   <InputStyled placeholder="Email Address" />
                 </Form.Item>
+
+                <Divider />
 
                 <Form.Item name="phone">
                   <InputStyled placeholder="Phone Number" />

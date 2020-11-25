@@ -42,13 +42,13 @@ const Routes = () => {
       <AuthRoute path="/d/project_brief" component={About} />
       <AuthRoute path="/d/help" component={Help} />
       <AuthRoute path="/d/profile/:id" component={Profile} />
-      <AuthRoute path="/d/segments/training" component={Training} />
+      {/* <AuthRoute path="/d/segments/training" component={Training} />
       <AuthRoute
-        path="/d/segments/businessSupport"
+        path="/d/segments/business_support"
         component={BusinessSupport}
       />
       <AuthRoute path="/d/segments/funding" component={Funding} />
-      <AuthRoute path="/d/segments/businesses" component={Businesses} />
+      <AuthRoute path="/d/segments/businesses" component={Businesses} /> */}
       <AuthRoute path="/d/segments/:name" component={Segment} />
 
       <AuthRoute exact path="/business" component={AddCompany} />

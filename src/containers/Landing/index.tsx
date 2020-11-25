@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { Button, Col, Form, Row, Select } from "antd";
 import Heading from "../../components/heading/heading";
 import { ReactComponent as Search } from "../../static/svg/search.svg";
 import { ReactComponent as SelectSearchIcon } from "../../static/svg/selectSearchIcon.svg";
 import { SectionWrapper } from "../Styles";
+import {
+  getEcosystem,
+  getOrganization,
+} from "../../redux/actions/businessActions";
 import "./styles.less";
 import { NavLink } from "react-router-dom";
 import Styled from "styled-components";
@@ -37,7 +42,15 @@ const SelectStyled = Styled(Select)`
 
 const { Option } = Select;
 
-const Landing = () => {
+const Landing = ({ auth, business, getEcosystem, getOrganization }) => {
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      getEcosystem();
+
+      getOrganization();
+    }
+  }, [auth, getEcosystem, getOrganization]);
+
   const handleSubmit = () => {};
 
   const links = [
@@ -131,20 +144,48 @@ const Landing = () => {
             justifyContent: "center",
           }}
         >
-          {links.map((business, key) => (
-            <Col key={key} className="text-center">
-              <NavLink to={business.url}>
-                <ButtonStyled>
-                  {business.name}
-                  <Search style={{ marginLeft: "10px" }} />
-                </ButtonStyled>
-              </NavLink>
-            </Col>
-          ))}
+          {auth.isAuthenticated
+            ? business.ecosystem.map((eco, key) => (
+                <Col key={key} className="text-center">
+                  <NavLink
+                    to={`/d/segments/${eco.name
+                      .split(" ")
+                      .join("_")
+                      .toLowerCase()}`}
+                  >
+                    <ButtonStyled>
+                      {eco.name}
+                      <Search style={{ marginLeft: "10px" }} />
+                    </ButtonStyled>
+                  </NavLink>
+                </Col>
+              ))
+            : links.map((business, key) => (
+                <Col key={key} className="text-center">
+                  <NavLink
+                    to={`/d/segments/${business.name
+                      .split(" ")
+                      .join("_")
+                      .toLowerCase()}`}
+                  >
+                    <ButtonStyled>
+                      {business.name}
+                      <Search style={{ marginLeft: "10px" }} />
+                    </ButtonStyled>
+                  </NavLink>
+                </Col>
+              ))}
         </Row>
       </div>
     </SectionWrapper>
   );
 };
 
-export default Landing;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  business: state.business,
+});
+
+export default connect(mapStateToProps, { getEcosystem, getOrganization })(
+  Landing
+);
