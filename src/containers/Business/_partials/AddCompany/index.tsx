@@ -4,7 +4,7 @@ import { ReactComponent as Enterpreneur } from "../../../../static/svg/enterpren
 import { ReactComponent as Ecosystem } from "../../../../static/svg/ecosystem.svg";
 import { ReactComponent as EcosystemColored } from "../../../../static/svg/ecosystemcolored.svg";
 
-import { Col, Row } from "antd";
+import { Col, Row, Tooltip } from "antd";
 import { WithBusinessProvider } from "../../index";
 import { ColStyled, SpanStyled, SpanFooter } from "./styled";
 import { ButtonStyled } from "../../../Styles";
@@ -40,47 +40,57 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
 
               <Row>
                 <ColStyled span={12} className="text-center">
-                  <SpanStyled
-                    onClick={() => {
-                      setIsEcosystemActive("");
-                      setIsEnterpreneurActive("enterpreneur");
-                      setState({
-                        ...state,
-                        business_type: "Enterpreneur",
-                        is_enterpreneur: true,
-                        is_ecosystem: false,
-                      });
-                    }}
-                    className={`enterpreneur ${isEnterpreneurActive ===
-                      "enterpreneur" && "active"}`}
+                  <Tooltip
+                    title="You are currently running a registered business"
+                    placement="left"
                   >
-                    <Enterpreneur />
-                  </SpanStyled>
+                    <SpanStyled
+                      onClick={() => {
+                        setIsEcosystemActive("");
+                        setIsEnterpreneurActive("enterpreneur");
+                        setState({
+                          ...state,
+                          business_type: "Enterpreneur",
+                          is_enterpreneur: true,
+                          is_ecosystem: false,
+                        });
+                      }}
+                      className={`enterpreneur ${isEnterpreneurActive ===
+                        "enterpreneur" && "active"}`}
+                    >
+                      <Enterpreneur />
+                    </SpanStyled>
+                  </Tooltip>
                   <span style={{ marginTop: "15px" }}>
                     I am an Enterpreneur
                   </span>
                 </ColStyled>
 
                 <ColStyled span={12} className="text-center">
-                  <SpanStyled
-                    className={`ecosystem ${isEcosystemActive === "ecosystem" &&
-                      "active"}`}
-                    // onMouseOver={() => setIsEcosystemActive(true)}
-                    // onMouseOut={() => setIsEcosystemActive(false)}
-                    onClick={() => {
-                      setIsEnterpreneurActive("");
-
-                      setIsEcosystemActive("ecosystem");
-                      setState({
-                        ...state,
-                        business_type: "Ecosystem Enabler",
-                        is_ecosytem: true,
-                        is_enterpreneur: false,
-                      });
-                    }}
+                  <Tooltip
+                    title=" You provide support to businesses around training, funding, business support, policy & regulation, market access, resources, research & development "
+                    placement="right"
                   >
-                    {isEcosystemActive ? <EcosystemColored /> : <Ecosystem />}
-                  </SpanStyled>
+                    <SpanStyled
+                      className={`ecosystem ${isEcosystemActive ===
+                        "ecosystem" && "active"}`}
+                      // onMouseOver={() => setIsEcosystemActive(true)}
+                      // onMouseOut={() => setIsEcosystemActive(false)}
+                      onClick={() => {
+                        setIsEnterpreneurActive("");
+
+                        setIsEcosystemActive("ecosystem");
+                        setState({
+                          ...state,
+                          business_type: "Ecosystem Enabler",
+                          is_ecosytem: true,
+                          is_enterpreneur: false,
+                        });
+                      }}
+                    >
+                      {isEcosystemActive ? <EcosystemColored /> : <Ecosystem />}
+                    </SpanStyled>
+                  </Tooltip>
                   <span style={{ marginTop: "15px" }}>
                     I am an Ecosystem Player
                   </span>
