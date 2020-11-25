@@ -53,7 +53,10 @@ const Preview = ({ history, addOrganization }) => {
   const handleSubmit = async () => {
     setIsLoading(true);
 
-    addOrganization({ ...state, sub_ecosystem_sub_class: "Legal" })
+    addOrganization({
+      ...state,
+      // sub_ecosystem_sub_class: "Legal",
+    })
       .then(res => {
         if (res && res.status === 201) {
           setIsLoading(false);

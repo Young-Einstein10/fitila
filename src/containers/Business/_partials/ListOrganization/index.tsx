@@ -107,7 +107,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
 
     if (state.business_type === "Ecosystem Enabler") {
       selectedSubEcosystem = selectedEcosystem[0].sub_ecosystem.filter(
-        sub_eco => sub_eco.name === values.sub_segment
+        sub_eco => sub_eco.name === values.sub_ecosystem
       );
 
       setState({
@@ -115,6 +115,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
         ...values,
         company_valuation: `${values.currency}${values.currency_value}`,
         ecosystem: selectedEcosystem[0].id,
+        sub_ecosystem: selectedSubEcosystem[0].id,
         sub_segment: selectedSubEcosystem[0].id,
       });
     } else {
