@@ -256,6 +256,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                       <Option value="Education">Education</Option>
                       <Option value="Manufacturers">Manufacturers</Option>
                       <Option value="ICT">ICT</Option>
+                      <Option value="Finance">Finance</Option>
                       <Option value="Other">Other</Option>
                     </Select>
                   </Form.Item>
