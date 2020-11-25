@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { Button, Dropdown, Row, Menu, Col, Table, Space } from "antd";
 import FeatherIcon from "feather-icons-react";
@@ -83,64 +83,6 @@ const tableHeader = (
   </div>
 );
 
-const dataSource = [
-  {
-    key: "1",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "2",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "3",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "4",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-  {
-    key: "5",
-    rank: "01",
-    company: "Paystack",
-    ceo_founder: "Sundar Pichai",
-    state: "Adamawa",
-    sectors: "Technology",
-    market_cap: "$134.5B",
-    employees: "20/200",
-    funding: "$2.4M",
-  },
-];
-
 const columns = [
   {
     title: "Rank",
@@ -221,51 +163,161 @@ const Segment = ({
 }) => {
   let counter = 0;
 
+  const { segments } = business;
+
   let pageHeader = name.split("_").join(" ");
 
-  const currentEcosystem = business.ecosystem.filter(
-    eco =>
-      eco.name
+  const currSegment = segments.filter(
+    segment =>
+      segment.name
         .split(" ")
         .join("_")
         .toLowerCase() === name
   );
 
-  const { sub_ecosystem } = currentEcosystem.length && currentEcosystem[0];
+  const tabData =
+    currSegment.length &&
+    currSegment[0].sub_class.map((subecosystem, key) => {
+      return {
+        id: key,
+        title: subecosystem.name,
+        tabTitle: subecosystem.name,
+        content: (
+          <Fragment>
+            {subecosystem.sub_class.length &&
+              subecosystem.sub_class.map((subclass, key) => (
+                <Row gutter={15} style={{ marginTop: "2rem" }}>
+                  <Col xs={24}>
+                    <Cards
+                      title={
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <span>{subclass}</span>
+                          <Dropdown overlay={menu}>
+                            <TableHeaderButtonStyled type="ghost" size="middle">
+                              Past Month <ArrowDown />
+                            </TableHeaderButtonStyled>
+                          </Dropdown>
+                        </div>
+                      }
+                      more={content}
+                    >
+                      <Table
+                        className="table-responsive"
+                        pagination={false}
+                        dataSource={business.organization.map((org, key) => {
+                          return {
+                            key: key,
+                            rank: key + 1,
+                            company: org.name,
+                            ceo_name: org.ceo_name,
+                            state: org.state,
+                            sectors: org.sector,
+                            market_cap: org.market_cap,
+                            employees: org.num_of_employees,
+                            funding: org.funding,
+                          };
+                        })}
+                        columns={columns}
+                      />
+                    </Cards>
+                  </Col>
+                </Row>
+              ))}
 
-  const tabData = sub_ecosystem.map(subecosystem => {
-    return {
-      id: subecosystem.id,
-      title: subecosystem.name,
-      tabTitle: subecosystem.name,
-      content: (
-        <Row gutter={15} style={{ marginTop: "2rem" }}>
-          <Col xs={24}>
-            <Cards title={tableHeader} more={content}>
-              <Table
-                className="table-responsive"
-                pagination={false}
-                dataSource={business.organization.map((org, key) => {
-                  return {
-                    key: key,
-                    rank: key + 1,
-                    company: org.name,
-                    ceo_name: org.ceo_name,
-                    state: org.state,
-                    sectors: org.sector,
-                    market_cap: org.market_cap,
-                    employees: org.num_of_employees,
-                    funding: org.funding,
-                  };
-                })}
-                columns={columns}
-              />
-            </Cards>
-          </Col>
-        </Row>
-      ),
-    };
-  });
+            <Row gutter={15} style={{ marginTop: "2rem" }}>
+              <Col xs={24}>
+                <Cards
+                  title={
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <span>{subecosystem.name}</span>
+                      <Dropdown overlay={menu}>
+                        <TableHeaderButtonStyled type="ghost" size="middle">
+                          Past Month <ArrowDown />
+                        </TableHeaderButtonStyled>
+                      </Dropdown>
+                    </div>
+                  }
+                  more={content}
+                >
+                  <Table
+                    className="table-responsive"
+                    pagination={false}
+                    dataSource={business.organization.map((org, key) => {
+                      return {
+                        key: key,
+                        rank: key + 1,
+                        company: org.name,
+                        ceo_name: org.ceo_name,
+                        state: org.state,
+                        sectors: org.sector,
+                        market_cap: org.market_cap,
+                        employees: org.num_of_employees,
+                        funding: org.funding,
+                      };
+                    })}
+                    columns={columns}
+                  />
+                </Cards>
+              </Col>
+            </Row>
+          </Fragment>
+        ),
+      };
+    });
+
+  // const currentEcosystem = business.ecosystem.filter(
+  //   eco =>
+  //     eco.name
+  //       .split(" ")
+  //       .join("_")
+  //       .toLowerCase() === name
+  // );
+
+  // const { sub_ecosystem } = currentEcosystem.length && currentEcosystem[0];
+
+  // const tabData = sub_ecosystem.map(subecosystem => {
+  //   return {
+  //     id: subecosystem.id,
+  //     title: subecosystem.name,
+  //     tabTitle: subecosystem.name,
+  //     content: (
+  //       <Row gutter={15} style={{ marginTop: "2rem" }}>
+  //         <Col xs={24}>
+  //           <Cards title={tableHeader} more={content}>
+  //             <Table
+  //               className="table-responsive"
+  //               pagination={false}
+  //               dataSource={business.organization.map((org, key) => {
+  //                 return {
+  //                   key: key,
+  //                   rank: key + 1,
+  //                   company: org.name,
+  //                   ceo_name: org.ceo_name,
+  //                   state: org.state,
+  //                   sectors: org.sector,
+  //                   market_cap: org.market_cap,
+  //                   employees: org.num_of_employees,
+  //                   funding: org.funding,
+  //                 };
+  //               })}
+  //               columns={columns}
+  //             />
+  //           </Cards>
+  //         </Col>
+  //       </Row>
+  //     ),
+  //   };
+  // });
 
   // const data = [
   //   {
