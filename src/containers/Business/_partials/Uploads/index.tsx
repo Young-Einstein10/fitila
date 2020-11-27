@@ -1,14 +1,16 @@
 import React, { FunctionComponent, useContext, useState } from "react";
-import { Row, Form, Select } from "antd";
+import { Row, Form, Select, Upload, message } from "antd";
 import { MainColStyled } from "../AddCompany/styled";
 
 import Heading from "../../../../components/heading/heading";
 import { StepsStyled } from "../ListOrganization/styled";
-import { ButtonStyled, InputStyled } from "../../../Styles";
+import { ButtonStyled, InputNumberStyled, InputStyled } from "../../../Styles";
 import { RouteComponentProps } from "react-router-dom";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import { BusinessContext } from "../../context";
+import { ReactComponent as UploadIcon } from "../../../../static/svg/upload.svg";
+import { UploadButtonStyled } from "./styled";
 
 const { Step } = StepsStyled;
 const InputGroup = InputStyled.Group;
@@ -16,6 +18,10 @@ const Option = Select.Option;
 
 const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
   const [num_of_employees_custom, setNum_of_employees_custom] = useState();
+  const [file, setFile] = useState({
+    ceo_image: [],
+    compnay_logo: [],
+  });
 
   const customDot = (dot: any) => dot;
 
@@ -32,12 +38,58 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
       ...state,
       ...values,
       funding: `${values.currency}${values.currency_value}`,
+      company_logo: file.compnay_logo[0],
+      ceo_image: file.ceo_image[0],
     });
     history.push("/business/preview");
   };
 
   const onNumberOfEmployeesChange = value => {
     setNum_of_employees_custom(value);
+  };
+
+  const ceoImageProps = {
+    onRemove: file => {
+      setFile(state => {
+        const index = state.ceo_image.indexOf(file);
+        const newFileList = state.ceo_image.slice();
+        newFileList.splice(index, 1);
+        return {
+          ...state,
+          ceo_image: newFileList,
+        };
+      });
+    },
+    beforeUpload: file => {
+      setFile(state => ({
+        ...state,
+        ceo_image: [...state.ceo_image, file],
+      }));
+      return false;
+    },
+    fileList: file.ceo_image,
+  };
+
+  const companyLogoProps = {
+    onRemove: file => {
+      setFile(state => {
+        const index = state.compnay_logo.indexOf(file);
+        const newFileList = state.compnay_logo.slice();
+        newFileList.splice(index, 1);
+        return {
+          ...state,
+          compnay_logo: newFileList,
+        };
+      });
+    },
+    beforeUpload: file => {
+      setFile(state => ({
+        ...state,
+        compnay_logo: [...state.compnay_logo, file],
+      }));
+      return false;
+    },
+    fileList: file.compnay_logo,
   };
 
   return (
@@ -68,12 +120,24 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                 className="uploads"
                 layout="vertical"
               >
-                {/* <Form.Item name="cac_doc">
-                  <InputStyled placeholder="Business RC Number" />
-                </Form.Item> */}
+                <Form.Item name="company_logo">
+                  <Upload {...companyLogoProps} listType="picture">
+                    <UploadButtonStyled size="large">
+                      Upload Company Logo <UploadIcon />
+                    </UploadButtonStyled>
+                  </Upload>
+                </Form.Item>
+
+                <Form.Item name="ceo_image">
+                  <Upload {...ceoImageProps} listType="picture">
+                    <UploadButtonStyled size="large">
+                      Upload CEO/Founder Image <UploadIcon />
+                    </UploadButtonStyled>
+                  </Upload>
+                </Form.Item>
 
                 <Form.Item name="cac_doc">
-                  <InputStyled placeholder="Business RC Number" />
+                  <InputStyled type="number" placeholder="Business RC Number" />
                 </Form.Item>
 
                 <Form.Item name="num_of_employees">
@@ -111,7 +175,14 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                     </Form.Item>
 
                     <Form.Item name="currency_value" style={{ width: "100%" }}>
-                      <InputStyled placeholder="Funding" type="number" />
+                      <InputNumberStyled
+                        size="large"
+                        formatter={value =>
+                          `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={value => value.replace(/\bNGN\s?|(,*)/g, "")}
+                        placeholder="Funding"
+                      />
                     </Form.Item>
                   </InputGroup>
                 </Form.Item>

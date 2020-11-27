@@ -1,8 +1,8 @@
 import React, { FC, useContext, useEffect, useState } from "react";
-import { Row, Form, Select, Divider } from "antd";
+import { Row, Form, Select, Divider, InputNumber } from "antd";
 import { MainColStyled } from "../AddCompany/styled";
 import Heading from "../../../../components/heading/heading";
-import { ButtonStyled, InputStyled } from "../../../Styles";
+import { ButtonStyled, InputNumberStyled, InputStyled } from "../../../Styles";
 import { StepsStyled } from "./styled";
 import { Redirect, RouteComponentProps } from "react-router-dom";
 import { WithBusinessProvider } from "../../index";
@@ -184,7 +184,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 className="list-organization"
               >
                 <Form.Item name="name">
-                  <InputStyled placeholder="Business Name" />
+                  <InputStyled placeholder="Business Name" required />
                 </Form.Item>
 
                 <Form.Item name="ceo_name">
@@ -347,9 +347,13 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                         name="currency_value"
                         style={{ width: "100%" }}
                       >
-                        <InputStyled
-                          placeholder="Compnay Valuation"
-                          type="number"
+                        <InputNumberStyled
+                          placeholder="Company Valuation"
+                          size="large"
+                          formatter={value =>
+                            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                          }
+                          parser={value => value.replace(/\bNGN\s?|(,*)/g, "")}
                         />
                       </Form.Item>
                     </InputGroup>

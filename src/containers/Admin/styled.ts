@@ -28,6 +28,10 @@ const AdminSectionWrapper = Styled.section<{ background?: string }>`
     }
   }
 
+  .ant-form-item .ant-upload {
+    width: 100%;
+  }
+
 
   .text-center {
     text-align: center;

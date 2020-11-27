@@ -17,7 +17,7 @@ import { addOrganization } from "../../../../redux/actions/businessActions";
 
 const { Step } = StepsStyled;
 
-const Preview = ({ history, addOrganization }) => {
+const Preview = ({ history, addOrganization, auth: { user } }) => {
   const [isLoading, setIsLoading] = useState(false);
   const customDot = (dot: any) => dot;
 
@@ -27,6 +27,8 @@ const Preview = ({ history, addOrganization }) => {
     business_type,
     organization_name,
     ceo_name,
+    ceo_image,
+    comapany_logo,
     address,
     state: organization_state,
     ecosystem,
@@ -53,22 +55,26 @@ const Preview = ({ history, addOrganization }) => {
   const handleSubmit = async () => {
     setIsLoading(true);
 
-    addOrganization({
-      ...state,
-      // sub_ecosystem_sub_class: "Legal",
-    })
-      .then(res => {
-        if (res && res.status === 201) {
-          setIsLoading(false);
+    const data = { ...state, user: user.id };
+    console.log(data);
 
-          history.push("/business/success");
-        }
-      })
-      .catch(err => setIsLoading(false));
+    const formData = new FormData();
 
-    const res = await api.business.addBusiness(state);
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
 
-    console.log(res.data);
+    try {
+      const res = await addOrganization(formData);
+
+      if (res && res.status === 201) {
+        setIsLoading(false);
+
+        history.push("/business/success");
+      }
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -299,4 +305,8 @@ const Preview = ({ history, addOrganization }) => {
   );
 };
 
-export default connect(null, { addOrganization })(Preview);
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { addOrganization })(Preview);

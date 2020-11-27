@@ -44,7 +44,7 @@ const { Option } = Select;
 
 const Landing = ({
   auth,
-  business: { segments },
+  business: { segments, organization },
   getEcosystem,
   getOrganization,
 }) => {
@@ -115,15 +115,18 @@ const Landing = ({
             onChange={() => {}}
             onFocus={() => {}}
             onBlur={() => {}}
-            onSearch={() => {}}
+            onSearch={val => {
+              console.log(val);
+            }}
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
           >
-            <Option value="jack">Paystack</Option>
-            <Option value="lucy">FarmCrowdy</Option>
-            <Option value="tom">Andela</Option>
-            <Option value="tom">Tech Cabal</Option>
+            {organization.map((org, key) => (
+              <Option key={key} value={org.name}>
+                {org.name}
+              </Option>
+            ))}
           </SelectStyled>
         </Form.Item>
       </Form>
@@ -149,38 +152,6 @@ const Landing = ({
             justifyContent: "center",
           }}
         >
-          {/* {auth.isAuthenticated
-            ? business.ecosystem.map((eco, key) => (
-                <Col key={key} className="text-center">
-                  <NavLink
-                    to={`/d/segments/${eco.name
-                      .split(" ")
-                      .join("_")
-                      .toLowerCase()}`}
-                  >
-                    <ButtonStyled>
-                      {eco.name}
-                      <Search style={{ marginLeft: "10px" }} />
-                    </ButtonStyled>
-                  </NavLink>
-                </Col>
-              ))
-            : links.map((business, key) => (
-                <Col key={key} className="text-center">
-                  <NavLink
-                    to={`/d/segments/${business.name
-                      .split(" ")
-                      .join("_")
-                      .toLowerCase()}`}
-                  >
-                    <ButtonStyled>
-                      {business.name}
-                      <Search style={{ marginLeft: "10px" }} />
-                    </ButtonStyled>
-                  </NavLink>
-                </Col>
-              ))} */}
-
           {segments.map((segment, key) => (
             <Col key={key} className="text-center">
               <NavLink

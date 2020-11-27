@@ -203,15 +203,15 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
                 </Row>
               ) : (
                 <Row gutter={[24, 24]}>
-                  {business.ecosystem.map(ecosystem => (
+                  {segments.map(segment => (
                     <Col
                       className="gutter-row"
                       span={6}
-                      key={ecosystem.id}
+                      key={segment.id}
                       style={{ minHeight: "122px" }}
                     >
                       <Link
-                        to={`/d/segments/${ecosystem.name
+                        to={`/d/segments/${segment.name
                           .split(" ")
                           .join("_")
                           .toLowerCase()}`}
@@ -220,11 +220,9 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
                           <BriefCase />
 
                           <div>
-                            <strong>{ecosystem.name}</strong>
+                            <strong>{segment.name}</strong>
                             <br />
-                            <span>
-                              {ecosystem.sub_ecosystem.length} Sub-Classes
-                            </span>
+                            <span>{segment.sub_class.length} Sub-Classes</span>
                           </div>
                         </CardSegmentStyled>
                       </Link>

@@ -1,4 +1,4 @@
-import { Input, Button } from "antd";
+import { Input, InputNumber, Button } from "antd";
 import Styled from "styled-components";
 
 const InputStyled = Styled(Input)`
@@ -15,6 +15,30 @@ const InputStyled = Styled(Input)`
   }
   
   &.ant-input, #login_password, &.ant-input-affix-wrapper > input.ant-input {
+    
+    background-color: #F9F9F9;  
+  }
+`;
+
+const InputNumberStyled = Styled(InputNumber)`
+  background-color: #F9F9F9;
+  border-radius: 6px;
+
+  &.ant-input-number-lg {
+    width: 100%;
+    height: 56px;
+  }
+
+  &.ant-input-number::placeholder,
+  &.ant-select-selection-placeholder {
+    color: ${({ theme }) => theme["extra-light-color"]};
+  }
+
+  & span.ant-select-selection-placeholder {
+    color: ${({ theme }) => theme["extra-light-color"]};
+  }
+  
+  &.ant-input-number, #login_password, &.ant-input-affix-wrapper > input.ant-input-number {
     
     background-color: #F9F9F9;  
   }
@@ -240,4 +264,10 @@ const AuthWrapper = Styled.div`
   }
 `;
 
-export { InputStyled, ButtonStyled, SectionWrapper, AuthWrapper };
+export {
+  InputStyled,
+  InputNumberStyled,
+  ButtonStyled,
+  SectionWrapper,
+  AuthWrapper,
+};

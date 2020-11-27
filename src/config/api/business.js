@@ -4,7 +4,11 @@ export default class Business {
   }
 
   addBusiness(data) {
-    return this.client.post("/organizations/", data);
+    return this.client.post("/organizations/", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 
   getEcosystem() {

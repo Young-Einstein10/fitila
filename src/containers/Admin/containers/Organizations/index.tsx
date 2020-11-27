@@ -112,7 +112,7 @@ const columns = [
 
 const tableHeader = (
   <div style={{ display: "flex", justifyContent: "space-between" }}>
-    <span></span>
+    <span>Organization</span>
     <Dropdown overlay={menu}>
       <TableHeaderButtonStyled type="ghost" size="middle">
         Past Month <ArrowDown />

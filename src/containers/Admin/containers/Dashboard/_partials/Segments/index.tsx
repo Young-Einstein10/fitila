@@ -204,33 +204,37 @@ const Segment = ({
         tabTitle: subecosystem.name,
         content: (
           <Fragment>
-            {subecosystem.sub_class.length &&
-              subecosystem.sub_class.map((subclass, key) => (
-                <Row key={key} gutter={15} style={{ marginTop: "2rem" }}>
-                  <Col xs={24}>
-                    <Cards title={generateTableTitle(subclass)} more={content}>
-                      <Table
-                        className="table-responsive"
-                        pagination={false}
-                        dataSource={business.organization.map((org, key) => {
-                          return {
-                            key: key,
-                            rank: key + 1,
-                            company: org.name,
-                            ceo_name: org.ceo_name,
-                            state: org.state,
-                            sectors: org.sector,
-                            market_cap: org.market_cap,
-                            employees: org.num_of_employees,
-                            funding: org.funding,
-                          };
-                        })}
-                        columns={columns}
-                      />
-                    </Cards>
-                  </Col>
-                </Row>
-              ))}
+            {subecosystem.sub_class.length
+              ? subecosystem.sub_class.map((subclass, key) => (
+                  <Row key={key} gutter={15} style={{ marginTop: "2rem" }}>
+                    <Col xs={24}>
+                      <Cards
+                        title={generateTableTitle(subclass)}
+                        more={content}
+                      >
+                        <Table
+                          className="table-responsive"
+                          pagination={false}
+                          dataSource={business.organization.map((org, key) => {
+                            return {
+                              key: key,
+                              rank: key + 1,
+                              company: org.name,
+                              ceo_name: org.ceo_name,
+                              state: org.state,
+                              sectors: org.sector,
+                              market_cap: org.market_cap,
+                              employees: org.num_of_employees,
+                              funding: org.funding,
+                            };
+                          })}
+                          columns={columns}
+                        />
+                      </Cards>
+                    </Col>
+                  </Row>
+                ))
+              : null}
 
             <Row gutter={15} style={{ marginTop: "2rem" }}>
               <Col xs={24}>
@@ -381,7 +385,6 @@ const Segment = ({
                     <SummaryData business={business} />
                   </div>
 
-                  {/* <Main>{tabContent}</Main> */}
                   {tabContent}
                 </Child>
               );
