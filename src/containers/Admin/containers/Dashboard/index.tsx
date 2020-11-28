@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Row, Table, Spin } from "antd";
 import { connect } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { content, generateIcons, tableHeader, columns } from "./functions";
+import { content, generateIcons, tableHeader } from "./functions";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
 import { Main } from "../../../AuthLayout/styled";
@@ -15,6 +15,7 @@ import SummaryData from "./_partials/SummaryData";
 import FilterOption from "./_partials/Filter";
 
 import { CardSegmentStyled } from "./styled";
+import { createDataSource, createTableColumns } from "../helpers";
 
 const Dashboard = ({ business, getEcosystem, getOrganization }) => {
   const [isEcosystemLoading, setIsEcosystemLoading] = useState(false);
@@ -161,20 +162,8 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
               <Table
                 className="table-responsive"
                 pagination={false}
-                dataSource={business.organization.map((org, key) => {
-                  return {
-                    key: key,
-                    rank: key + 1,
-                    company: org.name,
-                    ceo_name: org.ceo_name,
-                    state: org.state,
-                    sectors: org.sector,
-                    market_cap: org.market_cap,
-                    employees: org.num_of_employees,
-                    funding: org.funding,
-                  };
-                })}
-                columns={columns}
+                dataSource={createDataSource(business.organization)}
+                columns={createTableColumns()}
                 loading={isOrganizationLoading}
               />
             </Cards>

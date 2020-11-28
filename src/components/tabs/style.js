@@ -67,7 +67,6 @@ const TabChildColor = color => `
 const TabBasic = Styled(Tabs)`
   margin-bottom: 30px !important;
   ${({ color }) => color && TabColor(color)}
-  background: #E5E5E5;
 
   & > .ant-tabs-nav {
     background: #fff;

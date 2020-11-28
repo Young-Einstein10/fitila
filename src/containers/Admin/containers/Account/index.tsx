@@ -88,10 +88,7 @@ const Account = ({ auth }) => {
                     />
                   </div>
 
-                  <Main
-                    style={{ paddingRight: "0", paddingLeft: "0" }}
-                    background="#e5e5e5"
-                  >
+                  <Main style={{ paddingRight: "0", paddingLeft: "0" }}>
                     {tabContent}
                   </Main>
                 </Child>

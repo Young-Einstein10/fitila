@@ -1,18 +1,14 @@
-import React, { FunctionComponent, useContext, useState } from "react";
-import { Row, Form, notification } from "antd";
+import React, { useContext, useState } from "react";
+import { Row } from "antd";
 import { connect } from "react-redux";
-import { SectionWrapper } from "../../../Styles";
 import { MainColStyled } from "../AddCompany/styled";
-import { WithBusinessProvider } from "../../index";
 
 import Heading from "../../../../components/heading/heading";
 import { StepsStyled } from "../ListOrganization/styled";
 import { ButtonStyled } from "../../../Styles";
-import { RouteComponentProps } from "react-router-dom";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import { BusinessContext } from "../../context";
-import api from "../../../../config/api";
 import { addOrganization } from "../../../../redux/actions/businessActions";
 
 const { Step } = StepsStyled;

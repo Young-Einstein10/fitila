@@ -56,78 +56,6 @@ const menu = (
   </Menu>
 );
 
-const columns = [
-  {
-    title: "Rank",
-    dataIndex: "rank",
-    key: "rank",
-  },
-  {
-    title: "Company",
-    dataIndex: "company",
-    key: "company",
-  },
-  {
-    title: "Ceo/Founder",
-    dataIndex: "ceo_name",
-    key: "ceo_name",
-    render: text => (
-      <Space size="middle" style={{ display: "flex", alignItems: "center" }}>
-        <>
-          <p
-            className="img_placeholder"
-            style={{
-              width: "30px",
-              height: "30px",
-              borderRadius: "50px",
-              background: "#e6e6e6",
-              // marginRight: "10px",
-              marginBottom: 0,
-            }}
-          ></p>
-          <span>{text}</span>
-        </>
-      </Space>
-    ),
-  },
-  {
-    title: "State",
-    dataIndex: "state",
-    key: "state",
-  },
-  {
-    title: "Sectors",
-    dataIndex: "sectors",
-    key: "sectors",
-  },
-  // {
-  //   title: "Market Cap",
-  //   dataIndex: "market_cap",
-  //   key: "market_cap",
-  // },
-  {
-    title: "Employees",
-    dataIndex: "employees",
-    key: "employees",
-  },
-  {
-    title: "Funding",
-    dataIndex: "funding",
-    key: "funding",
-  },
-  {
-    // title: "Action",
-    key: "action",
-    render: (record, key) => (
-      <Space size="middle">
-        <ViewProfileBtnStyled>
-          <Link to={`/d/profile/${record.key}`}>View Profile</Link>
-        </ViewProfileBtnStyled>
-      </Space>
-    ),
-  },
-];
-
 const tableHeader = (
   <div style={{ display: "flex", justifyContent: "space-between" }}>
     <span>Newly Added</span>
@@ -189,4 +117,4 @@ const capitalize = str => {
   }
 };
 
-export { content, tableHeader, columns, generateIcons, capitalize };
+export { content, tableHeader, generateIcons, capitalize };

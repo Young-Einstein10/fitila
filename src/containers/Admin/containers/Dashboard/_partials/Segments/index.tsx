@@ -1,21 +1,19 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import { Button, Dropdown, Row, Menu, Col, Table, Space } from "antd";
+import { Button, Dropdown, Row, Menu, Col, Table } from "antd";
 import FeatherIcon from "feather-icons-react";
 
 import { UserOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../../../components/page-headers/page-headers";
 import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
-import { ReactComponent as BusinessSupportIcon } from "../../../../../../static/svg/businessSupport.svg";
-import { Main } from "../../../../../AuthLayout/styled";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Styled from "styled-components";
 import { AdminSectionWrapper } from "../../../../styled";
 import { Child, TabBasic } from "../../../../../../components/tabs/style";
 import SummaryData from "../SummaryData";
-import { ViewProfileBtnStyled } from "../../styled";
 import { capitalize, generateIcons } from "../../functions";
+import { createDataSource, createTableColumns } from "../../../helpers";
 
 const TableHeaderButtonStyled = Styled(Button)`
   background: #F7F9FA;
@@ -104,78 +102,6 @@ const tableHeader = (
   </div>
 );
 
-const columns = [
-  {
-    title: "Rank",
-    dataIndex: "rank",
-    key: "rank",
-  },
-  {
-    title: "Company",
-    dataIndex: "company",
-    key: "company",
-  },
-  {
-    title: "Ceo/Founder",
-    dataIndex: "ceo_name",
-    key: "ceo_name",
-    render: text => (
-      <Space size="middle" style={{ display: "flex", alignItems: "center" }}>
-        <>
-          <p
-            className="img_placeholder"
-            style={{
-              width: "30px",
-              height: "30px",
-              borderRadius: "50px",
-              background: "#e6e6e6",
-              // marginRight: "10px",
-              marginBottom: 0,
-            }}
-          ></p>
-          <span>{text}</span>
-        </>
-      </Space>
-    ),
-  },
-  {
-    title: "State",
-    dataIndex: "state",
-    key: "state",
-  },
-  {
-    title: "Sectors",
-    dataIndex: "sectors",
-    key: "sectors",
-  },
-  {
-    title: "Market Cap",
-    dataIndex: "market_cap",
-    key: "market_cap",
-  },
-  {
-    title: "Employees",
-    dataIndex: "employees",
-    key: "employees",
-  },
-  {
-    title: "Funding",
-    dataIndex: "funding",
-    key: "funding",
-  },
-  {
-    // title: "Action",
-    key: "action",
-    render: (record, key) => (
-      <Space size="middle">
-        <ViewProfileBtnStyled>
-          <Link to={`/d/profile/${record.key}`}>View Profile</Link>
-        </ViewProfileBtnStyled>
-      </Space>
-    ),
-  },
-];
-
 const Segment = ({
   match: {
     params: { name },
@@ -216,20 +142,8 @@ const Segment = ({
                         <Table
                           className="table-responsive"
                           pagination={false}
-                          dataSource={business.organization.map((org, key) => {
-                            return {
-                              key: key,
-                              rank: key + 1,
-                              company: org.name,
-                              ceo_name: org.ceo_name,
-                              state: org.state,
-                              sectors: org.sector,
-                              market_cap: org.market_cap,
-                              employees: org.num_of_employees,
-                              funding: org.funding,
-                            };
-                          })}
-                          columns={columns}
+                          dataSource={createDataSource(business.organization)}
+                          columns={createTableColumns()}
                         />
                       </Cards>
                     </Col>
@@ -246,20 +160,8 @@ const Segment = ({
                   <Table
                     className="table-responsive"
                     pagination={false}
-                    dataSource={business.organization.map((org, key) => {
-                      return {
-                        key: key,
-                        rank: key + 1,
-                        company: org.name,
-                        ceo_name: org.ceo_name,
-                        state: org.state,
-                        sectors: org.sector,
-                        market_cap: org.market_cap,
-                        employees: org.num_of_employees,
-                        funding: org.funding,
-                      };
-                    })}
-                    columns={columns}
+                    dataSource={createDataSource(business.organization)}
+                    columns={createTableColumns()}
                   />
                 </Cards>
               </Col>

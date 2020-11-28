@@ -92,57 +92,58 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
 
   const handleSubEcosystemChange = value => setSubEcosystemSubClass(value);
 
-  const handleSubmit = values => {
-    if (values.num_supported_business === "Above 1000") {
-      values.num_supported_business = values.num_supported_business_custom;
-    }
+  const handleSubmit = async () => {
+    try {
+      const values = await form.validateFields();
 
-    const selectedEcosystem = ecosystem.filter(
-      eco => eco.name === values.ecosystem
-    );
+      if (values.num_supported_business === "Above 1000") {
+        values.num_supported_business = values.num_supported_business_custom;
+      }
 
-    console.log(values);
-
-    let selectedSubEcosystem = [];
-
-    if (state.business_type === "Ecosystem Enabler") {
-      selectedSubEcosystem = selectedEcosystem[0].sub_ecosystem.filter(
-        sub_eco => sub_eco.name === values.sub_ecosystem
+      const selectedEcosystem = ecosystem.filter(
+        eco => eco.name === values.ecosystem
       );
 
-      setState({
-        ...state,
-        ...values,
-        company_valuation: `${values.currency}${values.currency_value}`,
-        ecosystem: selectedEcosystem[0].id,
-        sub_ecosystem: selectedSubEcosystem[0].id,
-        sub_segment: selectedSubEcosystem[0].id,
-        is_ecosystem:
-          state.business_type === "Ecosystem Enabler" ? true : false,
-        is_enterpreneur: state.business_type === "Enterpreneur" ? true : false,
-      });
-    } else {
-      setState({
-        ...state,
-        ...values,
-        company_valuation: `${values.currency}${values.currency_value}`,
-        is_ecosystem:
-          state.business_type === "Ecosystem Enabler" ? true : false,
-        is_enterpreneur: state.business_type === "Enterpreneur" ? true : false,
-      });
-    }
+      console.log(values);
 
-    history.push("/business/uploads");
+      let selectedSubEcosystem = [];
+
+      if (state.business_type === "Ecosystem Enabler") {
+        selectedSubEcosystem = selectedEcosystem[0].sub_ecosystem.filter(
+          sub_eco => sub_eco.name === values.sub_ecosystem
+        );
+
+        setState({
+          ...state,
+          ...values,
+          company_valuation: `${values.currency}${values.currency_value}`,
+          ecosystem: selectedEcosystem[0].id,
+          sub_ecosystem: selectedSubEcosystem[0].id,
+          sub_segment: selectedSubEcosystem[0].id,
+          is_ecosystem:
+            state.business_type === "Ecosystem Enabler" ? true : false,
+          is_enterpreneur:
+            state.business_type === "Enterpreneur" ? true : false,
+        });
+      } else {
+        setState({
+          ...state,
+          ...values,
+          company_valuation: `${values.currency}${values.currency_value}`,
+          is_ecosystem:
+            state.business_type === "Ecosystem Enabler" ? true : false,
+          is_enterpreneur:
+            state.business_type === "Enterpreneur" ? true : false,
+        });
+      }
+
+      history.push("/business/uploads");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const updateSubSegment = value => {
-    // value = value
-    //   .toLowerCase()
-    //   .split(" ")
-    //   .join("_");
-    // console.log(value);
-    // setSubSegmentList(ecosystemDropdown[value]);
-
     const selectedEcosystem = ecosystem.filter(eco => eco.name === value);
 
     setSubSegment(selectedEcosystem[0].sub_ecosystem);
@@ -189,15 +190,44 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 layout="vertical"
                 className="list-organization"
               >
-                <Form.Item name="name">
-                  <InputStyled placeholder="Business Name" required />
+                {/* BUSINESS NAME */}
+                <Form.Item
+                  name="name"
+                  rules={[
+                    {
+                      message: "Please input your business name",
+                      required: true,
+                    },
+                  ]}
+                >
+                  <InputStyled placeholder="Business Name" />
                 </Form.Item>
+                {/* BUSINESS NAME */}
 
-                <Form.Item name="ceo_name">
+                {/* CEO/FOUNDER"S NAME */}
+                <Form.Item
+                  name="ceo_name"
+                  rules={[
+                    {
+                      message: "Please input your ceo/founder's name",
+                      required: true,
+                    },
+                  ]}
+                >
                   <InputStyled placeholder="CEO/Founder's Name" />
                 </Form.Item>
+                {/* CEO/FOUNDER's ANME */}
 
-                <Form.Item name="state">
+                {/* STATE */}
+                <Form.Item
+                  name="state"
+                  rules={[
+                    {
+                      message: "Please select state organization is located in",
+                      required: true,
+                    },
+                  ]}
+                >
                   <Select placeholder="State" allowClear>
                     <Option value="Lagos">Lagos</Option>
                     <Option value="Ogun">Ogun</Option>
@@ -206,15 +236,35 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                     <Option value="Kaduna">Kaduna</Option>
                   </Select>
                 </Form.Item>
+                {/* STATE */}
 
-                <Form.Item name="address">
+                {/* ADDRESS */}
+                <Form.Item
+                  name="address"
+                  rules={[
+                    {
+                      message: "Please input your address!",
+                      required: true,
+                    },
+                  ]}
+                >
                   <InputStyled placeholder="Address" />
                 </Form.Item>
+                {/* ADDRESS */}
 
                 <Divider />
 
+                {/* ECOSYTEM SEGMENT */}
                 {state.business_type === "Ecosystem Enabler" && (
-                  <Form.Item name="ecosystem">
+                  <Form.Item
+                    name="ecosystem"
+                    rules={[
+                      {
+                        message: "Please select an ecosystem segment!",
+                        required: true,
+                      },
+                    ]}
+                  >
                     <Select
                       onChange={e => updateSubSegment(e)}
                       placeholder="Ecosystem Segment"
@@ -243,9 +293,19 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                     </Select>
                   </Form.Item>
                 )}
+                {/* ECOSYTEM SEGMENT */}
 
+                {/* SUB-ECOSYTEM SEGMENT */}
                 {state.business_type === "Ecosystem Enabler" && (
-                  <Form.Item name="sub_ecosystem">
+                  <Form.Item
+                    name="sub_ecosystem"
+                    rules={[
+                      {
+                        message: "Please select an ecosystem sub-segment!",
+                        required: true,
+                      },
+                    ]}
+                  >
                     <Select
                       onChange={e => handleSubEcosystemChange(e)}
                       placeholder="Sub-Segment"
@@ -269,10 +329,20 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                     </Select>
                   </Form.Item>
                 )}
+                {/* SUB-ECOSYTEM SEGMENT */}
 
+                {/* SUB-CLASS */}
                 {state.business_type === "Ecosystem Enabler" &&
                   subEcosystemSubClass === "Business Advisory" && (
-                    <Form.Item name="sub_ecosystem_sub_class">
+                    <Form.Item
+                      name="sub_ecosystem_sub_class"
+                      rules={[
+                        {
+                          message: "Please select a sub-segment class!",
+                          required: true,
+                        },
+                      ]}
+                    >
                       <Select placeholder="Sub-Class" allowClear>
                         {/* {subSegmentList.map((segment, key) => (
                         <Option
@@ -294,9 +364,19 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                       </Select>
                     </Form.Item>
                   )}
+                {/* SUB-CLASS */}
 
+                {/* BUSINESS SECTOR */}
                 {state.business_type === "Enterpreneur" && (
-                  <Form.Item name="sector">
+                  <Form.Item
+                    name="sector"
+                    rules={[
+                      {
+                        message: "Please select your sector!",
+                        required: true,
+                      },
+                    ]}
+                  >
                     <Select placeholder="Sector" allowClear>
                       <Option value="Health">Health</Option>
                       <Option value="Agriculture">Agriculture</Option>
@@ -309,9 +389,19 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                     </Select>
                   </Form.Item>
                 )}
+                {/* BUSINESS SECTOR */}
 
+                {/* BUSINESS LEVEL */}
                 {state.business_type === "Enterpreneur" && (
-                  <Form.Item name="business_level">
+                  <Form.Item
+                    name="business_level"
+                    rules={[
+                      {
+                        message: "Please select your business level!",
+                        required: true,
+                      },
+                    ]}
+                  >
                     <Select placeholder="Business Level" allowClear>
                       <Option value="Micro">Micro</Option>
                       <Option value="Small">Small</Option>
@@ -319,9 +409,19 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                     </Select>
                   </Form.Item>
                 )}
+                {/* BUSINESS LEVEL */}
 
+                {/* ARE YOU A STARTUP */}
                 {state.business_type === "Enterpreneur" && (
-                  <Form.Item name="is_startup">
+                  <Form.Item
+                    name="is_startup"
+                    rules={[
+                      {
+                        message: "Please select an option!",
+                        required: true,
+                      },
+                    ]}
+                  >
                     <Select
                       onChange={e => {
                         if (e === "Yes") {
@@ -338,9 +438,19 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                     </Select>
                   </Form.Item>
                 )}
+                {/* ARE YOU A STARTUP */}
 
+                {/* COMPANY VALUATION */}
                 {state.business_type === "Enterpreneur" && is_startUp && (
-                  <Form.Item name="company_valuation">
+                  <Form.Item
+                    name="company_valuation"
+                    rules={[
+                      {
+                        message: "Please input your company valuation!",
+                        required: true,
+                      },
+                    ]}
+                  >
                     <InputGroup compact style={{ display: "flex" }}>
                       <Form.Item initialValue="₦" name="currency">
                         <Select>
@@ -365,9 +475,20 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                     </InputGroup>
                   </Form.Item>
                 )}
+                {/* COMPANY VALUATION */}
 
+                {/* NUMBER OF SUPPORTED BUSINESSES */}
                 {state.business_type === "Ecosystem Enabler" && (
-                  <Form.Item name="num_supported_business">
+                  <Form.Item
+                    name="num_supported_business"
+                    rules={[
+                      {
+                        message:
+                          "Please input the number of businesses you've supported!",
+                        required: true,
+                      },
+                    ]}
+                  >
                     <Select
                       placeholder=" Number of businesses supported over the last 5 years"
                       onChange={e => onNumberOfBusinessChange(e)}
@@ -383,32 +504,73 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                     </Select>
                   </Form.Item>
                 )}
+                {/* NUMBER OF SUPPORTED BUSINESSES */}
 
+                {/* NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000 */}
                 {state.business_type === "Ecosystem Enabler" &&
                   num_supported_business === "Above 1000" && (
-                    <Form.Item name="num_supported_business_custom">
+                    <Form.Item
+                      name="num_supported_business_custom"
+                      rules={[
+                        {
+                          message:
+                            "Please input the number of businesses you've supported!",
+                          required: true,
+                        },
+                      ]}
+                    >
                       <InputStyled type="number" />
                     </Form.Item>
                   )}
+                {/* NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000 */}
 
-                <Form.Item name="website">
+                {/* WEBSITE */}
+                <Form.Item
+                  name="website"
+                  rules={[
+                    {
+                      message: "Please input your organization website !",
+                      required: true,
+                    },
+                  ]}
+                >
                   <InputStyled placeholder="Website Address" />
                 </Form.Item>
+                {/* WEBSITE */}
 
+                {/* ORGANIZATION EMAIL */}
                 <Form.Item
                   name="email"
                   rules={[
-                    { message: "Please input your Email!", required: true },
+                    {
+                      type: "email",
+                      message: "The input is not a valid E-mail!",
+                    },
+                    {
+                      message: "Please input your organization email!",
+                      required: true,
+                    },
                   ]}
                 >
                   <InputStyled placeholder="Email Address" />
                 </Form.Item>
+                {/* ORGANIZATION EMAIL */}
 
                 <Divider />
 
-                <Form.Item name="phone">
+                {/* ORGANIZATION PHONE */}
+                <Form.Item
+                  name="phone"
+                  rules={[
+                    {
+                      message: "Please input your organization phone number !",
+                      required: true,
+                    },
+                  ]}
+                >
                   <InputStyled placeholder="Phone Number" />
                 </Form.Item>
+                {/* ORGANIZATION PHONE */}
 
                 {[
                   { name: "Facebook Url", key: "facebook" },

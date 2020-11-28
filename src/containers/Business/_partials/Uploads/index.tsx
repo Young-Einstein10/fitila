@@ -29,19 +29,25 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
 
   const { state, setState } = useContext(BusinessContext);
 
-  const handleSubmit = values => {
-    if (values.num_of_employees === "Above 1000") {
-      values.num_of_employees = values.num_of_employees_custom;
+  const handleSubmit = async () => {
+    try {
+      const values = await form.validateFields();
+
+      if (values.num_of_employees === "Above 1000") {
+        values.num_of_employees = values.num_of_employees_custom;
+      }
+      console.log(values);
+      setState({
+        ...state,
+        ...values,
+        funding: `${values.currency}${values.currency_value}`,
+        company_logo: file.compnay_logo[0],
+        ceo_image: file.ceo_image[0],
+      });
+      history.push("/business/preview");
+    } catch (error) {
+      console.log(error);
     }
-    console.log(values);
-    setState({
-      ...state,
-      ...values,
-      funding: `${values.currency}${values.currency_value}`,
-      company_logo: file.compnay_logo[0],
-      ceo_image: file.ceo_image[0],
-    });
-    history.push("/business/preview");
   };
 
   const onNumberOfEmployeesChange = value => {
@@ -120,7 +126,15 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                 className="uploads"
                 layout="vertical"
               >
-                <Form.Item name="company_logo">
+                <Form.Item
+                  name="company_logo"
+                  rules={[
+                    {
+                      message: "Please upload your company logo!",
+                      required: true,
+                    },
+                  ]}
+                >
                   <Upload {...companyLogoProps} listType="picture">
                     <UploadButtonStyled size="large">
                       Upload Company Logo <UploadIcon />
@@ -128,7 +142,15 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                   </Upload>
                 </Form.Item>
 
-                <Form.Item name="ceo_image">
+                <Form.Item
+                  name="ceo_image"
+                  rules={[
+                    {
+                      message: "Please upload your ceo/founder image!",
+                      required: true,
+                    },
+                  ]}
+                >
                   <Upload {...ceoImageProps} listType="picture">
                     <UploadButtonStyled size="large">
                       Upload CEO/Founder Image <UploadIcon />
@@ -136,11 +158,27 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                   </Upload>
                 </Form.Item>
 
-                <Form.Item name="cac_doc">
+                <Form.Item
+                  name="cac_doc"
+                  rules={[
+                    {
+                      message: "Please input your Business RC Number!",
+                      required: true,
+                    },
+                  ]}
+                >
                   <InputStyled type="number" placeholder="Business RC Number" />
                 </Form.Item>
 
-                <Form.Item name="num_of_employees">
+                <Form.Item
+                  name="num_of_employees"
+                  rules={[
+                    {
+                      message: "Please select an option!",
+                      required: true,
+                    },
+                  ]}
+                >
                   <Select
                     placeholder="Number of Employees"
                     onChange={e => onNumberOfEmployeesChange(e)}
@@ -157,7 +195,15 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                 </Form.Item>
 
                 {num_of_employees_custom === "Above 1000" && (
-                  <Form.Item name="num_of_employees_custom">
+                  <Form.Item
+                    name="num_of_employees_custom"
+                    rules={[
+                      {
+                        message: "Please input the number of employees!",
+                        required: true,
+                      },
+                    ]}
+                  >
                     <InputStyled
                       placeholder="Number of Employees"
                       type="number"
@@ -165,7 +211,16 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                   </Form.Item>
                 )}
 
-                <Form.Item name="funding">
+                <Form.Item
+                  name="funding"
+                  rules={[
+                    {
+                      message: "Please input this field!",
+                      required: true,
+                    },
+                  ]}
+                  style={{ marginBottom: 0 }}
+                >
                   <InputGroup compact style={{ display: "flex" }}>
                     <Form.Item initialValue="₦" name="currency">
                       <Select>

@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Button, Dropdown, Row, Menu, Col, Table, Space } from "antd";
+import { Button, Dropdown, Row, Menu, Col, Table } from "antd";
 import FeatherIcon from "feather-icons-react";
 import { UserOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { getOrganization } from "../../../../redux/actions/businessActions";
 import { AdminSectionWrapper } from "../../styled";
-import { ReactComponent as FilterOutlined } from "../../../../static/svg/filter.svg";
 import { ReactComponent as ArrowDown } from "../../../../static/svg/arrowDown.svg";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
-import { Link, NavLink } from "react-router-dom";
-import {
-  TableHeaderButtonStyled,
-  ViewProfileBtnStyled,
-} from "../Dashboard/styled";
+import { NavLink } from "react-router-dom";
+import { TableHeaderButtonStyled } from "../Dashboard/styled";
 import Filter from "../Dashboard/_partials/Filter";
+import { createDataSource, createTableColumns } from "../helpers";
 
 const content = (
   <>
@@ -55,60 +52,6 @@ const menu = (
     </Menu.Item>
   </Menu>
 );
-
-const columns = [
-  {
-    title: "Rank",
-    dataIndex: "rank",
-    key: "rank",
-  },
-  {
-    title: "Company",
-    dataIndex: "company",
-    key: "company",
-  },
-  {
-    title: "Ceo/Founder",
-    dataIndex: "ceo_founder",
-    key: "ceo_founder",
-  },
-  {
-    title: "State",
-    dataIndex: "state",
-    key: "state",
-  },
-  {
-    title: "Sectors",
-    dataIndex: "sectors",
-    key: "sectors",
-  },
-  // {
-  //   title: "Market Cap",
-  //   dataIndex: "market_cap",
-  //   key: "market_cap",
-  // },
-  {
-    title: "Employees",
-    dataIndex: "employees",
-    key: "employees",
-  },
-  {
-    title: "Funding",
-    dataIndex: "funding",
-    key: "funding",
-  },
-  {
-    // title: "Action",
-    key: "action",
-    render: (record, key) => (
-      <Space size="middle">
-        <ViewProfileBtnStyled>
-          <Link to={`/d/profile/${record.key}`}>View Profile</Link>
-        </ViewProfileBtnStyled>
-      </Space>
-    ),
-  },
-];
 
 const tableHeader = (
   <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -159,20 +102,8 @@ const Organizations = ({ getOrganization, organization }) => {
               <Table
                 className="table-responsive"
                 pagination={false}
-                dataSource={organization.map((org, key) => {
-                  return {
-                    key: key,
-                    rank: key + 1,
-                    company: org.name,
-                    ceo_founder: org.ceo_name,
-                    state: org.state,
-                    sectors: org.sector,
-                    market_cap: org.market_cap || null,
-                    employees: org.employess || null,
-                    funding: org.funding || null,
-                  };
-                })}
-                columns={columns}
+                dataSource={createDataSource(organization)}
+                columns={createTableColumns()}
                 loading={isOrganizationLoading}
               />
             </Cards>

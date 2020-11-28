@@ -211,11 +211,7 @@ const Profile = () => {
               counter += 1;
               return (
                 <Child tab={tabTitle} key={counter}>
-                  <Main
-                    className="main-content"
-                    style={{ padding: "0" }}
-                    background="#e5e5e5"
-                  >
+                  <Main className="main-content" style={{ padding: "0" }}>
                     {tabContent}
                   </Main>
                 </Child>

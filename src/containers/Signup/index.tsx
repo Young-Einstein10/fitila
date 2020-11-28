@@ -71,7 +71,13 @@ const Signup = ({ signupUser, history, auth }) => {
 
           <Form.Item
             name="email"
-            rules={[{ message: "Please input your Email!", required: true }]}
+            rules={[
+              {
+                type: "email",
+                message: "The input is not a valid E-mail!",
+              },
+              { message: "Please input your Email!", required: true },
+            ]}
           >
             <InputStyled placeholder="Email Address" />
           </Form.Item>

@@ -64,6 +64,10 @@ const Login = ({ signinUser, history, auth, location }) => {
             name="email"
             rules={[
               {
+                type: "email",
+                message: "The input is not a valid E-mail!",
+              },
+              {
                 message: "Please input your Email!",
                 required: true,
               },
