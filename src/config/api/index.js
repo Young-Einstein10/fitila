@@ -40,18 +40,19 @@ axiosInstance.interceptors.response.use(
       store.dispatch({
         type: GET_ERRORS,
         payload: {
-          message: error.errorResponse
-            ? errorResponse.data && Array.isArray(errorResponse.data.errors)
-              ? errorResponse.data.errors[0]
-              : errorResponse.data.message
-            : errorResponse.data.error[0],
-          fullMessage: errorResponse
-            ? errorResponse.data &&
-              Array.isArray(errorResponse.data.full_messages)
-              ? errorResponse.data.full_messages[0]
-              : errorResponse.data.full_messages
-            : error.message,
-          errors: errorResponse && errorResponse.data.error,
+          message: errorResponse.data.error,
+          // message:
+          //   errorResponse && Object.values(errorResponse.data.errors).length > 0
+          //     ? Object.values(errorResponse.data.errors).flat()[0]
+          //     : errorResponse.data.error,
+
+          // fullMessage: errorResponse
+          //   ? errorResponse.data &&
+          //     Array.isArray(errorResponse.data.full_messages)
+          //     ? errorResponse.data.full_messages[0]
+          //     : errorResponse.data.full_messages
+          //   : error.message,
+          detail: errorResponse && errorResponse.data.detail,
           statusText: errorResponse && errorResponse.statusText,
         },
       });

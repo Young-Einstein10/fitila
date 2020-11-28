@@ -12,14 +12,14 @@ export default (state = initialState, action: ActionType) => {
   switch (type) {
     case GET_ERRORS:
       if (payload && payload.message) {
-        // message.error(payload.message, toastMessageDuration);
+        message.error(payload.message, toastMessageDuration);
         return payload.message;
       } else if (payload && payload.fullMessage) {
         message.error(payload.fullMessage, toastMessageDuration);
         return payload.fullMessage;
-      } else if (payload && payload.errors) {
+      } else if (payload && payload.detail) {
         message.error(payload.errors, toastMessageDuration);
-        return payload.errors;
+        return payload.detail;
       } else if (payload && payload.statusText) {
         message.error(payload.statusText, toastMessageDuration);
         return payload.statusText;

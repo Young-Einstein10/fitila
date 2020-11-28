@@ -1,148 +1,20 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Button, Col, Dropdown, Menu, Row, Space, Table, Spin } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Row, Table, Spin } from "antd";
 import { connect } from "react-redux";
-import FeatherIcon from "feather-icons-react";
+import { Link, NavLink } from "react-router-dom";
+import { content, generateIcons, tableHeader, columns } from "./functions";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
-import { Link, NavLink } from "react-router-dom";
 import {
   getEcosystem,
   getOrganization,
 } from "../../../../redux/actions/businessActions";
-import { ReactComponent as BriefCase } from "../../../../static/svg/briefcase.svg";
-import { UserOutlined } from "@ant-design/icons";
-import { ReactComponent as ArrowDown } from "../../../../static/svg/arrowDown.svg";
-import {
-  CardSegmentStyled,
-  TableHeaderButtonStyled,
-  ViewProfileBtnStyled,
-} from "./styled";
 import SummaryData from "./_partials/SummaryData";
 import FilterOption from "./_partials/Filter";
 
-const content = (
-  <>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="printer" />
-      <span>Printer</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="book-open" />
-      <span>PDF</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file-text" />
-      <span>Google Sheets</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="x" />
-      <span>Excel (XLSX)</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file" />
-      <span>CSV</span>
-    </NavLink>
-  </>
-);
-
-const menu = (
-  <Menu onClick={() => {}}>
-    <Menu.Item key="1" icon={<UserOutlined />}>
-      1st menu item
-    </Menu.Item>
-    <Menu.Item key="2" icon={<UserOutlined />}>
-      2nd menu item
-    </Menu.Item>
-    <Menu.Item key="3" icon={<UserOutlined />}>
-      3rd menu item
-    </Menu.Item>
-  </Menu>
-);
-
-const columns = [
-  {
-    title: "Rank",
-    dataIndex: "rank",
-    key: "rank",
-  },
-  {
-    title: "Company",
-    dataIndex: "company",
-    key: "company",
-  },
-  {
-    title: "Ceo/Founder",
-    dataIndex: "ceo_name",
-    key: "ceo_name",
-    render: text => (
-      <Space size="middle" style={{ display: "flex", alignItems: "center" }}>
-        <>
-          <p
-            className="img_placeholder"
-            style={{
-              width: "30px",
-              height: "30px",
-              borderRadius: "50px",
-              background: "#e6e6e6",
-              // marginRight: "10px",
-              marginBottom: 0,
-            }}
-          ></p>
-          <span>{text}</span>
-        </>
-      </Space>
-    ),
-  },
-  {
-    title: "State",
-    dataIndex: "state",
-    key: "state",
-  },
-  {
-    title: "Sectors",
-    dataIndex: "sectors",
-    key: "sectors",
-  },
-  // {
-  //   title: "Market Cap",
-  //   dataIndex: "market_cap",
-  //   key: "market_cap",
-  // },
-  {
-    title: "Employees",
-    dataIndex: "employees",
-    key: "employees",
-  },
-  {
-    title: "Funding",
-    dataIndex: "funding",
-    key: "funding",
-  },
-  {
-    // title: "Action",
-    key: "action",
-    render: (record, key) => (
-      <Space size="middle">
-        <ViewProfileBtnStyled>
-          <Link to={`/d/profile/${record.key}`}>View Profile</Link>
-        </ViewProfileBtnStyled>
-      </Space>
-    ),
-  },
-];
-
-const tableHeader = (
-  <div style={{ display: "flex", justifyContent: "space-between" }}>
-    <span>Newly Added</span>
-    <Dropdown overlay={menu}>
-      <TableHeaderButtonStyled type="ghost" size="middle">
-        Past Month <ArrowDown />
-      </TableHeaderButtonStyled>
-    </Dropdown>
-  </div>
-);
+import { CardSegmentStyled } from "./styled";
 
 const Dashboard = ({ business, getEcosystem, getOrganization }) => {
   const [isEcosystemLoading, setIsEcosystemLoading] = useState(false);
@@ -164,7 +36,7 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
   }, [getEcosystem, getOrganization]);
 
   return (
-    <AdminSectionWrapper>
+    <AdminSectionWrapper className="dasboard">
       <div style={{ background: "#F4F4F4" }}>
         <PageHeader
           title="Gain credible insights into Nigeria’s most thriving Organizations"
@@ -202,11 +74,14 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
                   <Spin />
                 </Row>
               ) : (
-                <Row gutter={[24, 24]}>
+                <Row gutter={[16, 16]}>
                   {segments.map(segment => (
                     <Col
                       className="gutter-row"
-                      span={6}
+                      xs={24}
+                      sm={12}
+                      md={8}
+                      lg={6}
                       key={segment.id}
                       style={{ minHeight: "122px" }}
                     >
@@ -217,7 +92,7 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
                           .toLowerCase()}`}
                       >
                         <CardSegmentStyled>
-                          <BriefCase />
+                          {generateIcons(segment.name)}
 
                           <div>
                             <strong>{segment.name}</strong>
@@ -250,8 +125,9 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
           </Col>
         </Row>
 
-        <Row gutter={16} style={{ marginTop: "2rem" }}>
-          <Col span={8}>
+        {/* CHARTS */}
+        <Row gutter={[16, 16]} style={{ marginTop: "2rem" }}>
+          <Col xs={24} sm={24} md={12} lg={8}>
             <Cards title="2020 Investments" size="large" more={content}>
               <div
                 className="states-lga"
@@ -260,7 +136,7 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
             </Cards>
           </Col>
 
-          <Col span={8}>
+          <Col xs={24} sm={24} md={12} lg={8}>
             <Cards title="Female Led Startups" size="large" more={content}>
               <div
                 className="states-lga"
@@ -269,7 +145,7 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
             </Cards>
           </Col>
 
-          <Col span={8}>
+          <Col xs={24} sm={24} md={12} lg={8}>
             <Cards title="Funding by Sector" size="large" more={content}>
               <div
                 className="states-lga"
@@ -292,7 +168,7 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
                     company: org.name,
                     ceo_name: org.ceo_name,
                     state: org.state,
-                    sectors: org.sector,
+                    sectors: org.business_sector,
                     market_cap: org.market_cap,
                     employees: org.num_of_employees,
                     funding: org.funding,

@@ -156,7 +156,7 @@ const initialState = {
     {
       id: 6,
 
-      name: "Policy and Regulation",
+      name: "Policy & Regulation",
       description:
         "Organizations involved in entrepreneurship policy design, review or implementation, regulatory organizations, policy advocacy organizations etc.",
       sub_class: [
@@ -202,11 +202,21 @@ const initialState = {
     {
       id: 8,
 
-      name: "MSMEs and Startups",
+      name: "MSMEs & Startups",
       description: "",
       sub_class: [],
     },
   ],
+  sectors: [
+    "Health",
+    "Agriculture",
+    "Creatives",
+    "Education",
+    "Manufacturers",
+    "ICT",
+    "Finance",
+  ],
+  states: ["Lagos", "Ogun", "Abuja", "Kano", "Kaduna"],
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

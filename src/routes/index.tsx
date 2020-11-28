@@ -41,7 +41,7 @@ const Routes = () => {
       <AuthRoute path="/d/contact" component={Contact} />
       <AuthRoute path="/d/project_brief" component={About} />
       <AuthRoute path="/d/help" component={Help} />
-      <AuthRoute path="/d/profile/:id" component={Profile} />
+      <AuthRoute exact path="/d/profile/:id" component={Profile} />
       {/* <AuthRoute path="/d/segments/training" component={Training} />
       <AuthRoute
         path="/d/segments/business_support"

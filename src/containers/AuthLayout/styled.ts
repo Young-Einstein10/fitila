@@ -5,7 +5,7 @@ const Main = Styled.div<{ background?: string }>`
     padding: 1.3rem;
     min-height: 600px;
     background-color: ${({ background }) =>
-      background ? background : "rgb(244, 245, 247)"};
+      background ? background : "#E5E5E5"};
     .ant-card-rtl .ant-card-extra{
                 margin-right: 0 !important;
             }

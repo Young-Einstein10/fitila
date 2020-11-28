@@ -48,13 +48,13 @@ const Landing = ({
   getEcosystem,
   getOrganization,
 }) => {
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      getEcosystem();
+  // useEffect(() => {
+  //   if (auth.isAuthenticated) {
+  //     getEcosystem();
 
-      getOrganization();
-    }
-  }, [auth, getEcosystem, getOrganization]);
+  //     getOrganization();
+  //   }
+  // }, [auth, getEcosystem, getOrganization]);
 
   const handleSubmit = () => {};
 

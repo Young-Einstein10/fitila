@@ -39,7 +39,9 @@ const Favorites = () => {
       key: "action",
       render: () => (
         <Space size="middle">
-          <Button style={{ color: "red" }}>Remove</Button>
+          <Button type="link" style={{ color: "red" }}>
+            Remove
+          </Button>
         </Space>
       ),
     },

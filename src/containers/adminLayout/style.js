@@ -79,138 +79,7 @@ const Div = Styled.div`
             ${({ darkMode }) => (darkMode ? `color: #A8AAB3;` : "")};
         }
     }
-    .customizer-trigger{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px;
-        height: 50px;
-        border-radius: ${({ theme }) =>
-          theme.rtl ? "0 10px 10px 0" : "10px 0 0 10px"};
-        background-color: #5F63F2;
-        position: fixed;
-        ${({ theme }) => (theme.rtl ? "left" : "right")}: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        transition: all .3s ease;
-        z-index: 999;
-        box-shadow: 0 10px 15px rgba(#5F63F2,.20);
-        &.show{
-            ${({ theme }) => (theme.rtl ? "left" : "right")}: 295px;
-        }
-        svg,
-        img{
-            width: 20px;
-            color: #fff;
-            animation: antRotate 3s infinite linear;
-        }
-    }
-    .customizer-wrapper{
-        position: fixed;
-        top: 0;
-        ${({ theme }) => (theme.rtl ? "left" : "right")}: 0;
-        width: 350px;
-        transform: translateX(${({ theme }) =>
-          theme.rtl ? "-350px" : "350px"});
-        height: 100vh;
-        overflow-y: auto;
-        background-color: #fff;
-        box-shadow: 0 0 30px #9299B810;
-        z-index: 99999999999;
-        transition: all .3s ease;
-        @media only screen and (max-width: 479px){
-            width: 280px;
-            transform: translateX(${({ theme }) =>
-              theme.rtl ? "-280px" : "280px"});
-        }
-        &.show{
-            transform: translateX(0);
-        }
-    }
-    .customizer{
-        height: 100%;
-        .customizer__head{
-            position: relative;
-            padding: 18px 24px;
-            border-bottom: 1px solid #f0f0f0;
-            text-align: left;
-            .customizer-close{
-                position: absolute;
-                right: 15px;
-                top: 15px;
-                svg,
-                i{
-                    color: #FF4D4F;
-                }
-            }
-            .customizer__title{
-                font-weight: 600;
-                color: #272B41;
-                font-size: 16px;
-                margin-bottom: 2px;
-            }
-        }
-        .customizer__body{
-            padding: 25px;
-        }
-        .customizer__single{
-            &:not(:last-child){
-                margin-bottom: 35px;
-            }
-            h4{
-                font-weight: 600;
-                font-size: 16px;
-                margin-bottom: 10px;
-                color: #272B41;
-            }
-        }
-    }
-    .customizer-list{
-        margin: -10px;
-        .customizer-list__item{
-            position: relative;
-            display: inline-block;
-            min-height: 60px;
-            background-size: cover;
-            margin: 10px;
-            &.top{
-                span.fa{
-                    top: 35px;
-                }
-            }
-            &:hover{
-                span{
-                    color: #5F63F2;
-                }
-            }
-            a{
-                position: relative;
-                display: block;
-                &.active{
-                    span.fa{
-                        display: block;
-                    }
-                }
-                span.fa{
-                    display: none;
-                    font-size: 16px;
-                    margin-top: 0;
-                    position: absolute;
-                    top: 15px;
-                    right: 15px;
-                    color: ${({ theme }) => theme["success-color"]};
-                }
-            }
-            img{
-                width: 100%;
-            }
-            span{
-                display: inline-block;
-                margin-top: 15px;
-                color: #272B41;
-            }
-        }
-    }
+
     .striking-logo{
         @media only screen and (max-width: 875px){
             ${({ theme }) => (theme.rtl ? "margin-left" : "margin-right")}: 4px;
@@ -384,10 +253,11 @@ const Div = Styled.div`
                     padding: 0 15px !important;
                     &.ant-menu-item-active{
                         border-radius: 4px;
-                        ${({ darkMode }) =>
-                          darkMode
-                            ? `background-color: rgba(255, 255, 255, .05);`
-                            : ""};
+                        
+                        a {
+                            color: ${({ theme }) => theme["seconadry-color"]};
+
+                        }
                     }
                     a{
                         display: flex !important;
@@ -406,12 +276,28 @@ const Div = Styled.div`
                         }
                     }
                     &.ant-menu-item-selected{
+                        color: ${({ theme }) => theme["secondary-color"]}
+                        background-color: ${({ theme }) =>
+                          theme["secondary-hover"]};
+
+                        a, a:hover  {
+                            color: ${({ theme }) => theme["secondary-color"]}
+                            font-weight: bold;
+                        }
+
                         svg,
                         i{
-                            color: ${({ theme }) => theme["primary-color"]};
+                            color: ${({ theme }) => theme["secondary-color"]};
                         }
                     }
                 }
+
+                .ant-menu-item-active {
+                    a {
+                        color: ${({ theme }) => theme["secondary-color"]}
+                    }
+                }
+
                 .ant-menu-submenu,
                 .ant-menu-item{
                     ${({ theme }) => theme.rtl && `padding-right: 5px;`}

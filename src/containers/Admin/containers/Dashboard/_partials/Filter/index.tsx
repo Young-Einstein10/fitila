@@ -7,23 +7,17 @@ import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowD
 const FilterOption = ({ business }) => {
   const sectorData = (
     <Menu onClick={() => {}}>
-      <Menu.Item key="1">Health</Menu.Item>
-      <Menu.Item key="2">Agriculture</Menu.Item>
-      <Menu.Item key="3">Creatives</Menu.Item>
-      <Menu.Item key="4">Education</Menu.Item>
-      <Menu.Item key="5">Manufacturers</Menu.Item>
-      <Menu.Item key="6">ICT</Menu.Item>
-      <Menu.Item key="7">Finance</Menu.Item>
+      {business.sectors.map((sector, key) => (
+        <Menu.Item key={key}>{sector}</Menu.Item>
+      ))}
     </Menu>
   );
 
   const stateData = (
     <Menu onClick={() => {}}>
-      <Menu.Item key="11">Lagos</Menu.Item>
-      <Menu.Item key="21">Ogun</Menu.Item>
-      <Menu.Item key="31">Abuja</Menu.Item>
-      <Menu.Item key="41">Kano</Menu.Item>
-      <Menu.Item key="51">Kaduna</Menu.Item>
+      {business.states.map((state, key) => (
+        <Menu.Item key={key}>{state}</Menu.Item>
+      ))}
     </Menu>
   );
 
@@ -36,11 +30,8 @@ const FilterOption = ({ business }) => {
   );
 
   return (
-    <Row
-      gutter={{ xs: 8, sm: 16, md: 24, lg: 24 }}
-      style={{ padding: "0 1.3rem 1.3rem" }}
-    >
-      <Col span={6}>
+    <Row gutter={[16, 16]} style={{ padding: "0 1.3rem 1.3rem" }}>
+      <Col xs={24} sm={24} md={12} lg={8}>
         <Dropdown overlay={businessData}>
           <Button
             style={{
@@ -57,7 +48,7 @@ const FilterOption = ({ business }) => {
         </Dropdown>
       </Col>
 
-      <Col span={6}>
+      <Col xs={24} sm={24} md={12} lg={8}>
         <Dropdown overlay={stateData}>
           <Button
             style={{
@@ -74,7 +65,7 @@ const FilterOption = ({ business }) => {
         </Dropdown>
       </Col>
 
-      <Col span={6}>
+      <Col xs={24} sm={24} md={12} lg={8}>
         <Dropdown overlay={sectorData}>
           <Button
             style={{

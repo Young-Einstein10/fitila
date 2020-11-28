@@ -15,6 +15,7 @@ import { AdminSectionWrapper } from "../../../../styled";
 import { Child, TabBasic } from "../../../../../../components/tabs/style";
 import SummaryData from "../SummaryData";
 import { ViewProfileBtnStyled } from "../../styled";
+import { capitalize, generateIcons } from "../../functions";
 
 const TableHeaderButtonStyled = Styled(Button)`
   background: #F7F9FA;
@@ -359,9 +360,9 @@ const Segment = ({
                               textTransform: "capitalize",
                             }}
                           >
-                            <BusinessSupportIcon
-                              style={{ marginRight: "15px" }}
-                            />{" "}
+                            {generateIcons(capitalize(pageHeader), {
+                              marginRight: "15px",
+                            })}{" "}
                             {pageHeader}
                           </p>
                         </div>

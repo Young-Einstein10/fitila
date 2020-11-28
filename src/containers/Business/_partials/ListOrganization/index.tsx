@@ -290,7 +290,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                   )}
 
                 {state.business_type === "Enterpreneur" && (
-                  <Form.Item name="business_sector">
+                  <Form.Item name="sector">
                     <Select placeholder="Sector" allowClear>
                       <Option value="Health">Health</Option>
                       <Option value="Agriculture">Agriculture</Option>

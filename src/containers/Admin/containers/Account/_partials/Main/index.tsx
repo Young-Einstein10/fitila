@@ -78,7 +78,17 @@ export const Deactivate = () => (
           <p>
             Are you sure you want to deactivate your account? We put a lot into
             the work we do, and, we’ll be sad to see you leave, if there is
-            anything you want us to help you with, please contact us here
+            anything you want us to help you with, please{" "}
+            <NavLink
+              to="/d/contact"
+              style={{
+                textDecoration: "underline",
+                fontWeight: "bold",
+                color: "#000",
+              }}
+            >
+              contact us here
+            </NavLink>
           </p>
         </div>
 

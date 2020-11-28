@@ -1,11 +1,14 @@
 import React from "react";
 import { Row, Col, Card } from "antd";
 import { ReactComponent as Icon1 } from "../../../../../../static/svg/icon1.svg";
+import { ReactComponent as StarIcon } from "../../../../../../static/svg/star.svg";
+import { ReactComponent as LocationIcon } from "../../../../../../static/svg/location.svg";
+import { ReactComponent as HandBagIcon } from "../../../../../../static/svg/handbag.svg";
 
 const SummaryData = ({ business }) => {
   return (
-    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-      <Col span={6}>
+    <Row gutter={[16, 16]}>
+      <Col xs={24} sm={12} md={8} lg={6}>
         <Card>
           <p style={{ color: "#81868C", borderRadius: "4px" }}>
             Number of Organizations
@@ -32,7 +35,7 @@ const SummaryData = ({ business }) => {
         </Card>
       </Col>
 
-      <Col span={6}>
+      <Col xs={24} sm={12} md={8} lg={6}>
         <Card>
           <p style={{ color: "#81868C", borderRadius: "4px" }}>
             Number of States
@@ -54,12 +57,12 @@ const SummaryData = ({ business }) => {
             >
               5
             </p>
-            <Icon1 />
+            <StarIcon />
           </div>
         </Card>
       </Col>
 
-      <Col span={6}>
+      <Col xs={24} sm={12} md={8} lg={6}>
         <Card>
           <p style={{ color: "#81868C", borderRadius: "4px" }}>Locations</p>
 
@@ -79,15 +82,15 @@ const SummaryData = ({ business }) => {
             >
               376
             </p>
-            <Icon1 />
+            <LocationIcon />
           </div>
         </Card>
       </Col>
 
-      <Col span={6}>
+      <Col xs={24} sm={12} md={8} lg={6}>
         <Card>
           <p style={{ color: "#81868C", borderRadius: "4px" }}>
-            Estimated Market Size
+            Number of Sectors
           </p>
 
           <div
@@ -104,9 +107,9 @@ const SummaryData = ({ business }) => {
                 marginBottom: "0px",
               }}
             >
-              ₦9.5B
+              7
             </p>
-            <Icon1 />
+            <HandBagIcon />
           </div>
         </Card>
       </Col>

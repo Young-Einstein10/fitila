@@ -1,14 +1,16 @@
 import React from "react";
-import { Col, Row, Menu, Dropdown, Table, Space, Button } from "antd";
+import { connect } from "react-redux";
+import { Col, Row, Menu, Dropdown, Table, Space } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import FeatherIcon from "feather-icons-react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import { UserOutlined } from "@ant-design/icons";
 import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
 import { TableHeaderButtonStyled } from "../../../Dashboard/_partials/Businesses";
+import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
 
-const SimilarCompanies = () => {
+const SimilarCompanies = ({ organization }) => {
   const menu = (
     <Menu onClick={() => {}}>
       <Menu.Item key="1" icon={<UserOutlined />}>
@@ -48,64 +50,6 @@ const SimilarCompanies = () => {
     </>
   );
 
-  const dataSource = [
-    {
-      key: "1",
-      rank: "01",
-      company: "Paystack",
-      ceo_founder: "Sundar Pichai",
-      state: "Adamawa",
-      sectors: "Technology",
-      market_cap: "$134.5B",
-      employees: "20/200",
-      funding: "$2.4M",
-    },
-    {
-      key: "1",
-      rank: "01",
-      company: "Paystack",
-      ceo_founder: "Sundar Pichai",
-      state: "Adamawa",
-      sectors: "Technology",
-      market_cap: "$134.5B",
-      employees: "20/200",
-      funding: "$2.4M",
-    },
-    {
-      key: "1",
-      rank: "01",
-      company: "Paystack",
-      ceo_founder: "Sundar Pichai",
-      state: "Adamawa",
-      sectors: "Technology",
-      market_cap: "$134.5B",
-      employees: "20/200",
-      funding: "$2.4M",
-    },
-    {
-      key: "1",
-      rank: "01",
-      company: "Paystack",
-      ceo_founder: "Sundar Pichai",
-      state: "Adamawa",
-      sectors: "Technology",
-      market_cap: "$134.5B",
-      employees: "20/200",
-      funding: "$2.4M",
-    },
-    {
-      key: "1",
-      rank: "01",
-      company: "Paystack",
-      ceo_founder: "Sundar Pichai",
-      state: "Adamawa",
-      sectors: "Technology",
-      market_cap: "$134.5B",
-      employees: "20/200",
-      funding: "$2.4M",
-    },
-  ];
-
   const columns = [
     {
       title: "Rank",
@@ -132,11 +76,11 @@ const SimilarCompanies = () => {
       dataIndex: "sectors",
       key: "sectors",
     },
-    {
-      title: "Market Cap",
-      dataIndex: "market_cap",
-      key: "market_cap",
-    },
+    // {
+    //   title: "Market Cap",
+    //   dataIndex: "market_cap",
+    //   key: "market_cap",
+    // },
     {
       title: "Employees",
       dataIndex: "employees",
@@ -148,16 +92,17 @@ const SimilarCompanies = () => {
       key: "funding",
     },
     {
-      title: "Action",
+      // title: "Action",
       key: "action",
-      render: () => (
+      render: (record, key) => (
         <Space size="middle">
-          <Button>View Profile</Button>
+          <ViewProfileBtnStyled>
+            <Link to={`/d/profile/${record.key}`}>View Profile</Link>
+          </ViewProfileBtnStyled>
         </Space>
       ),
     },
   ];
-
   return (
     <Row gutter={15}>
       <Col xs={24}>
@@ -169,7 +114,7 @@ const SimilarCompanies = () => {
                 justifyContent: "space-between",
               }}
             >
-              <span>Sub-Category</span>
+              <span>Companies in Similar Locations and Sectors</span>
               <Dropdown overlay={menu}>
                 <TableHeaderButtonStyled type="ghost" size="middle">
                   Past Month <ArrowDown />
@@ -182,7 +127,19 @@ const SimilarCompanies = () => {
           <Table
             className="table-responsive"
             pagination={false}
-            dataSource={dataSource}
+            dataSource={organization.map((org, key) => {
+              return {
+                key: key,
+                rank: key + 1,
+                company: org.name,
+                ceo_founder: org.ceo_name,
+                state: org.state,
+                sectors: org.sector,
+                market_cap: org.market_cap || null,
+                employees: org.employess || null,
+                funding: org.funding || null,
+              };
+            })}
             columns={columns}
           />
         </Cards>
@@ -191,4 +148,8 @@ const SimilarCompanies = () => {
   );
 };
 
-export default SimilarCompanies;
+const mapStateToProps = state => ({
+  organization: state.business.organization,
+});
+
+export default connect(mapStateToProps, null)(SimilarCompanies);

@@ -5,12 +5,7 @@ const { TabPane } = Tabs;
 
 const TabColor = colors => `
   margin-bottom: 30px !important;
-  .ant-tabs-bar {
-    margin: 0;
-  }
-  .ant-tabs-nav-list{
-    margin: 0;
-  }
+
   .ant-tabs-nav{
     color : ${({ color }) =>
       color !== "default" &&
@@ -21,9 +16,7 @@ const TabColor = colors => `
         : "#000000"};
   }
   
-  .ant-tabs-tab {
-    padding: 12px 25px;
-  }
+
 
   .ant-tabs-nav .ant-tabs-tab:hover, .ant-tabs-nav .ant-tabs-tab:focus {
     //background : ${colors !== "default" && colors};
@@ -74,17 +67,34 @@ const TabChildColor = color => `
 const TabBasic = Styled(Tabs)`
   margin-bottom: 30px !important;
   ${({ color }) => color && TabColor(color)}
-  padding: 0 1.3rem !important;
+  background: #E5E5E5;
+
+  & > .ant-tabs-nav {
+    background: #fff;
+    padding-right: 1.3rem;
+
+
+    .ant-tabs-tab {
+      margin: 15px 0;
+      padding: 5px 15px
+      border-right: solid 1px #D0D4D9;
+    }
+
+    .ant-tabs-tab:first-child {
+      margin-left: 1.3rem;
+    }
+
+    /* .ant-tabs-tab-active {
+      border-bottom: solid 2px red;
+    } */
+  }
+
+
+  /* padding: 0 1.3rem !important; */
 `;
 
-const Child = Styled(TabPane)` 
-    /* background: ${({ color }) =>
-      color !== "default" &&
-      color !== "#ffffff" &&
-      color !== "#fff" &&
-      color !== "white"
-        ? "#ffffff"
-        : "#000000"}; */
+const Child = Styled(TabPane)`
+  padding: 1.3rem
     ${({ color }) => color && TabChildColor(color)}
 `;
 

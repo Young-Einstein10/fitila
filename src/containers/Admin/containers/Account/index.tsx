@@ -55,9 +55,6 @@ const Account = () => {
               counter += 1;
               return (
                 <Child tab={tabTitle} key={counter}>
-                  {/* <h2>{title}</h2>
-                  <p>{content}</p> */}
-
                   <div>
                     <PageHeader
                       title={
@@ -67,9 +64,10 @@ const Account = () => {
                               display: "flex",
                               alignItems: "center",
                               marginBottom: "0",
+                              fontWeight: "bold",
+                              fontSize: "24px",
                             }}
                           >
-                            <FundingIcon style={{ marginRight: "15px" }} />{" "}
                             Account
                           </p>
                         </div>
@@ -85,7 +83,10 @@ const Account = () => {
                     />
                   </div>
 
-                  <Main style={{ paddingRight: "0", paddingLeft: "0" }}>
+                  <Main
+                    style={{ paddingRight: "0", paddingLeft: "0" }}
+                    background="#e5e5e5"
+                  >
                     {tabContent}
                   </Main>
                 </Child>
