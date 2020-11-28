@@ -133,10 +133,10 @@ const Organizations = ({ getOrganization, organization }) => {
   }, [getOrganization]);
 
   return (
-    <AdminSectionWrapper>
+    <AdminSectionWrapper className="organizations">
       <div>
         <PageHeader
-          title="Organizations in Lagos"
+          title="Organizations"
           buttons={[
             <div key="1" className="page-header-actions">
               <Button size="large" type="primary">
@@ -144,6 +144,9 @@ const Organizations = ({ getOrganization, organization }) => {
               </Button>
             </div>,
           ]}
+          style={{
+            background: "none",
+          }}
         />
 
         <Filter />

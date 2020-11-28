@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Row, Col } from "antd";
+import { connect } from "react-redux";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
-import { ReactComponent as FundingIcon } from "../../../../static/svg/funding.svg";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import { Child, TabBasic } from "../../../../components/tabs/style";
@@ -10,40 +10,42 @@ import Activity from "./_partials/Activity";
 import Favorites from "./_partials/Favorites";
 import { NavLink } from "react-router-dom";
 
-const data = [
-  {
-    id: 1,
-    title: "Your Profile",
-    tabTitle: "Your Profile",
-    content: (
-      <Row gutter={15}>
-        <Col xs={24}>
-          <Profile />
+const Account = ({ auth }) => {
+  const { user } = auth;
 
-          <Security />
-          <Deactivate />
-
-          <ModifyAccount />
-        </Col>
-      </Row>
-    ),
-  },
-  {
-    id: 2,
-    title: "Activity",
-    tabTitle: "Activity",
-    content: <Activity />,
-  },
-  {
-    id: 3,
-    title: "Favorites",
-    tabTitle: "Favorites",
-    content: <Favorites />,
-  },
-];
-
-const Account = () => {
   let counter = 0;
+
+  const data = [
+    {
+      id: 1,
+      title: "Your Profile",
+      tabTitle: "Your Profile",
+      content: (
+        <Row gutter={15}>
+          <Col xs={24}>
+            <Profile user={user} />
+
+            <Security />
+            <Deactivate />
+
+            <ModifyAccount />
+          </Col>
+        </Row>
+      ),
+    },
+    {
+      id: 2,
+      title: "Activity",
+      tabTitle: "Activity",
+      content: <Activity />,
+    },
+    {
+      id: 3,
+      title: "Favorites",
+      tabTitle: "Favorites",
+      content: <Favorites />,
+    },
+  ];
 
   return (
     <AdminSectionWrapper>
@@ -79,7 +81,10 @@ const Account = () => {
                           </Button>
                         </div>,
                       ]}
-                      style={{ paddingLeft: "0", paddingRight: "0" }}
+                      style={{
+                        padding: "0",
+                        background: "none",
+                      }}
                     />
                   </div>
 
@@ -99,4 +104,8 @@ const Account = () => {
   );
 };
 
-export default Account;
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {})(Account);

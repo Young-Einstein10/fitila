@@ -2,15 +2,23 @@ import { Layout } from "antd";
 import Styled from "styled-components";
 const { Header, Footer } = Layout;
 
+const Div = Styled.div`
+    background: #fff
+`;
 
 const LayoutStyled = Styled(Layout)`
     & header.ant-layout-header {
         box-shadow: 0px 2px 8px rgba(53,55,81,0.04);
         padding: 0 40px;
     }
-`
+`;
 
-const HeaderStyled = Styled(Header)`    
+const HeaderStyled = Styled(Header)`  
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #fff
 
     .ant-layout-header {
         min-height: 64px;
@@ -71,4 +79,4 @@ const FooterStyled = Styled(Footer)`
       
 `;
 
-export { LayoutStyled, HeaderStyled, FooterStyled };
+export { Div, LayoutStyled, HeaderStyled, FooterStyled };

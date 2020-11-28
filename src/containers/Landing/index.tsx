@@ -76,7 +76,7 @@ const Landing = ({
         name="login"
         onFinish={handleSubmit}
         layout="vertical"
-        style={{ paddingTop: "6rem" }}
+        style={{ paddingTop: "8rem" }}
       >
         <Heading
           style={{ fontSize: "48px", fontWeight: "bold" }}
@@ -101,12 +101,6 @@ const Landing = ({
             justifyContent: "center",
           }}
         >
-          {/* <Input.Search
-            size="large"
-            placeholder="Search by Organization, Sector and States"
-            style={{ width: "80%" }}
-          /> */}
-
           <SelectStyled
             suffixIcon={<SelectSearchIcon />}
             showSearch

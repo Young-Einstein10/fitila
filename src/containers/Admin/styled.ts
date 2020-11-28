@@ -1,7 +1,7 @@
 import Styled from "styled-components";
 
 const AdminSectionWrapper = Styled.section<{ background?: string }>`
-  background: ${({ background }) => (background ? background : "#E5E5E5")};
+  background: ${({ background }) => (background ? background : "#FAFAFA")};
   /* padding: 0 1.3rem 1.3rem; */
   /* min-height: calc(100vh - ()) */
 
@@ -12,6 +12,10 @@ const AdminSectionWrapper = Styled.section<{ background?: string }>`
         border-radius: 4px;
         height: 40px;
       }
+  }
+
+  .ant-page-header {
+    background: none;
   }
 
   &.section-add-business, 
@@ -30,6 +34,10 @@ const AdminSectionWrapper = Styled.section<{ background?: string }>`
 
   .ant-form-item .ant-upload {
     width: 100%;
+  }
+
+  .ant-form-item .ant-form-item-label {
+    font-weight: bold;
   }
 
 

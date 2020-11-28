@@ -5,7 +5,7 @@ const Main = Styled.div<{ background?: string }>`
     padding: 1.3rem;
     min-height: 600px;
     background-color: ${({ background }) =>
-      background ? background : "#E5E5E5"};
+      background ? background : "#FAFAFA"};
     .ant-card-rtl .ant-card-extra{
                 margin-right: 0 !important;
             }
@@ -52,9 +52,9 @@ const Main = Styled.div<{ background?: string }>`
 
     /* progress bars */
     
-    @media only screen and (max-width: 1199px){
+    /* @media only screen and (max-width: 1199px){
         padding: 0px 15px;
-    }
+    } */
     @media only screen and (max-width: 991px){
         min-height: 580px;
     }

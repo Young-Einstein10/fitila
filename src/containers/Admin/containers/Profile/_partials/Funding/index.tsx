@@ -59,7 +59,7 @@ const Funding = () => {
                 justifyContent: "space-between",
               }}
             >
-              <span>Funding</span>
+              <span>Estimated Funding (Raised over the last 5years)</span>
               <Dropdown overlay={menu}>
                 <TableHeaderButtonStyled type="ghost" size="middle">
                   Past Month <ArrowDown />

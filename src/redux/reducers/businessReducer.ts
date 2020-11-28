@@ -33,6 +33,12 @@ const initialState = {
 
           sub_class: [],
         },
+        {
+          name: "Resources",
+          description:
+            "Organizations that provide or host resources that businesses need on their entrepreneurship journey",
+          sub_class: ["Virtual Resources", "In-Person Resources"],
+        },
       ],
     },
     {
@@ -182,29 +188,15 @@ const initialState = {
     {
       id: 7,
 
-      name: "Resources",
-      description:
-        "Organizations that provide or host resources that businesses need on their entrepreneurship journey",
+      name: "Startups",
+      description: "",
       sub_class: [
         {
-          name: "Virtual Resources",
-          description: "",
-          sub_class: [],
-        },
-        {
-          name: "In-Person Resources",
+          name: "MSMEs",
           description: "",
           sub_class: [],
         },
       ],
-    },
-
-    {
-      id: 8,
-
-      name: "MSMEs & Startups",
-      description: "",
-      sub_class: [],
     },
   ],
   sectors: [

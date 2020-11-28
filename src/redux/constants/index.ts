@@ -14,5 +14,5 @@ export const ECOSYSTEM_SEGMENTS = {
   RESEARCH_AND_DEVELOPMENT: "Research & Development",
   POLICY_AND_REGULATION: "Policy & Regulation",
   RESOURCES: "Resources",
-  MSMES_AND_STARTUPS: "MSMEs & Startups",
+  STARTUPS: "Startups",
 };

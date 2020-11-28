@@ -3,7 +3,12 @@ import { PageHeader } from "antd";
 
 const PageHeaderStyle = Styled(PageHeader)`
   margin-bottom: 15px;
-  
+
+  &.ant-page-header {
+      background-color: none !important;
+
+  }
+
   .page-header-actions button.ant-btn-white svg {
     width: 12px;
     height: 12px;

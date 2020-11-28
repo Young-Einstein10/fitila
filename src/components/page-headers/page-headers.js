@@ -17,13 +17,13 @@ const PageHeader = props => {
     <>
       <div
         style={{
-          backgroundColor: bgColor || "#F4F5F7",
+          // backgroundColor: bgColor || "#F4F5F7",
           ...style,
         }}
       >
         <PageHeaderStyle
           style={{
-            backgroundColor: "rgb(244, 245, 247)",
+            // backgroundColor: "rgb(244, 245, 247)",
             ...style,
           }}
           // onBack={() => window.history.back()}

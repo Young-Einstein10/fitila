@@ -59,7 +59,7 @@ const Revenue = () => {
                 justifyContent: "space-between",
               }}
             >
-              <span>Revenue</span>
+              <span>Estimated Revenue (Made over the last 5 years)</span>
               <Dropdown overlay={menu}>
                 <TableHeaderButtonStyled type="ghost" size="middle">
                   Past Month <ArrowDown />
