@@ -126,6 +126,9 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
         ...state,
         ...values,
         company_valuation: `${values.currency}${values.currency_value}`,
+        is_ecosystem:
+          state.business_type === "Ecosystem Enabler" ? true : false,
+        is_enterpreneur: state.business_type === "Enterpreneur" ? true : false,
       });
     }
 
