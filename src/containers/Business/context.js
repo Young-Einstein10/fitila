@@ -15,7 +15,7 @@ const BusinessProvider = ({ children }) => {
     state: "",
     ecosystem: "",
     sub_segment: "",
-    business_sector: "",
+    sector: "",
     business_level: "",
     is_startup: "",
     num_supported_business: "",
@@ -32,6 +32,7 @@ const BusinessProvider = ({ children }) => {
     cac_doc: "",
     is_enterpreneur: false,
     is_ecosystem: false,
+    is_active: true,
     user: null,
   });
 

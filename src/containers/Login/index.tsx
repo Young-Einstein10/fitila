@@ -27,22 +27,24 @@ const Login = ({ signinUser, history, auth, location }) => {
     }
   }, [auth, state, history]);
 
-  const handleSubmit = values => {
+  const handleSubmit = async values => {
     setIsLoading(true);
     // console.log(values);
-    signinUser(values)
-      .then(res => {
-        setIsLoading(false);
-        if (state && state.next) {
-          history.push(state.next);
-        } else {
-          history.push("/d");
-        }
-      })
-      .catch((err: any) => {
-        console.log(err);
-        setIsLoading(false);
-      });
+
+    try {
+      const values = await form.validateFields();
+
+      const res = await signinUser(values);
+      setIsLoading(false);
+
+      if (state && state.next) {
+        history.push(state.next);
+      } else {
+        history.push("/d");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -70,7 +72,10 @@ const Login = ({ signinUser, history, auth, location }) => {
             <InputStyled placeholder="Email Address" />
           </Form.Item>
 
-          <Form.Item name="password">
+          <Form.Item
+            name="password"
+            rules={[{ message: "Please input your password", required: true }]}
+          >
             <InputStyled.Password placeholder="Password" />
           </Form.Item>
 

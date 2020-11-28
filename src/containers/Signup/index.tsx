@@ -19,27 +19,23 @@ const Signup = ({ signupUser, history, auth }) => {
 
   const [form] = Form.useForm();
 
-  // useEffect(() => {
-  //   if (!auth.isAuthhenticated) {
-  //     history.push("/d");
-  //   }
-  // }, [auth, history]);
-
-  const handleSubmit = values => {
+  const handleSubmit = async values => {
     setIsLoading(true);
-    console.log(values);
-    signupUser(values)
-      .then(res => {
-        notification.success({
-          message: "Your Account Has Been Created Successfully",
-        });
-        setIsLoading(false);
-        history.push("/d");
-      })
-      .catch((err: any) => {
-        console.log(err);
-        setIsLoading(false);
+
+    try {
+      const values = await form.validateFields();
+
+      const res = await signupUser(values);
+
+      notification.success({
+        message: "Your Account Has Been Created Successfully",
       });
+      setIsLoading(false);
+      history.push("/d");
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -80,15 +76,21 @@ const Signup = ({ signupUser, history, auth }) => {
             <InputStyled placeholder="Email Address" />
           </Form.Item>
 
-          <Form.Item name="role" rules={[{ required: true }]}>
+          <Form.Item
+            name="role"
+            rules={[{ message: "Please Select a role", required: true }]}
+          >
             <Select placeholder="Choose Your Role" allowClear>
-              <Option value="male">Enterpreneur</Option>
-              <Option value="female">Ecosysytem Enabler</Option>
-              <Option value="other">other</Option>
+              <Option value="Student">Student</Option>
+              <Option value="Researcher">Researcher</Option>
+              <Option value="Manager">Manager</Option>
             </Select>
           </Form.Item>
 
-          <Form.Item name="password">
+          <Form.Item
+            name="password"
+            rules={[{ message: "Please input your password", required: true }]}
+          >
             <InputStyled.Password placeholder="Password" />
           </Form.Item>
 

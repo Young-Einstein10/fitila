@@ -117,6 +117,9 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
         ecosystem: selectedEcosystem[0].id,
         sub_ecosystem: selectedSubEcosystem[0].id,
         sub_segment: selectedSubEcosystem[0].id,
+        is_ecosystem:
+          state.business_type === "Ecosystem Enabler" ? true : false,
+        is_enterpreneur: state.business_type === "Enterpreneur" ? true : false,
       });
     } else {
       setState({

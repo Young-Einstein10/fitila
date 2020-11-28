@@ -168,7 +168,7 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
                     company: org.name,
                     ceo_name: org.ceo_name,
                     state: org.state,
-                    sectors: org.business_sector,
+                    sectors: org.sector,
                     market_cap: org.market_cap,
                     employees: org.num_of_employees,
                     funding: org.funding,
