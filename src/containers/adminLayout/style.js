@@ -8,6 +8,19 @@ const Div = Styled.div`
         ${({ darkMode }) => (darkMode ? `background: #272B41;` : "")};
         z-index: 999;
 
+        .navitem-left {
+            display: flex;
+            align-items: center;
+
+            .ant-breadcrumb {
+                margin-left: 4rem;
+                color: #000000;
+                font-size: 1rem;
+            }
+
+        }
+
+
         .ant-btn-link{
             ${({ darkMode }) =>
               darkMode

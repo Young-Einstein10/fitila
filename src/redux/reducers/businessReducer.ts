@@ -188,11 +188,16 @@ const initialState = {
     {
       id: 7,
 
-      name: "Startups",
+      name: "MSMEs & Startups",
       description: "",
       sub_class: [
         {
           name: "MSMEs",
+          description: "",
+          sub_class: [],
+        },
+        {
+          name: "Startups",
           description: "",
           sub_class: [],
         },

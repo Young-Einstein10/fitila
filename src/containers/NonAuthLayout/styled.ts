@@ -1,4 +1,5 @@
-import { Layout } from "antd";
+import { Layout, Button } from "antd";
+import { Link } from "react-router-dom";
 import Styled from "styled-components";
 const { Header, Footer } = Layout;
 
@@ -79,4 +80,53 @@ const FooterStyled = Styled(Footer)`
       
 `;
 
-export { Div, LayoutStyled, HeaderStyled, FooterStyled };
+const BusinessButton = Styled(Button)`
+  border: ${({ theme }) => `solid 1px ${theme["primary-color"]}`}
+  color: ${({ theme }) => theme["primary-color"]}
+  margin-right: 2rem;
+`;
+
+const ButtonStyled = Styled(Button)`
+  background: #F7F9FA
+  color: #000000;
+  font-weight: 700;
+  border: 0;
+
+  &:hover, &:active {
+   background: #F7F9FA
+  color: #000000;
+  font-weight: 700;
+  border: 0;
+  }
+`;
+
+const LinkStyled = Styled(Link)`
+  background: #F7F9FA; 
+
+  
+  &:first-child {
+    margin-bottom: 0.625rem
+  }
+  
+  &:hover {
+    background:  #F7F9FA;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    color: #000
+    font-weight: bold;
+    font-size: 1rem
+  }
+`;
+
+export {
+  BusinessButton,
+  ButtonStyled,
+  LinkStyled,
+  Div,
+  LayoutStyled,
+  HeaderStyled,
+  FooterStyled,
+};

@@ -1,66 +1,26 @@
 import React, { FunctionComponent } from "react";
 import { Layout, Breadcrumb, Col, Row, Button } from "antd";
-import { DownOutlined } from "@ant-design/icons";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../static/svg/logo.svg";
 import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
-import { ReactComponent as LoginIcon } from "../../static/svg/login.svg";
-import { ReactComponent as UserIcon } from "../../static/svg/usericon.svg";
-
-import { Div, FooterStyled, HeaderStyled, LayoutStyled } from "./styled";
-import Styled from "styled-components";
-import { Dropdown } from "../../components/dropdown/dropdown";
-// import { Button as ButtonStyled } from "../../components/buttons/buttons";
+import {
+  BusinessButton,
+  ButtonStyled,
+  Div,
+  FooterStyled,
+  HeaderStyled,
+  LayoutStyled,
+  LinkStyled,
+} from "./styled";
 
 const { Content } = Layout;
 
-const BusinessButton = Styled(Button)`
-  border: ${({ theme }) => `solid 1px ${theme["primary-color"]}`}
-  color: ${({ theme }) => theme["primary-color"]}
-  margin-right: 2rem;
-`;
-
-const ButtonStyled = Styled(Button)`
-  background: #F7F9FA
-  color: #000000;
-  font-weight: 700;
-  border: 0;
-
-  &:hover, &:active {
-   background: #F7F9FA
-  color: #000000;
-  font-weight: 700;
-  border: 0;
-  }
-`;
-
-const LinkStyled = Styled(Link)`
-  background: #F7F9FA; 
-
-  
-  &:first-child {
-    margin-bottom: 10px
-  }
-  
-  &:hover {
-    background:  #F7F9FA;
-  }
-
-  span {
-    display: flex;
-    align-items: center;
-    color: #000
-    font-weight: bold;
-    font-size: 16px
-  }
-`;
-
 const NonAuthLayout: FunctionComponent = ({ children }) => {
   const menu = (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "1.25rem" }}>
       <LinkStyled to="/signup">
         <span>
-          <UserPlus style={{ marginRight: "20px" }} /> Sign Up
+          <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up
         </span>
       </LinkStyled>
     </div>
@@ -106,7 +66,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
               <ButtonStyled size="large">
                 <LinkStyled to="/signup">
                   <span>
-                    <UserPlus style={{ marginRight: "20px" }} /> Sign Up
+                    <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up
                   </span>
                 </LinkStyled>
               </ButtonStyled>
@@ -116,10 +76,10 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
 
         <Content
           style={{
-            padding: "0 50px",
+            padding: "0 3.125rem",
             background: "#fff",
             minHeight: "calc(100vh - 128px)",
-            marginTop: "64px",
+            marginTop: "4rem",
           }}
         >
           <section>{children}</section>

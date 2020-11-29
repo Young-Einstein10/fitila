@@ -4,12 +4,18 @@ import { ReactComponent as Icon1 } from "../../../../../../static/svg/icon1.svg"
 import { ReactComponent as StarIcon } from "../../../../../../static/svg/star.svg";
 import { ReactComponent as LocationIcon } from "../../../../../../static/svg/location.svg";
 import { ReactComponent as HandBagIcon } from "../../../../../../static/svg/handbag.svg";
+import Styled from "styled-components";
+
+const CardStyled = Styled(Card)`
+  box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
+  border-radius: 4px;
+`;
 
 const SummaryData = ({ business }) => {
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={12} md={8} lg={6}>
-        <Card>
+        <CardStyled>
           <p style={{ color: "#81868C", borderRadius: "4px" }}>
             Number of Organizations
           </p>
@@ -32,11 +38,11 @@ const SummaryData = ({ business }) => {
             </p>
             <Icon1 />
           </div>
-        </Card>
+        </CardStyled>
       </Col>
 
       <Col xs={24} sm={12} md={8} lg={6}>
-        <Card>
+        <CardStyled>
           <p style={{ color: "#81868C", borderRadius: "4px" }}>
             Number of States
           </p>
@@ -59,11 +65,11 @@ const SummaryData = ({ business }) => {
             </p>
             <StarIcon />
           </div>
-        </Card>
+        </CardStyled>
       </Col>
 
       <Col xs={24} sm={12} md={8} lg={6}>
-        <Card>
+        <CardStyled>
           <p style={{ color: "#81868C", borderRadius: "4px" }}>Locations</p>
 
           <div
@@ -84,11 +90,11 @@ const SummaryData = ({ business }) => {
             </p>
             <LocationIcon />
           </div>
-        </Card>
+        </CardStyled>
       </Col>
 
       <Col xs={24} sm={12} md={8} lg={6}>
-        <Card>
+        <CardStyled>
           <p style={{ color: "#81868C", borderRadius: "4px" }}>
             Number of Sectors
           </p>
@@ -111,7 +117,7 @@ const SummaryData = ({ business }) => {
             </p>
             <HandBagIcon />
           </div>
-        </Card>
+        </CardStyled>
       </Col>
     </Row>
   );

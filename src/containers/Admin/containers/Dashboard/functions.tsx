@@ -76,7 +76,7 @@ const generateIcons = (name, style?: React.CSSProperties) => {
     RESEARCH_AND_DEVELOPMENT,
     POLICY_AND_REGULATION,
     RESOURCES,
-    STARTUPS,
+    MSMES_AND_STARTUPS,
   } = ECOSYSTEM_SEGMENTS;
 
   switch (name) {
@@ -101,7 +101,7 @@ const generateIcons = (name, style?: React.CSSProperties) => {
     case RESOURCES:
       return <RescourcesIcon style={{ ...style }} />;
 
-    case STARTUPS:
+    case MSMES_AND_STARTUPS:
       return <MSMEsIcon style={{ ...style }} />;
 
     default:

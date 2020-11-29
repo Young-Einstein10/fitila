@@ -1,15 +1,17 @@
 /* eslint-disable no-shadow */
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Layout, Button, Row, Col } from "antd";
-import { NavLink, Link } from "react-router-dom";
+import { Layout, Button, Row, Col, Breadcrumb } from "antd";
+import { NavLink, Link, useRouteMatch, withRouter } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
 import { ThemeProvider } from "styled-components";
-import propTypes from "prop-types";
 import MenueItems from "./MenueItems";
 import { CurrentUserButton, Div, SidebarFooterStyled } from "./style";
 import logo from "../../static/svg/logo.svg";
+import { ReactComponent as ArrowRight } from "../../static/svg/arrowright.svg";
 import burgermenu from "../../static/svg/burgermenu.svg";
+import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
+import { capitalize } from "../Admin/containers/Dashboard/functions";
 
 const { darkTheme } = require("../../config/theme/themeVariables");
 
@@ -43,6 +45,7 @@ const ThemeLayout = WrappedComponent => {
 
     render() {
       const { collapsed } = this.state;
+      const { location } = this.props;
 
       const topMenu = false;
       const rtl = false;
@@ -61,6 +64,53 @@ const ThemeLayout = WrappedComponent => {
           });
         }
       };
+
+      const breadcrumbNameMap = (name = "") => ({
+        "/d": "Dashboard",
+        "/d/organizations": "Organizations",
+        "/d/states": "States",
+        "/d/account": "Account",
+        "/d/contact": "Contact",
+        "/d/project_brief": "Project Brief",
+        "/d/help": "Help",
+        "/d/segments": "Ecosystem Segments",
+        [`/d/segments/${name}`]: capitalize(
+          `${name
+            .split("_")
+            .join(" ")
+            .toString()}`
+        ),
+      });
+
+      const pathSnippets = location.pathname.split("/").filter(i => i);
+
+      // console.log("Path Snippets", pathSnippets);
+
+      const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+        const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
+
+        // console.log(`URL ${index}`, url);
+
+        let filteredUrl = url.split("/").filter(i => i);
+
+        // console.log(`Filtered URL ${index}`, filteredUrl);
+
+        return (
+          <BreadcrumbItem key={url}>
+            <Link to={url}>
+              {filteredUrl.length >= 3
+                ? breadcrumbNameMap(filteredUrl[2])[url]
+                : breadcrumbNameMap()[url]}
+            </Link>
+          </BreadcrumbItem>
+        );
+      });
+
+      const breadcrumbItems = [
+        <BreadcrumbItem key="home">
+          <Link to="/">Home</Link>
+        </BreadcrumbItem>,
+      ].concat(extraBreadcrumbItems);
 
       const footerStyle = {
         padding: "20px 30px 18px",
@@ -140,7 +190,7 @@ const ThemeLayout = WrappedComponent => {
                   justifyContent: "space-between",
                 }}
               >
-                <div>
+                <div className="navitem-left">
                   {window.innerWidth <= 1200 ? (
                     <Button type="link" onClick={toggleCollapsed}>
                       <img src={burgermenu} alt="menu" />
@@ -157,6 +207,20 @@ const ThemeLayout = WrappedComponent => {
                   >
                     <img src={logo} alt="Logo" style={{ width: "100px" }} />
                   </Link>
+
+                  <Breadcrumb separator={<ArrowRight />}>
+                    {/* <Breadcrumb.Item>Home</Breadcrumb.Item>
+                    <Breadcrumb.Separator>
+                      <ArrowRight />
+                    </Breadcrumb.Separator>
+                    <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+                    <Breadcrumb.Separator>
+                      <ArrowRight />
+                    </Breadcrumb.Separator>
+                    <Breadcrumb.Item>Current</Breadcrumb.Item> */}
+
+                    {breadcrumbItems}
+                  </Breadcrumb>
                 </div>
 
                 <CurrentUserButton size="large">
@@ -238,7 +302,7 @@ const ThemeLayout = WrappedComponent => {
     auth: state.auth,
   });
 
-  return connect(mapStateTopProps, null)(LayoutComponent);
+  return connect(mapStateTopProps, null)(withRouter(LayoutComponent));
 };
 
 export default ThemeLayout;

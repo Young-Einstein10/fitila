@@ -1,8 +1,13 @@
 @import (css) url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap');
 
+
+html {
+  font-size: 100%;
+}
+
 body {
   font-family: 'Nunito Sans', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .section-list-organization,
@@ -26,8 +31,8 @@ body {
 .section-landing {
 
   .ant-btn-icon-only.ant-btn-lg {
-    height: 50px;
-    width: 50px;
+    height: 3.125rem;
+    width: 3.125rem;
   }
 }
 
@@ -61,5 +66,11 @@ section.section-landing {
   #login_password,
   &.ant-input-affix-wrapper>input.ant-input {
     background-color: #F9F9F9;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  html {
+    font-size: 80%;
   }
 }

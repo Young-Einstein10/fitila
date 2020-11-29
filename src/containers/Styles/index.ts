@@ -1,4 +1,4 @@
-import { Input, InputNumber, Button } from "antd";
+import { Input, InputNumber, Button, Select } from "antd";
 import Styled from "styled-components";
 
 const InputStyled = Styled(Input)`
@@ -264,10 +264,21 @@ const AuthWrapper = Styled.div`
   }
 `;
 
+const SelectStyled = Styled(Select)<{ width?: string }>`
+  width: ${({ width }) => (width ? `${width} !important` : "100% !important")};
+
+  & span.ant-select-arrow {
+    top: 43%;
+    width: 21px;
+    height: 21px;
+  }
+`;
+
 export {
   InputStyled,
   InputNumberStyled,
   ButtonStyled,
   SectionWrapper,
   AuthWrapper,
+  SelectStyled,
 };

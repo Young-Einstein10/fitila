@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Button, Col, Form, Row, Select } from "antd";
 import Heading from "../../components/heading/heading";
 import { ReactComponent as Search } from "../../static/svg/search.svg";
-import { ReactComponent as SelectSearchIcon } from "../../static/svg/selectSearchIcon.svg";
-import { SectionWrapper } from "../Styles";
+import { ReactComponent as SearchIconLeft } from "../../static/svg/SearchIconLeft.svg";
+import { ReactComponent as SearchIconRight } from "../../static/svg/SearchIconRight.svg";
+
+import { SectionWrapper, SelectStyled } from "../Styles";
 import {
   getEcosystem,
   getOrganization,
@@ -14,12 +16,12 @@ import { NavLink } from "react-router-dom";
 import Styled from "styled-components";
 
 const ButtonStyled = Styled(Button)`
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: bold;
   color: #BF1E2E;
   background:#FFECDD;
-  margin-left: 15px;
-  margin-top: 20px;
+  margin-left: 0.9375rem;
+  margin-top: 0.625rem;
   box-shadow: none;
   text-shadow: none;
   border: 0;
@@ -27,16 +29,6 @@ const ButtonStyled = Styled(Button)`
   &:hover {
     background: #FFECDD;
     color: #BF1E2E;
-  }
-`;
-
-const SelectStyled = Styled(Select)`
-  width: 898px !important;
-
-  & span.ant-select-arrow {
-    top: 43%;
-    width: 21px;
-    height: 21px;
   }
 `;
 
@@ -48,6 +40,8 @@ const Landing = ({
   getEcosystem,
   getOrganization,
 }) => {
+  const [dropDownIsOpen, setDropdownIsOpen] = useState(false);
+
   // useEffect(() => {
   //   if (auth.isAuthenticated) {
   //     getEcosystem();
@@ -79,7 +73,7 @@ const Landing = ({
         style={{ paddingTop: "8rem" }}
       >
         <Heading
-          style={{ fontSize: "48px", fontWeight: "bold" }}
+          style={{ fontSize: "3rem", fontWeight: "bold" }}
           className="text-center"
           as="h1"
         >
@@ -87,7 +81,7 @@ const Landing = ({
         </Heading>
 
         <p
-          style={{ fontSize: "24px", color: "#696969" }}
+          style={{ fontSize: "1.5rem", color: "#696969" }}
           className="text-center"
         >
           Gain credible insights into Nigeria's entrepreneurship ecosystem
@@ -96,20 +90,24 @@ const Landing = ({
         <Form.Item
           name="search__box"
           style={{
-            marginTop: "40px",
+            marginTop: "2.5rem",
             display: "flex",
             justifyContent: "center",
           }}
         >
           <SelectStyled
-            suffixIcon={<SelectSearchIcon />}
-            showSearch
+            width="898px"
+            suffixIcon={
+              dropDownIsOpen ? <SearchIconRight /> : <SearchIconLeft />
+            }
             placeholder="Search by Organization, Sector and States"
             optionFilterProp="children"
             onChange={() => {}}
-            onFocus={() => {}}
             onBlur={() => {}}
-            onSearch={val => {
+            onDropdownVisibleChange={open => {
+              setDropdownIsOpen(open);
+            }}
+            onSelect={val => {
               console.log(val);
             }}
             filterOption={(input, option) =>
@@ -131,18 +129,18 @@ const Landing = ({
           justifyContent: "center",
           flexDirection: "column",
           alignItems: "center",
-          marginTop: "60px",
+          marginTop: "3.75rem",
           paddingBottom: "6rem",
         }}
       >
-        <p style={{ fontSize: "16px", color: "#1D429C" }}>
+        <p style={{ fontSize: "1rem", color: "#1D429C" }}>
           Explore ecosystem players by segment
         </p>
 
         <Row
           style={{
             maxWidth: "800px",
-            margin: "0px auto",
+            margin: "0 auto",
             justifyContent: "center",
           }}
         >
@@ -156,7 +154,7 @@ const Landing = ({
               >
                 <ButtonStyled>
                   {segment.name}
-                  <Search style={{ marginLeft: "10px" }} />
+                  <Search style={{ marginLeft: "0.625rem" }} />
                 </ButtonStyled>
               </NavLink>
             </Col>
