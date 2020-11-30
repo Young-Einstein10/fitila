@@ -35,6 +35,7 @@ const ButtonStyled = Styled(Button)`
 const { Option } = Select;
 
 const Landing = ({
+  history,
   auth,
   business: { segments, organization },
   getEcosystem,
@@ -95,6 +96,8 @@ const Landing = ({
         >
           <SelectStyled
             width="898px"
+            autoFocus
+            showSearch
             suffixIcon={
               dropDownIsOpen ? <SearchIconRight /> : <SearchIconLeft />
             }
@@ -106,7 +109,9 @@ const Landing = ({
               setDropdownIsOpen(open);
             }}
             onSelect={val => {
-              console.log(val);
+              let selectedOrg = organization.find(org => org.name === val);
+              console.log(selectedOrg);
+              selectedOrg.id && history.push(`/d/profile/${selectedOrg.id}`);
             }}
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
