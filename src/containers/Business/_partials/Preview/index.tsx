@@ -18,24 +18,12 @@ const { Step } = StepsStyled;
 const Preview = ({ history, addOrganization, auth: { user } }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [ecosystem, setEcosystem] = useState([]);
+  const [selectedEcosystem, setSelectedEcosystem] = useState([]);
+  const [selectedSubEcosystem, setSelectedSubEcosystem] = useState([]);
 
   const customDot = (dot: any) => dot;
 
   const { state } = useContext(BusinessContext);
-
-  useEffect(() => {
-    const getEcosystem = async () => {
-      const res = await api.business.getEcosystem();
-
-      if (res && res.status === 200) {
-        const { data } = res.data;
-
-        setEcosystem(data);
-      }
-    };
-
-    getEcosystem();
-  }, [state]);
 
   const {
     business_type,
@@ -46,9 +34,9 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
     address,
     state: organization_state,
     ecosystem: ecosystemId,
-    sub_ecosystem: subEcosystemId,
+    sub_ecosystem,
     sub_ecosystem_sub_class,
-    sub_segment,
+    sub_segment: subSegmentId,
     business_sector,
     business_level,
     is_startup,
@@ -65,6 +53,31 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
     twitter,
     cac_doc,
   } = state;
+
+  useEffect(() => {
+    const getEcosystem = async () => {
+      const res = await api.business.getEcosystem();
+
+      if (res && res.status === 200) {
+        const { data } = res.data;
+
+        setEcosystem(data);
+
+        let selectedecosystem = data.filter(eco => eco.id === ecosystemId);
+
+        let selectedSubEcosystem =
+          selectedecosystem.length &&
+          selectedecosystem[0].sub_ecosystem.filter(
+            sub_eco => sub_eco.id === subSegmentId
+          );
+
+        setSelectedEcosystem(selectedecosystem);
+        setSelectedSubEcosystem(selectedSubEcosystem);
+      }
+    };
+
+    getEcosystem();
+  }, [state, ecosystem, ecosystemId, subSegmentId, selectedEcosystem]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -154,25 +167,16 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
                   <p>
                     <strong>Ecosystem Segment:</strong>
                     <br />
-                    {ecosystem.filter(eco => eco.id === ecosystemId).length >
-                      0 &&
-                      ecosystem.filter(ecos => ecos.id === ecosystemId)[0].name}
+                    {selectedEcosystem.length > 0 && selectedEcosystem[0].name}
                   </p>
                 )}
-
-                {/* {business_type === "Ecosystem Enabler" && (
-                  <p>
-                    <strong>Sub-Ecosystem:</strong>
-                    <br />
-                    {sub_ecosystem}
-                  </p>
-                )} */}
 
                 {business_type === "Ecosystem Enabler" && (
                   <p>
                     <strong>Sub-Segement of Ecosystem:</strong>
                     <br />
-                    {sub_segment}
+                    {selectedSubEcosystem.length &&
+                      selectedSubEcosystem[0].name}
                   </p>
                 )}
 

@@ -18,7 +18,7 @@ export default (state = initialState, action: ActionType) => {
         message.error(payload.fullMessage, toastMessageDuration);
         return payload.fullMessage;
       } else if (payload && payload.detail) {
-        message.error(payload.errors, toastMessageDuration);
+        message.error(payload.detail, toastMessageDuration);
         return payload.detail;
       } else if (payload && payload.statusText) {
         message.error(payload.statusText, toastMessageDuration);

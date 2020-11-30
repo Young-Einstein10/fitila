@@ -42,13 +42,11 @@ const Landing = ({
 }) => {
   const [dropDownIsOpen, setDropdownIsOpen] = useState(false);
 
-  // useEffect(() => {
-  //   if (auth.isAuthenticated) {
-  //     getEcosystem();
+  useEffect(() => {
+    getEcosystem();
 
-  //     getOrganization();
-  //   }
-  // }, [auth, getEcosystem, getOrganization]);
+    getOrganization();
+  }, [auth, getEcosystem, getOrganization]);
 
   const handleSubmit = () => {};
 

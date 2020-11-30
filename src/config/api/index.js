@@ -7,6 +7,9 @@ import Business from "./business";
 //Staging endpoint
 const axiosInstance = axios.create({
   baseURL: "https://fitilla.pythonanywhere.com/api/v1",
+  headers: {
+    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6ImRhdmlkQHdlc3QuY28iLCJleHAiOjE2MDY4NTgxMzAsImVtYWlsIjoiZGF2aWRAd2VzdC5jbyJ9.7iAndTuaU2Ifkm5WHGlMyKYWzgCUL9FwSZoa8sZkqiA`,
+  },
 });
 
 //Intercept For Error reset

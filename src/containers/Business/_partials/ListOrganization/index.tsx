@@ -1,4 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { Row, Form, Select, Divider, InputNumber, Tooltip } from "antd";
 import { MainColStyled } from "../AddCompany/styled";
 import Heading from "../../../../components/heading/heading";
@@ -10,13 +11,13 @@ import { WithBusinessProvider } from "../../index";
 import { BusinessContext } from "../../context";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
-import api from "../../../../config/api";
+import { getEcosystem } from "../../../../redux/actions/businessActions";
 
 const { Option } = Select;
 const { Step } = StepsStyled;
 const InputGroup = InputStyled.Group;
 
-const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
+const ListOrganization = ({ history, getEcosystem, business }) => {
   const [ecosystemDropdown, setEcosystemDropdown] = useState({
     business_support: [
       "Business Advisory and Consulting Organizations",
@@ -60,11 +61,13 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
     enterprises: [],
   });
   const [subSegmentList, setSubSegmentList] = useState([]);
-  const [ecosystem, setEcosystem] = useState([]);
+  // const [ecosystem, setEcosystem] = useState([]);
   const [subSegment, setSubSegment] = useState([]);
   const [num_supported_business, setNum_supported_business] = useState();
   const [is_startUp, setIs_Startup] = useState(false);
   const [subEcosystemSubClass, setSubEcosystemSubClass] = useState("");
+
+  const { ecosystem } = business;
 
   const customDot = (dot: any) => dot;
 
@@ -77,18 +80,8 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
       <Redirect to="/business" />;
     }
 
-    const getEcosystem = async () => {
-      const res = await api.business.getEcosystem();
-
-      if (res && res.status === 200) {
-        const { data } = res.data;
-
-        setEcosystem(data);
-      }
-    };
-
     getEcosystem();
-  }, [state]);
+  }, [state, getEcosystem]);
 
   const handleSubEcosystemChange = value => setSubEcosystemSubClass(value);
 
@@ -658,4 +651,8 @@ land and building) of 100million to 1billion naira
   );
 };
 
-export default ListOrganization;
+const mapStateToProps = state => ({
+  business: state.business,
+});
+
+export default connect(mapStateToProps, { getEcosystem })(ListOrganization);
