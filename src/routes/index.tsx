@@ -34,14 +34,14 @@ const NotFound = () => {
 const Routes = () => {
   return (
     <Switch>
-      <AuthRoute exact path="/d" component={Dashboard} />
-      <AuthRoute path="/d/organizations" component={Organizations} />
-      <AuthRoute path="/d/states" component={States} />
-      <AuthRoute path="/d/account" component={Account} />
-      <AuthRoute path="/d/contact" component={Contact} />
-      <AuthRoute path="/d/project_brief" component={About} />
-      <AuthRoute path="/d/help" component={Help} />
-      <AuthRoute exact path="/d/profile/:id" component={Profile} />
+      <Route exact path="/d" component={Dashboard} />
+      <Route path="/d/organizations" component={Organizations} />
+      <Route path="/d/states" component={States} />
+      <Route path="/d/account" component={Account} />
+      <Route path="/d/contact" component={Contact} />
+      <Route path="/d/project_brief" component={About} />
+      <Route path="/d/help" component={Help} />
+      <Route exact path="/d/profile/:id" component={Profile} />
       {/* <AuthRoute path="/d/segments/training" component={Training} />
       <AuthRoute
         path="/d/segments/business_support"
@@ -49,13 +49,13 @@ const Routes = () => {
       />
       <AuthRoute path="/d/segments/funding" component={Funding} />
       <AuthRoute path="/d/segments/businesses" component={Businesses} /> */}
-      <AuthRoute path="/d/segments/:name" component={Segment} />
+      <Route path="/d/segments/:name" component={Segment} />
 
-      <AuthRoute exact path="/business" component={AddCompany} />
-      <AuthRoute path={`/business/listorg`} component={ListOrganization} />
-      <AuthRoute path={`/business/uploads`} component={Uploads} />
-      <AuthRoute path={`/business/preview`} component={Preview} />
-      <AuthRoute path={`/business/success`} component={Success} />
+      <Route exact path="/business" component={AddCompany} />
+      <Route path={`/business/listorg`} component={ListOrganization} />
+      <Route path={`/business/uploads`} component={Uploads} />
+      <Route path={`/business/preview`} component={Preview} />
+      <Route path={`/business/success`} component={Success} />
 
       <NonAuthLayout>
         <Switch>

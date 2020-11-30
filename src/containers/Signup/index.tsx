@@ -95,7 +95,7 @@ const Signup = ({ signupUser, history, auth }) => {
           >
             <Select placeholder="Choose Your Role" allowClear>
               <Option value="Enterpreneur">Enterpreneur</Option>
-              <Option value="Ecosystem Enabler">Ecosystem Enabler</Option>
+              <Option value="Ecosystem Enabler">Ecosystem Player</Option>
               <Option value="Others">Others</Option>
             </Select>
           </Form.Item>

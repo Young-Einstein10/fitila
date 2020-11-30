@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from "react";
-import { Row, Form, Select, Divider, InputNumber } from "antd";
+import { Row, Form, Select, Divider, InputNumber, Tooltip } from "antd";
 import { MainColStyled } from "../AddCompany/styled";
 import Heading from "../../../../components/heading/heading";
 import { ButtonStyled, InputNumberStyled, InputStyled } from "../../../Styles";
@@ -403,9 +403,34 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                     ]}
                   >
                     <Select placeholder="Business Level" allowClear>
-                      <Option value="Micro">Micro</Option>
-                      <Option value="Small">Small</Option>
-                      <Option value="Medium">Medium</Option>
+                      <Option value="Micro">
+                        <Tooltip
+                          title="businesses with 0 - 9 employees and  total assets (excluding land and building) of less than 10 million naira
+"
+                        >
+                          <span>Micro</span>
+                        </Tooltip>
+                      </Option>
+
+                      <Option value="Small">
+                        <Tooltip
+                          title="businesses with 10 - 49 employees and total assets (excluding
+land and building) of 10million to 99million naira
+"
+                        >
+                          <span>Small</span>
+                        </Tooltip>
+                      </Option>
+
+                      <Option value="Medium">
+                        <Tooltip
+                          title="businesses with 50 - 199 employees and total assets (excluding
+land and building) of 100million to 1billion naira
+"
+                        >
+                          <span>Medium</span>
+                        </Tooltip>
+                      </Option>
                     </Select>
                   </Form.Item>
                 )}
@@ -430,7 +455,11 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                           setIs_Startup(false);
                         }
                       }}
-                      placeholder="Are You A StartUp"
+                      placeholder={
+                        <Tooltip title="High-growth young business typically 0 - 5 years old">
+                          <span>Are You A StartUp</span>
+                        </Tooltip>
+                      }
                       allowClear
                     >
                       <Option value="Yes">Yes</Option>
