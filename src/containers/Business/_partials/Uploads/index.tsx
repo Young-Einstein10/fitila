@@ -247,8 +247,8 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                   <InputStyled placeholder="Government ID" />
                 </Form.Item> */}
 
-                <Form.Item name="other_info">
-                  <InputStyled.TextArea placeholder="Other Information" />
+                <Form.Item name="description">
+                  <InputStyled.TextArea placeholder="Organization Description" />
                 </Form.Item>
 
                 <Form.Item>

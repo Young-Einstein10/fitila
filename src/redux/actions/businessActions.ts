@@ -53,6 +53,7 @@ export const getOrganization = () => async dispatch => {
     filteredPayload.sector = "Private Sector Groups & Associations";
 
     filteredPayload.num_of_employees = "50-100";
+    filteredPayload.company_logo_url = "../../static/img/fate.jpeg";
 
     dispatch({
       type: GET_ALL_ORGANIZATION,

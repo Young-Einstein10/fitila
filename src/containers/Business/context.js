@@ -6,6 +6,8 @@ const BusinessProvider = ({ children }) => {
   const [state, setState] = useState({
     business_type: "",
     name: "",
+    description: "",
+    headquarters: "",
     ceo_name: "",
     ceo_image: null,
     company_logo: null,

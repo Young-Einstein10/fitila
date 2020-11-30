@@ -50,12 +50,16 @@ const Profile = ({ organization, match }) => {
                     }}
                   >
                     {/* <img src={cowrywise_small} alt="Cowrywise" /> */}
-                    <div>
+                    <div style={{ width: "97px" }}>
                       {selectedorganization[0] &&
                       selectedorganization[0].company_logo_url ? (
                         <img
                           src={selectedorganization[0].company_logo_url}
                           alt="Company Logo"
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                          }}
                         />
                       ) : (
                         <UnknownAvatar
@@ -85,12 +89,17 @@ const Profile = ({ organization, match }) => {
                 <Cards
                   title={
                     <div style={{ display: "flex", alignItems: "center" }}>
-                      <div>
+                      <div style={{ width: "50px", height: "50px" }}>
                         {selectedorganization[0] &&
                         selectedorganization[0].ceo_image_url ? (
                           <img
                             src={selectedorganization[0].ceo_image_url}
                             alt="John Doe"
+                            style={{
+                              width: "100%",
+                              height: "auto",
+                              borderRadius: "50px",
+                            }}
                           />
                         ) : (
                           <UnknownAvatar

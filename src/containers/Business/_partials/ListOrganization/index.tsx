@@ -218,6 +218,20 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 </Form.Item>
                 {/* CEO/FOUNDER's ANME */}
 
+                {/* HEADQUARTERS */}
+                {/* <Form.Item
+                  name="head_quarters"
+                  rules={[
+                    {
+                      message: "Please input your headquarters",
+                      required: true,
+                    },
+                  ]}
+                >
+                  <InputStyled placeholder="CEO/Founder's Name" />
+                </Form.Item> */}
+                {/* HEADQUARTERS */}
+
                 {/* STATE */}
                 <Form.Item
                   name="state"
@@ -367,28 +381,28 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                 {/* SUB-CLASS */}
 
                 {/* BUSINESS SECTOR */}
-                {state.business_type === "Enterpreneur" && (
-                  <Form.Item
-                    name="sector"
-                    rules={[
-                      {
-                        message: "Please select your sector!",
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <Select placeholder="Sector" allowClear>
-                      <Option value="Health">Health</Option>
-                      <Option value="Agriculture">Agriculture</Option>
-                      <Option value="Creatives">Creatives</Option>
-                      <Option value="Education">Education</Option>
-                      <Option value="Manufacturers">Manufacturers</Option>
-                      <Option value="ICT">ICT</Option>
-                      <Option value="Finance">Finance</Option>
-                      <Option value="Other">Other</Option>
-                    </Select>
-                  </Form.Item>
-                )}
+
+                <Form.Item
+                  name="sector"
+                  rules={[
+                    {
+                      message: "Please select your sector!",
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Select placeholder="Sector" allowClear>
+                    <Option value="Health">Health</Option>
+                    <Option value="Agriculture">Agriculture</Option>
+                    <Option value="Creatives">Creatives</Option>
+                    <Option value="Education">Education</Option>
+                    <Option value="Manufacturers">Manufacturers</Option>
+                    <Option value="ICT">ICT</Option>
+                    <Option value="Finance">Finance</Option>
+                    <Option value="Other">Other</Option>
+                  </Select>
+                </Form.Item>
+
                 {/* BUSINESS SECTOR */}
 
                 {/* BUSINESS LEVEL */}

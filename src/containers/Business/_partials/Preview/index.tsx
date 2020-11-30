@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Row } from "antd";
 import { connect } from "react-redux";
 import { MainColStyled } from "../AddCompany/styled";
@@ -10,25 +10,43 @@ import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import { BusinessContext } from "../../context";
 import { addOrganization } from "../../../../redux/actions/businessActions";
+import { numberWithCommas } from "../../../../utils/helpers";
+import api from "../../../../config/api";
 
 const { Step } = StepsStyled;
 
 const Preview = ({ history, addOrganization, auth: { user } }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [ecosystem, setEcosystem] = useState([]);
+
   const customDot = (dot: any) => dot;
 
   const { state } = useContext(BusinessContext);
 
+  useEffect(() => {
+    const getEcosystem = async () => {
+      const res = await api.business.getEcosystem();
+
+      if (res && res.status === 200) {
+        const { data } = res.data;
+
+        setEcosystem(data);
+      }
+    };
+
+    getEcosystem();
+  }, [state]);
+
   const {
     business_type,
-    organization_name,
+    name,
     ceo_name,
     ceo_image,
     comapany_logo,
     address,
     state: organization_state,
-    ecosystem,
-    sub_ecosystem,
+    ecosystem: ecosystemId,
+    sub_ecosystem: subEcosystemId,
     sub_ecosystem_sub_class,
     sub_segment,
     business_sector,
@@ -111,7 +129,7 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
                 <p>
                   <strong>Organization Name:</strong>
                   <br />
-                  {organization_name}
+                  {name}
                 </p>
 
                 <p>
@@ -134,9 +152,11 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
 
                 {business_type === "Ecosystem Enabler" && (
                   <p>
-                    <strong>Ecosystem Segement:</strong>
+                    <strong>Ecosystem Segment:</strong>
                     <br />
-                    {ecosystem}
+                    {ecosystem.filter(eco => eco.id === ecosystemId).length >
+                      0 &&
+                      ecosystem.filter(ecos => ecos.id === ecosystemId)[0].name}
                   </p>
                 )}
 
@@ -184,23 +204,25 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
                   <p>
                     <strong>Company Valuation:</strong>
                     <br />
-                    {company_valuation}
+                    {numberWithCommas(company_valuation)}
                   </p>
                 )}
 
-                <p>
-                  <strong>
-                    Number of businesses supported over the last 5 years:
-                  </strong>
-                  <br />
-                  {num_supported_business}
-                </p>
+                {business_type === "Ecosystem Enabler" && (
+                  <p>
+                    <strong>
+                      Number of businesses supported over the last 5 years:
+                    </strong>
+                    <br />
+                    {num_supported_business}
+                  </p>
+                )}
 
                 {
                   <p>
                     <strong>Funding:</strong>
                     <br />
-                    {funding}
+                    {numberWithCommas(funding)}
                   </p>
                 }
 
