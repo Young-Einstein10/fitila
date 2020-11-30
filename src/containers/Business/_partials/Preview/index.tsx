@@ -60,19 +60,17 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
       formData.append(key, data[key]);
     }
 
-    try {
-      const res = await addOrganization(formData);
-
-      if (res && res.status === 201) {
+    addOrganization(formData)
+      .then(res => {
         setIsLoading(false);
-
-        history.push("/business/success");
-      } else {
+        if (res && res.status === 201) {
+          history.push("/business/success");
+        }
+      })
+      .catch(err => {
+        console.log(err);
         setIsLoading(false);
-      }
-    } catch (error) {
-      setIsLoading(false);
-    }
+      });
   };
 
   return (
