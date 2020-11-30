@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Menu } from "antd";
-import { NavLink, useRouteMatch } from "react-router-dom";
+import { NavLink, useRouteMatch, withRouter } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 import { logout } from "../../redux/actions/authActions";
 import { ReactComponent as DashboardIcon } from "../../static/svg/dashboardIcon.svg";
@@ -12,7 +12,7 @@ import { ReactComponent as ContactNavIcon } from "../../static/svg/contactNavIco
 import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.svg";
 import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.svg";
 
-const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout }) => {
+const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout, history }) => {
   const { path } = useRouteMatch();
   const pathName = window.location.pathname;
   const pathArray = pathName.split(path);
@@ -91,7 +91,9 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout }) => {
           onClick={() => {
             toggleCollapsed();
 
-            logout().then(() => {});
+            logout().then(() => {
+              history.push("/");
+            });
           }}
           to="#"
         >
@@ -102,4 +104,4 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout }) => {
   );
 };
 
-export default connect(null, { logout })(MenuItems);
+export default connect(null, { logout })(withRouter(MenuItems));

@@ -18,7 +18,7 @@ const access_token = userData && userData.token;
 if (access_token) {
   store.dispatch(setCurrentUser(userData));
 
-  api.HttpClient.defaults.headers.common.authorization = `Bearer ${access_token}`;
+  api.HttpClient.defaults.headers.common.authorization = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6ImRhdmlkQHdlc3QuY28iLCJleHAiOjE2MDY4MTc1MTUsImVtYWlsIjoiZGF2aWRAd2VzdC5jbyJ9.gT4Gh6E0I-5krK_yDIJDo27GzY7rH2FfI4d_Xm3mLfU`;
 }
 
 function App() {
