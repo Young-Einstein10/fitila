@@ -211,16 +211,7 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                   </Form.Item>
                 )}
 
-                <Form.Item
-                  name="funding"
-                  rules={[
-                    {
-                      message: "Please input this field!",
-                      required: true,
-                    },
-                  ]}
-                  style={{ marginBottom: 0 }}
-                >
+                <Form.Item name="funding" style={{ marginBottom: 0 }}>
                   <InputGroup compact style={{ display: "flex" }}>
                     <Form.Item initialValue="₦" name="currency">
                       <Select>
@@ -229,7 +220,17 @@ const Uploads: FunctionComponent<RouteComponentProps> = ({ history }) => {
                       </Select>
                     </Form.Item>
 
-                    <Form.Item name="currency_value" style={{ width: "100%" }}>
+                    <Form.Item
+                      name="currency_value"
+                      style={{ width: "100%" }}
+                      rules={[
+                        { type: "number", message: "Only Numbers are allowed" },
+                        {
+                          message: "Please input this field!",
+                          required: true,
+                        },
+                      ]}
+                    >
                       <InputNumberStyled
                         size="large"
                         formatter={value =>

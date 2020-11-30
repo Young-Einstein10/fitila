@@ -97,11 +97,19 @@ const ThemeLayout = WrappedComponent => {
 
         return (
           <BreadcrumbItem key={url}>
-            <Link to={url}>
-              {filteredUrl.length >= 3
-                ? breadcrumbNameMap(filteredUrl[2])[url]
-                : breadcrumbNameMap()[url]}
-            </Link>
+            {url === "/d/segments" ? (
+              <span>
+                {filteredUrl.length >= 3
+                  ? breadcrumbNameMap(filteredUrl[2])[url]
+                  : breadcrumbNameMap()[url]}
+              </span>
+            ) : (
+              <Link to={url}>
+                {filteredUrl.length >= 3
+                  ? breadcrumbNameMap(filteredUrl[2])[url]
+                  : breadcrumbNameMap()[url]}
+              </Link>
+            )}
           </BreadcrumbItem>
         );
       });
@@ -122,7 +130,7 @@ const ThemeLayout = WrappedComponent => {
 
       const SideBarStyle = {
         margin: "63px 0 0 0",
-        padding: "15px 15px 55px 15px",
+        padding: "15px 15px 55px 0",
         overflowY: "auto",
         height: "100vh",
         position: "fixed",

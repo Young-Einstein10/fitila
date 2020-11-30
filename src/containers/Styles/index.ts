@@ -271,6 +271,8 @@ const SelectStyled = Styled(Select)<{ width?: string }>`
     top: 43%;
     width: 21px;
     height: 21px;
+    display: flex;
+    align-items: center;
   }
 `;
 

@@ -442,15 +442,7 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
 
                 {/* COMPANY VALUATION */}
                 {state.business_type === "Enterpreneur" && is_startUp && (
-                  <Form.Item
-                    name="company_valuation"
-                    rules={[
-                      {
-                        message: "Please input your company valuation!",
-                        required: true,
-                      },
-                    ]}
-                  >
+                  <Form.Item name="company_valuation">
                     <InputGroup compact style={{ display: "flex" }}>
                       <Form.Item initialValue="₦" name="currency">
                         <Select>
@@ -462,6 +454,16 @@ const ListOrganization: FC<RouteComponentProps> = ({ history }) => {
                       <Form.Item
                         name="currency_value"
                         style={{ width: "100%" }}
+                        rules={[
+                          {
+                            type: "number",
+                            message: "Only Numbers are allowed",
+                          },
+                          {
+                            message: "Please input your company valuation!",
+                            required: true,
+                          },
+                        ]}
                       >
                         <InputNumberStyled
                           placeholder="Company Valuation"

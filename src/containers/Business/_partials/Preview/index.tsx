@@ -67,6 +67,8 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
         setIsLoading(false);
 
         history.push("/business/success");
+      } else {
+        setIsLoading(false);
       }
     } catch (error) {
       setIsLoading(false);

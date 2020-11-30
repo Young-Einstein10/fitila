@@ -6,7 +6,9 @@ const Div = Styled.div`
     header{
         box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
         ${({ darkMode }) => (darkMode ? `background: #272B41;` : "")};
-        z-index: 999;
+        z-index: 999;        
+        padding: 0 3rem;
+     
 
         .navitem-left {
             display: flex;
@@ -263,7 +265,7 @@ const Div = Styled.div`
                 .ant-menu-item{
                     display: flex;
                     align-items: center;
-                    padding: 0 15px !important;
+                    padding-left: 3rem !important;
                     &.ant-menu-item-active{
                         border-radius: 4px;
                         
@@ -455,15 +457,16 @@ const SidebarFooterStyled = Styled.footer`
     font-size: 12px;
     margin-top: 3rem;
     color: #81868C;
+    padding-left: 3rem
 
     p {
-        margin-left: 20px;
+        /* margin-left: 20px; */
     }
 
     ul {
         list-style: none;
         text-decoration: underline;
-        margin-left: 20px;
+        /* margin-left: 20px; */
         padding: 0;
     }
 `;

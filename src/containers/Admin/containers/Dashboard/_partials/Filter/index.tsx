@@ -22,7 +22,13 @@ const FilterOption = ({ business }) => {
         <SelectStyled
           suffixIcon={<ArrowDown />}
           showSearch
-          placeholder={<span>Filter By Organization</span>}
+          placeholder={
+            <span>
+              {" "}
+              <FilterOutlined style={{ marginRight: "1.5rem" }} />
+              Filter By Organization
+            </span>
+          }
           optionFilterProp="children"
           onChange={() => {}}
           onFocus={() => {}}

@@ -19,23 +19,32 @@ const Signup = ({ signupUser, history, auth }) => {
 
   const [form] = Form.useForm();
 
-  const handleSubmit = async values => {
-    setIsLoading(true);
+  // useEffect(() => {
+  //   if (!auth.isAuthhenticated) {
+  //     history.push("/d");
+  //   }
+  // }, [auth, history]);
 
-    try {
-      const values = await form.validateFields();
-
-      const res = await signupUser(values);
-
-      notification.success({
-        message: "Your Account Has Been Created Successfully",
-      });
-      setIsLoading(false);
-      history.push("/d");
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-    }
+  const handleSubmit = values => {
+    form
+      .validateFields()
+      .then(values => {
+        setIsLoading(true);
+        signupUser(values)
+          .then(res => {
+            notification.success({
+              message: "Your Account Has Been Created Successfully",
+            });
+            setIsLoading(false);
+            history.push("/d");
+          })
+          .catch((err: any) => {
+            console.log(err);
+            setIsLoading(false);
+          });
+      })
+      .catch(err => console.log(err));
+    // console.log(values);
   };
 
   return (
@@ -54,7 +63,7 @@ const Signup = ({ signupUser, history, auth }) => {
           <Form.Item
             name="first_name"
             rules={[
-              { message: "Please input your firstname !", required: true },
+              { message: "Please input your firstname!", required: true },
             ]}
           >
             <InputStyled placeholder="First Name" />
@@ -62,9 +71,7 @@ const Signup = ({ signupUser, history, auth }) => {
 
           <Form.Item
             name="last_name"
-            rules={[
-              { message: "Please input your lastname !", required: true },
-            ]}
+            rules={[{ message: "Please input your lastname!", required: true }]}
           >
             <InputStyled placeholder="Last Name" />
           </Form.Item>
@@ -87,15 +94,15 @@ const Signup = ({ signupUser, history, auth }) => {
             rules={[{ message: "Please Select a role", required: true }]}
           >
             <Select placeholder="Choose Your Role" allowClear>
-              <Option value="Student">Student</Option>
-              <Option value="Researcher">Researcher</Option>
-              <Option value="Manager">Manager</Option>
+              <Option value="Enterpreneur">Enterpreneur</Option>
+              <Option value="Ecosystem Enabler">Ecosystem Enabler</Option>
+              <Option value="Others">Others</Option>
             </Select>
           </Form.Item>
 
           <Form.Item
             name="password"
-            rules={[{ message: "Please input your password", required: true }]}
+            rules={[{ message: "Please enter your password", required: true }]}
           >
             <InputStyled.Password placeholder="Password" />
           </Form.Item>

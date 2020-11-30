@@ -40,7 +40,12 @@ axiosInstance.interceptors.response.use(
       store.dispatch({
         type: GET_ERRORS,
         payload: {
-          message: errorResponse.data.error,
+          message:
+            typeof errorResponse.data.error === "string"
+              ? errorResponse.data.error
+              : typeof errorResponse.data.error === "object"
+              ? Object.entries(errorResponse.data.error)[0][1]
+              : null,
           // message:
           //   errorResponse && Object.values(errorResponse.data.errors).length > 0
           //     ? Object.values(errorResponse.data.errors).flat()[0]
