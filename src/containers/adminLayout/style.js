@@ -8,6 +8,11 @@ const Div = Styled.div`
         ${({ darkMode }) => (darkMode ? `background: #272B41;` : "")};
         z-index: 999;        
         padding: 0 3rem;
+
+        @media screen and (max-width: 1200px) {
+            padding-left: 0;
+            padding-right: 0;        
+        }
      
 
         .navitem-left {

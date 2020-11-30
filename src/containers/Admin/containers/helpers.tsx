@@ -80,13 +80,15 @@ const createTableColumns = () => {
     {
       // title: "Action",
       key: "action",
-      render: (record, key) => (
-        <Space size="middle">
-          <ViewProfileBtnStyled>
-            <Link to={`/d/profile/${record.key}`}>View Profile</Link>
-          </ViewProfileBtnStyled>
-        </Space>
-      ),
+      render: (record, key) => {
+        return (
+          <Space size="middle">
+            <ViewProfileBtnStyled>
+              <Link to={`/d/profile/${record.id}`}>View Profile</Link>
+            </ViewProfileBtnStyled>
+          </Space>
+        );
+      },
     },
   ];
 
@@ -105,6 +107,7 @@ const createDataSource = organizationList => {
       market_cap: org.market_cap,
       employees: org.num_of_employees,
       funding: org.funding,
+      id: org.id,
     };
   });
 

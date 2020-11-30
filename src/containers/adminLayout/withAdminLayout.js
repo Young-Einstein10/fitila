@@ -73,6 +73,10 @@ const ThemeLayout = WrappedComponent => {
         "/d/contact": "Contact",
         "/d/project_brief": "Project Brief",
         "/d/help": "Help",
+        "/business": "Add Company",
+        "/business/listorg": "List Organization",
+        "/business/uploads": "List Organization",
+        "/business/preview": "Preview Form",
         "/d/segments": "Ecosystem Segments",
         [`/d/segments/${name}`]: capitalize(
           `${name

@@ -5,8 +5,15 @@ const RowStyled = Style(Row)`
 
 
   .profile-summary-data {
-    span {
-      display: block;
+    width: 100%;
+
+    div {
+      display: flex;
+      align-items: center;
+
+      span {
+        width: 50%
+      }
     }
   }
 `;
