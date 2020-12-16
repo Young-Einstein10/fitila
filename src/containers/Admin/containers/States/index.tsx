@@ -108,7 +108,6 @@ const States = ({ organization }) => {
             <Cards title={tableHeader} more={content}>
               <Table
                 className="table-responsive"
-                pagination={false}
                 dataSource={createDataSource(organization)}
                 columns={createTableColumns()}
                 loading={isOrganizationLoading}

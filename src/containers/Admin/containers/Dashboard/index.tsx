@@ -161,7 +161,6 @@ const Dashboard = ({ business, getEcosystem, getOrganization }) => {
             <Cards title={tableHeader} more={content}>
               <Table
                 className="table-responsive"
-                pagination={false}
                 dataSource={createDataSource(business.organization)}
                 columns={createTableColumns()}
                 loading={isOrganizationLoading}

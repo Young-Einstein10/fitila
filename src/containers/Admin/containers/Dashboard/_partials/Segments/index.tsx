@@ -141,7 +141,6 @@ const Segment = ({
                       >
                         <Table
                           className="table-responsive"
-                          pagination={false}
                           dataSource={createDataSource(business.organization)}
                           columns={createTableColumns()}
                         />
@@ -159,7 +158,6 @@ const Segment = ({
                 >
                   <Table
                     className="table-responsive"
-                    pagination={false}
                     dataSource={createDataSource(business.organization)}
                     columns={createTableColumns()}
                   />
