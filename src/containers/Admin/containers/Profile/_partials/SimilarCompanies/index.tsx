@@ -73,7 +73,6 @@ const SimilarCompanies = ({ organization }) => {
         >
           <Table
             className="table-responsive"
-            pagination={false}
             dataSource={createDataSource(organization)}
             columns={createTableColumns()}
           />
