@@ -12,7 +12,7 @@ export default class Business {
   }
 
   getEcosystem() {
-    return this.client.get("/ecosystem");
+    return this.client.get("/ecosystem/");
   }
 
   getOrganization() {

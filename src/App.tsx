@@ -6,19 +6,28 @@ import { ThemeProvider } from "styled-components";
 import config from "./config/config";
 import store from "./redux/store";
 import "./App.less";
-import { setCurrentUser } from "./redux/actions/authActions";
+import { logout, setCurrentUser } from "./redux/actions/authActions";
 import BusinessProvider from "./containers/Business/context";
-import api from "./config/api";
+import setAuthToken from "./utils/setAuthToken";
 
 const { theme } = config;
 
 const userData = JSON.parse(localStorage.getItem("userData"));
 
 const access_token = userData && userData.token;
-if (access_token) {
+
+if (access_token !== "undefined" && access_token !== null) {
+  setAuthToken(access_token);
+
   store.dispatch(setCurrentUser(userData));
 
-  api.HttpClient.defaults.headers.common.authorization = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6ImRhdmlkQHdlc3QuY28iLCJleHAiOjE2MDY4NTgxMzAsImVtYWlsIjoiZGF2aWRAd2VzdC5jbyJ9.7iAndTuaU2Ifkm5WHGlMyKYWzgCUL9FwSZoa8sZkqiA`;
+  const currentTime = Date.now() / 1000;
+
+  // Check for token expiration
+  if (access_token.expiry < currentTime) {
+    // Sign out user
+    store.dispatch(logout() as any);
+  }
 }
 
 function App() {
