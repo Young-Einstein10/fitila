@@ -18,6 +18,7 @@ const Cards = props => {
     isbutton,
     bodyStyle,
     headStyle,
+    style,
     border,
     bodypadding,
   } = props;
@@ -44,23 +45,23 @@ const Cards = props => {
               {isbutton && isbutton}
             </>
           }
-          style={{ width: "100%" }}
+          style={{ ...style, width: "100%" }}
         >
           {children}
         </CardFrame>
       ) : (
-        <CardFrame
-          bodypadding={bodypadding && bodypadding}
-          bodyStyle={bodyStyle && bodyStyle}
-          size={size}
-          style={{ width: "100%" }}
-          bordered={border}
-        >
-          {title && <Heading as="h4">{title}</Heading>}
-          {caption && <p>{caption}</p>}
-          {children}
-        </CardFrame>
-      )}
+          <CardFrame
+            bodypadding={bodypadding && bodypadding}
+            bodyStyle={bodyStyle && bodyStyle}
+            size={size}
+            style={{ ...style, width: "100%" }}
+            bordered={border}
+          >
+            {title && <Heading as="h4">{title}</Heading>}
+            {caption && <p>{caption}</p>}
+            {children}
+          </CardFrame>
+        )}
     </>
   );
 };
@@ -81,6 +82,7 @@ Cards.propTypes = {
     PropTypes.object,
     PropTypes.node,
   ]),
+  style: PropTypes.object,
   bodyStyle: PropTypes.object,
   headStyle: PropTypes.object,
   isbutton: PropTypes.node,

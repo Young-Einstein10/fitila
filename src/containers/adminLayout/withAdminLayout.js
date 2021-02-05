@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Layout, Button, Row, Col, Breadcrumb } from "antd";
-import { NavLink, Link, useRouteMatch, withRouter } from "react-router-dom";
+import { NavLink, Link, withRouter } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
 import { ThemeProvider } from "styled-components";
 import MenueItems from "./MenueItems";
@@ -65,7 +65,7 @@ const ThemeLayout = WrappedComponent => {
         }
       };
 
-      const breadcrumbNameMap = (name = "") => ({
+      const breadcrumbNameMap = (name = "", profileId = "") => ({
         "/d": "Dashboard",
         "/d/organizations": "Organizations",
         "/d/states": "States",
@@ -78,7 +78,8 @@ const ThemeLayout = WrappedComponent => {
         "/business/uploads": "List Organization",
         "/business/preview": "Preview Form",
         "/d/segments": "Ecosystem Segments",
-        "/d/profile/": "Profile",
+        "/d/profile": "Company",
+        [`/d/profile/${profileId}`]: "Profile",
         [`/d/segments/${name}`]: capitalize(
           `${name
             .split("_")
@@ -105,16 +106,31 @@ const ThemeLayout = WrappedComponent => {
             {url === "/d/segments" ? (
               <span>
                 {filteredUrl.length >= 3
-                  ? breadcrumbNameMap(filteredUrl[2])[url]
+                  ? breadcrumbNameMap(filteredUrl[2], "")[url]
                   : breadcrumbNameMap()[url]}
               </span>
-            ) : (
-              <Link to={url}>
-                {filteredUrl.length >= 3
-                  ? breadcrumbNameMap(filteredUrl[2])[url]
-                  : breadcrumbNameMap()[url]}
-              </Link>
-            )}
+            ) :
+              url === "/d/profile" ? (
+                <span>
+                  {breadcrumbNameMap()[url]}
+                </span>
+              ) :
+                url === `/d/profile/${filteredUrl[2]}` ? (
+                  <span>
+                    {
+                      filteredUrl.length >= 3
+                        ? breadcrumbNameMap("", filteredUrl[2])[url]
+                        : breadcrumbNameMap()[url]
+                    }
+                  </span>
+                )
+                  : (
+                    <Link to={url}>
+                      {filteredUrl.length >= 3
+                        ? breadcrumbNameMap(filteredUrl[2], "")[url]
+                        : breadcrumbNameMap()[url]}
+                    </Link>
+                  )}
           </BreadcrumbItem>
         );
       });
