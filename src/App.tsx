@@ -15,7 +15,9 @@ const { theme } = config;
 
 const userData = JSON.parse(localStorage.getItem("userData"));
 
-const access_token = userData && userData.token;
+// const access_token = userData && userData.token;
+const access_token =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6ImRhdmlkQHdlc3QuY28iLCJleHAiOjE2MTMxMTYzMDUsImVtYWlsIjoiZGF2aWRAd2VzdC5jbyJ9.ZyoW0h__g4qoeCVrpyJ0x81aGgYRBnrMM8QOwhiWdMc";
 
 const checkAuth = () => {
   if (userData) {
@@ -35,18 +37,20 @@ const checkAuth = () => {
   return false;
 };
 
-if (access_token !== "undefined" && access_token !== null) {
+// access_token !== "undefined" && access_token !== null
+
+if (access_token) {
   setAuthToken(access_token);
 
-  store.dispatch(setCurrentUser(userData));
+  store.dispatch(setCurrentUser({}));
 
   // const currentTime = Date.now() / 1000;
 
   // Check for token expiration
-  if (!checkAuth()) {
-    // Sign out user
-    store.dispatch(logout() as any);
-  }
+  // if (!checkAuth()) {
+  //   // Sign out user
+  //   store.dispatch(logout() as any);
+  // }
 }
 
 function App() {
