@@ -4,9 +4,9 @@ import { Route, Redirect, RouteProps, useLocation } from "react-router-dom";
 import AuthLayout from "../containers/AuthLayout";
 
 const AuthRoute: FC<RouteProps> = ({ component, path, ...rest }: any) => {
-  const auth = useSelector((state: any) => state.auth);
+  // const auth = useSelector((state: any) => state.auth);
 
-  const location = useLocation();
+  // const location = useLocation();
 
   return (
     <AuthLayout>

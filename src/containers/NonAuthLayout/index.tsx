@@ -63,13 +63,13 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
               </ButtonStyled>
             </Dropdown> */}
 
-              <ButtonStyled size="large">
+              {/* <ButtonStyled size="large">
                 <LinkStyled to="/signup">
                   <span>
                     <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up
                   </span>
                 </LinkStyled>
-              </ButtonStyled>
+              </ButtonStyled> */}
             </div>
           </Row>
         </HeaderStyled>

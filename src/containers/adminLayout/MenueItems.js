@@ -86,7 +86,7 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout, history }) => {
         </NavLink>
       </Menu.Item>
 
-      <Menu.Item icon={<LogOutNavIcon />} key="Log_Out">
+      {/* <Menu.Item icon={<LogOutNavIcon />} key="Log_Out">
         <NavLink
           onClick={() => {
             toggleCollapsed();
@@ -99,7 +99,7 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout, history }) => {
         >
           Log Out
         </NavLink>
-      </Menu.Item>
+      </Menu.Item> */}
     </Menu>
   );
 };
