@@ -44,9 +44,9 @@ const Landing = ({
   const [dropDownIsOpen, setDropdownIsOpen] = useState(false);
 
   useEffect(() => {
-    // getEcosystem();
-
-    // getOrganization();
+    Promise.all([getEcosystem(), getOrganization()])
+      .then((res: any) => console.log(res.data))
+      .catch(err => console.log(err));
   }, [auth, getEcosystem, getOrganization]);
 
   const handleSubmit = () => {};
