@@ -82,7 +82,7 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
   const handleSubmit = async () => {
     setIsLoading(true);
 
-    const data = { ...state, user: user.id };
+    const data = { ...state, user: "" };
     console.log(data);
 
     const formData = new FormData();
