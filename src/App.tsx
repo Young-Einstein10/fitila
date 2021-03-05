@@ -9,6 +9,7 @@ import store from "./redux/store";
 import "./App.less";
 // import { logout, setCurrentUser } from "./redux/actions/authActions";
 import BusinessProvider from "./containers/Business/context";
+import { ApiProvider, ErrorProvider } from "./context";
 // import setAuthToken from "./utils/setAuthToken";
 
 const { theme } = config;
@@ -57,11 +58,15 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={{ ...theme }}>
-        <Router>
-          <BusinessProvider>
-            <Routes />
-          </BusinessProvider>
-        </Router>
+        <ErrorProvider>
+          <ApiProvider>
+            <Router>
+              <BusinessProvider>
+                <Routes />
+              </BusinessProvider>
+            </Router>
+          </ApiProvider>
+        </ErrorProvider>
       </ThemeProvider>
     </Provider>
   );

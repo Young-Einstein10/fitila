@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useContext, useState } from "react";
-import { Row, Form, Select, Upload, message } from "antd";
+import { Row, Form, Select, Upload } from "antd";
 import { MainColStyled } from "../AddCompany/styled";
 
 import Heading from "../../../../components/heading/heading";

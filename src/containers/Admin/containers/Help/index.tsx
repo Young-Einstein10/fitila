@@ -1,5 +1,5 @@
-import { Menu, Col, Row, Dropdown } from "antd";
 import React from "react";
+import { Menu, Col, Row, Dropdown, Collapse } from "antd";
 import FeatherIcon from "feather-icons-react";
 import { UserOutlined } from "@ant-design/icons";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
@@ -10,6 +10,8 @@ import { AdminSectionWrapper } from "../../styled";
 import { NavLink } from "react-router-dom";
 import { TableHeaderButtonStyled } from "../Dashboard/styled";
 import { ReactComponent as ArrowDown } from "../../../../static/svg/arrowDown.svg";
+
+const { Panel } = Collapse;
 
 const content = (
   <>
@@ -61,6 +63,15 @@ const tableHeader = (
   </div>
 );
 
+const text = (
+  <p style={{ paddingLeft: 24 }}>
+    Nam varius risus, donec sed imperdiet cursus sollicitudin leo. Magna mi
+    viverra sit diam posuere porttitor aliquet venenatis elementum. Quis lorem
+    nisl vitae nullam eros. Maecenas dui neque ut ultrices consectetur sed orci.
+    Quis.
+  </p>
+);
+
 const Help = () => {
   return (
     <AdminSectionWrapper>
@@ -79,8 +90,27 @@ const Help = () => {
         <Row gutter={24}>
           <Col xs={24}>
             <Cards title={tableHeader} more={content}>
-              <Col span={12}></Col>
-              <Col span={12}></Col>
+              <Row>
+                <Col span={12}>
+                  <Collapse accordion bordered={false} defaultActiveKey={["1"]}>
+                    {[1, 2, 3, 4, 5, 6].map((_, key) => (
+                      <Panel key={key} header="This is panel header 1">
+                        {text}
+                      </Panel>
+                    ))}
+                  </Collapse>
+                </Col>
+
+                <Col span={12}>
+                  <Collapse accordion bordered={false} defaultActiveKey={["1"]}>
+                    {[11, 12, 13, 14, 15, 16].map((num, key) => (
+                      <Panel key={num} header="This is panel header 1">
+                        {text}
+                      </Panel>
+                    ))}
+                  </Collapse>
+                </Col>
+              </Row>
             </Cards>
           </Col>
         </Row>

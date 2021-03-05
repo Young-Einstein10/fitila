@@ -5,7 +5,6 @@ import { ReactComponent as Ecosystem } from "../../../../static/svg/ecosystem.sv
 import { ReactComponent as EcosystemColored } from "../../../../static/svg/ecosystemcolored.svg";
 
 import { Col, Row, Tooltip } from "antd";
-import { WithBusinessProvider } from "../../index";
 import { ColStyled, SpanStyled, SpanFooter } from "./styled";
 import { ButtonStyled } from "../../../Styles";
 import { RouteComponentProps } from "react-router-dom";

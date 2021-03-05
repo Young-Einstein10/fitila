@@ -1,17 +1,14 @@
-import React from 'react';
-import { Input, Row, Col } from 'antd';
-import { NavLink } from 'react-router-dom';
-import FeatherIcon from 'feather-icons-react';
-import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Div } from './header-search-style';
+import React from "react";
+import { Input, Row, Col } from "antd";
+import FeatherIcon from "feather-icons-react";
+import PropTypes from "prop-types";
+import { Div } from "./header-search-style";
 // import { headerSearchAction } from '../../redux/headerSearch/actionCreator';
-import { Popover } from '../popup/popup';
+import { Popover } from "../popup/popup";
 
 const HeaderSearch = ({ darkMode }) => {
-  const dispatch = useDispatch();
   // const searchData = useSelector(state => state.headerSearchData);
-  const rtl = false
+  const rtl = false;
 
   const search = e => {
     // dispatch(headerSearchAction(e.target.value));
@@ -35,20 +32,24 @@ const HeaderSearch = ({ darkMode }) => {
   //   </div>
   // );
 
-  const content = (<span></span>)
+  const content = <span></span>;
 
   return (
     <>
-      <Div className="certain-category-search-wrapper" style={{ width: '100%' }} darkMode={darkMode}>
+      <Div
+        className="certain-category-search-wrapper"
+        style={{ width: "100%" }}
+        darkMode={darkMode}
+      >
         <Row className="ant-row-middle">
-          <Col md={2} xs={1} className={rtl ? 'text-left' : 'text-right'}>
+          <Col md={2} xs={1} className={rtl ? "text-left" : "text-right"}>
             <span className="certain-category-icon">
               <FeatherIcon icon="search" size={16} />
             </span>
           </Col>
           <Col md={22} xs={23}>
             <Popover
-              placement={!rtl ? 'bottomLeft' : 'bottomRight'}
+              placement={!rtl ? "bottomLeft" : "bottomRight"}
               content={content}
               title="Search List"
               action="focus"

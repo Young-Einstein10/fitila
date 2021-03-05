@@ -13,6 +13,7 @@ import {
 // import BusinessSupport from "../containers/Admin/containers/Dashboard/_partials/BusinessSupport";
 // import Funding from "../containers/Admin/containers/Dashboard/_partials/Funding";
 import Segment from "../containers/Admin/containers/Dashboard/_partials/Segments";
+import PrivacyPolicy from "../containers/Admin/containers/PrivacyPolicy";
 // import Training from "../containers/Admin/containers/Dashboard/_partials/Training";
 import Profile from "../containers/Admin/containers/Profile";
 // import {Business} from "../containers/Business";
@@ -41,6 +42,7 @@ const Routes = () => {
       <AuthRoute path="/d/contact" component={Contact} />
       <AuthRoute path="/d/project_brief" component={About} />
       <AuthRoute path="/d/help" component={Help} />
+      <AuthRoute path="/d/privacy" component={PrivacyPolicy} />
       <AuthRoute exact path="/d/profile/:id" component={Profile} />
       {/* <AuthRoute path="/d/segments/training" component={Training} />
       <AuthRoute

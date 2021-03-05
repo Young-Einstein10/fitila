@@ -1,4 +1,4 @@
-import { Button, Col, Row } from "antd";
+import { Col, Row } from "antd";
 import React from "react";
 import Heading from "../../../../components/heading/heading";
 import { PageHeader } from "../../../../components/page-headers/page-headers";

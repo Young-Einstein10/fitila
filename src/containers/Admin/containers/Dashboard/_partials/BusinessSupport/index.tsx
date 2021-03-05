@@ -4,7 +4,6 @@ import FeatherIcon from "feather-icons-react";
 
 import { UserOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../../../components/page-headers/page-headers";
-import { ReactComponent as FilterOutlined } from "../../../../../../static/svg/filter.svg";
 import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
 import { ReactComponent as Icon1 } from "../../../../../../static/svg/icon1.svg";
 
@@ -14,7 +13,6 @@ import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { NavLink } from "react-router-dom";
 import Styled from "styled-components";
 import { AdminSectionWrapper } from "../../../../styled";
-import { Tab } from "../../../../../../components/tabs/tabs";
 import { Child, TabBasic } from "../../../../../../components/tabs/style";
 
 const TableHeaderButtonStyled = Styled(Button)`

@@ -1,30 +1,28 @@
 import React, { FunctionComponent } from "react";
-import { Layout, Breadcrumb, Col, Row, Button } from "antd";
+import { Layout, Breadcrumb, Col, Row } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../static/svg/logo.svg";
-import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
+// import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
 import {
   BusinessButton,
-  ButtonStyled,
   Div,
   FooterStyled,
   HeaderStyled,
   LayoutStyled,
-  LinkStyled,
 } from "./styled";
 
 const { Content } = Layout;
 
 const NonAuthLayout: FunctionComponent = ({ children }) => {
-  const menu = (
-    <div style={{ padding: "1.25rem" }}>
-      <LinkStyled to="/signup">
-        <span>
-          <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up
-        </span>
-      </LinkStyled>
-    </div>
-  );
+  // const menu = (
+  //   <div style={{ padding: "1.25rem" }}>
+  //     <LinkStyled to="/signup">
+  //       <span>
+  //         <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up
+  //       </span>
+  //     </LinkStyled>
+  //   </div>
+  // );
 
   return (
     <Div>

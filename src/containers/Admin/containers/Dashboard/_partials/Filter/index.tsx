@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Row, Col, Dropdown, Button, Menu, Select } from "antd";
+import { Row, Col, Select } from "antd";
 import { ReactComponent as FilterOutlined } from "../../../../../../static/svg/filter.svg";
 import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
 import { SelectStyled } from "../../../../../Styles";
@@ -8,13 +8,13 @@ import { SelectStyled } from "../../../../../Styles";
 const { Option } = Select;
 
 const FilterOption = ({ business }) => {
-  const sectorData = (
-    <Menu onClick={() => {}}>
-      {business.sectors.map((sector, key) => (
-        <Menu.Item key={key}>{sector}</Menu.Item>
-      ))}
-    </Menu>
-  );
+  // const sectorData = (
+  //   <Menu onClick={() => {}}>
+  //     {business.sectors.map((sector, key) => (
+  //       <Menu.Item key={key}>{sector}</Menu.Item>
+  //     ))}
+  //   </Menu>
+  // );
 
   return (
     <Row gutter={[16, 16]} style={{ padding: "0 1.3rem 1.3rem" }}>

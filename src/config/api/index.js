@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
 
 //Intercept For Error reset
 axiosInstance.interceptors.request.use(
-  function (config) {
+  function(config) {
     // Reset error state before make a fresh API call
     store.dispatch({
       type: RESET_ERROR,
@@ -19,22 +19,21 @@ axiosInstance.interceptors.request.use(
 
     return config;
   },
-  function (error) {
+  function(error) {
     return Promise.reject(error);
   }
 );
 
 //Intercept For Errors
 axiosInstance.interceptors.response.use(
-  function (response) {
+  function(response) {
     // Do something with response data
     return response;
   },
-  function (error) {
+  function(error) {
     console.log(error.response);
     // Do something with response error
     const errorResponse = error.response;
-    const errorRequest = error.request;
 
     errorResponse &&
       store.dispatch({
@@ -44,8 +43,8 @@ axiosInstance.interceptors.response.use(
             typeof errorResponse.data.error === "string"
               ? errorResponse.data.error
               : typeof errorResponse.data.error === "object"
-                ? Object.entries(errorResponse.data.error)[0][1]
-                : null,
+              ? Object.entries(errorResponse.data.error)[0][1]
+              : null,
           // message:
           //   errorResponse && Object.values(errorResponse.data.errors).length > 0
           //     ? Object.values(errorResponse.data.errors).flat()[0]

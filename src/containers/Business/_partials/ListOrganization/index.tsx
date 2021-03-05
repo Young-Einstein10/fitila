@@ -1,12 +1,11 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Row, Form, Select, Divider, InputNumber, Tooltip } from "antd";
+import { Row, Form, Select, Divider, Tooltip } from "antd";
 import { MainColStyled } from "../AddCompany/styled";
 import Heading from "../../../../components/heading/heading";
 import { ButtonStyled, InputNumberStyled, InputStyled } from "../../../Styles";
 import { StepsStyled } from "./styled";
-import { Redirect, RouteComponentProps } from "react-router-dom";
-import { WithBusinessProvider } from "../../index";
+import { Redirect } from "react-router-dom";
 
 import { BusinessContext } from "../../context";
 import { AdminSectionWrapper } from "../../../Admin/styled";
@@ -18,7 +17,7 @@ const { Step } = StepsStyled;
 const InputGroup = InputStyled.Group;
 
 const ListOrganization = ({ history, getEcosystem, business }) => {
-  const [ecosystemDropdown, setEcosystemDropdown] = useState({
+  const [ecosystemDropdown] = useState({
     business_support: [
       "Business Advisory and Consulting Organizations",
       "Mentoring (Individuals & Organization)",
@@ -60,7 +59,7 @@ const ListOrganization = ({ history, getEcosystem, business }) => {
     ],
     enterprises: [],
   });
-  const [subSegmentList, setSubSegmentList] = useState([]);
+  // const [subSegmentList, setSubSegmentList] = useState([]);
   // const [ecosystem, setEcosystem] = useState([]);
   const [subSegment, setSubSegment] = useState([]);
   const [num_supported_business, setNum_supported_business] = useState();

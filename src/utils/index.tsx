@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
-import { Route, Redirect, RouteProps, useLocation } from "react-router-dom";
+import { Route, RouteProps } from "react-router-dom";
 import AuthLayout from "../containers/AuthLayout";
 
 const AuthRoute: FC<RouteProps> = ({ component, path, ...rest }: any) => {

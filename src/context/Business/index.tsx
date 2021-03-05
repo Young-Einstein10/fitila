@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import api from "../../config/api";
-export const BusinessContext = React.createContext();
+import React, { useState, createContext, FC } from "react";
+import { IBusinessProps, IBusinessStateProps } from "./types";
 
-const BusinessProvider = ({ children }) => {
-  const [state, setState] = useState({
+const BusinessContext = createContext<IBusinessProps | undefined>(undefined);
+
+const BusinessProvider: FC = ({ children }) => {
+  const [state, setState] = useState<IBusinessStateProps>({
     business_type: "",
     name: "",
     description: "",
@@ -38,19 +39,22 @@ const BusinessProvider = ({ children }) => {
     user: null,
   });
 
-  const addBusiness = async businessData => {
-    const res = await api.business.addBusiness(businessData);
-
-    if (res.status && res.status === 200) {
-      console.log("DATA", res.data);
-    }
-  };
-
   return (
-    <BusinessContext.Provider value={{ state, setState, addBusiness }}>
+    <BusinessContext.Provider value={{ state, setState }}>
       {children}
     </BusinessContext.Provider>
   );
 };
 
-export default BusinessProvider;
+function useBusinessContext() {
+  const context = React.useContext(BusinessContext);
+
+  if (context === undefined) {
+    throw new Error(
+      "useBusinessContext must be used within a BusinessProvider"
+    );
+  }
+  return context;
+}
+
+export { BusinessProvider, useBusinessContext };

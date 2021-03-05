@@ -11,7 +11,7 @@ const CardStyled = Styled(Card)`
   border-radius: 4px;
 `;
 
-const SummaryData = ({ business }) => {
+const SummaryData = ({ organizations }) => {
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={12} md={8} lg={6}>
@@ -34,7 +34,7 @@ const SummaryData = ({ business }) => {
                 marginBottom: "0px",
               }}
             >
-              {business.organization.length}
+              {organizations.length}
             </p>
             <Icon1 />
           </div>

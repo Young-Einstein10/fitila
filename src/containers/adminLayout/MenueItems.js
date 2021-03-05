@@ -9,7 +9,7 @@ import { ReactComponent as OrganizationNavIcon } from "../../static/svg/orgNavIc
 import { ReactComponent as HelpNavIcon } from "../../static/svg/helpNavIcon.svg";
 import { ReactComponent as AccountsNavIcon } from "../../static/svg/accountsNavIcon.svg";
 import { ReactComponent as ContactNavIcon } from "../../static/svg/contactNavIcon.svg";
-import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.svg";
+// import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.svg";
 import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.svg";
 
 const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout, history }) => {

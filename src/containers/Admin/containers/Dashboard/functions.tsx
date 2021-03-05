@@ -1,7 +1,7 @@
 import React from "react";
-import { Dropdown, Menu, Space } from "antd";
+import { Dropdown, Menu } from "antd";
 import FeatherIcon from "feather-icons-react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ECOSYSTEM_SEGMENTS } from "../../../../redux/constants";
 import { ReactComponent as BriefCase } from "../../../../static/svg/briefcase.svg";
 import { ReactComponent as BusinessSupportIcon } from "../../../../static/svg/business_support_icon.svg";
@@ -15,7 +15,7 @@ import { ReactComponent as MSMEsIcon } from "../../../../static/svg/cone.svg";
 import { UserOutlined } from "@ant-design/icons";
 import { ReactComponent as ArrowDown } from "../../../../static/svg/arrowDown.svg";
 
-import { TableHeaderButtonStyled, ViewProfileBtnStyled } from "./styled";
+import { TableHeaderButtonStyled } from "./styled";
 
 const content = (
   <>

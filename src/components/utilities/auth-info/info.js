@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Avatar } from "antd";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+
 import FeatherIcon from "feather-icons-react";
 import { InfoWraper, UserDropDwon } from "./auth-info-style";
 
@@ -11,12 +11,6 @@ import { Popover } from "../../popup/popup";
 import Heading from "../../heading/heading";
 
 const AuthInfo = ({ rtl }) => {
-  const dispatch = useDispatch();
-  const [state, setState] = useState({
-    flag: "english",
-  });
-  const { flag } = state;
-
   const SignOut = e => {
     e.preventDefault();
     // dispatch(logOut());

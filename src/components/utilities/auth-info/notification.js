@@ -1,43 +1,42 @@
-import React from 'react';
-import { Badge } from 'antd';
-import FeatherIcon from 'feather-icons-react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { Scrollbars } from 'react-custom-scrollbars';
-import { useSelector } from 'react-redux';
-import { AtbdTopDropdwon } from './auth-info-style';
-import { Popover } from '../../popup/popup';
-import Heading from '../../heading/heading';
+import React from "react";
+import { Badge } from "antd";
+import FeatherIcon from "feather-icons-react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Scrollbars } from "react-custom-scrollbars";
+import { AtbdTopDropdwon } from "./auth-info-style";
+import { Popover } from "../../popup/popup";
+import Heading from "../../heading/heading";
 
 const NotificationBox = () => {
-  const rtl = false
+  const rtl = false;
 
   const renderThumb = ({ style, ...props }) => {
     const thumbStyle = {
       borderRadius: 6,
-      backgroundColor: '#F1F2F6',
+      backgroundColor: "#F1F2F6",
     };
     return <div style={{ ...style, ...thumbStyle }} props={props} />;
   };
 
   const renderTrackVertical = () => {
     const thumbStyle = {
-      position: 'absolute',
-      width: '6px',
-      transition: 'opacity 200ms ease 0s',
+      position: "absolute",
+      width: "6px",
+      transition: "opacity 200ms ease 0s",
       opacity: 0,
-      [rtl ? 'left' : 'right']: '2px',
-      bottom: '2px',
-      top: '2px',
-      borderRadius: '3px',
+      [rtl ? "left" : "right"]: "2px",
+      bottom: "2px",
+      top: "2px",
+      borderRadius: "3px",
     };
     return <div className="hello" style={thumbStyle} />;
   };
 
   const renderView = ({ style, ...props }) => {
     const customStyle = {
-      marginRight: rtl && 'auto',
-      [rtl ? 'marginLeft' : 'marginRight']: '-17px',
+      marginRight: rtl && "auto",
+      [rtl ? "marginLeft" : "marginRight"]: "-17px",
     };
     return <div {...props} style={{ ...style, ...customStyle }} />;
   };
