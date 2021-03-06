@@ -9,10 +9,13 @@ interface IOrganizationProps {
   state: string;
 }
 
+
 interface IOrganizationStateProps {
   isLoading: boolean;
   data: IOrganizationProps[];
   refetchOrganizations: () => void;
+  states: string[],
+  sectors?: string[]
 }
 
 export type { IOrganizationProps, IOrganizationStateProps }

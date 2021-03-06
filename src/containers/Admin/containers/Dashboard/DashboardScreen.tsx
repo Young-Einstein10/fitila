@@ -10,7 +10,7 @@ import { Cards } from "../../../../components/cards/frame/cards-frame";
 import SummaryData from "./_partials/SummaryData";
 import FilterOption from "./_partials/Filter";
 
-import { CardSegmentStyled } from "./styled";
+import { CardSegmentStyled, RowStyled } from "./styled";
 import { createDataSource, createTableColumns } from "../helpers";
 import {
   useEcosystemContext,
@@ -27,6 +27,64 @@ const DashboardScreen = () => {
     isLoading: isEcosystemLoading,
     data: ecosystems,
   } = useEcosystemContext();
+
+  const statesData = [
+    {
+      id: 1,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 2,
+      name: "Abuja",
+      organizations: 40,
+    },
+    {
+      id: 3,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 4,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 5,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 6,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 7,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 8,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 9,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 10,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 11,
+      name: "Lagos",
+      organizations: 40,
+    },
+  ];
 
   return (
     <AdminSectionWrapper className="dashboard">
@@ -112,10 +170,26 @@ const DashboardScreen = () => {
               size="large"
               more={content}
             >
-              <div
-                className="states-lga"
-                style={{ background: "#B1E2CB", height: "400px" }}
-              ></div>
+              <RowStyled>
+                {statesData.map((state, i) => (
+                  <div className={`cell cell--${i + 1}`}>
+                    <p>{state.name}</p>
+                    <span>{state.organizations} Organizations</span>
+                  </div>
+                ))}
+
+                {/* 
+                <div className="cell cell--2" />
+                <div className="cell cell--3" />
+                <div className="cell cell--4" />
+                <div className="cell cell--5" />
+                <div className="cell cell--6" />
+                <div className="cell cell--7" />
+                <div className="cell cell--8" />
+                <div className="cell cell--9" />
+                <div className="cell cell--10" />
+                <div className="cell cell--11" /> */}
+              </RowStyled>
             </Cards>
           </Col>
         </Row>

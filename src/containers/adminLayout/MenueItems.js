@@ -86,6 +86,12 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout, history }) => {
         </NavLink>
       </Menu.Item>
 
+      <Menu.Item icon={<HelpNavIcon />} key="administrators">
+        <NavLink onClick={toggleCollapsed} to={`/d/administrators`}>
+          Administrators
+        </NavLink>
+      </Menu.Item>
+
       {/* <Menu.Item icon={<LogOutNavIcon />} key="Log_Out">
         <NavLink
           onClick={() => {

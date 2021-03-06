@@ -266,6 +266,7 @@ const AuthWrapper = Styled.div`
 
 const SelectStyled = Styled(Select)<{ width?: string }>`
   width: ${({ width }) => (width ? `${width} !important` : "100% !important")};
+  font-size: 16px;
 
   & span.ant-select-arrow {
     top: 43%;
@@ -276,6 +277,16 @@ const SelectStyled = Styled(Select)<{ width?: string }>`
   }
 `;
 
+const ActionButtonStyled = Styled(Button)`
+  padding: 4px 10px;
+  /* background: none;
+  border: none; */
+/* 
+  &:hover {
+    background: red;
+  } */
+`;
+
 export {
   InputStyled,
   InputNumberStyled,
@@ -283,4 +294,5 @@ export {
   SectionWrapper,
   AuthWrapper,
   SelectStyled,
+  ActionButtonStyled,
 };

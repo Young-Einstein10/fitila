@@ -1,4 +1,4 @@
-import { Card, Button } from "antd";
+import { Card, Row, Button } from "antd";
 import Styled from "styled-components";
 
 const CardSegmentStyled = Styled(Card)`
@@ -42,4 +42,132 @@ const TableHeaderButtonStyled = Styled(Button)`
   }
 `;
 
-export { CardSegmentStyled, ViewProfileBtnStyled, TableHeaderButtonStyled };
+const RowStyled = Styled(Row)`
+  height: 400px;
+  display: grid;
+  grid-template-columns: repeat(17, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  grid-gap: 0.5rem;
+
+  /* grid-template-areas: 
+    "A A A A A A  B B B C C C   E E F F G G"
+    "A A A A A A  B B B C C C   E E F F G G"
+    "A A A A A A  B B B C C C   H H I I J J"
+    "A A A A A A  D D D D D D   H H I I J J"
+    "A A A A A A  D D D D D D   K K K K K K"
+    "A A A A A A  D D D D D D   K K K K K K"; */
+
+
+  .cell {
+    border-radius: 5px;
+    padding: 1rem;
+
+    p {
+      margin-bottom: 0;
+      font-weight: 700;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+    .cell--1 {
+      background: rgb(177, 226, 203);
+      /* grid-area: A; */
+      grid-column: 1 / 6;
+      grid-row: 1 / -1;
+    }
+
+    .cell--2 {
+      background: #B7BEE6;
+      /* grid-area: B; */
+      grid-column: 6 / 9;
+      grid-row: 1 / 7;
+    }
+
+    .cell--3 {
+      background: #FFB49B;
+      /* grid-area: C; */
+      grid-column: 9 / 12;
+      grid-row: 1 / 7;
+    } 
+
+    .cell--4 {
+      background: tomato;
+      /* grid-area: D; */
+      grid-column: 6 / 12;
+      grid-row: 7 / -1;
+    }
+
+    .cell--5 {
+      background: darkcyan;
+      /* grid-area: E; */
+      grid-column: 12 / 14;
+      grid-row: 1 / 5;
+    }
+
+    .cell--6 {
+      background: magenta;
+      /* grid-area: F; */
+      grid-column: 14 / 16;
+      grid-row: 1 / 5;
+    }
+
+    .cell--7 {
+      background: yellow;
+      /* grid-area: G; */
+      grid-column: 16 / 18;
+      grid-row: 1 / 4;
+    }
+
+    .cell--8 {
+      background: yellowgreen;
+      /* grid-area: H; */
+      grid-column: 12 / 14;
+      grid-row: 5 / 9;
+    }
+
+    .cell--9 {
+      background: red;
+      /* grid-area: I; */
+      grid-column: 14 / 16;
+      grid-row: 5 / 9;
+    }
+
+    .cell--10 {
+      background: brown;
+      /* grid-area: J; */
+      grid-column: 16 / 18;
+      grid-row: 4 / 9;
+    }
+
+    .cell--11 {
+      background: skyblue;
+      /* grid-area: K; */
+      grid-column: 12 / 18;
+      grid-row: 9 / -1;
+    }
+  
+`;
+
+const CellStyledOne = Styled.div`
+  height: 100%;
+`;
+
+const CellStyledTwo = Styled.div`
+  height: 100%;
+`;
+
+const CellStyledThree = Styled.div`
+  height: 100%;
+`;
+
+export {
+  CardSegmentStyled,
+  ViewProfileBtnStyled,
+  TableHeaderButtonStyled,
+  CellStyledOne,
+  CellStyledTwo,
+  CellStyledThree,
+  RowStyled,
+};

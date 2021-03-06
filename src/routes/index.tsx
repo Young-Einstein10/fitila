@@ -8,6 +8,7 @@ import {
   About,
   Account,
   Contact,
+  Administrators,
 } from "../containers/Admin";
 // import Businesses from "../containers/Admin/containers/Dashboard/_partials/Businesses";
 // import BusinessSupport from "../containers/Admin/containers/Dashboard/_partials/BusinessSupport";
@@ -36,9 +37,16 @@ const Routes = () => {
   return (
     <Switch>
       <AuthRoute exact path="/d" component={Dashboard} />
-      <AuthRoute path="/d/organizations" component={Organizations} />
+      <AuthRoute exact path="/d/organizations" component={Organizations} />
+      <AuthRoute
+        exact
+        path="/d/organizations/:state"
+        component={Organizations}
+      />
+
       <AuthRoute path="/d/states" component={States} />
       <AuthRoute path="/d/account" component={Account} />
+      <AuthRoute path="/d/administrators" component={Administrators} />
       <AuthRoute path="/d/contact" component={Contact} />
       <AuthRoute path="/d/project_brief" component={About} />
       <AuthRoute path="/d/help" component={Help} />

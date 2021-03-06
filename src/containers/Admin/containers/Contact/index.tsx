@@ -14,7 +14,7 @@ const Contact = () => {
     <AdminSectionWrapper className="business-uploads" background="#fff">
       <Main background="#fff">
         <Row style={{ justifyContent: "center", padding: "5rem 0" }}>
-          <Col span={10}>
+          <Col xs={24} md={12} lg={10}>
             <div>
               <div>
                 <Heading

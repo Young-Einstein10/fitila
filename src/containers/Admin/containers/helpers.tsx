@@ -1,12 +1,38 @@
 import React from "react";
-import { Space } from "antd";
+import { Space, Tooltip } from "antd";
+import { EditFilled, DeleteFilled } from "@ant-design/icons";
 import { ViewProfileBtnStyled } from "./Dashboard/styled";
 import { Link } from "react-router-dom";
+import { ActionButtonStyled } from "../../Styles";
 
 // Function that Generate Table Columns
 
-const createTableColumns = () => {
-  const columns = [
+const DeleteButton = props => (
+  <Tooltip title="Delete">
+    <ActionButtonStyled
+      {...props}
+      danger
+      type="default"
+      children={<DeleteFilled height="1.2em" width="1.2em" />}
+    />
+  </Tooltip>
+);
+
+const EditButton = props => (
+  <Tooltip title="Edit">
+    <ActionButtonStyled
+      {...props}
+      type="default"
+      children={<EditFilled height="1.2em" width="1.2em" />}
+    />
+  </Tooltip>
+);
+
+const createTableColumns = (
+  handleEdit?: (record: any) => void,
+  handleDelete?: (record: any) => void
+) => {
+  const columns: any = [
     {
       title: "Rank",
       dataIndex: "rank",
@@ -78,14 +104,33 @@ const createTableColumns = () => {
       key: "funding",
     },
     {
-      // title: "Action",
+      title: "Actions",
       key: "action",
+      align: "center",
       render: (record, key) => {
         return (
           <Space size="middle">
             <ViewProfileBtnStyled>
               <Link to={`/d/profile/${record.id}`}>View Profile</Link>
             </ViewProfileBtnStyled>
+            {/* <Button onClick={() => handleEdit(record)}>
+              <EditFilled
+                style={{
+                  width: "1.2rem",
+                  height: "1.2rem",
+                }}
+              />
+            </Button> */}
+            {/* <Button onClick={() => handleDelete(record.id)}>
+              <DeleteFilled
+                style={{
+                  width: "1.2rem",
+                  height: "1.2rem",
+                }}
+              />
+            </Button> */}
+            <EditButton onClick={() => handleEdit(record)} />
+            <DeleteButton onClick={() => handleDelete(record.id)} />
           </Space>
         );
       },
@@ -98,6 +143,7 @@ const createTableColumns = () => {
 const createDataSource = organizationList => {
   const dataSource = organizationList.map((org, key) => {
     return {
+      ...org,
       key: key,
       rank: key + 1,
       company: org.name,

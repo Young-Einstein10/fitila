@@ -112,10 +112,7 @@ const SegmentScreen: FC<{ match?: any }> = ({
 }) => {
   let counter = 0;
 
-  const {
-    data: organizations,
-    isLoading: isOrganizationLoading,
-  } = useOrganizationContext();
+  const { data: organizations } = useOrganizationContext();
 
   const {
     data: ecosystems,
@@ -136,61 +133,45 @@ const SegmentScreen: FC<{ match?: any }> = ({
 
   const ecosystemTabData =
     currEcosystem.length &&
-    currEcosystem[0].sub_ecosystem.map((subEco, key) => {
-      return {
-        id: key,
-        title: subEco.name,
-        tabTitle: subEco.name,
-        content: (
-          <Fragment>
-            <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
-              <Col xs={24}>
-                <Cards title={generateTableTitle(subEco.name)} more={content}>
-                  <Table
-                    className="table-responsive"
-                    dataSource={createDataSource(subEco.organizations)}
-                    columns={createTableColumns()}
-                  />
-                </Cards>
-              </Col>
-            </Row>
-            {/* {subEco.organizations.length
-              ? subEco.organizations.map((org, key) => (
-                  <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
-                    <Col xs={24}>
-                      <Cards
-                        title={generateTableTitle(subEco.name)}
-                        more={content}
-                      >
-                        <Table
-                          className="table-responsive"
-                          dataSource={createDataSource(org)}
-                          columns={createTableColumns()}
-                        />
-                      </Cards>
-                    </Col>
-                  </Row>
-                ))
-              : null} */}
-          </Fragment>
-        ),
-      };
-    });
+    currEcosystem[0].sub_ecosystem
+      .filter(subEco => subEco.name)
+      .map(subEco => {
+        return {
+          id: subEco.id,
+          title: subEco.name,
+          tabTitle: subEco.name,
+          content: (
+            <Fragment>
+              <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
+                <Col xs={24}>
+                  <Cards title={generateTableTitle(subEco.name)} more={content}>
+                    <Table
+                      className="table-responsive"
+                      dataSource={createDataSource(subEco.organizations)}
+                      columns={createTableColumns()}
+                    />
+                  </Cards>
+                </Col>
+              </Row>
+            </Fragment>
+          ),
+        };
+      });
 
   return (
     <AdminSectionWrapper>
       <Row gutter={25}>
         <Col span={24}>
           <TabBasic defaultActiveKey="1" tabPosition={"top"}>
-            {ecosystemTabData.length &&
+            {isEcosystemLoading ? (
+              <Cards headless>Loading...</Cards>
+            ) : (
+              ecosystemTabData.length &&
               ecosystemTabData.map(item => {
                 const { content: tabContent, tabTitle } = item;
                 counter += 1;
                 return (
                   <Child tab={tabTitle} key={counter}>
-                    {/* <h2>{title}</h2>
-                  <p>{content}</p> */}
-
                     <div>
                       <PageHeader
                         title={
@@ -234,7 +215,8 @@ const SegmentScreen: FC<{ match?: any }> = ({
                     {tabContent}
                   </Child>
                 );
-              })}
+              })
+            )}
           </TabBasic>
         </Col>
       </Row>

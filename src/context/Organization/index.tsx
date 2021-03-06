@@ -10,6 +10,16 @@ const OrganizationProvider: FC = ({ children }) => {
   const [organization, setOrganization] = useState({
     isLoading: false,
     data: [],
+    sectors: [
+      "Health",
+      "Agriculture",
+      "Creatives",
+      "Education",
+      "Manufacturers",
+      "ICT",
+      "Finance",
+    ],
+    states: ["Lagos", "Ogun", "Abuja", "Kano", "Kaduna"],
   });
 
   const { organization: api } = useApiContext();
