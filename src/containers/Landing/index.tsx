@@ -1,12 +1,13 @@
-import React from "react";
+import React, { FC } from "react";
+import { RouteComponentProps } from "react-router-dom";
 import { EcosystemProvider, OrganizationProvider } from "../../context";
 import LandingScreen from "./LandingScreen";
 
-const Landing = () => {
+const Landing: FC<RouteComponentProps> = props => {
   return (
     <OrganizationProvider>
       <EcosystemProvider>
-        <LandingScreen />
+        <LandingScreen {...props} />
       </EcosystemProvider>
     </OrganizationProvider>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Space, Tooltip } from "antd";
 import { EditFilled, DeleteFilled } from "@ant-design/icons";
 import { ViewProfileBtnStyled } from "./Dashboard/styled";
@@ -30,7 +30,9 @@ const EditButton = props => (
 
 const createTableColumns = (
   handleEdit?: (record: any) => void,
-  handleDelete?: (record: any) => void
+  handleDelete?: (record: any) => void,
+  isAdmin?: boolean,
+  isOrganizationRoute?: boolean
 ) => {
   const columns: any = [
     {
@@ -129,8 +131,12 @@ const createTableColumns = (
                 }}
               />
             </Button> */}
-            <EditButton onClick={() => handleEdit(record)} />
-            <DeleteButton onClick={() => handleDelete(record.id)} />
+            {isAdmin && isOrganizationRoute ? (
+              <Fragment>
+                <EditButton onClick={() => handleEdit(record)} />
+                <DeleteButton onClick={() => handleDelete(record.id)} />
+              </Fragment>
+            ) : null}
           </Space>
         );
       },

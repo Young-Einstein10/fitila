@@ -7,7 +7,7 @@ import { ReactComponent as SearchIconRight } from "../../static/svg/SearchIconRi
 
 import { SectionWrapper, SelectStyled } from "../Styles";
 import "./styles.less";
-import { NavLink } from "react-router-dom";
+import { NavLink, RouteComponentProps } from "react-router-dom";
 import Styled from "styled-components";
 import { useEcosystemContext, useOrganizationContext } from "../../context";
 
@@ -30,11 +30,7 @@ const ButtonStyled = Styled(Button)`
 
 const { Option } = Select;
 
-interface ILandingProps {
-  history?: any;
-}
-
-const LandingScreen: FC<ILandingProps> = ({ history }) => {
+const LandingScreen: FC<RouteComponentProps> = ({ history }) => {
   const [dropDownIsOpen, setDropdownIsOpen] = useState(false);
 
   const {

@@ -7,13 +7,14 @@ import { AdminSectionWrapper } from "../../styled";
 import { ReactComponent as ArrowDown } from "../../../../static/svg/arrowDown.svg";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
-import { NavLink } from "react-router-dom";
+import { NavLink, RouteComponentProps } from "react-router-dom";
 import { TableHeaderButtonStyled } from "../Dashboard/styled";
 import { createDataSource, createTableColumns } from "../helpers";
 import { useOrganizationContext } from "../../../../context";
 import OrganizationFilter from "./_partials/OrganizationFilter";
 import { IOrganizationProps } from "../../../../context/Organization/types";
 import EditOrganizationModal from "./_partials/EditOrganizationModal";
+import CSVUploadModal from "./_partials/CSVUploadModal";
 
 const content = (
   <>
@@ -65,17 +66,22 @@ const tableHeader = (
   </div>
 );
 
-const OrganizationScreen: FC = () => {
+const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
   const [
     isEditOrganizationModalOpen,
     setIsEditOrganizationModalOpen,
   ] = useState(false);
+  const [isCSVUploadModalOpen, setIsCSVUploadModalOpen] = useState(false);
   const [currentOrganization, setCurrentOrganization] = useState(null);
   const [filteredOrganizations, setFilteredOrganizations] = useState<
     IOrganizationProps[]
   >([]);
 
   // const { state } = useParams();
+
+  let isAdmin = true;
+
+  const isOrganizationRoute = location.pathname === "/d/organizations";
 
   const {
     isLoading: isOrganizationLoading,
@@ -112,6 +118,8 @@ const OrganizationScreen: FC = () => {
 
   const toggleEditModal = () => setIsEditOrganizationModalOpen(open => !open);
 
+  const toggleCSVUploadModal = () => setIsCSVUploadModalOpen(open => !open);
+
   return (
     <AdminSectionWrapper className="organizations">
       <div>
@@ -123,6 +131,7 @@ const OrganizationScreen: FC = () => {
                 size="large"
                 type="primary"
                 style={{ marginRight: "1rem" }}
+                onClick={toggleCSVUploadModal}
               >
                 Bulk Upload (CSV)
               </Button>
@@ -152,7 +161,12 @@ const OrganizationScreen: FC = () => {
               <Table
                 className="table-responsive"
                 dataSource={createDataSource(filteredOrganizations)}
-                columns={createTableColumns(handleEdit, handleDelete)}
+                columns={createTableColumns(
+                  handleEdit,
+                  handleDelete,
+                  isAdmin,
+                  isOrganizationRoute
+                )}
                 loading={isOrganizationLoading}
               />
             </Cards>
@@ -165,6 +179,13 @@ const OrganizationScreen: FC = () => {
           visible={isEditOrganizationModalOpen}
           closeModal={toggleEditModal}
           currentOrganization={currentOrganization}
+        />
+      ) : null}
+
+      {isCSVUploadModalOpen ? (
+        <CSVUploadModal
+          visible={isCSVUploadModalOpen}
+          closeModal={toggleCSVUploadModal}
         />
       ) : null}
     </AdminSectionWrapper>

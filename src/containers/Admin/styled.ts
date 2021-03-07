@@ -3,7 +3,7 @@ import Styled from "styled-components";
 const AdminSectionWrapper = Styled.section<{ background?: string }>`
   background: ${({ background }) => (background ? background : "#FAFAFA")};
   /* padding: 0 1.3rem 1.3rem; */
-  min-height: calc(100vh - 64px)
+    min-height: calc(100vh - 64px) !important;
 
   button {
       &.ant-btn-lg{
@@ -12,6 +12,10 @@ const AdminSectionWrapper = Styled.section<{ background?: string }>`
         border-radius: 4px;
         height: 40px;
       }
+  }
+
+  section {
+
   }
 
   .ant-page-header {

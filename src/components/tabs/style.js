@@ -27,6 +27,8 @@ const TabColor = colors => `
       color !== "white"
         ? "#ffffff"
         : "#000000"};
+                margin-bottom: 0;
+
   }
   .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active {
     border-radius: 3px;
@@ -71,6 +73,7 @@ const TabBasic = Styled(Tabs)`
   & > .ant-tabs-nav {
     background: #fff;
     padding-right: 1.3rem;
+    margin-bottom: 0;
 
 
     .ant-tabs-tab {

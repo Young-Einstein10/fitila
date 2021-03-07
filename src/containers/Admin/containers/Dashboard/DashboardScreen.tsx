@@ -172,7 +172,7 @@ const DashboardScreen = () => {
             >
               <RowStyled>
                 {statesData.map((state, i) => (
-                  <div className={`cell cell--${i + 1}`}>
+                  <div key={state.id} className={`cell cell--${i + 1}`}>
                     <p>{state.name}</p>
                     <span>{state.organizations} Organizations</span>
                   </div>

@@ -159,7 +159,7 @@ const SegmentScreen: FC<{ match?: any }> = ({
       });
 
   return (
-    <AdminSectionWrapper>
+    <AdminSectionWrapper className="ecosystem-segments">
       <Row gutter={25}>
         <Col span={24}>
           <TabBasic defaultActiveKey="1" tabPosition={"top"}>
