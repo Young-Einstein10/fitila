@@ -1,4 +1,4 @@
-import { Input, Card, InputNumber, Button, Select } from "antd";
+import { Input, InputNumber, Button, Select } from "antd";
 import Styled from "styled-components";
 
 const InputStyled = Styled(Input)`

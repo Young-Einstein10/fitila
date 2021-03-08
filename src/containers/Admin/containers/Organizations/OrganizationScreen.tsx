@@ -1,14 +1,11 @@
 import React, { FC, useState, useEffect } from "react";
-import { Button, Dropdown, Row, Menu, Modal, Col, Table } from "antd";
+import { NavLink, RouteComponentProps, useParams } from "react-router-dom";
+import { Button, Row, Modal, Col, Table } from "antd";
 import FeatherIcon from "feather-icons-react";
-import { UserOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
-import { ReactComponent as ArrowDown } from "../../../../static/svg/arrowDown.svg";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
-import { NavLink, RouteComponentProps } from "react-router-dom";
-import { TableHeaderButtonStyled } from "../Dashboard/styled";
 import { createDataSource, createTableColumns } from "../helpers";
 import { useOrganizationContext } from "../../../../context";
 import OrganizationFilter from "./_partials/OrganizationFilter";
@@ -41,31 +38,6 @@ const content = (
   </>
 );
 
-const menu = (
-  <Menu onClick={() => {}}>
-    <Menu.Item key="1" icon={<UserOutlined />}>
-      1st menu item
-    </Menu.Item>
-    <Menu.Item key="2" icon={<UserOutlined />}>
-      2nd menu item
-    </Menu.Item>
-    <Menu.Item key="3" icon={<UserOutlined />}>
-      3rd menu item
-    </Menu.Item>
-  </Menu>
-);
-
-const tableHeader = (
-  <div style={{ display: "flex", justifyContent: "space-between" }}>
-    <span>Organization</span>
-    <Dropdown overlay={menu}>
-      <TableHeaderButtonStyled type="ghost" size="middle">
-        Past Month <ArrowDown />
-      </TableHeaderButtonStyled>
-    </Dropdown>
-  </div>
-);
-
 const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
   const [
     isEditOrganizationModalOpen,
@@ -77,7 +49,7 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
     IOrganizationProps[]
   >([]);
 
-  // const { state } = useParams();
+  const { state } = useParams() as any;
 
   let isAdmin = true;
 
@@ -91,10 +63,10 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
   } = useOrganizationContext();
 
   useEffect(() => {
-    if (organizations.length) {
+    if (!state && organizations.length) {
       setFilteredOrganizations(organizations);
     }
-  }, [organizations]);
+  }, [organizations, state]);
 
   const handleDelete = organizationId => {
     if (organizationId) {
@@ -151,13 +123,21 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
           setFilteredOrganizations={setFilteredOrganizations}
           states={states}
           sectors={sectors}
+          state={state}
         />
       </div>
 
       <Main>
         <Row gutter={15}>
           <Col xs={24}>
-            <Cards title={tableHeader} more={content}>
+            <Cards
+              title={
+                <div>
+                  <span>Organizations</span>
+                </div>
+              }
+              more={content}
+            >
               <Table
                 className="table-responsive"
                 dataSource={createDataSource(filteredOrganizations)}

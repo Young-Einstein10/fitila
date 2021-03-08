@@ -4,6 +4,7 @@ import { EditFilled, DeleteFilled } from "@ant-design/icons";
 import { ViewProfileBtnStyled } from "./Dashboard/styled";
 import { Link } from "react-router-dom";
 import { ActionButtonStyled } from "../../Styles";
+import styled from "styled-components";
 
 // Function that Generate Table Columns
 
@@ -27,6 +28,14 @@ const EditButton = props => (
     />
   </Tooltip>
 );
+
+const ImgPlaceholderStyled = styled.span`
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  background: #e7833b;
+  margin-bottom: 0;
+`;
 
 const createTableColumns = (
   handleEdit?: (record: any) => void,
@@ -53,27 +62,24 @@ const createTableColumns = (
         <Space size="middle" style={{ display: "flex", alignItems: "center" }}>
           <>
             {record.avatar ? (
-              <img
-                src={record.avatar}
-                alt="Profile"
+              <div
                 style={{
                   width: "30px",
                   height: "30px",
-                  borderRadius: "50px",
                 }}
-              />
+              >
+                <img
+                  src={record.avatar}
+                  alt="Profile"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "50px",
+                  }}
+                />
+              </div>
             ) : (
-              <p
-                className="img_placeholder"
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "50px",
-                  background: "#e6e6e6",
-                  // marginRight: "10px",
-                  marginBottom: 0,
-                }}
-              ></p>
+              <ImgPlaceholderStyled className="img_placeholder" />
             )}
             <span>{record.name}</span>
           </>

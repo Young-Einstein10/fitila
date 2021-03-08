@@ -1,12 +1,13 @@
-import React from "react";
+import React, { FC } from "react";
+import { RouteComponentProps } from "react-router-dom";
 import { EcosystemProvider, OrganizationProvider } from "../../../../context";
 import DashboardScreen from "./DashboardScreen";
 
-const Dashboard = () => {
+const Dashboard: FC<RouteComponentProps> = props => {
   return (
     <OrganizationProvider>
       <EcosystemProvider>
-        <DashboardScreen />
+        <DashboardScreen {...props} />
       </EcosystemProvider>
     </OrganizationProvider>
   );

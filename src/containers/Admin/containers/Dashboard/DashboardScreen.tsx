@@ -1,6 +1,6 @@
-import React from "react";
+import React, { FC } from "react";
 import { Button, Col, Row, Table, Spin } from "antd";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, RouteComponentProps } from "react-router-dom";
 import { content, generateIcons, tableHeader } from "./functions";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
@@ -17,7 +17,7 @@ import {
   useOrganizationContext,
 } from "../../../../context";
 
-const DashboardScreen = () => {
+const DashboardScreen: FC<RouteComponentProps> = ({ history }) => {
   const {
     isLoading: isOrganizationLoading,
     data: organizations,
@@ -165,17 +165,19 @@ const DashboardScreen = () => {
         {/* STATES */}
         <Row gutter={24} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
-            <Cards
-              title="Explore by Ecosystem States"
-              size="large"
-              more={content}
-            >
+            <Cards title="Explore by States" size="large" more={content}>
               <RowStyled>
                 {statesData.map((state, i) => (
-                  <div key={state.id} className={`cell cell--${i + 1}`}>
-                    <p>{state.name}</p>
-                    <span>{state.organizations} Organizations</span>
-                  </div>
+                  <Link
+                    className={`cell cell--${i + 1}`}
+                    key={state.id}
+                    to={`/d/organizations/${state.name}`}
+                  >
+                    <div>
+                      <p>{state.name}</p>
+                      <span>{state.organizations} Organizations</span>
+                    </div>
+                  </Link>
                 ))}
 
                 {/* 
@@ -229,7 +231,7 @@ const DashboardScreen = () => {
             <Cards title={tableHeader} more={content}>
               <Table
                 className="table-responsive"
-                dataSource={createDataSource(organizations)}
+                dataSource={createDataSource(organizations.slice(0, 5))}
                 columns={createTableColumns()}
                 loading={isOrganizationLoading}
               />

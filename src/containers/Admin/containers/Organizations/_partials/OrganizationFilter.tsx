@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { Row, Col } from "antd";
+import React, { FC, useEffect } from "react";
+import { Row, Col, Input, Form } from "antd";
 import { ReactComponent as ArrowDown } from "../../../../../static/svg/arrowDown.svg";
 import { ReactComponent as FilterOutlined } from "../../../../../static/svg/filter.svg";
 import { ReactComponent as SearchIconLeft } from "../../../../../static/svg/SearchIconLeft.svg";
@@ -7,6 +7,7 @@ import { SelectStyled } from "../../../../Styles";
 import { IOrganizationProps } from "../../../../../context/Organization/types";
 
 const { Option } = SelectStyled;
+const FormItem = Form.Item;
 
 interface IOrganizationFilterProps {
   isOrganizationLoading: boolean;
@@ -16,30 +17,68 @@ interface IOrganizationFilterProps {
   >;
   states: string[];
   sectors: string[];
+  state: string;
 }
 
-type IFilterOption = "name" | "state" | "sector";
+type IFilterOption = "name" | "state" | "sector" | "search";
 
 const OrganizationFilter: FC<IOrganizationFilterProps> = ({
   isOrganizationLoading,
   organizations,
   setFilteredOrganizations,
+  state,
   sectors,
   states,
 }) => {
+  useEffect(() => {
+    if (state) {
+      const result = organizations
+        .map(organization => organization)
+        .filter(
+          organization =>
+            organization.state.toLowerCase() === state.toLowerCase()
+        );
+
+      setFilteredOrganizations(result);
+    }
+  }, [state, organizations, setFilteredOrganizations]);
+
   const filterOrganizations = (
     filterValue: string,
     filterMethod: IFilterOption
   ) => {
-    if (filterMethod === "name") {
-      const result = organizations
-        .map(organization => organization)
-        .filter(organization => organization.name === filterValue);
+    if (filterValue === "") {
+      return;
+    } else {
+      if (filterMethod === "sector") {
+        const result = organizations
+          .map(organization => organization)
+          .filter(organization => organization.sector === filterValue);
 
-      setFilteredOrganizations(result);
-    }
+        setFilteredOrganizations(result);
+      }
 
-    if (filterMethod === "state") {
+      if (filterMethod === "state") {
+        const result = organizations
+          .map(organization => organization)
+          .filter(organization => organization.state === filterValue);
+
+        setFilteredOrganizations(result);
+      }
+
+      if (filterMethod === "search") {
+        const filteredData = organizations.filter(org => {
+          return Object.keys(org).some(
+            key =>
+              org[key] &&
+              org[key]
+                .toString()
+                .toLowerCase()
+                .includes(filterValue)
+          );
+        });
+        setFilteredOrganizations(filteredData);
+      }
     }
   };
 
@@ -50,94 +89,131 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
           <strong>Filter</strong>
         </p>
       </div>
-      <Row gutter={[16, 16]} style={{ padding: "0 1.3rem 1.3rem" }}>
-        <Col xs={24} sm={24} md={12} lg={12}>
-          <SelectStyled
-            loading={isOrganizationLoading}
-            suffixIcon={<ArrowDown />}
-            showSearch
-            placeholder={
-              <span>
-                {" "}
-                <SearchIconLeft style={{ marginRight: "1.5rem" }} />
-                Filter By Organization
-              </span>
-            }
-            optionFilterProp="children"
-            onChange={() => {}}
-            onFocus={() => {}}
-            onBlur={() => {}}
-            onSelect={(val: string) => {
-              filterOrganizations(val, "name");
-            }}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            {organizations.map((org, key) => (
-              <Option key={key} value={org.name}>
-                {org.name}
-              </Option>
-            ))}
-          </SelectStyled>
-        </Col>
+      <Row style={{ padding: "0 1.3rem 1.3rem" }}>
+        <Col span={24}>
+          <Form layout="vertical" initialValues={{ state_filter: state }}>
+            <Row gutter={[16, 16]}>
+              {!state && (
+                <Col xs={24} sm={24} md={12} lg={12}>
+                  <FormItem name="search_filter">
+                    <Input
+                      onChange={e => {
+                        let input = e.target.value.toString().toLowerCase();
+                        console.log(e.target.value);
 
-        <Col xs={24} sm={24} md={12} lg={6}>
-          <SelectStyled
-            suffixIcon={<ArrowDown />}
-            showSearch
-            placeholder={
-              <span>
-                <FilterOutlined style={{ marginRight: "1.5rem" }} />
-                Filter By States
-              </span>
-            }
-            optionFilterProp="children"
-            onChange={() => {}}
-            onFocus={() => {}}
-            onBlur={() => {}}
-            onSelect={val => {
-              console.log(val);
-            }}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            {states.map((state, key) => (
-              <Option key={key} value={state}>
-                {state}
-              </Option>
-            ))}
-          </SelectStyled>
-        </Col>
+                        filterOrganizations(input, "search");
+                      }}
+                      placeholder="Search Companies By Name"
+                      prefix={<SearchIconLeft />}
+                      disabled={isOrganizationLoading}
+                    />
+                  </FormItem>
+                </Col>
+              )}
 
-        <Col xs={24} sm={24} md={12} lg={6}>
-          <SelectStyled
-            suffixIcon={<ArrowDown />}
-            showSearch
-            placeholder={
-              <span>
-                <FilterOutlined style={{ marginRight: "1.5rem" }} />
-                Filter By Sectors
-              </span>
-            }
-            optionFilterProp="children"
-            onChange={() => {}}
-            onFocus={() => {}}
-            onBlur={() => {}}
-            onSelect={val => {
-              console.log(val);
-            }}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            {sectors.map((sector, key) => (
-              <Option key={key} value={sector}>
-                {sector}
-              </Option>
-            ))}
-          </SelectStyled>
+              <Col xs={24} sm={24} md={12} lg={6}>
+                <FormItem name="state_filter">
+                  <SelectStyled
+                    suffixIcon={<ArrowDown />}
+                    showSearch
+                    placeholder={
+                      <span>
+                        <FilterOutlined style={{ marginRight: "1.5rem" }} />
+                        Filter By States
+                      </span>
+                    }
+                    optionFilterProp="children"
+                    onChange={() => {}}
+                    onFocus={() => {}}
+                    onBlur={() => {}}
+                    onSelect={(val: string) => {
+                      filterOrganizations(val, "state");
+                    }}
+                    filterOption={(input, option) =>
+                      option.value.toLowerCase().indexOf(input.toLowerCase()) >=
+                      0
+                    }
+                    disabled={isOrganizationLoading}
+                  >
+                    {states.map((state, key) => (
+                      <Option key={key} value={state}>
+                        {state}
+                      </Option>
+                    ))}
+                  </SelectStyled>
+                </FormItem>
+              </Col>
+
+              {state && (
+                <Col xs={24} sm={24} md={12} lg={6}>
+                  <FormItem name="segment_filter">
+                    <SelectStyled
+                      suffixIcon={<ArrowDown />}
+                      showSearch
+                      placeholder={
+                        <span>
+                          <FilterOutlined style={{ marginRight: "1.5rem" }} />
+                          Filter By Segments
+                        </span>
+                      }
+                      optionFilterProp="children"
+                      onChange={() => {}}
+                      onFocus={() => {}}
+                      onBlur={() => {}}
+                      onSelect={(val: string) => {
+                        filterOrganizations(val, "state");
+                      }}
+                      filterOption={(input, option) =>
+                        option.value
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      }
+                      disabled={isOrganizationLoading}
+                    >
+                      {states.map((state, key) => (
+                        <Option key={key} value={state}>
+                          {state}
+                        </Option>
+                      ))}
+                    </SelectStyled>
+                  </FormItem>
+                </Col>
+              )}
+
+              <Col xs={24} sm={24} md={12} lg={6}>
+                <FormItem name="sector_filter">
+                  <SelectStyled
+                    suffixIcon={<ArrowDown />}
+                    showSearch
+                    placeholder={
+                      <span>
+                        <FilterOutlined style={{ marginRight: "1.5rem" }} />
+                        Filter By Sectors
+                      </span>
+                    }
+                    optionFilterProp="children"
+                    onChange={() => {}}
+                    onFocus={() => {}}
+                    onBlur={() => {}}
+                    onSelect={(val: string) => {
+                      filterOrganizations(val, "sector");
+                    }}
+                    filterOption={(input, option) =>
+                      option.value.toLowerCase().indexOf(input.toLowerCase()) >=
+                      0
+                    }
+                    disabled={isOrganizationLoading}
+                  >
+                    {sectors.map((sector, key) => (
+                      <Option key={key} value={sector}>
+                        {sector}
+                      </Option>
+                    ))}
+                  </SelectStyled>
+                </FormItem>
+              </Col>
+            </Row>
+          </Form>
         </Col>
       </Row>
     </section>
