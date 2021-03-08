@@ -1,4 +1,4 @@
-import { Input, InputNumber, Button, Select } from "antd";
+import { Input, Card, InputNumber, Button, Select } from "antd";
 import Styled from "styled-components";
 
 const InputStyled = Styled(Input)`
@@ -277,6 +277,14 @@ const SelectStyled = Styled(Select)<{ width?: string }>`
   }
 `;
 
+const SpinnerStyled = Styled.div`
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+`;
+
 const ActionButtonStyled = Styled(Button)`
   padding: 4px 10px;
   /* background: none;
@@ -295,4 +303,5 @@ export {
   AuthWrapper,
   SelectStyled,
   ActionButtonStyled,
+  SpinnerStyled,
 };

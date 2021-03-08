@@ -13,13 +13,10 @@ import Contact from "./_partials/Contact";
 import Summary from "./_partials/Summary";
 import { RowStyled } from "./styled";
 import { useOrganizationContext } from "../../../../context";
+import { RouteComponentProps } from "react-router-dom";
 
-interface IProfileScreenProps {
-  match: any;
-}
-
-const ProfileScreen: FC<IProfileScreenProps> = ({ match }) => {
-  const { id: organizationId } = match.params;
+const ProfileScreen: FC<RouteComponentProps> = ({ match }) => {
+  const { id: organizationId } = match.params as any;
 
   const { data: organizations } = useOrganizationContext();
 
@@ -41,7 +38,9 @@ const ProfileScreen: FC<IProfileScreenProps> = ({ match }) => {
       id: 2,
       title: "Similar Companies",
       tabTitle: "Similar Companies",
-      content: <SimilarCompanies />,
+      content: (
+        <SimilarCompanies selectedOrganization={selectedOrganization[0]} />
+      ),
     },
     {
       id: 3,

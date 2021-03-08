@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { connect } from "react-redux";
 import { Col, Row, Menu, Dropdown, Table } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
@@ -9,8 +9,22 @@ import { UserOutlined } from "@ant-design/icons";
 import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
 import { TableHeaderButtonStyled } from "../../../Dashboard/_partials/Businesses";
 import { createDataSource, createTableColumns } from "../../../helpers";
+import { IOrganizationProps } from "../../../../../../context/Organization/types";
+import { useOrganizationContext } from "../../../../../../context";
 
-const SimilarCompanies = ({ organization }) => {
+interface ISimilarCompaniesProps {
+  selectedOrganization: IOrganizationProps;
+}
+
+const SimilarCompanies: FC<ISimilarCompaniesProps> = ({
+  selectedOrganization,
+}) => {
+  const { data: organizations } = useOrganizationContext();
+
+  const similarCompanies = organizations.filter(
+    organization => organization.sector === selectedOrganization.sector
+  );
+
   const menu = (
     <Menu onClick={() => {}}>
       <Menu.Item key="1" icon={<UserOutlined />}>
@@ -73,7 +87,7 @@ const SimilarCompanies = ({ organization }) => {
         >
           <Table
             className="table-responsive"
-            dataSource={createDataSource(organization)}
+            dataSource={createDataSource(similarCompanies)}
             columns={createTableColumns()}
           />
         </Cards>

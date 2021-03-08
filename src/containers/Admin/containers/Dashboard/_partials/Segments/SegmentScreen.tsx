@@ -1,7 +1,7 @@
 import React, { Fragment, FC } from "react";
-import { Button, Dropdown, Row, Menu, Col, Table } from "antd";
+import { Button, Dropdown, Row, Spin, Menu, Col, Table } from "antd";
 import FeatherIcon from "feather-icons-react";
-
+import { LoadingOutlined } from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../../../components/page-headers/page-headers";
 import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
@@ -17,6 +17,9 @@ import {
   useEcosystemContext,
   useOrganizationContext,
 } from "../../../../../../context";
+import { SpinnerStyled } from "../../../../../Styles";
+
+const LoadingSpinner = <LoadingOutlined style={{ fontSize: 50 }} spin />;
 
 const TableHeaderButtonStyled = Styled(Button)`
   background: #F7F9FA;
@@ -162,62 +165,64 @@ const SegmentScreen: FC<{ match?: any }> = ({
     <AdminSectionWrapper className="ecosystem-segments">
       <Row gutter={25}>
         <Col span={24}>
-          <TabBasic defaultActiveKey="1" tabPosition={"top"}>
-            {isEcosystemLoading ? (
-              <Cards headless>Loading...</Cards>
-            ) : (
-              ecosystemTabData.length &&
-              ecosystemTabData.map(item => {
-                const { content: tabContent, tabTitle } = item;
-                counter += 1;
-                return (
-                  <Child tab={tabTitle} key={counter}>
-                    <div>
-                      <PageHeader
-                        title={
-                          <div>
-                            <p
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                marginBottom: "0",
-                                textTransform: "capitalize",
-                              }}
-                            >
-                              {generateIcons(capitalize(pageHeader), {
-                                marginRight: "15px",
-                              })}{" "}
-                              {pageHeader}
-                            </p>
-                          </div>
-                        }
-                        buttons={[
-                          <div key="1" className="page-header-actions">
-                            <Button size="large" type="primary">
-                              <NavLink to="/business">
-                                List Your Business
-                              </NavLink>
-                            </Button>
-
-                            {pageHeader === "Funding" && (
+          {isEcosystemLoading ? (
+            <SpinnerStyled>
+              <Spin indicator={LoadingSpinner} />
+            </SpinnerStyled>
+          ) : (
+            <TabBasic defaultActiveKey="1" tabPosition={"top"}>
+              {ecosystemTabData.length &&
+                ecosystemTabData.map(item => {
+                  const { content: tabContent, tabTitle } = item;
+                  counter += 1;
+                  return (
+                    <Child tab={tabTitle} key={counter}>
+                      <div>
+                        <PageHeader
+                          title={
+                            <div>
+                              <p
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  marginBottom: "0",
+                                  textTransform: "capitalize",
+                                }}
+                              >
+                                {generateIcons(capitalize(pageHeader), {
+                                  marginRight: "15px",
+                                })}{" "}
+                                {pageHeader}
+                              </p>
+                            </div>
+                          }
+                          buttons={[
+                            <div key="1" className="page-header-actions">
                               <Button size="large" type="primary">
-                                View Businesses
+                                <NavLink to="/business">
+                                  List Your Business
+                                </NavLink>
                               </Button>
-                            )}
-                          </div>,
-                        ]}
-                        style={{ paddingLeft: 0, paddingRight: 0 }}
-                      />
 
-                      <SummaryData organizations={organizations} />
-                    </div>
+                              {pageHeader === "Funding" && (
+                                <Button size="large" type="primary">
+                                  View Businesses
+                                </Button>
+                              )}
+                            </div>,
+                          ]}
+                          style={{ paddingLeft: 0, paddingRight: 0 }}
+                        />
 
-                    {tabContent}
-                  </Child>
-                );
-              })
-            )}
-          </TabBasic>
+                        <SummaryData organizations={organizations} />
+                      </div>
+
+                      {tabContent}
+                    </Child>
+                  );
+                })}
+            </TabBasic>
+          )}
         </Col>
       </Row>
     </AdminSectionWrapper>

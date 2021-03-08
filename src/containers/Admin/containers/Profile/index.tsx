@@ -3,10 +3,10 @@ import { RouteComponentProps } from "react-router-dom";
 import { OrganizationProvider } from "../../../../context";
 import ProfileScreen from "./ProfileScreen";
 
-const Profile: FC<RouteComponentProps> = ({ match }) => {
+const Profile: FC<RouteComponentProps> = props => {
   return (
     <OrganizationProvider>
-      <ProfileScreen match={match} />
+      <ProfileScreen {...props} />
     </OrganizationProvider>
   );
 };
