@@ -11,7 +11,7 @@ const AuthProvider: FC = ({ children }) => {
     user: {},
   });
 
-  const { setApiHeaders } = useApiContext();
+  const { setApiHeaders, auth: api } = useApiContext();
 
   const userData = localStorage.getItem("userData");
 
@@ -24,8 +24,10 @@ const AuthProvider: FC = ({ children }) => {
           const jwtToken = jwt_decode(token) as any;
 
           if (jwtToken.exp < new Date().getTime() / 1000) {
-            // console.log("Token Expired", jwtToken);
+            console.log("Token Expired", jwtToken);
             return false;
+          } else {
+            console.log("Token Hasn't Expired", jwtToken);
           }
         } catch (error) {
           return false;
@@ -48,6 +50,15 @@ const AuthProvider: FC = ({ children }) => {
     }
   }, [userData, setApiHeaders]);
 
+  const login = async (userData: { email: string; password: string }) => {
+    try {
+      const res = await api.login(userData);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const signOut = () => {
     localStorage.removeItem("userData");
     setAuth({
@@ -57,7 +68,7 @@ const AuthProvider: FC = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, signOut }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, signOut }}>
       {children}
     </AuthContext.Provider>
   );

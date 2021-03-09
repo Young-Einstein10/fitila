@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Checkbox, Button, Form } from "antd";
-import { connect } from "react-redux";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Heading from "../../components/heading/heading";
 import { AuthWrapper } from "../Styles";
-import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
-import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
-import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
-import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
+// import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
+// import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
+// import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
+// import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
 import { InputStyled } from "../Styles";
-import { signinUser } from "../../redux/actions/authActions";
+import { useApiContext, useAuthContext } from "../../context";
 
-const Login = ({ signinUser, history, auth, location }) => {
+const Login = ({ history, location }) => {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
 
   const { state } = location;
+
+  const { setApiHeaders } = useApiContext();
+
+  const { setAuth, login, auth } = useAuthContext();
 
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -27,22 +30,31 @@ const Login = ({ signinUser, history, auth, location }) => {
     }
   }, [auth, state, history]);
 
-  const handleSubmit = values => {
+  const handleSubmit = async values => {
     setIsLoading(true);
     // console.log(values);
-    signinUser(values)
-      .then(res => {
-        setIsLoading(false);
-        if (state && state.next) {
-          history.push(state.next);
-        } else {
-          history.push("/d");
-        }
-      })
-      .catch((err: any) => {
-        console.log(err);
-        setIsLoading(false);
-      });
+    try {
+      const res = await login(values);
+
+      if (res.status && res.status === 200) {
+        const {
+          data: { data },
+        } = res;
+
+        localStorage.setItem("userData", JSON.stringify(data));
+
+        setApiHeaders(data.token);
+
+        setAuth({
+          isAuthenticated: true,
+          user: data,
+        });
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -101,7 +113,7 @@ const Login = ({ signinUser, history, auth, location }) => {
             </Button>
           </Form.Item>
 
-          <p className="auth-notice">
+          {/* <p className="auth-notice">
             Don&rsquo;t have an account?{" "}
             <NavLink to="/signup">Sign up here</NavLink>
           </p>
@@ -127,15 +139,11 @@ const Login = ({ signinUser, history, auth, location }) => {
                 <LinkedIn />
               </Link>
             </li>
-          </ul>
+          </ul> */}
         </Form>
       </div>
     </AuthWrapper>
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, { signinUser })(Login);
+export default Login;

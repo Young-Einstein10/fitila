@@ -45,7 +45,7 @@ const ThemeLayout = WrappedComponent => {
 
     render() {
       const { collapsed } = this.state;
-      const { location } = this.props;
+      const { location, history } = this.props;
 
       const topMenu = false;
       const rtl = false;
@@ -109,28 +109,21 @@ const ThemeLayout = WrappedComponent => {
                   ? breadcrumbNameMap(filteredUrl[2], "")[url]
                   : breadcrumbNameMap()[url]}
               </span>
-            ) :
-              url === "/d/profile" ? (
-                <span>
-                  {breadcrumbNameMap()[url]}
-                </span>
-              ) :
-                url === `/d/profile/${filteredUrl[2]}` ? (
-                  <span>
-                    {
-                      filteredUrl.length >= 3
-                        ? breadcrumbNameMap("", filteredUrl[2])[url]
-                        : breadcrumbNameMap()[url]
-                    }
-                  </span>
-                )
-                  : (
-                    <Link to={url}>
-                      {filteredUrl.length >= 3
-                        ? breadcrumbNameMap(filteredUrl[2], "")[url]
-                        : breadcrumbNameMap()[url]}
-                    </Link>
-                  )}
+            ) : url === "/d/profile" ? (
+              <span>{breadcrumbNameMap()[url]}</span>
+            ) : url === `/d/profile/${filteredUrl[2]}` ? (
+              <span>
+                {filteredUrl.length >= 3
+                  ? breadcrumbNameMap("", filteredUrl[2])[url]
+                  : breadcrumbNameMap()[url]}
+              </span>
+            ) : (
+              <Link to={url}>
+                {filteredUrl.length >= 3
+                  ? breadcrumbNameMap(filteredUrl[2], "")[url]
+                  : breadcrumbNameMap()[url]}
+              </Link>
+            )}
           </BreadcrumbItem>
         );
       });
@@ -238,19 +231,13 @@ const ThemeLayout = WrappedComponent => {
                   </Link>
 
                   <Breadcrumb separator={<ArrowRight />}>
-                    {/* <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Separator>
-                      <ArrowRight />
-                    </Breadcrumb.Separator>
-                    <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-                    <Breadcrumb.Separator>
-                      <ArrowRight />
-                    </Breadcrumb.Separator>
-                    <Breadcrumb.Item>Current</Breadcrumb.Item> */}
-
                     {breadcrumbItems}
                   </Breadcrumb>
                 </div>
+
+                {/* <Button type="primary" onClick={() => history.push("/login")}>
+                  Admin Login
+                </Button> */}
 
                 <CurrentUserButton size="large">
                   <span></span>

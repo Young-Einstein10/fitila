@@ -7,7 +7,11 @@ import { AdminSectionWrapper } from "../../styled";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
 import { createDataSource, createTableColumns } from "../helpers";
-import { useOrganizationContext } from "../../../../context";
+import {
+  useApiContext,
+  useAuthContext,
+  useOrganizationContext,
+} from "../../../../context";
 import OrganizationFilter from "./_partials/OrganizationFilter";
 import { IOrganizationProps } from "../../../../context/Organization/types";
 import EditOrganizationModal from "./_partials/EditOrganizationModal";
@@ -44,14 +48,13 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
     setIsEditOrganizationModalOpen,
   ] = useState(false);
   const [isCSVUploadModalOpen, setIsCSVUploadModalOpen] = useState(false);
+
   const [currentOrganization, setCurrentOrganization] = useState(null);
   const [filteredOrganizations, setFilteredOrganizations] = useState<
     IOrganizationProps[]
   >([]);
 
   const { state } = useParams() as any;
-
-  let isAdmin = true;
 
   const isOrganizationRoute = location.pathname === "/d/organizations";
 
@@ -60,7 +63,12 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
     data: organizations,
     states,
     sectors,
+    refetchOrganizations,
   } = useOrganizationContext();
+
+  const { organization: api } = useApiContext();
+
+  const { auth } = useAuthContext();
 
   useEffect(() => {
     if (!state && organizations.length) {
@@ -72,13 +80,28 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
     if (organizationId) {
       Modal.confirm({
         title: "Are you sure?",
-        onOk: () => {
-          console.log("Yes");
+        onOk: async () => {
+          await deleteOrganization(organizationId);
         },
         onCancel: () => {
           console.log("No");
         },
       });
+    }
+  };
+
+  const deleteOrganization = async id => {
+    try {
+      const res = await api.deleteOrganization(id);
+
+      if (res.status === 204) {
+        Modal.success({
+          title: "Organization deleted successfully",
+          onOk: () => refetchOrganizations(),
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -99,14 +122,16 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
           title="Organizations"
           buttons={[
             <div key="1" className="page-header-actions">
-              <Button
-                size="large"
-                type="primary"
-                style={{ marginRight: "1rem" }}
-                onClick={toggleCSVUploadModal}
-              >
-                Bulk Upload (CSV)
-              </Button>
+              {auth.isAuthenticated && (
+                <Button
+                  size="large"
+                  type="primary"
+                  style={{ marginRight: "1rem" }}
+                  onClick={toggleCSVUploadModal}
+                >
+                  Bulk Upload (CSV)
+                </Button>
+              )}
               <Button size="large" type="primary">
                 <NavLink to="/business">List Your Business</NavLink>
               </Button>
@@ -144,7 +169,7 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
                 columns={createTableColumns(
                   handleEdit,
                   handleDelete,
-                  isAdmin,
+                  auth.isAuthenticated,
                   isOrganizationRoute
                 )}
                 loading={isOrganizationLoading}

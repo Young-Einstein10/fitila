@@ -1,6 +1,9 @@
+import { AxiosResponse } from "axios";
+
 interface ContextProps {
   auth: AuthProps;
   setAuth: React.Dispatch<React.SetStateAction<AuthProps>>;
+  login: (userData: { email: string, password: string }) => Promise<AxiosResponse<any>>;
   signOut: () => void;
 }
 

@@ -460,9 +460,11 @@ const Div = Styled.div`
 
 const SidebarFooterStyled = Styled.footer`
     font-size: 12px;
-    margin-top: 3rem;
+    /* margin-top: 3rem; */
     color: #81868C;
-    padding-left: 3rem
+    padding-left: 3rem;
+    position: absolute;
+    bottom: 0;
 
     p {
         /* margin-left: 20px; */

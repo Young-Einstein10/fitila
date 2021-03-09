@@ -18,4 +18,24 @@ export default class Organization {
       },
     });
   }
+
+  upload(data) {
+    return this.client.post("/organizations/upload_organizations/", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  }
+
+  editOrganization(id, data) {
+    return this.client.put(`/organizations/${id}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  }
+
+  deleteOrganization(id) {
+    return this.client.delete(`/organizations/${id}`);
+  }
 }

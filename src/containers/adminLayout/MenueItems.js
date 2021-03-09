@@ -1,29 +1,30 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Menu } from "antd";
 import { NavLink, useRouteMatch, withRouter } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
-import { logout } from "../../redux/actions/authActions";
 import { ReactComponent as DashboardIcon } from "../../static/svg/dashboardIcon.svg";
 import { ReactComponent as OrganizationNavIcon } from "../../static/svg/orgNavIcon.svg";
 import { ReactComponent as HelpNavIcon } from "../../static/svg/helpNavIcon.svg";
 import { ReactComponent as AccountsNavIcon } from "../../static/svg/accountsNavIcon.svg";
 import { ReactComponent as ContactNavIcon } from "../../static/svg/contactNavIcon.svg";
-// import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.svg";
+import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.svg";
 import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.svg";
+import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
+import { useAuthContext } from "../../context";
 
-const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout, history }) => {
+const MenuItems = ({ darkMode, topMenu, toggleCollapsed }) => {
   const { path } = useRouteMatch();
   const pathName = window.location.pathname;
   const pathArray = pathName.split(path);
   const mainPath = pathArray[1];
   const mainPathSplit = mainPath.split("/");
 
+  const { auth, signOut } = useAuthContext();
+
   return (
     <Menu
       mode={!topMenu || window.innerWidth <= 991 ? "inline" : "horizontal"}
       theme={darkMode && "dark"}
-      // // eslint-disable-next-line no-nested-ternary
       defaultSelectedKeys={
         !topMenu
           ? [
@@ -62,11 +63,13 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout, history }) => {
         </NavLink>
       </Menu.Item>
 
-      <Menu.Item icon={<AccountsNavIcon />} key="Account">
-        <NavLink onClick={toggleCollapsed} to={`/d/account`}>
-          Account
-        </NavLink>
-      </Menu.Item>
+      {auth.isAuthenticated && (
+        <Menu.Item icon={<AccountsNavIcon />} key="Account">
+          <NavLink onClick={toggleCollapsed} to={`/d/account`}>
+            Account
+          </NavLink>
+        </Menu.Item>
+      )}
 
       <Menu.Item icon={<ContactNavIcon />} key="Contact">
         <NavLink onClick={toggleCollapsed} to={`/d/contact`}>
@@ -86,28 +89,30 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed, logout, history }) => {
         </NavLink>
       </Menu.Item>
 
-      <Menu.Item icon={<HelpNavIcon />} key="administrators">
-        <NavLink onClick={toggleCollapsed} to={`/d/administrators`}>
-          Administrators
-        </NavLink>
-      </Menu.Item>
+      {auth.isAuthenticated && (
+        <Menu.Item icon={<UserPlus />} key="administrators">
+          <NavLink onClick={toggleCollapsed} to={`/d/administrators`}>
+            Administrators
+          </NavLink>
+        </Menu.Item>
+      )}
 
-      {/* <Menu.Item icon={<LogOutNavIcon />} key="Log_Out">
-        <NavLink
-          onClick={() => {
-            toggleCollapsed();
+      {auth.isAuthenticated && (
+        <Menu.Item icon={<LogOutNavIcon />} key="Log_Out">
+          <NavLink
+            onClick={() => {
+              toggleCollapsed();
 
-            logout().then(() => {
-              history.push("/");
-            });
-          }}
-          to="#"
-        >
-          Log Out
-        </NavLink>
-      </Menu.Item> */}
+              signOut();
+            }}
+            to="#"
+          >
+            Log Out
+          </NavLink>
+        </Menu.Item>
+      )}
     </Menu>
   );
 };
 
-export default connect(null, { logout })(withRouter(MenuItems));
+export default withRouter(MenuItems);

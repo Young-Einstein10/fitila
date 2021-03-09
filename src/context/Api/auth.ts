@@ -16,7 +16,15 @@ export default class Auth {
     return this.client.post("/account/auth/", userDetails);
   }
 
-  signup(userData) {
+  createAdmin(userData) {
     return this.client.post("/account/add_user/", userData);
+  }
+
+  getUsers() {
+    return this.client.get("/account/get_user/");
+  }
+
+  editUser(id: string) {
+    return this.client.get(`/account/user/${id}`);
   }
 }
