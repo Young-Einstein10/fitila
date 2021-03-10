@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Row } from "antd";
-import { connect } from "react-redux";
 import { MainColStyled } from "../AddCompany/styled";
 
 import Heading from "../../../../components/heading/heading";
@@ -9,17 +8,18 @@ import { ButtonStyled } from "../../../Styles";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import { BusinessContext } from "../../context";
-import { addOrganization } from "../../../../redux/actions/businessActions";
 import { numberWithCommas } from "../../../../utils/helpers";
-import api from "../../../../config/api";
+import { useApiContext, useEcosystemContext } from "../../../../context";
 
 const { Step } = StepsStyled;
 
-const Preview = ({ history, addOrganization, auth: { user } }) => {
+const Preview = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [ecosystem, setEcosystem] = useState([]);
   const [selectedEcosystem, setSelectedEcosystem] = useState([]);
   const [selectedSubEcosystem, setSelectedSubEcosystem] = useState([]);
+
+  const { organization: api } = useApiContext();
 
   const customDot = (dot: any) => dot;
 
@@ -54,16 +54,16 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
     cac_doc,
   } = state;
 
+  const { data: ecosystemData } = useEcosystemContext();
+
   useEffect(() => {
     const getEcosystem = async () => {
-      const res = await api.business.getEcosystem();
+      if (ecosystem) {
+        setEcosystem(ecosystemData);
 
-      if (res && res.status === 200) {
-        const { data } = res.data;
-
-        setEcosystem(data);
-
-        let selectedecosystem = data.filter(eco => eco.id === ecosystemId);
+        let selectedecosystem = ecosystemData.filter(
+          eco => eco.id === ecosystemId
+        );
 
         let selectedSubEcosystem =
           selectedecosystem.length &&
@@ -77,7 +77,7 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
     };
 
     getEcosystem();
-  }, [state, ecosystem, ecosystemId, subSegmentId, selectedEcosystem]);
+  }, [ecosystemData, ecosystem, ecosystemId, subSegmentId, selectedEcosystem]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -91,7 +91,8 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
       formData.append(key, data[key]);
     }
 
-    addOrganization(formData)
+    api
+      .addBusiness(formData)
       .then(res => {
         setIsLoading(false);
         if (res && res.status === 201) {
@@ -327,8 +328,4 @@ const Preview = ({ history, addOrganization, auth: { user } }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, { addOrganization })(Preview);
+export default Preview;

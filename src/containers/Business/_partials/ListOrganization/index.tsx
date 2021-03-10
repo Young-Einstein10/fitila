@@ -11,12 +11,13 @@ import { BusinessContext } from "../../context";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import { getEcosystem } from "../../../../redux/actions/businessActions";
+import { useEcosystemContext } from "../../../../context";
 
 const { Option } = Select;
 const { Step } = StepsStyled;
 const InputGroup = InputStyled.Group;
 
-const ListOrganization = ({ history, getEcosystem, business }) => {
+const ListOrganization = ({ history }) => {
   const [ecosystemDropdown] = useState({
     business_support: [
       "Business Advisory and Consulting Organizations",
@@ -66,7 +67,7 @@ const ListOrganization = ({ history, getEcosystem, business }) => {
   const [is_startUp, setIs_Startup] = useState(false);
   const [subEcosystemSubClass, setSubEcosystemSubClass] = useState("");
 
-  const { ecosystem } = business;
+  const { data: ecosystem } = useEcosystemContext();
 
   const customDot = (dot: any) => dot;
 
@@ -80,7 +81,7 @@ const ListOrganization = ({ history, getEcosystem, business }) => {
     }
 
     getEcosystem();
-  }, [state, getEcosystem]);
+  }, [state]);
 
   const handleSubEcosystemChange = value => setSubEcosystemSubClass(value);
 
@@ -650,8 +651,4 @@ land and building) of 100million to 1billion naira
   );
 };
 
-const mapStateToProps = state => ({
-  business: state.business,
-});
-
-export default connect(mapStateToProps, { getEcosystem })(ListOrganization);
+export default ListOrganization;
