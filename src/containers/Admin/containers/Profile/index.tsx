@@ -4,11 +4,7 @@ import { OrganizationProvider } from "../../../../context";
 import ProfileScreen from "./ProfileScreen";
 
 const Profile: FC<RouteComponentProps> = props => {
-  return (
-    <OrganizationProvider>
-      <ProfileScreen {...props} />
-    </OrganizationProvider>
-  );
+  return <ProfileScreen {...props} />;
 };
 
 export default Profile;

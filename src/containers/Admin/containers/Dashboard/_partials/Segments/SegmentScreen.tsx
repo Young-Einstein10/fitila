@@ -140,7 +140,7 @@ const SegmentScreen: FC<{ match?: any }> = ({
           tabTitle: subEco.name,
           content: (
             <Fragment>
-              {/* <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
+              <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
                 <Col xs={24}>
                   <Cards title={generateTableTitle(subEco.name)} more={content}>
                     <Table
@@ -150,7 +150,7 @@ const SegmentScreen: FC<{ match?: any }> = ({
                     />
                   </Cards>
                 </Col>
-              </Row> */}
+              </Row>
 
               {subEco.sub_class.length ? (
                 subEco.sub_class.map(subclass => (

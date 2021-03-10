@@ -1,13 +1,8 @@
 import React from "react";
-import { OrganizationProvider } from "../../../../context";
 import StateScreen from "./StateScreen";
 
 const States = props => {
-  return (
-    <OrganizationProvider>
-      <StateScreen {...props} />
-    </OrganizationProvider>
-  );
+  return <StateScreen {...props} />;
 };
 
 export default States;
