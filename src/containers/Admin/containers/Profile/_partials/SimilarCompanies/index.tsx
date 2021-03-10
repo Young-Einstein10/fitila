@@ -96,8 +96,4 @@ const SimilarCompanies: FC<ISimilarCompaniesProps> = ({
   );
 };
 
-const mapStateToProps = state => ({
-  organization: state.business.organization,
-});
-
-export default connect(mapStateToProps, null)(SimilarCompanies);
+export default SimilarCompanies;
