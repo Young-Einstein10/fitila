@@ -58,7 +58,7 @@ const Preview = ({ history }) => {
 
   useEffect(() => {
     const getEcosystem = async () => {
-      if (ecosystem) {
+      if (ecosystem.length) {
         setEcosystem(ecosystemData);
 
         let selectedecosystem = ecosystemData.filter(
@@ -77,7 +77,13 @@ const Preview = ({ history }) => {
     };
 
     getEcosystem();
-  }, [ecosystemData, ecosystem, ecosystemId, subSegmentId, selectedEcosystem]);
+  }, [
+    ecosystemData,
+    ecosystem.length,
+    ecosystemId,
+    subSegmentId,
+    selectedEcosystem,
+  ]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
