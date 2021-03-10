@@ -1,6 +1,5 @@
-import React from "react";
+import React, { FC } from "react";
 import { Button, Row, Col } from "antd";
-import { connect } from "react-redux";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
@@ -8,10 +7,13 @@ import { Child, TabBasic } from "../../../../components/tabs/style";
 import { Profile, Deactivate, ModifyAccount, Security } from "./_partials/Main";
 import Activity from "./_partials/Activity";
 import Favorites from "./_partials/Favorites";
-import { NavLink } from "react-router-dom";
+import { NavLink, RouteComponentProps } from "react-router-dom";
+import { useAuthContext } from "../../../../context";
 
-const Account = ({ auth }) => {
-  const { user } = auth;
+const Account: FC<RouteComponentProps> = () => {
+  const {
+    auth: { user },
+  } = useAuthContext();
 
   let counter = 0;
 
@@ -101,8 +103,4 @@ const Account = ({ auth }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, {})(Account);
+export default Account;

@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosRequestConfig } from "axios";
 
 export default class Ecosystem {
   client: AxiosInstance;
@@ -7,11 +7,11 @@ export default class Ecosystem {
     this.client = client;
   }
 
-  getEcosystem() {
-    return this.client.get("/ecosystem/");
+  getEcosystem(config?: AxiosRequestConfig) {
+    return this.client.get("/ecosystem/", config);
   }
 
-  getSubEcosystem() {
-    return this.client.get("/sub_ecosystem");
+  getSubEcosystem(config?: AxiosRequestConfig) {
+    return this.client.get("/sub_ecosystem", config);
   }
 }

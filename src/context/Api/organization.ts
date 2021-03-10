@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosRequestConfig } from "axios";
 
 export default class Organization {
   client: AxiosInstance;
@@ -7,8 +7,8 @@ export default class Organization {
     this.client = client;
   }
 
-  getOrganization() {
-    return this.client.get("/organizations");
+  getOrganization(config?: AxiosRequestConfig) {
+    return this.client.get("/organizations", config);
   }
 
   addBusiness(data) {

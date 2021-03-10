@@ -1,6 +1,8 @@
-import React, { useState, useEffect, createContext, FC } from "react";
+import React, { useState, useEffect, createContext, FC, useRef } from "react";
+import Axios from "axios";
 import { useApiContext } from "../Api";
-import { IOrganizationStateProps } from "./types";
+import { IOrganizationProps, IOrganizationStateProps } from "./types";
+import { useMountedState } from "../../utils/hooks";
 
 const OrganizationContext = createContext<IOrganizationStateProps | undefined>(
   undefined
@@ -24,7 +26,14 @@ const OrganizationProvider: FC = ({ children }) => {
 
   const { organization: api } = useApiContext();
 
+  const isMounted = useMountedState();
+
+  const ecosystemData = useRef<any[]>();
+
   useEffect(() => {
+    const cancelTokenSource = Axios.CancelToken;
+    const source = cancelTokenSource.source();
+
     const getAllOrganizations = async () => {
       setOrganization(prevOrganizations => ({
         ...prevOrganizations,
@@ -32,27 +41,61 @@ const OrganizationProvider: FC = ({ children }) => {
       }));
 
       try {
-        const res = await api.getOrganization();
+        if (
+          ecosystemData.current &&
+          ecosystemData.current.length
+          // ecosystemData.current.data.length
+        ) {
+          if (isMounted()) {
+            setOrganization(prevOrganizations => ({
+              ...prevOrganizations,
+              isLoading: false,
+              data: ecosystemData.current,
+            }));
+          }
+        } else {
+          const res = await api.getOrganization({
+            cancelToken: source.token,
+          });
 
-        const { data } = res.data;
+          const { data } = res.data;
 
-        setOrganization(prevOrganizations => ({
-          ...prevOrganizations,
-          isLoading: false,
-          data,
-        }));
+          if (isMounted()) {
+            setOrganization(prevOrganizations => ({
+              ...prevOrganizations,
+              isLoading: false,
+              data,
+            }));
+
+            ecosystemData.current = data;
+          }
+        }
       } catch (error) {
-        setOrganization(prevOrganizations => ({
-          ...prevOrganizations,
-          isLoading: false,
-        }));
+        if (Axios.isCancel(error)) {
+          console.log("Request canceled", error.message);
+        }
+        // handle error
+        if (isMounted()) {
+          setOrganization(prevOrganizations => ({
+            ...prevOrganizations,
+            isLoading: false,
+          }));
 
-        console.log(error);
+          console.log(error);
+        }
       }
     };
 
+    // if (organization.data.length === 0) {
+    //   getAllOrganizations();
+    // }
     getAllOrganizations();
-  }, [api]);
+
+    return () => {
+      // cancel the request (the message parameter is optional)
+      source.cancel("Operation canceled by the user.");
+    };
+  }, [api, isMounted]);
 
   const refetchOrganizations = async () => {
     setOrganization(prevOrganizations => ({

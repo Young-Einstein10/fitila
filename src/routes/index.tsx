@@ -27,7 +27,7 @@ import Landing from "../containers/Landing";
 import Login from "../containers/Login";
 import NonAuthLayout from "../containers/NonAuthLayout";
 import Signup from "../containers/Signup";
-import AuthRoute from "../utils";
+import { AuthRoute, CustomRoute } from "../utils";
 
 const NotFound = () => {
   return <Redirect to="/" />;
@@ -36,36 +36,36 @@ const NotFound = () => {
 const Routes = () => {
   return (
     <Switch>
-      <AuthRoute exact path="/d" component={Dashboard} />
-      <AuthRoute exact path="/d/organizations" component={Organizations} />
-      <AuthRoute
+      <CustomRoute exact path="/d" component={Dashboard} />
+      <CustomRoute exact path="/d/organizations" component={Organizations} />
+      <CustomRoute
         exact
         path="/d/organizations/:state"
         component={Organizations}
       />
 
-      <AuthRoute path="/d/states" component={States} />
+      <CustomRoute path="/d/states" component={States} />
       <AuthRoute path="/d/account" component={Account} />
       <AuthRoute path="/d/administrators" component={Administrators} />
-      <AuthRoute path="/d/contact" component={Contact} />
-      <AuthRoute path="/d/project_brief" component={About} />
-      <AuthRoute path="/d/help" component={Help} />
-      <AuthRoute path="/d/privacy" component={PrivacyPolicy} />
-      <AuthRoute exact path="/d/profile/:id" component={Profile} />
-      {/* <AuthRoute path="/d/segments/training" component={Training} />
-      <AuthRoute
+      <CustomRoute path="/d/contact" component={Contact} />
+      <CustomRoute path="/d/project_brief" component={About} />
+      <CustomRoute path="/d/help" component={Help} />
+      <CustomRoute path="/d/privacy" component={PrivacyPolicy} />
+      <CustomRoute exact path="/d/profile/:id" component={Profile} />
+      {/* <Route path="/d/segments/training" component={Training} />
+      <Route
         path="/d/segments/business_support"
         component={BusinessSupport}
       />
-      <AuthRoute path="/d/segments/funding" component={Funding} />
-      <AuthRoute path="/d/segments/businesses" component={Businesses} /> */}
-      <AuthRoute path="/d/segments/:name" component={Segment} />
+      <Route path="/d/segments/funding" component={Funding} />
+      <Route path="/d/segments/businesses" component={Businesses} /> */}
+      <CustomRoute path="/d/segments/:name" component={Segment} />
 
-      <AuthRoute exact path="/business" component={AddCompany} />
-      <AuthRoute path={`/business/listorg`} component={ListOrganization} />
-      <AuthRoute path={`/business/uploads`} component={Uploads} />
-      <AuthRoute path={`/business/preview`} component={Preview} />
-      <AuthRoute path={`/business/success`} component={Success} />
+      <CustomRoute exact path="/business" component={AddCompany} />
+      <CustomRoute path={`/business/listorg`} component={ListOrganization} />
+      <CustomRoute path={`/business/uploads`} component={Uploads} />
+      <CustomRoute path={`/business/preview`} component={Preview} />
+      <CustomRoute path={`/business/success`} component={Success} />
 
       <NonAuthLayout>
         <Switch>

@@ -7,16 +7,22 @@ interface ContextProps {
   signOut: () => void;
 }
 
+
+interface IUserProps {
+
+  id?: number;
+  name?: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  phone?: string;
+  token?: string;
+}
+
 interface AuthProps {
   isAuthenticated: boolean;
-  user: {
-    id?: number;
-    name?: string;
-    email?: string;
-    phone?: string;
-    token?: string;
-  };
+  user: IUserProps
 }
 
 
-export type { ContextProps, AuthProps }
+export type { ContextProps, AuthProps, IUserProps }

@@ -1,20 +1,14 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Row, Col, Select } from "antd";
 import { ReactComponent as FilterOutlined } from "../../../../../../static/svg/filter.svg";
 import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
 import { SelectStyled } from "../../../../../Styles";
+import { useOrganizationContext } from "../../../../../../context";
 
 const { Option } = Select;
 
-const FilterOption = ({ business }) => {
-  // const sectorData = (
-  //   <Menu onClick={() => {}}>
-  //     {business.sectors.map((sector, key) => (
-  //       <Menu.Item key={key}>{sector}</Menu.Item>
-  //     ))}
-  //   </Menu>
-  // );
+const FilterOption = () => {
+  const { data: organizations, states, sectors } = useOrganizationContext();
 
   return (
     <Row gutter={[16, 16]} style={{ padding: "0 1.3rem 1.3rem" }}>
@@ -40,7 +34,7 @@ const FilterOption = ({ business }) => {
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {business.organization.map((org, key) => (
+          {organizations.map((org, key) => (
             <Option key={key} value={org.name}>
               {org.name}
             </Option>
@@ -66,10 +60,10 @@ const FilterOption = ({ business }) => {
             console.log(val);
           }}
           filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {business.states.map((state, key) => (
+          {states.map((state, key) => (
             <Option key={key} value={state}>
               {state}
             </Option>
@@ -95,10 +89,10 @@ const FilterOption = ({ business }) => {
             console.log(val);
           }}
           filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {business.sectors.map((sector, key) => (
+          {sectors.map((sector, key) => (
             <Option key={key} value={sector}>
               {sector}
             </Option>
@@ -109,8 +103,4 @@ const FilterOption = ({ business }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  business: state.business,
-});
-
-export default connect(mapStateToProps)(FilterOption);
+export default FilterOption;

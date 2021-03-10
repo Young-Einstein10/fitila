@@ -34,6 +34,12 @@ const ApiProvider: FC = ({ children }) => {
   const dispatch = useErrorDispatch();
 
   useEffect(() => {
+    console.log("API HAS MOUNTED");
+
+    if (dispatch) {
+      console.log("DISPATCH JUST CHANGED CAUSING A RERENDER");
+    }
+
     //Intercept For Error reset
     axiosInstance.interceptors.request.use(
       function(config: any) {

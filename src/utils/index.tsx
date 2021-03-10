@@ -1,25 +1,26 @@
 import React, { FC } from "react";
-import { Route, RouteProps } from "react-router-dom";
+import { Redirect, Route, RouteProps, useLocation } from "react-router-dom";
 import AuthLayout from "../containers/AuthLayout";
+import { useAuthContext } from "../context";
 
 const AuthRoute: FC<RouteProps> = ({ component, path, ...rest }: any) => {
-  // const auth = useSelector((state: any) => state.auth);
+  const { auth } = useAuthContext();
 
-  // const location = useLocation();
+  const location = useLocation();
 
-  return (
+  return auth.isAuthenticated ? (
     <AuthLayout>
       <Route component={component} path={path} {...rest} />
     </AuthLayout>
+  ) : (
+    <Redirect to={{ pathname: "/login", state: { next: location.pathname } }} />
   );
-
-  // return auth.isAuthenticated ? (
-  //   <AuthLayout>
-  //     <Route component={component} path={path} {...rest} />
-  //   </AuthLayout>
-  // ) : (
-  //   <Redirect to={{ pathname: "/login", state: { next: location.pathname } }} />
-  // );
 };
 
-export default AuthRoute;
+const CustomRoute: FC<RouteProps> = ({ component, path, ...rest }: any) => (
+  <AuthLayout>
+    <Route component={component} path={path} {...rest} />
+  </AuthLayout>
+);
+
+export { AuthRoute, CustomRoute };

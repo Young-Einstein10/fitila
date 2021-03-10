@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Row, Col, Table, Space } from "antd";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import CreateAdminModal from "./_partials/CreateAdministrators";
 import { useApiContext } from "../../../../context";
+import { useMountedState } from "../../../../utils/hooks";
 
 const AdministratorScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,6 +13,8 @@ const AdministratorScreen = () => {
   const [users, setUsers] = useState([]);
 
   const { auth: api } = useApiContext();
+
+  const isMounted = useMountedState();
 
   useEffect(() => {
     const fetchAdminUsers = async () => {
@@ -25,20 +28,26 @@ const AdministratorScreen = () => {
           const adminUsers = data.filter(
             user => user.role.toLowerCase() === "admin"
           );
-          setIsLoading(false);
 
-          setUsers(adminUsers);
+          if (isMounted()) {
+            setIsLoading(false);
+
+            setUsers(adminUsers);
+          }
         }
 
         console.log(res.data);
       } catch (error) {
-        setIsLoading(false);
+        if (isMounted()) {
+          setIsLoading(false);
 
-        console.log(error);
+          console.log(error);
+        }
       }
     };
+
     fetchAdminUsers();
-  }, [api]);
+  }, [api, isMounted]);
 
   const toggleCreateAdminModal = () => setIsCreateAdminModalOpen(open => !open);
 
@@ -108,6 +117,7 @@ const AdministratorScreen = () => {
                 const name = `${first_name} ${last_name}`;
 
                 return {
+                  key: user.id,
                   ...user,
                   name,
                 };

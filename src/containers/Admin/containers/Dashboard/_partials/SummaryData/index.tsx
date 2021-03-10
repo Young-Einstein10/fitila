@@ -5,13 +5,16 @@ import { ReactComponent as StarIcon } from "../../../../../../static/svg/star.sv
 import { ReactComponent as LocationIcon } from "../../../../../../static/svg/location.svg";
 import { ReactComponent as HandBagIcon } from "../../../../../../static/svg/handbag.svg";
 import Styled from "styled-components";
+import { useOrganizationContext } from "../../../../../../context";
 
 const CardStyled = Styled(Card)`
   box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
   border-radius: 4px;
 `;
 
-const SummaryData = ({ organizations }) => {
+const SummaryData = () => {
+  const { states, sectors, data: organizations } = useOrganizationContext();
+
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={12} md={8} lg={6}>
@@ -61,7 +64,7 @@ const SummaryData = ({ organizations }) => {
                 marginBottom: "0px",
               }}
             >
-              5
+              {states.length}
             </p>
             <StarIcon />
           </div>
@@ -113,7 +116,7 @@ const SummaryData = ({ organizations }) => {
                 marginBottom: "0px",
               }}
             >
-              7
+              {sectors.length}
             </p>
             <HandBagIcon />
           </div>

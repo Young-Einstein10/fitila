@@ -104,7 +104,7 @@ const DashboardScreen: FC<RouteComponentProps> = ({ history }) => {
       </div>
 
       <Main style={{ padding: "1.3rem" }}>
-        <SummaryData organizations={organizations} />
+        <SummaryData />
 
         {/* ECOSYSTEMS */}
         <Row gutter={25} style={{ marginTop: "2rem" }}>

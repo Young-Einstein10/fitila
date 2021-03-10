@@ -24,10 +24,8 @@ const AuthProvider: FC = ({ children }) => {
           const jwtToken = jwt_decode(token) as any;
 
           if (jwtToken.exp < new Date().getTime() / 1000) {
-            console.log("Token Expired", jwtToken);
+            // console.log("Token Expired", jwtToken);
             return false;
-          } else {
-            console.log("Token Hasn't Expired", jwtToken);
           }
         } catch (error) {
           return false;

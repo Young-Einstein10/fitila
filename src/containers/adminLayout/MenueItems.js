@@ -1,6 +1,11 @@
 import React from "react";
 import { Menu } from "antd";
-import { NavLink, useRouteMatch, withRouter } from "react-router-dom";
+import {
+  NavLink,
+  useLocation,
+  useRouteMatch,
+  withRouter,
+} from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 import { ReactComponent as DashboardIcon } from "../../static/svg/dashboardIcon.svg";
 import { ReactComponent as OrganizationNavIcon } from "../../static/svg/orgNavIcon.svg";
@@ -12,12 +17,16 @@ import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.sv
 import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
 import { useAuthContext } from "../../context";
 
-const MenuItems = ({ darkMode, topMenu, toggleCollapsed }) => {
+const MenuItems = props => {
   const { path } = useRouteMatch();
   const pathName = window.location.pathname;
   const pathArray = pathName.split(path);
   const mainPath = pathArray[1];
   const mainPathSplit = mainPath.split("/");
+
+  const { darkMode, topMenu, toggleCollapsed } = props;
+
+  // console.log(props);
 
   const { auth, signOut } = useAuthContext();
 
@@ -43,6 +52,8 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed }) => {
           ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : "dashboard"}`]
           : []
       }
+      // defaultSelectedKeys={["/d"]}
+      // selectedKeys={[location.pathname]}
       overflowedIndicator={<FeatherIcon icon="more-vertical" />}
     >
       <Menu.Item icon={<DashboardIcon />} key="home">
@@ -83,7 +94,7 @@ const MenuItems = ({ darkMode, topMenu, toggleCollapsed }) => {
         </NavLink>
       </Menu.Item>
 
-      <Menu.Item icon={<HelpNavIcon />} key="help_enter">
+      <Menu.Item icon={<HelpNavIcon />} key="help_center">
         <NavLink onClick={toggleCollapsed} to={`/d/help`}>
           Help Center
         </NavLink>

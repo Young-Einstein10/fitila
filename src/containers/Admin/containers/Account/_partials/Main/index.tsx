@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Row, Col, Select, Button, Form, Upload } from "antd";
 import { ReactComponent as UnknownAvatar } from "../../../../../../static/svg/unknownAvatar.svg";
 
@@ -7,6 +7,7 @@ import { InputStyled } from "../../../../../Styles";
 import FeatherIcon from "feather-icons-react";
 import { NavLink } from "react-router-dom";
 import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
+import { IUserProps } from "../../../../../../context/Auth/types";
 
 const { Option } = Select;
 
@@ -204,7 +205,9 @@ const Security = () => {
   );
 };
 
-const Profile = ({ user: { first_name, last_name, email, phone } }) => {
+const Profile: FC<{ user: IUserProps }> = ({
+  user: { phone, email, first_name, last_name },
+}) => {
   const [form] = Form.useForm();
 
   const handleSubmit = async values => {

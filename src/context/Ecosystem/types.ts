@@ -1,10 +1,16 @@
 import { IOrganizationProps } from "../Organization/types";
 
 
-interface ISubEcosystem {
+interface ISubclassProps {
   id: number;
   name: string;
   organizations: IOrganizationProps[]
+}
+
+interface ISubEcosystem {
+  id: number;
+  name: string;
+  sub_class: ISubclassProps[]
 }
 
 interface IEcosystemProps {

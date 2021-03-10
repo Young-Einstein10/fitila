@@ -13,10 +13,7 @@ import { Child, TabBasic } from "../../../../../../components/tabs/style";
 import SummaryData from "../SummaryData";
 import { capitalize, generateIcons } from "../../functions";
 import { createDataSource, createTableColumns } from "../../../helpers";
-import {
-  useEcosystemContext,
-  useOrganizationContext,
-} from "../../../../../../context";
+import { useEcosystemContext } from "../../../../../../context";
 import { SpinnerStyled } from "../../../../../Styles";
 
 const LoadingSpinner = <LoadingOutlined style={{ fontSize: 50 }} spin />;
@@ -115,8 +112,6 @@ const SegmentScreen: FC<{ match?: any }> = ({
 }) => {
   let counter = 0;
 
-  const { data: organizations } = useOrganizationContext();
-
   const {
     data: ecosystems,
     isLoading: isEcosystemLoading,
@@ -145,7 +140,7 @@ const SegmentScreen: FC<{ match?: any }> = ({
           tabTitle: subEco.name,
           content: (
             <Fragment>
-              <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
+              {/* <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
                 <Col xs={24}>
                   <Cards title={generateTableTitle(subEco.name)} more={content}>
                     <Table
@@ -155,7 +150,38 @@ const SegmentScreen: FC<{ match?: any }> = ({
                     />
                   </Cards>
                 </Col>
-              </Row>
+              </Row> */}
+
+              {subEco.sub_class.length ? (
+                subEco.sub_class.map(subclass => (
+                  <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
+                    <Col xs={24}>
+                      <Cards
+                        title={generateTableTitle(subclass.name)}
+                        more={content}
+                      >
+                        <Table
+                          className="table-responsive"
+                          dataSource={createDataSource(subclass.organizations)}
+                          columns={createTableColumns()}
+                        />
+                      </Cards>
+                    </Col>
+                  </Row>
+                ))
+              ) : (
+                <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
+                  <Col xs={24}>
+                    <Cards title={generateTableTitle("")} more={""}>
+                      <Table
+                        className="table-responsive"
+                        dataSource={createDataSource([])}
+                        columns={createTableColumns()}
+                      />
+                    </Cards>
+                  </Col>
+                </Row>
+              )}
             </Fragment>
           ),
         };
@@ -214,7 +240,7 @@ const SegmentScreen: FC<{ match?: any }> = ({
                           style={{ paddingLeft: 0, paddingRight: 0 }}
                         />
 
-                        <SummaryData organizations={organizations} />
+                        <SummaryData />
                       </div>
 
                       {tabContent}

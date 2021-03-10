@@ -61,6 +61,7 @@ const RowStyled = Styled(Row)`
   .cell {
     border-radius: 5px;
     padding: 1rem;
+    color: black;
 
     p {
       margin-bottom: 0;
@@ -86,63 +87,63 @@ const RowStyled = Styled(Row)`
     }
 
     .cell--3 {
-      background: #FFB49B;
+      background: #FFEABD;
       /* grid-area: C; */
       grid-column: 9 / 12;
       grid-row: 1 / 7;
     } 
 
     .cell--4 {
-      background: tomato;
+      background: #B7BEE6;
       /* grid-area: D; */
       grid-column: 6 / 12;
       grid-row: 7 / -1;
     }
 
     .cell--5 {
-      background: darkcyan;
+      background: #EDB29F;
       /* grid-area: E; */
       grid-column: 12 / 14;
       grid-row: 1 / 5;
     }
 
     .cell--6 {
-      background: magenta;
+      background: #FFB49B;
       /* grid-area: F; */
       grid-column: 14 / 16;
       grid-row: 1 / 5;
     }
 
     .cell--7 {
-      background: yellow;
+      background: #EDB29F;
       /* grid-area: G; */
       grid-column: 16 / 18;
       grid-row: 1 / 4;
     }
 
     .cell--8 {
-      background: yellowgreen;
+      background: #9FBEED;
       /* grid-area: H; */
       grid-column: 12 / 14;
       grid-row: 5 / 9;
     }
 
     .cell--9 {
-      background: red;
+      background: #A7DEC2;
       /* grid-area: I; */
       grid-column: 14 / 16;
       grid-row: 5 / 9;
     }
 
     .cell--10 {
-      background: brown;
+      background: #E4E4E4;
       /* grid-area: J; */
       grid-column: 16 / 18;
       grid-row: 4 / 9;
     }
 
     .cell--11 {
-      background: skyblue;
+      background: #9FBEED;
       /* grid-area: K; */
       grid-column: 12 / 18;
       grid-row: 9 / -1;

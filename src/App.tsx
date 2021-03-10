@@ -1,11 +1,9 @@
 import React from "react";
-import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 // import jwt_decode from "jwt-decode";
 import Routes from "./routes";
 import { ThemeProvider } from "styled-components";
 import config from "./config/config";
-import store from "./redux/store";
 import "./App.less";
 // import { logout, setCurrentUser } from "./redux/actions/authActions";
 import BusinessProvider from "./containers/Business/context";
@@ -56,21 +54,19 @@ const { theme } = config;
 
 function App() {
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={{ ...theme }}>
-        <ErrorProvider>
-          <ApiProvider>
-            <AuthProvider>
-              <Router>
-                <BusinessProvider>
-                  <Routes />
-                </BusinessProvider>
-              </Router>
-            </AuthProvider>
-          </ApiProvider>
-        </ErrorProvider>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={{ ...theme }}>
+      <ErrorProvider>
+        <ApiProvider>
+          <AuthProvider>
+            <Router>
+              <BusinessProvider>
+                <Routes />
+              </BusinessProvider>
+            </Router>
+          </AuthProvider>
+        </ApiProvider>
+      </ErrorProvider>
+    </ThemeProvider>
   );
 }
 
