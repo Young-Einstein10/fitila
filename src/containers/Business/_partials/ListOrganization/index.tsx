@@ -11,7 +11,10 @@ import { BusinessContext } from "../../context";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import { getEcosystem } from "../../../../redux/actions/businessActions";
-import { useEcosystemContext } from "../../../../context";
+import {
+  useEcosystemContext,
+  useOrganizationContext,
+} from "../../../../context";
 
 const { Option } = Select;
 const { Step } = StepsStyled;
@@ -68,6 +71,7 @@ const ListOrganization = ({ history }) => {
   const [subEcosystemSubClass, setSubEcosystemSubClass] = useState("");
 
   const { data: ecosystem } = useEcosystemContext();
+  const { states, sectors } = useOrganizationContext();
 
   const customDot = (dot: any) => dot;
 
@@ -236,11 +240,11 @@ const ListOrganization = ({ history }) => {
                   ]}
                 >
                   <Select placeholder="State" allowClear>
-                    <Option value="Lagos">Lagos</Option>
-                    <Option value="Ogun">Ogun</Option>
-                    <Option value="Abuja">Abuja</Option>
-                    <Option value="Kano">Kano</Option>
-                    <Option value="Kaduna">Kaduna</Option>
+                    {states.map((state, i) => (
+                      <Option key={i} value={state}>
+                        {state}
+                      </Option>
+                    ))}
                   </Select>
                 </Form.Item>
                 {/* STATE */}
@@ -339,7 +343,9 @@ const ListOrganization = ({ history }) => {
                 {/* SUB-ECOSYTEM SEGMENT */}
 
                 {/* SUB-CLASS */}
-                {state.business_type === "Ecosystem Enabler" &&
+                {/* {
+                
+                state.business_type === "Ecosystem Enabler" &&
                   subEcosystemSubClass === "Business Advisory" && (
                     <Form.Item
                       name="sub_ecosystem_sub_class"
@@ -350,16 +356,7 @@ const ListOrganization = ({ history }) => {
                         },
                       ]}
                     >
-                      <Select placeholder="Sub-Class" allowClear>
-                        {/* {subSegmentList.map((segment, key) => (
-                        <Option
-                          key={key}
-                          value={segment}
-                          style={{ textTransform: "capitalize" }}
-                        >
-                          {segment}
-                        </Option>
-                      ))} */}
+                      <Select placeholder="Sub-Class" allowClear>                       
 
                         {ecosystemDropdown.business_advisory.map(
                           (subclass, key) => (
@@ -370,7 +367,7 @@ const ListOrganization = ({ history }) => {
                         )}
                       </Select>
                     </Form.Item>
-                  )}
+                  )} */}
                 {/* SUB-CLASS */}
 
                 {/* BUSINESS SECTOR */}
@@ -385,13 +382,12 @@ const ListOrganization = ({ history }) => {
                   ]}
                 >
                   <Select placeholder="Sector" allowClear>
-                    <Option value="Health">Health</Option>
-                    <Option value="Agriculture">Agriculture</Option>
-                    <Option value="Creatives">Creatives</Option>
-                    <Option value="Education">Education</Option>
-                    <Option value="Manufacturers">Manufacturers</Option>
-                    <Option value="ICT">ICT</Option>
-                    <Option value="Finance">Finance</Option>
+                    {sectors.map((sector, i) => (
+                      <Option key={i} value={sector}>
+                        {sector}
+                      </Option>
+                    ))}
+
                     <Option value="Other">Other</Option>
                   </Select>
                 </Form.Item>

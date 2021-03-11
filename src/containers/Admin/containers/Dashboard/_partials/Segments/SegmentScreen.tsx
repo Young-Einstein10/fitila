@@ -152,7 +152,7 @@ const SegmentScreen: FC<{ match?: any }> = ({
                 </Col>
               </Row>
 
-              {subEco.sub_class.length ? (
+              {/* {subEco.sub_class.length ? (
                 subEco.sub_class.map(subclass => (
                   <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
                     <Col xs={24}>
@@ -181,7 +181,7 @@ const SegmentScreen: FC<{ match?: any }> = ({
                     </Cards>
                   </Col>
                 </Row>
-              )}
+              )} */}
             </Fragment>
           ),
         };

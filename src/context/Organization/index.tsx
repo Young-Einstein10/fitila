@@ -19,6 +19,7 @@ const OrganizationProvider: FC = ({ children }) => {
       "Education",
       "Manufacturers",
       "ICT",
+      "Government",
       "Finance",
     ],
     states: ["Lagos", "Ogun", "Abuja", "Kano", "Kaduna"],

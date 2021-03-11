@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Modal, Upload, Button } from "antd";
+import { Modal, Upload, Button, notification } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import { useApiContext } from "../../../../../../context";
 
@@ -21,9 +21,20 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({ visible, closeModal }) => {
     try {
       console.log(csvFile);
 
-      // const res = await api.upload(csvFile);
+      Modal.info({
+        title:
+          "Your Upload has started. You will get notification once its completed.",
+      });
 
-      // console.log(res.data);
+      const res = await api.upload(csvFile);
+
+      console.log(res.data);
+
+      if (res.status === 200) {
+        notification.success({
+          message: "Upload Completed.",
+        });
+      }
       setIsUploading(false);
     } catch (error) {
       console.log(error);
@@ -52,7 +63,7 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({ visible, closeModal }) => {
     <Modal
       visible={visible}
       onCancel={closeModal}
-      title={<strong>Edit Organization</strong>}
+      title={<strong>Upload Organization List</strong>}
       footer={[
         <Button
           key="upload-btn"
