@@ -17,6 +17,7 @@ import Segment from "../containers/Admin/containers/Dashboard/_partials/Segments
 import PrivacyPolicy from "../containers/Admin/containers/PrivacyPolicy";
 // import Training from "../containers/Admin/containers/Dashboard/_partials/Training";
 import Profile from "../containers/Admin/containers/Profile";
+import TermsConditions from "../containers/Admin/containers/TermsConditions";
 // import {Business} from "../containers/Business";
 import AddCompany from "../containers/Business/_partials/AddCompany";
 import ListOrganization from "../containers/Business/_partials/ListOrganization";
@@ -51,6 +52,8 @@ const Routes = () => {
       <CustomRoute path="/d/project_brief" component={About} />
       <CustomRoute path="/d/help" component={Help} />
       <CustomRoute path="/d/privacy" component={PrivacyPolicy} />
+      <CustomRoute path="/d/terms" component={TermsConditions} />
+
       <CustomRoute exact path="/d/profile/:id" component={Profile} />
       {/* <Route path="/d/segments/training" component={Training} />
       <Route

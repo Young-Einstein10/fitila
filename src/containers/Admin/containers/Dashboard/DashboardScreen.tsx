@@ -8,7 +8,6 @@ import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
 
 import SummaryData from "./_partials/SummaryData";
-import FilterOption from "./_partials/Filter";
 
 import { CardSegmentStyled, RowStyled } from "./styled";
 import { createDataSource, createTableColumns } from "../helpers";
@@ -100,7 +99,7 @@ const DashboardScreen: FC<RouteComponentProps> = ({ history }) => {
           ]}
         />
 
-        <FilterOption />
+        {/* <FilterOption /> */}
       </div>
 
       <Main style={{ padding: "1.3rem" }}>
@@ -231,7 +230,9 @@ const DashboardScreen: FC<RouteComponentProps> = ({ history }) => {
             <Cards title={tableHeader} more={content}>
               <Table
                 className="table-responsive"
-                dataSource={createDataSource(organizations.slice(0, 5))}
+                dataSource={createDataSource(
+                  organizations.slice(organizations.length - 5)
+                )}
                 columns={createTableColumns()}
                 loading={isOrganizationLoading}
               />

@@ -44,9 +44,9 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
                 <img src={Logo} alt="Logo" />
               </Link>
 
-              <Breadcrumb>
+              {/* <Breadcrumb>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
-              </Breadcrumb>
+              </Breadcrumb> */}
             </div>
 
             <div className="navItem-right">
@@ -93,8 +93,9 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
 
             <Col md={12} xs={24}>
               <div className="admin-footer__links">
-                <NavLink to="#">Privacy Poilicy</NavLink>
-                <NavLink to="#">Terms and Condition</NavLink>
+                <NavLink to="/login">Admin</NavLink>
+                <NavLink to="/d/privacy">Privacy Poilicy</NavLink>
+                <NavLink to="/d/terms">Terms and Condition</NavLink>
                 <NavLink to="#">Cookie Poilicy</NavLink>
               </div>
             </Col>

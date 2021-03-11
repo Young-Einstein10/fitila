@@ -1,29 +1,37 @@
-import React, { Fragment } from "react";
+import React, { FC, Fragment } from "react";
 import { Row, Col } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
 import { ReactComponent as UnknownAvatar } from "../../../../../../static/svg/unknownAvatar.svg";
+import { useOrganizationContext } from "../../../../../../context";
+import { IOrganizationProps } from "../../../../../../context/Organization/types";
 // import cowrywise_small from "../../../../../../static/img/cowrywise_small.png";
 // import john_doe from "../../../../../../static/img/john_doe.png";
 
-const Summary = ({ selectedOrganization }) => {
+interface ISummaryProps {
+  selectedOrganization: IOrganizationProps[];
+}
+
+const Summary: FC<ISummaryProps> = ({ selectedOrganization }) => {
+  const { data: organizations } = useOrganizationContext();
+
   const cardsSummary = [
     {
-      value: 12,
-      content: "Total No of fintech companies in Lagos",
+      value: 14,
+      content: `Total Number of ${selectedOrganization[0].sector} Companies in ${selectedOrganization[0].state}`,
     },
     {
       value: 3,
       content: "Total No of Fintech companies in Sabo Yaba",
     },
     {
-      value: 14,
-      content: "Total No of Fintech companies in Nigeria",
+      value: 12,
+      content: `Total Number of Companies in ${selectedOrganization[0].state}`,
     },
-    {
-      value: "₦8.5B",
-      content: "Total Market Capitalization Fintech companies",
-    },
+    // {
+    //   value: "₦8.5B",
+    //   content: "Total Market Capitalization Fintech companies",
+    // },
   ];
 
   return (
@@ -173,22 +181,47 @@ const Summary = ({ selectedOrganization }) => {
 
           {/* =============== CARD SUMMARY =================== */}
           <Row gutter={[16, 8]}>
-            {cardsSummary.map((card, key) => (
-              <Col key={key} xs={24} sm={12} md={8} lg={6}>
-                <Cards headless bodypadding="15px">
-                  <p
-                    style={{
-                      fontSize: "48px",
-                      fontWeight: "bold",
-                      marginBottom: "0px",
-                    }}
-                  >
-                    {card.value}
-                  </p>
-                  <span>{card.content}</span>
-                </Cards>
-              </Col>
-            ))}
+            <Col xs={24} sm={24} md={8} lg={8}>
+              <Cards headless bodypadding="15px">
+                <p
+                  style={{
+                    fontSize: "48px",
+                    fontWeight: "bold",
+                    marginBottom: "0px",
+                  }}
+                >
+                  {
+                    organizations
+                      .filter(
+                        organization =>
+                          organization.state.toLowerCase() ===
+                          selectedOrganization[0].state.toLowerCase()
+                      )
+                      .filter(
+                        organization =>
+                          organization.sector.toLowerCase() ===
+                          selectedOrganization[0].sector.toLowerCase()
+                      ).length
+                  }
+                </p>
+                <span>{`Total Number of ${selectedOrganization[0].sector} Companies in ${selectedOrganization[0].state}`}</span>
+              </Cards>
+            </Col>
+
+            <Col xs={24} sm={24} md={8} lg={8}>
+              <Cards headless bodypadding="15px">
+                <p
+                  style={{
+                    fontSize: "48px",
+                    fontWeight: "bold",
+                    marginBottom: "0px",
+                  }}
+                >
+                  {organizations.length}
+                </p>
+                <span>{`Total Number of Companies in Nigeria`}</span>
+              </Cards>
+            </Col>
           </Row>
           {/* =============== CARD SUMMARY =================== */}
         </Col>

@@ -16,53 +16,9 @@ import { ButtonStyled, InputStyled } from "../../../Styles";
 
 const { Panel } = Collapse;
 
-const content = (
-  <>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="printer" />
-      <span>Printer</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="book-open" />
-      <span>PDF</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file-text" />
-      <span>Google Sheets</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="x" />
-      <span>Excel (XLSX)</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file" />
-      <span>CSV</span>
-    </NavLink>
-  </>
-);
-
-const menu = (
-  <Menu onClick={() => {}}>
-    <Menu.Item key="1" icon={<UserOutlined />}>
-      1st menu item
-    </Menu.Item>
-    <Menu.Item key="2" icon={<UserOutlined />}>
-      2nd menu item
-    </Menu.Item>
-    <Menu.Item key="3" icon={<UserOutlined />}>
-      3rd menu item
-    </Menu.Item>
-  </Menu>
-);
-
 const tableHeader = (
   <div style={{ display: "flex", justifyContent: "space-between" }}>
     <span>General</span>
-    <Dropdown overlay={menu}>
-      <TableHeaderButtonStyled type="ghost" size="middle">
-        General <ArrowDown />
-      </TableHeaderButtonStyled>
-    </Dropdown>
   </div>
 );
 
@@ -96,7 +52,7 @@ const Help = () => {
       <Main>
         <Row gutter={24}>
           <Col xs={24}>
-            <Cards title={tableHeader} more={content}>
+            <Cards title={tableHeader}>
               <Row gutter={24}>
                 <Col xs={24} md={16} lg={12}>
                   <Collapse
@@ -145,7 +101,11 @@ const Help = () => {
             xs={24}
             md={24}
             lg={12}
-            style={{ paddingRight: "1.5rem", paddingLeft: "1.5rem" }}
+            style={{
+              paddingRight: "1.5rem",
+              paddingLeft: "1.5rem",
+              marginTop: "3rem",
+            }}
           >
             <div>
               <div>

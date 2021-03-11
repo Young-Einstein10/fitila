@@ -284,8 +284,8 @@ const ThemeLayout = WrappedComponent => {
                     <Col md={12} xs={24}>
                       <div className="admin-footer__links">
                         <NavLink to="/login">Admin</NavLink>
-                        <NavLink to="/privacy">Privacy Poilicy</NavLink>
-                        <NavLink to="#">Terms and Condition</NavLink>
+                        <NavLink to="/d/privacy">Privacy Poilicy</NavLink>
+                        <NavLink to="/d/terms">Terms and Condition</NavLink>
                         <NavLink to="#">Cookie Poilicy</NavLink>
                       </div>
                     </Col>

@@ -7,6 +7,9 @@ interface IOrganizationProps {
   name: string;
   sector: string;
   state: string;
+  num_of_employees?: string;
+  ceo_name?: string;
+  description?: string;
 }
 
 

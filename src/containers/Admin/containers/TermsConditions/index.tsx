@@ -4,22 +4,16 @@ import Heading from "../../../../components/heading/heading";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
+import { PrivacyHeader } from "../PrivacyPolicy";
 
-import styled from "styled-components";
-
-export const PrivacyHeader = styled.h2`
-  color: #1d429c;
-  font-weight: 700;
-`;
-
-const PrivacyPolicy = () => {
+const TermsConditions = () => {
   return (
     <AdminSectionWrapper>
       <div>
         <PageHeader
           title={
             <Heading as="h3" style={{ fontSize: "24px", fontWeight: "bold" }}>
-              Privacy Policy
+              Terms and Conditions
             </Heading>
           }
           style={{ marginBottom: "0" }}
@@ -174,4 +168,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default TermsConditions;
