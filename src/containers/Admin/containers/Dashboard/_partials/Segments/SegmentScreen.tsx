@@ -133,6 +133,7 @@ const SegmentScreen: FC<{ match?: any }> = ({
     currEcosystem.length &&
     currEcosystem[0].sub_ecosystem
       .filter(subEco => subEco.name)
+      .filter(subEco => subEco.name !== "Churches/Mosques")
       .map(subEco => {
         return {
           id: subEco.id,

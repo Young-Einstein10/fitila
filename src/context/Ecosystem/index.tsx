@@ -30,24 +30,41 @@ const EcosystemProvider: FC = ({ children }) => {
       try {
         const res = await api.getEcosystem();
 
-        const { data } = res.data;
+        const data: IEcosystemProps[] = res.data.data;
 
         if (isMounted()) {
-          let RESOURCES = data
-            .map(ecosystem => ecosystem)
-            .find(ecosystem => ecosystem.name === "Resources");
+          // let RESOURCES = data
+          //   .map(ecosystem => ecosystem)
+          //   .find(ecosystem => ecosystem.name === "Resources");
 
-          RESOURCES = RESOURCES.sub_ecosystem.map(subeco => {
-            let result = [];
+          // RESOURCES = RESOURCES.sub_ecosystem.map(subeco => {
+          //   let result = [];
 
-            return {
-              ...subeco,
-              sub_class: result,
-            };
-          });
+          //   return {
+          //     ...subeco,
+          //     sub_class: result,
+          //   };
+          // });
 
-          const formattedData = data
-            .filter(ecosystem => ecosystem.name !== "Resources")
+          const formattedData: IEcosystemProps[] = data
+            .filter(ecosystem => {
+              const res = ecosystem.sub_ecosystem.filter(
+                subEco =>
+                  subEco.name.toLowerCase() !== "Churches/Mosques".toLowerCase()
+              );
+              return {
+                ...ecosystem,
+                sub_ecosystem: res,
+              };
+            })
+            .filter(
+              ecosystem =>
+                ecosystem.name.toLowerCase() !== "Resources".toLowerCase()
+            )
+            .filter(
+              ecosystem =>
+                ecosystem.name.toLowerCase() !== "Research".toLowerCase()
+            )
             .map(ecosystem => {
               let sub_eco = ecosystem.sub_ecosystem.map(subeco => {
                 if (subeco.name === "Business Advisory") {

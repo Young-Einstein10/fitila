@@ -6,6 +6,10 @@ import Account from "./containers/Account";
 import About from "./containers/About";
 import Contact from "./containers/Contact";
 import Administrators from "./containers/Administrators";
+import Sectors from "./containers/Sectors";
+import Profile from "./containers/Profile";
+import PrivacyPolicy from "./containers/PrivacyPolicy";
+import TermsConditions from "./containers/TermsConditions";
 
 export {
   Dashboard,
@@ -16,4 +20,8 @@ export {
   Account,
   Contact,
   Administrators,
+  Sectors,
+  Profile,
+  PrivacyPolicy,
+  TermsConditions,
 };

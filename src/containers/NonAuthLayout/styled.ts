@@ -41,7 +41,7 @@ const HeaderStyled = Styled(Header)`
     }
 
     .account-btn {
-        margin-left: 2rem
+        margin-top: 0;
     }
 `;
 

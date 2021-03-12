@@ -253,7 +253,7 @@ const ThemeLayout = WrappedComponent => {
                       rtl={rtl}
                       toggleCollapsed={toggleCollapsedMobile}
                     />
-
+                    {/* 
                     <SidebarFooterStyled>
                       <p>2020, Copyright, Enterprise Data Map</p>
 
@@ -262,7 +262,7 @@ const ThemeLayout = WrappedComponent => {
                         <li>Terms and Conditions</li>
                         <li>Cookie Policy</li>
                       </ul>
-                    </SidebarFooterStyled>
+                    </SidebarFooterStyled> */}
                   </Scrollbars>
                 </Sider>
               </ThemeProvider>

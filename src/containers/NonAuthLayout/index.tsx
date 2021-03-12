@@ -1,28 +1,56 @@
 import React, { FunctionComponent } from "react";
-import { Layout, Breadcrumb, Col, Row } from "antd";
+import { Layout, Col, Row, Dropdown } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../static/svg/logo.svg";
-// import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
+import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
+import { ReactComponent as UserIcon } from "../../static/svg/usericon.svg";
 import {
   BusinessButton,
   Div,
   FooterStyled,
   HeaderStyled,
   LayoutStyled,
+  LinkStyled,
 } from "./styled";
+import { ButtonStyled } from "../Styles";
+import { DownOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 
 const NonAuthLayout: FunctionComponent = ({ children }) => {
-  // const menu = (
-  //   <div style={{ padding: "1.25rem" }}>
-  //     <LinkStyled to="/signup">
-  //       <span>
-  //         <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up
-  //       </span>
-  //     </LinkStyled>
-  //   </div>
-  // );
+  const menu = (
+    <div style={{ padding: "1rem", background: "#fff" }}>
+      <LinkStyled
+        to="#"
+        style={{
+          padding: "1rem",
+          background: "#F7F9FA;",
+          marginBottom: ".5rem",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <span>
+          <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up
+        </span>
+      </LinkStyled>
+
+      <LinkStyled
+        to="/signin"
+        style={{
+          padding: "1rem",
+          background: "#F7F9FA;",
+          marginBottom: ".5rem",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <span>
+          <UserPlus style={{ marginRight: "1.25rem" }} /> Sign In
+        </span>
+      </LinkStyled>
+    </div>
+  );
 
   return (
     <Div>
@@ -54,14 +82,17 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
                 <NavLink to="/business">List Your Organization</NavLink>
               </BusinessButton>
 
-              {/* <Dropdown className="account-btn" content={menu}>
+              <Dropdown className="account-btn" overlay={menu}>
+                <ButtonStyled size="large">
+                  <UserIcon style={{ marginRight: "10px" }} />
+                  <strong>
+                    Account
+                    <DownOutlined style={{ marginLeft: "10px" }} />
+                  </strong>
+                </ButtonStyled>
+              </Dropdown>
+              {/* 
               <ButtonStyled size="large">
-                <UserIcon style={{ marginRight: "10px" }} /> Sign Up{" "}
-                <DownOutlined />
-              </ButtonStyled>
-            </Dropdown> */}
-
-              {/* <ButtonStyled size="large">
                 <LinkStyled to="/signup">
                   <span>
                     <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up

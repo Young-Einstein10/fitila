@@ -17,10 +17,10 @@ const OrganizationProvider: FC = ({ children }) => {
       "Agriculture",
       "Creatives",
       "Education",
-      "Manufacturers",
       "ICT",
       "Government",
       "Finance",
+      "Others",
     ],
     states: ["Lagos", "Ogun", "Abuja", "Kano", "Kaduna"],
   });

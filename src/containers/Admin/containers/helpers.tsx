@@ -5,10 +5,11 @@ import { ViewProfileBtnStyled } from "./Dashboard/styled";
 import { Link } from "react-router-dom";
 import { ActionButtonStyled } from "../../Styles";
 import styled from "styled-components";
+import numberWithCommas from "../../../utils/numberFormatter";
 
 // Function that Generate Table Columns
 
-const DeleteButton = props => (
+export const DeleteButton = props => (
   <Tooltip title="Delete">
     <ActionButtonStyled
       {...props}
@@ -19,7 +20,7 @@ const DeleteButton = props => (
   </Tooltip>
 );
 
-const EditButton = props => (
+export const EditButton = props => (
   <Tooltip title="Edit">
     <ActionButtonStyled
       {...props}
@@ -107,9 +108,16 @@ const createTableColumns = (
       key: "employees",
     },
     {
-      title: "Funding",
+      title: "Funding (₦)",
       dataIndex: "funding",
       key: "funding",
+      render: (record, key) => {
+        let result = record ? record.split("₦") : [];
+
+        return (
+          <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
+        );
+      },
     },
     {
       title: "Actions",

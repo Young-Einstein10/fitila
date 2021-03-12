@@ -387,8 +387,6 @@ const ListOrganization = ({ history }) => {
                         {sector}
                       </Option>
                     ))}
-
-                    <Option value="Other">Other</Option>
                   </Select>
                 </Form.Item>
 

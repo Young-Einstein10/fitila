@@ -119,7 +119,7 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
     <AdminSectionWrapper className="organizations">
       <div>
         <PageHeader
-          title="Organizations"
+          title={state ? `Organizations in ${state}` : `Organizations`}
           buttons={[
             <div key="1" className="page-header-actions">
               {auth.isAuthenticated && (

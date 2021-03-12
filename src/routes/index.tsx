@@ -9,15 +9,17 @@ import {
   Account,
   Contact,
   Administrators,
+  Profile,
+  PrivacyPolicy,
+  TermsConditions,
+  Sectors,
 } from "../containers/Admin";
 // import Businesses from "../containers/Admin/containers/Dashboard/_partials/Businesses";
 // import BusinessSupport from "../containers/Admin/containers/Dashboard/_partials/BusinessSupport";
 // import Funding from "../containers/Admin/containers/Dashboard/_partials/Funding";
 import Segment from "../containers/Admin/containers/Dashboard/_partials/Segments";
-import PrivacyPolicy from "../containers/Admin/containers/PrivacyPolicy";
 // import Training from "../containers/Admin/containers/Dashboard/_partials/Training";
-import Profile from "../containers/Admin/containers/Profile";
-import TermsConditions from "../containers/Admin/containers/TermsConditions";
+
 // import {Business} from "../containers/Business";
 import AddCompany from "../containers/Business/_partials/AddCompany";
 import ListOrganization from "../containers/Business/_partials/ListOrganization";
@@ -48,6 +50,7 @@ const Routes = () => {
       <CustomRoute path="/d/states" component={States} />
       <AuthRoute path="/d/account" component={Account} />
       <AuthRoute path="/d/administrators" component={Administrators} />
+      <AuthRoute path="/d/sectors" component={Sectors} />
       <CustomRoute path="/d/contact" component={Contact} />
       <CustomRoute path="/d/project_brief" component={About} />
       <CustomRoute path="/d/help" component={Help} />
