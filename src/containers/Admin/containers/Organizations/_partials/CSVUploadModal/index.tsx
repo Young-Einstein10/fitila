@@ -25,6 +25,7 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({ visible, closeModal }) => {
         title:
           "Your Upload has started. You will get notification once its completed.",
       });
+      closeModal();
 
       const res = await api.upload(csvFile);
 
@@ -33,6 +34,7 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({ visible, closeModal }) => {
       if (res.status === 200) {
         notification.success({
           message: "Upload Completed.",
+          placement: "bottomRight",
         });
       }
       setIsUploading(false);
@@ -83,10 +85,7 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({ visible, closeModal }) => {
         <p className="ant-upload-text">
           Click or drag file to this area to upload
         </p>
-        <p className="ant-upload-hint">
-          Support for a single or bulk upload. Strictly prohibit from uploading
-          company data or other band files
-        </p>
+        <p className="ant-upload-hint">Support for a single or bulk upload.</p>
       </Dragger>
     </Modal>
   );

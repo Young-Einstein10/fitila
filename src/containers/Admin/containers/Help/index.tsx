@@ -65,7 +65,7 @@ const Help = () => {
                   >
                     {[1, 2, 3, 4, 5, 6].map((_, key) => (
                       <Panel
-                        key={key}
+                        key={key + 1}
                         header={
                           <p>
                             A proin dolor at turpis arcu. Lectus interdum purus.

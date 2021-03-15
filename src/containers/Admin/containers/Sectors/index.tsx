@@ -87,7 +87,6 @@ const Sectors = () => {
       title: "Actions",
       align: "center",
       render: (record, key) => {
-        console.log({ record, key });
         return (
           <Space size="middle">
             <Fragment>
