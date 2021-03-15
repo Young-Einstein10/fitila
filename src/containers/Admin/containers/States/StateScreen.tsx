@@ -86,11 +86,7 @@ const StateScreen = () => {
       <Main>
         <Row gutter={24} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
-            <Cards
-              title="Explore by ecosystem segments"
-              size="large"
-              more={content}
-            >
+            <Cards title="Explore by States" size="large" more={content}>
               <div
                 className="states-lga"
                 style={{ background: "#B1E2CB", height: "400px" }}

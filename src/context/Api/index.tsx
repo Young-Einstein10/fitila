@@ -4,11 +4,13 @@ import axios, { AxiosInstance } from "axios";
 import Auth from "./auth";
 import Organization from "./organization";
 import Ecosystem from "./ecosystem";
+import Sector from "./sector";
 
 interface ApiProps {
   auth: Auth;
   organization: Organization;
   ecosystem: Ecosystem;
+  sector: Sector;
   HttpClient: AxiosInstance;
 }
 
@@ -28,6 +30,7 @@ const ApiProvider: FC = ({ children }) => {
     auth: new Auth(axiosInstance),
     organization: new Organization(axiosInstance),
     ecosystem: new Ecosystem(axiosInstance),
+    sector: new Sector(axiosInstance),
     HttpClient: axiosInstance,
   });
 

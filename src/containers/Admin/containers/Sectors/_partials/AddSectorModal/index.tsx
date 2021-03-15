@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Modal, Form, Button } from "antd";
 import { InputStyled } from "../../../../../Styles";
+import { useApiContext, useSectorContext } from "../../../../../../context";
 
 const AddSectorModal = ({ visible, closeModal }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [form] = Form.useForm();
+
+  const { sector: api } = useApiContext();
+  const { refetchSectors } = useSectorContext();
 
   const handleSubmit = async () => {
     try {
@@ -13,10 +17,22 @@ const AddSectorModal = ({ visible, closeModal }) => {
 
       setIsLoading(true);
 
-      console.log(values);
+      const res = await api.addSector(values);
+
+      if (res.status === 201) {
+        Modal.success({
+          title: "Added Sector Successfully",
+          onOk: async () => {
+            await refetchSectors();
+            closeModal();
+          },
+        });
+      }
 
       setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
+
       console.log(error);
     }
   };
@@ -39,7 +55,7 @@ const AddSectorModal = ({ visible, closeModal }) => {
       ]}
       destroyOnClose
     >
-      <Form>
+      <Form form={form}>
         <Form.Item
           name="name"
           rules={[{ message: "Please input sector name!", required: true }]}

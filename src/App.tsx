@@ -11,6 +11,7 @@ import {
   EcosystemProvider,
   ErrorProvider,
   OrganizationProvider,
+  SectorProvider,
 } from "./context";
 
 const { theme } = config;
@@ -23,11 +24,13 @@ function App() {
           <AuthProvider>
             <OrganizationProvider>
               <EcosystemProvider>
-                <Router>
-                  <BusinessProvider>
-                    <Routes />
-                  </BusinessProvider>
-                </Router>
+                <SectorProvider>
+                  <Router>
+                    <BusinessProvider>
+                      <Routes />
+                    </BusinessProvider>
+                  </Router>
+                </SectorProvider>
               </EcosystemProvider>
             </OrganizationProvider>
           </AuthProvider>

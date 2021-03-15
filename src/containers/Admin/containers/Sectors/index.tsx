@@ -2,7 +2,11 @@ import React, { FC, Fragment, useState } from "react";
 import { Button, Tooltip, Col, Row, Space, Table, Modal } from "antd";
 import { EditFilled, DeleteFilled } from "@ant-design/icons";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
-import { useOrganizationContext } from "../../../../context";
+import {
+  useApiContext,
+  useOrganizationContext,
+  useSectorContext,
+} from "../../../../context";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import AddSectorModal from "./_partials/AddSectorModal";
@@ -36,18 +40,36 @@ const Sectors = () => {
   const [isEditSectorModalOpen, setIsEditSectorModalOpen] = useState(false);
   const [currSector, setCurrSector] = useState(null);
 
-  const { sectors } = useOrganizationContext();
+  const { sector: api } = useApiContext();
+  const { isLoading, data: sectors, refetchSectors } = useSectorContext();
 
   const toggleAddSectorModal = () => setIsAddSectorModalOpen(open => !open);
 
   const toggleEditSectorModal = () => setIsEditSectorModalOpen(open => !open);
 
-  const handleDeleteSectorModal = () => {
+  const handleDeleteSectorModal = sectorId => {
     Modal.confirm({
       title: "Are You Sure?",
-      onOk: () => {},
+      onOk: async () => {
+        await deleteSector(sectorId);
+      },
       onCancel: () => {},
     });
+  };
+
+  const deleteSector = async id => {
+    try {
+      const res = await api.deleteSector(id);
+
+      if (res.status === 204) {
+        Modal.success({
+          title: "Organization deleted successfully",
+          onOk: () => refetchSectors(),
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const columns: any = [
@@ -65,16 +87,19 @@ const Sectors = () => {
       title: "Actions",
       align: "center",
       render: (record, key) => {
+        console.log({ record, key });
         return (
           <Space size="middle">
             <Fragment>
               <EditButton
                 onClick={() => {
-                  setCurrSector(record.name);
+                  setCurrSector(record);
                   toggleEditSectorModal();
                 }}
               />
-              <DeleteButton onClick={() => handleDeleteSectorModal()} />
+              <DeleteButton
+                onClick={() => handleDeleteSectorModal(record.id)}
+              />
             </Fragment>
           </Space>
         );
@@ -108,11 +133,15 @@ const Sectors = () => {
             <Cards headless>
               <Table
                 className="table-responsive"
-                dataSource={sectors.map((sector, key) => ({
-                  key: key + 1,
-                  name: sector,
-                }))}
+                dataSource={sectors.map((sector, key) => {
+                  return {
+                    ...sector,
+                    key: key + 1,
+                    name: sector.name,
+                  };
+                })}
                 columns={columns}
+                loading={isLoading}
               />
             </Cards>
           </Col>

@@ -18,7 +18,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization }) => {
   const cardsSummary = [
     {
       value: 14,
-      content: `Total Number of ${selectedOrganization[0].sector} Companies in ${selectedOrganization[0].state}`,
+      content: `Total Number of ${selectedOrganization[0].sector_name} Companies in ${selectedOrganization[0].state}`,
     },
     {
       value: 3,
@@ -148,7 +148,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization }) => {
                       <span>Sector</span>
                       <span>
                         {selectedOrganization[0] &&
-                          selectedOrganization[0].sector}
+                          selectedOrganization[0].sector_name}
                       </span>
                     </div>
 
@@ -199,12 +199,12 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization }) => {
                       )
                       .filter(
                         organization =>
-                          organization.sector.toLowerCase() ===
-                          selectedOrganization[0].sector.toLowerCase()
+                          organization.sector_name.toLowerCase() ===
+                          selectedOrganization[0].sector_name.toLowerCase()
                       ).length
                   }
                 </p>
-                <span>{`Total Number of ${selectedOrganization[0].sector} Companies in ${selectedOrganization[0].state}`}</span>
+                <span>{`Total Number of ${selectedOrganization[0].sector_name} Companies in ${selectedOrganization[0].state}`}</span>
               </Cards>
             </Col>
 

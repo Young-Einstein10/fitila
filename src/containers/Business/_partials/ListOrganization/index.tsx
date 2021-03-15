@@ -14,6 +14,7 @@ import { getEcosystem } from "../../../../redux/actions/businessActions";
 import {
   useEcosystemContext,
   useOrganizationContext,
+  useSectorContext,
 } from "../../../../context";
 
 const { Option } = Select;
@@ -71,7 +72,8 @@ const ListOrganization = ({ history }) => {
   const [subEcosystemSubClass, setSubEcosystemSubClass] = useState("");
 
   const { data: ecosystem } = useEcosystemContext();
-  const { states, sectors } = useOrganizationContext();
+  const { states } = useOrganizationContext();
+  const { data: sectors } = useSectorContext();
 
   const customDot = (dot: any) => dot;
 
@@ -383,8 +385,8 @@ const ListOrganization = ({ history }) => {
                 >
                   <Select placeholder="Sector" allowClear>
                     {sectors.map((sector, i) => (
-                      <Option key={i} value={sector}>
-                        {sector}
+                      <Option key={i} value={sector.name}>
+                        {sector.name}
                       </Option>
                     ))}
                   </Select>

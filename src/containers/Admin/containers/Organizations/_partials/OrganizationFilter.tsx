@@ -5,6 +5,7 @@ import { ReactComponent as FilterOutlined } from "../../../../../static/svg/filt
 import { ReactComponent as SearchIconLeft } from "../../../../../static/svg/SearchIconLeft.svg";
 import { SelectStyled } from "../../../../Styles";
 import { IOrganizationProps } from "../../../../../context/Organization/types";
+import { ISectorProps } from "../../../../../context/Sector/types";
 
 const { Option } = SelectStyled;
 const FormItem = Form.Item;
@@ -16,7 +17,7 @@ interface IOrganizationFilterProps {
     React.SetStateAction<IOrganizationProps[]>
   >;
   states: string[];
-  sectors: string[];
+  sectors: ISectorProps[];
   state: string;
 }
 
@@ -53,7 +54,7 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
       if (filterMethod === "sector") {
         const result = organizations
           .map(organization => organization)
-          .filter(organization => organization.sector === filterValue);
+          .filter(organization => organization.sector_name === filterValue);
 
         setFilteredOrganizations(result);
       }
@@ -205,8 +206,8 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                     disabled={isOrganizationLoading}
                   >
                     {sectors.map((sector, key) => (
-                      <Option key={key} value={sector}>
-                        {sector}
+                      <Option key={key} value={sector.name}>
+                        {sector.name}
                       </Option>
                     ))}
                   </SelectStyled>

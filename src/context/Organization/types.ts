@@ -10,6 +10,9 @@ interface IOrganizationProps {
   num_of_employees?: string;
   ceo_name?: string;
   description?: string;
+  sector_name?: string;
+  ecosystem_name?: string;
+  sub_ecosystem_name?: string;
 }
 
 

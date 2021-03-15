@@ -11,6 +11,7 @@ import {
   useApiContext,
   useAuthContext,
   useOrganizationContext,
+  useSectorContext,
 } from "../../../../context";
 import OrganizationFilter from "./_partials/OrganizationFilter";
 import { IOrganizationProps } from "../../../../context/Organization/types";
@@ -62,9 +63,11 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
     isLoading: isOrganizationLoading,
     data: organizations,
     states,
-    sectors,
+    // sectors,
     refetchOrganizations,
   } = useOrganizationContext();
+
+  const { data: sectors } = useSectorContext();
 
   const { organization: api } = useApiContext();
 
