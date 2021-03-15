@@ -385,7 +385,7 @@ const ListOrganization = ({ history }) => {
                 >
                   <Select placeholder="Sector" allowClear>
                     {sectors.map((sector, i) => (
-                      <Option key={i} value={sector.name}>
+                      <Option key={i} value={sector.id}>
                         {sector.name}
                       </Option>
                     ))}
