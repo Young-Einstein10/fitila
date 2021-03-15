@@ -17,6 +17,7 @@ import OrganizationFilter from "./_partials/OrganizationFilter";
 import { IOrganizationProps } from "../../../../context/Organization/types";
 import EditOrganizationModal from "./_partials/EditOrganizationModal";
 import CSVUploadModal from "./_partials/CSVUploadModal";
+import { UploadOutlined } from "@ant-design/icons";
 
 const content = (
   <>
@@ -51,6 +52,8 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
   const [isCSVUploadModalOpen, setIsCSVUploadModalOpen] = useState(false);
 
   const [currentOrganization, setCurrentOrganization] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+
   const [filteredOrganizations, setFilteredOrganizations] = useState<
     IOrganizationProps[]
   >([]);
@@ -131,6 +134,8 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
                   type="primary"
                   style={{ marginRight: "1rem" }}
                   onClick={toggleCSVUploadModal}
+                  icon={<UploadOutlined />}
+                  loading={isUploading}
                 >
                   Bulk Upload (CSV)
                 </Button>
@@ -194,6 +199,8 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
         <CSVUploadModal
           visible={isCSVUploadModalOpen}
           closeModal={toggleCSVUploadModal}
+          isUploading={isUploading}
+          setIsUploading={setIsUploading}
         />
       ) : null}
     </AdminSectionWrapper>

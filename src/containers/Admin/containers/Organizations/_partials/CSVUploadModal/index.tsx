@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { Modal, Upload, Button, notification } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
+import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { useApiContext } from "../../../../../../context";
 
 const { Dragger } = Upload;
@@ -8,11 +8,17 @@ const { Dragger } = Upload;
 interface ICSVUploadModalProps {
   visible: boolean;
   closeModal: () => void;
+  isUploading: boolean;
+  setIsUploading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CSVUploadModal: FC<ICSVUploadModalProps> = ({ visible, closeModal }) => {
+const CSVUploadModal: FC<ICSVUploadModalProps> = ({
+  visible,
+  closeModal,
+  isUploading,
+  setIsUploading,
+}) => {
   const [csvFile, setCsvFile] = useState([]);
-  const [isUploading, setIsUploading] = useState(false);
 
   const { organization: api } = useApiContext();
 
@@ -81,6 +87,7 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({ visible, closeModal }) => {
           type="primary"
           disabled={csvFile.length === 0}
           loading={isUploading}
+          icon={<UploadOutlined />}
         >
           Upload
         </Button>,
