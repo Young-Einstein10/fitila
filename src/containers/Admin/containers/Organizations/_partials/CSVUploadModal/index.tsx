@@ -27,11 +27,19 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({ visible, closeModal }) => {
       });
       closeModal();
 
-      const res = await api.upload(csvFile);
+      let data = { file: csvFile[0] };
+
+      const formData = new FormData();
+
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+
+      const res = await api.upload(formData);
 
       console.log(res.data);
 
-      if (res.status === 200) {
+      if (res.status === 201) {
         notification.success({
           message: "Upload Completed.",
           placement: "bottomRight",
@@ -78,6 +86,18 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({ visible, closeModal }) => {
         </Button>,
       ]}
     >
+      <p>
+        Ensure CSV Data is in line with provided template.{" "}
+        <a
+          href="https://drive.google.com/file/d/1WbL5VLe-JzW7tHx37B1lmDLAB-peGef-/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#FF6D00" }}
+        >
+          Download Template
+        </a>
+      </p>
+
       <Dragger {...props}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
