@@ -155,6 +155,7 @@ const theme = {
   "input-height-base": "56px",
   "input-border-color": borderColorNormal,
   "input-height-sm": "30px",
+  "input-height-md": "40px",
   "input-height-lg": "50px",
 
   // rate

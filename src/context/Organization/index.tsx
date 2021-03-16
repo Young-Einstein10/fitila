@@ -29,8 +29,6 @@ const OrganizationProvider: FC = ({ children }) => {
 
   const isMounted = useMountedState();
 
-  const ecosystemData = useRef<any[]>();
-
   useEffect(() => {
     const cancelTokenSource = Axios.CancelToken;
     const source = cancelTokenSource.source();
@@ -42,34 +40,22 @@ const OrganizationProvider: FC = ({ children }) => {
       }));
 
       try {
-        if (
-          ecosystemData.current &&
-          ecosystemData.current.length
-          // ecosystemData.current.data.length
-        ) {
-          if (isMounted()) {
-            setOrganization(prevOrganizations => ({
-              ...prevOrganizations,
-              isLoading: false,
-              data: ecosystemData.current,
-            }));
-          }
-        } else {
-          const res = await api.getOrganization({
-            cancelToken: source.token,
-          });
+        const res = await api.getOrganization({
+          cancelToken: source.token,
+        });
 
-          const { data } = res.data;
+        const { data } = res.data;
 
-          if (isMounted()) {
-            setOrganization(prevOrganizations => ({
-              ...prevOrganizations,
-              isLoading: false,
-              data,
-            }));
+        let resp = Object.entries(data[0]);
 
-            ecosystemData.current = data;
-          }
+        console.log(resp.map(val => val.toString()));
+
+        if (isMounted()) {
+          setOrganization(prevOrganizations => ({
+            ...prevOrganizations,
+            isLoading: false,
+            data,
+          }));
         }
       } catch (error) {
         if (Axios.isCancel(error)) {
@@ -87,9 +73,6 @@ const OrganizationProvider: FC = ({ children }) => {
       }
     };
 
-    // if (organization.data.length === 0) {
-    //   getAllOrganizations();
-    // }
     getAllOrganizations();
 
     return () => {

@@ -21,6 +21,34 @@ const { Option } = Select;
 const { Step } = StepsStyled;
 const InputGroup = InputStyled.Group;
 
+const numOfBusinessessSupported = [
+  "1-100",
+  "101-200",
+  "201-300",
+  "301-400",
+  "401-500",
+  "501-1000",
+  "Above 1000",
+];
+
+const businessLevels = [
+  {
+    name: "Micro",
+    description:
+      "businesses with 0 - 9 employees and  total assets (excluding land and building) of less than 10 million naira",
+  },
+  {
+    name: "Small",
+    description: `businesses with 10 - 49 employees and total assets (excluding
+land and building) of 10million to 99million naira`,
+  },
+  {
+    name: "Medium",
+    description: `businesses with 50 - 199 employees and total assets (excluding
+land and building) of 100million to 1billion naira`,
+  },
+];
+
 const ListOrganization = ({ history }) => {
   const [ecosystemDropdown] = useState({
     business_support: [
@@ -406,34 +434,13 @@ const ListOrganization = ({ history }) => {
                     ]}
                   >
                     <Select placeholder="Business Level" allowClear>
-                      <Option value="Micro">
-                        <Tooltip
-                          title="businesses with 0 - 9 employees and  total assets (excluding land and building) of less than 10 million naira
-"
-                        >
-                          <span>Micro</span>
-                        </Tooltip>
-                      </Option>
-
-                      <Option value="Small">
-                        <Tooltip
-                          title="businesses with 10 - 49 employees and total assets (excluding
-land and building) of 10million to 99million naira
-"
-                        >
-                          <span>Small</span>
-                        </Tooltip>
-                      </Option>
-
-                      <Option value="Medium">
-                        <Tooltip
-                          title="businesses with 50 - 199 employees and total assets (excluding
-land and building) of 100million to 1billion naira
-"
-                        >
-                          <span>Medium</span>
-                        </Tooltip>
-                      </Option>
+                      {businessLevels.map((level, key) => (
+                        <Option key={key} value={level.name}>
+                          <Tooltip title={level.description}>
+                            <span>{level.name}</span>
+                          </Tooltip>
+                        </Option>
+                      ))}
                     </Select>
                   </Form.Item>
                 )}
@@ -528,13 +535,11 @@ land and building) of 100million to 1billion naira
                       onChange={e => onNumberOfBusinessChange(e)}
                       allowClear
                     >
-                      <Option value="1-100">1-100</Option>
-                      <Option value="101-200">101-200</Option>
-                      <Option value="201-300">201-300</Option>
-                      <Option value="301-400">301-400</Option>
-                      <Option value="401-500">401-500</Option>
-                      <Option value="501-600">501-1000</Option>
-                      <Option value="Above 1000">Above 1000</Option>
+                      {numOfBusinessessSupported.map((value, i) => (
+                        <Option value={value} key={i}>
+                          {value}
+                        </Option>
+                      ))}
                     </Select>
                   </Form.Item>
                 )}

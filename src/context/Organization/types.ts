@@ -8,11 +8,31 @@ interface IOrganizationProps {
   sector: string;
   state: string;
   num_of_employees?: string;
-  ceo_name?: string;
+  ceo_name?: { name: string, avatar: string };
   description?: string;
-  sector_name?: string;
   ecosystem_name?: string;
   sub_ecosystem_name?: string;
+  user?: any;
+  address?: string;
+  ecosystem?: number;
+  sub_ecosystem?: number;
+  sector_name?: string;
+  business_level?: string;
+  company_valuation?: string;
+  is_startup?: boolean
+  num_supported_business?: number;
+  ceo_image?: any;
+  head_quarters?: string;
+  facebook?: string;
+  instagram?: string;
+  linkedIn?: string;
+  twitter?; string;
+  is_entrepreneur?: boolean;
+  is_ecosystem?: boolean;
+  is_active?: boolean;
+  date_created?: string;
+  date_updated?: string
+
 }
 
 

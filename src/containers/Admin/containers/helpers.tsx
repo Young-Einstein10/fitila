@@ -169,7 +169,7 @@ const createDataSource = organizationList => {
       company: org.name,
       ceo_name: { name: org.ceo_name, avatar: org.ceo_image_url },
       state: org.state,
-      sectors: org.sector_name,
+      sectors: org.sector_name || org.sector,
       market_cap: org.market_cap,
       employees: org.num_of_employees,
       funding: org.funding,

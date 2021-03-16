@@ -28,13 +28,27 @@ const MenuItems = props => {
       selectedKeys={[location.pathname]}
       overflowedIndicator={<FeatherIcon icon="more-vertical" />}
     >
-      <Menu.Item icon={<DashboardIcon />} key="/d">
+      <Menu.Item
+        icon={
+          <NavLink to={`/d`}>
+            <DashboardIcon />
+          </NavLink>
+        }
+        key="/d"
+      >
         <NavLink onClick={toggleCollapsed} to={`/d`}>
           Dashboard
         </NavLink>
       </Menu.Item>
 
-      <Menu.Item icon={<OrganizationNavIcon />} key="/d/organizations">
+      <Menu.Item
+        icon={
+          <NavLink to={`/d/organizations`}>
+            <OrganizationNavIcon />
+          </NavLink>
+        }
+        key="/d/organizations"
+      >
         <NavLink onClick={toggleCollapsed} to={`/d/organizations`}>
           Organizations
         </NavLink>
