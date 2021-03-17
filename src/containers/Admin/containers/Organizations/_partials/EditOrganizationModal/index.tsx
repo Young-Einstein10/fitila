@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import { Modal, Form, Select, Tooltip, Upload, Button } from "antd";
 import { InputNumberStyled, InputStyled } from "../../../../../Styles";
 import {
+  useApiContext,
   useEcosystemContext,
   useOrganizationContext,
   useSectorContext,
@@ -57,13 +58,15 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
   const [subSegment, setSubSegment] = useState([]);
   const [num_supported_business, setNum_supported_business] = useState();
   const [num_of_employees_custom, setNum_of_employees_custom] = useState();
+  const [loading, setLoading] = useState(false);
 
   const [file, setFile] = useState({
     ceo_image: [],
     compnay_logo: [],
   });
 
-  const { states } = useOrganizationContext();
+  const { organization: api } = useApiContext();
+  const { states, refetchOrganizations } = useOrganizationContext();
   const { data: ecosystems } = useEcosystemContext();
   const { data: sectors } = useSectorContext();
 
@@ -130,11 +133,41 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
   };
 
   const handleEdit = async () => {
+    setLoading(true);
     try {
       const values = await form.validateFields();
       console.log(values);
+
+      const data = {
+        ...values,
+        company_logo: file.compnay_logo[0],
+        ceo_image: file.ceo_image[0],
+      };
+
+      const formData = new FormData();
+
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+
+      const res = await api.editOrganization(currentOrganization.id, formData);
+
+      console.log(res.data);
+
+      setLoading(false);
+
+      if (res.status === 201) {
+        Modal.success({
+          title: "Organization has been edited successfully.",
+          onOk: () => {
+            refetchOrganizations();
+            closeModal();
+          },
+        });
+      }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -147,12 +180,18 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         <Button key="cancel" onClick={() => closeModal()}>
           Cancel
         </Button>,
-        <Button type="primary" key="edit" onClick={() => handleEdit()}>
+        <Button
+          loading={loading}
+          type="primary"
+          key="edit"
+          onClick={() => handleEdit()}
+        >
           Edit
         </Button>,
       ]}
     >
       <Form
+        layout="vertical"
         form={form}
         initialValues={{
           ...currentOrganization,
@@ -165,6 +204,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
       >
         {/* BUSINESS NAME */}
         <FormItem
+          label="Name of Organization"
           name="name"
           rules={[
             {
@@ -179,6 +219,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* CEO/FOUNDER"S NAME */}
         <FormItem
+          label="CEO Name"
           name="ceo_name"
           rules={[
             {
@@ -193,6 +234,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* STATE */}
         <Form.Item
+          label="State"
           name="state"
           rules={[
             {
@@ -201,7 +243,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
             },
           ]}
         >
-          <Select size="large" placeholder="State" allowClear>
+          <Select placeholder="State" allowClear>
             {states.map((state, i) => (
               <Option key={i} value={state}>
                 {state}
@@ -213,6 +255,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* ADDRESS */}
         <Form.Item
+          label="Address"
           name="address"
           rules={[
             {
@@ -228,6 +271,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* Ecosystem Segment */}
         {currentOrganization.is_ecosystem && (
           <Form.Item
+            label="Ecosystem Segment"
             name="ecosystem"
             rules={[
               {
@@ -237,7 +281,6 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
             ]}
           >
             <Select
-              size="large"
               onChange={e => updateSubSegment(e)}
               placeholder="Ecosystem Segment"
               allowClear
@@ -255,6 +298,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* SUB-ECOSYTEM SEGMENT */}
         {currentOrganization.is_ecosystem && (
           <Form.Item
+            label="Sub-Ecosystem Segment"
             name="sub_ecosystem"
             rules={[
               {
@@ -263,7 +307,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
               },
             ]}
           >
-            <Select size="large" placeholder="Sub-Segment" allowClear>
+            <Select placeholder="Sub-Segment" allowClear>
               {subSegment.map(segment => (
                 <Option key={segment.id} value={segment.name}>
                   {segment.name}
@@ -276,6 +320,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* BUSINESS SECTOR */}
         <Form.Item
+          label="Sector"
           name="sector"
           rules={[
             {
@@ -284,7 +329,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
             },
           ]}
         >
-          <Select size="large" placeholder="Sector" allowClear>
+          <Select placeholder="Sector" allowClear>
             {sectors.map((sector, i) => (
               <Option key={i} value={sector.id}>
                 {sector.name}
@@ -297,6 +342,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* BUSINESS LEVEL */}
         {currentOrganization.is_entrepreneur && (
           <Form.Item
+            label="Business Level"
             name="business_level"
             rules={[
               {
@@ -321,6 +367,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* ARE YOU A STARTUP */}
         {currentOrganization.is_startup && (
           <Form.Item
+            label="Are You a Startup"
             name="is_startup"
             rules={[
               {
@@ -354,7 +401,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* COMPANY VALUATION */}
         {currentOrganization.is_ecosystem && currentOrganization.is_startup && (
-          <Form.Item name="company_valuation">
+          <Form.Item label="Company Valuation" name="company_valuation">
             <InputGroup size="large" compact style={{ display: "flex" }}>
               <Form.Item initialValue="₦" name="currency">
                 <Select>
@@ -394,6 +441,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* NUMBER OF SUPPORTED BUSINESSES */}
         {currentOrganization.is_ecosystem && (
           <Form.Item
+            label="Number of Supported Businesses"
             name="num_supported_business"
             rules={[
               {
@@ -423,6 +471,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {currentOrganization.is_ecosystem &&
           num_supported_business === "Above 1000" && (
             <Form.Item
+              label="Number of Supported Businesses"
               name="num_supported_business_custom"
               rules={[
                 {
@@ -439,6 +488,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* WEBSITE */}
         <Form.Item
+          label="Website"
           name="website"
           rules={[
             {
@@ -453,6 +503,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* ORGANIZATION EMAIL */}
         <Form.Item
+          label="Organization Email"
           name="email"
           rules={[
             {
@@ -471,6 +522,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* ORGANIZATION PHONE */}
         <Form.Item
+          label="Phone"
           name="phone"
           rules={[
             {
@@ -490,7 +542,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           { name: "Twitter Url", key: "twitter" },
           { name: "LinkedIn Url", key: "linkedin" },
         ].map((inputField, key) => (
-          <Form.Item key={key} name={inputField.key}>
+          <Form.Item key={key} label={inputField.key} name={inputField.key}>
             <InputStyled size="large" placeholder={inputField.name} />
           </Form.Item>
         ))}
@@ -500,7 +552,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* WEB MENTIONS */}
         {["Url 1", "Url 2", "Url 3"].map((url, key) => (
-          <Form.Item key={key} name={url}>
+          <Form.Item key={key} label={url} name={url}>
             <InputStyled size="large" placeholder={url} />
           </Form.Item>
         ))}
@@ -508,6 +560,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* COMPANY LOGO */}
         <Form.Item
+          label="Company Logo"
           name="company_logo"
           rules={[
             {
@@ -517,7 +570,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           ]}
         >
           <Upload {...companyLogoProps} listType="picture">
-            <UploadButtonStyled size="large" style={{ width: "100%" }}>
+            <UploadButtonStyled size="large">
               Upload Company Logo <UploadIcon />
             </UploadButtonStyled>
           </Upload>
@@ -535,7 +588,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           ]}
         >
           <Upload {...ceoImageProps} listType="picture">
-            <UploadButtonStyled size="large" style={{ width: "100%" }}>
+            <UploadButtonStyled size="large">
               Upload CEO/Founder Image <UploadIcon />
             </UploadButtonStyled>
           </Upload>
@@ -544,6 +597,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* BUSINESS RC NUMBER */}
         <Form.Item
+          label="Business RC Number"
           name="cac_doc"
           rules={[
             {
@@ -562,6 +616,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* NUMBER OF EMPLOYEES */}
         <Form.Item
+          label="Number of Employees"
           name="num_of_employees"
           rules={[
             {
@@ -571,7 +626,6 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           ]}
         >
           <Select
-            size="large"
             placeholder="Number of Employees"
             onChange={e => onNumberOfEmployeesChange(e)}
             allowClear
@@ -590,6 +644,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* NUMBER OF EMPLOYEES: ABOVE 1000 */}
         {num_of_employees_custom === "Above 1000" && (
           <Form.Item
+            label="Number of Employees"
             name="num_of_employees_custom"
             rules={[
               {
@@ -598,17 +653,13 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
               },
             ]}
           >
-            <InputStyled
-              size="large"
-              placeholder="Number of Employees"
-              type="number"
-            />
+            <InputStyled placeholder="Number of Employees" type="number" />
           </Form.Item>
         )}
         {/* NUMBER OF EMPLOYEES: ABOVE 1000 */}
 
         {/* FUNDING */}
-        <Form.Item name="funding" style={{ marginBottom: 0 }}>
+        <Form.Item label="Funding" name="funding" style={{ marginBottom: 0 }}>
           <InputGroup compact style={{ display: "flex" }}>
             <Form.Item initialValue="₦" name="currency">
               <Select>
@@ -642,7 +693,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* FUNDING */}
 
         {/* DESCRIPTION */}
-        <Form.Item name="description">
+        <Form.Item label="Description" name="description">
           <InputStyled.TextArea
             size="large"
             placeholder="Organization Description"
