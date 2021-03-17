@@ -1,6 +1,6 @@
 const numberWithCommas = x => {
   if (!x) {
-    return;
+    return "";
   }
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
