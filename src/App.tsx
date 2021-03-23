@@ -16,6 +16,10 @@ import {
 
 const { theme } = config;
 
+// const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+// Spin.setDefaultIndicator(antIcon);
+
 function App() {
   return (
     <ThemeProvider theme={{ ...theme }}>

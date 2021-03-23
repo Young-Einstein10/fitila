@@ -1,15 +1,15 @@
 import React, { Fragment } from "react";
 import { Space, Tooltip } from "antd";
+import FeatherIcon from "feather-icons-react";
 import { EditFilled, DeleteFilled } from "@ant-design/icons";
 import { ViewProfileBtnStyled } from "./Dashboard/styled";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ActionButtonStyled } from "../../Styles";
 import styled from "styled-components";
 import numberWithCommas from "../../../utils/numberFormatter";
+import { IOrganizationProps } from "../../../context/Organization/types";
 
-// Function that Generate Table Columns
-
-export const DeleteButton = props => (
+const DeleteButton = props => (
   <Tooltip title="Delete">
     <ActionButtonStyled
       {...props}
@@ -20,7 +20,7 @@ export const DeleteButton = props => (
   </Tooltip>
 );
 
-export const EditButton = props => (
+const EditButton = props => (
   <Tooltip title="Edit">
     <ActionButtonStyled
       {...props}
@@ -38,6 +38,7 @@ const ImgPlaceholderStyled = styled.span`
   margin-bottom: 0;
 `;
 
+// Function that Generate Table Columns
 const createTableColumns = (
   handleEdit?: (record: any) => void,
   handleDelete?: (record: any) => void,
@@ -49,16 +50,20 @@ const createTableColumns = (
       title: "Rank",
       dataIndex: "rank",
       key: "rank",
+      // responsive: ["xs"],
     },
     {
       title: "Company",
       dataIndex: "company",
       key: "company",
+      // responsive: ["xs"],
     },
     {
       title: "Ceo/Founder",
       dataIndex: "ceo_name",
       key: "ceo_name",
+      // responsive: ["xs"],
+
       render: (record, text) => (
         <Space size="middle" style={{ display: "flex", alignItems: "center" }}>
           <>
@@ -91,11 +96,13 @@ const createTableColumns = (
       title: "State",
       dataIndex: "state",
       key: "state",
+      // responsive: ["xs"],
     },
     {
       title: "Sectors",
       dataIndex: "sectors",
       key: "sectors",
+      // responsive: ["xs"],
     },
     // {
     //   title: "Market Cap",
@@ -106,12 +113,16 @@ const createTableColumns = (
       title: "Employees",
       dataIndex: "employees",
       key: "employees",
+      // responsive: ["xs"],
     },
     {
       title: "Funding (₦)",
       dataIndex: "funding",
       key: "funding",
+      // responsive: ["xs"],
+
       render: (record, key) => {
+        // console.log(key);
         let result = record ? record.split("₦") : [];
 
         return (
@@ -123,6 +134,8 @@ const createTableColumns = (
       title: "Actions",
       key: "action",
       align: "center",
+      // responsive: ["xs"],
+
       render: (record, key) => {
         return (
           <Space size="middle">
@@ -160,11 +173,11 @@ const createTableColumns = (
   return columns;
 };
 
-const createDataSource = organizationList => {
+const createDataSource = (organizationList: IOrganizationProps[]) => {
   const dataSource = organizationList.map((org, key) => {
     return {
       ...org,
-      key: key,
+      key: org.id,
       rank: key + 1,
       company: org.name,
       ceo_name: { name: org.ceo_name, avatar: org.ceo_image_url },
@@ -180,4 +193,36 @@ const createDataSource = organizationList => {
   return dataSource;
 };
 
-export { createTableColumns, createDataSource };
+const TableOptions = () => (
+  <Fragment>
+    {/* <NavLink to="#">
+      <FeatherIcon size={16} icon="printer" />
+      <span>Printer</span>
+    </NavLink> */}
+    <NavLink to="#">
+      <FeatherIcon size={16} icon="book-open" />
+      <span>PDF</span>
+    </NavLink>
+    {/* <NavLink to="#">
+      <FeatherIcon size={16} icon="file-text" />
+      <span>Google Sheets</span>
+    </NavLink> */}
+    <NavLink to="#">
+      <FeatherIcon size={16} icon="x" />
+      <span>Excel (XLSX)</span>
+    </NavLink>
+    <NavLink to="#">
+      <FeatherIcon size={16} icon="file" />
+      <span>CSV</span>
+    </NavLink>
+  </Fragment>
+);
+
+export {
+  createTableColumns,
+  createDataSource,
+  TableOptions,
+  EditButton,
+  DeleteButton,
+  ImgPlaceholderStyled,
+};

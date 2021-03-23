@@ -25,6 +25,11 @@ const Div = Styled.div`
                 font-size: 1rem;
             }
 
+            @media screen and (max-width: 992px) {
+                .ant-breadcrumb {
+                    display: none;
+                }
+            }
         }
 
 
@@ -440,19 +445,28 @@ const Div = Styled.div`
             }
         }
         .admin-footer__links{
-            text-align: ${({ theme }) => (theme.rtl ? "left" : "right")};
+            text-align: right;
+            
             @media only screen and (max-width: 767px){
-                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
             a{
                 color: ${({ theme }) => theme["light-color"]};
+
                 &:not(:last-child){
-                    ${({ theme }) =>
-                      theme.rtl ? "margin-left" : "margin-right"}: 15px;
+                  margin-right: 15px;
+                      
+                  @media only screen and (max-width: 767px){
+                    margin-right: 0;
+                  }
                 }
+
                 &:hover{
                     color: ${({ theme }) => theme["primary-color"]};
                 }
+
             }
         }
     }    

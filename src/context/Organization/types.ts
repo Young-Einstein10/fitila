@@ -17,6 +17,7 @@ interface IOrganizationProps {
   ecosystem?: number;
   sub_ecosystem?: number;
   sector_name?: string;
+  market_cap?: string;
   business_level?: string;
   company_valuation?: string;
   is_startup?: boolean
@@ -30,6 +31,7 @@ interface IOrganizationProps {
   is_entrepreneur?: boolean;
   is_ecosystem?: boolean;
   is_active?: boolean;
+  is_approved?: boolean;
   date_created?: string;
   date_updated?: string
 

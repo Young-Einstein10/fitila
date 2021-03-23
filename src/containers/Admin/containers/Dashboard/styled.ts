@@ -62,6 +62,7 @@ const RowStyled = Styled(Row)`
     border-radius: 5px;
     padding: 1rem;
     color: black;
+    transition: transform 0.4s ease 0s;
 
     p {
       margin-bottom: 0;
@@ -70,6 +71,7 @@ const RowStyled = Styled(Row)`
 
     &:hover {
       cursor: pointer;
+      transform: scale(1.03);
     }
   }
     .cell--1 {

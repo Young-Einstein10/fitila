@@ -6,7 +6,7 @@ import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
-import { createDataSource, createTableColumns } from "../helpers";
+import { createDataSource, createTableColumns, TableOptions } from "../helpers";
 import {
   useApiContext,
   useAuthContext,
@@ -18,31 +18,7 @@ import { IOrganizationProps } from "../../../../context/Organization/types";
 import EditOrganizationModal from "./_partials/EditOrganizationModal";
 import CSVUploadModal from "./_partials/CSVUploadModal";
 import { UploadOutlined } from "@ant-design/icons";
-
-const content = (
-  <>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="printer" />
-      <span>Printer</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="book-open" />
-      <span>PDF</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file-text" />
-      <span>Google Sheets</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="x" />
-      <span>Excel (XLSX)</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file" />
-      <span>CSV</span>
-    </NavLink>
-  </>
-);
+import BulkDeleteModal from "./_partials/BulkDeleteModal";
 
 const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
   const [
@@ -50,6 +26,8 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
     setIsEditOrganizationModalOpen,
   ] = useState(false);
   const [isCSVUploadModalOpen, setIsCSVUploadModalOpen] = useState(false);
+  const [isBulkDeleteModalOpen, setIsBulkDeleteModalOpen] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const [currentOrganization, setCurrentOrganization] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -117,9 +95,26 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
     toggleEditModal();
   };
 
+  const handleBulkDelete = () => {
+    Modal.confirm({
+      title: "Are You Sure you want to delete the selected organizations?",
+      onOk: () => toggleBulkDeleteModal(),
+    });
+  };
+
+  const toggleBulkDeleteModal = () => setIsBulkDeleteModalOpen(open => !open);
+
   const toggleEditModal = () => setIsEditOrganizationModalOpen(open => !open);
 
   const toggleCSVUploadModal = () => setIsCSVUploadModalOpen(open => !open);
+
+  const onSelectChange = selectedRowKeys => setSelectedRowKeys(selectedRowKeys);
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
+  const hasSelected = selectedRowKeys.length > 0;
 
   return (
     <AdminSectionWrapper className="organizations">
@@ -162,6 +157,33 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
 
       <Main>
         <Row gutter={15}>
+          {selectedRowKeys.length ? (
+            <Col xs={24}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  margin: "2rem 0",
+                }}
+              >
+                <span>
+                  {hasSelected
+                    ? `Selected ${selectedRowKeys.length} items`
+                    : ""}
+                </span>
+
+                <Button
+                  danger
+                  disabled={!selectedRowKeys.length}
+                  onClick={() => handleBulkDelete()}
+                >
+                  Delete
+                </Button>
+              </div>
+            </Col>
+          ) : null}
+
           <Col xs={24}>
             <Cards
               title={
@@ -169,10 +191,11 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
                   <span>Organizations</span>
                 </div>
               }
-              more={content}
+              more={TableOptions}
             >
               <Table
                 className="table-responsive"
+                rowSelection={rowSelection}
                 dataSource={createDataSource(filteredOrganizations)}
                 columns={createTableColumns(
                   handleEdit,
@@ -192,6 +215,14 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
           visible={isEditOrganizationModalOpen}
           closeModal={toggleEditModal}
           currentOrganization={currentOrganization}
+        />
+      ) : null}
+
+      {isBulkDeleteModalOpen ? (
+        <BulkDeleteModal
+          visible={isBulkDeleteModalOpen}
+          closeModal={toggleBulkDeleteModal}
+          selectedOrganizations={selectedRowKeys}
         />
       ) : null}
 

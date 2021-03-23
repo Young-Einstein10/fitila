@@ -13,6 +13,7 @@ import {
   PrivacyPolicy,
   TermsConditions,
   Sectors,
+  PendingApplication,
 } from "../containers/Admin";
 // import Businesses from "../containers/Admin/containers/Dashboard/_partials/Businesses";
 // import BusinessSupport from "../containers/Admin/containers/Dashboard/_partials/BusinessSupport";
@@ -49,6 +50,11 @@ const Routes = () => {
 
       <CustomRoute path="/d/states" component={States} />
       <AuthRoute path="/d/account" component={Account} />
+      <AuthRoute
+        path="/d/pending_applications"
+        component={PendingApplication}
+      />
+
       <AuthRoute path="/d/administrators" component={Administrators} />
       <AuthRoute path="/d/sectors" component={Sectors} />
       <CustomRoute path="/d/contact" component={Contact} />

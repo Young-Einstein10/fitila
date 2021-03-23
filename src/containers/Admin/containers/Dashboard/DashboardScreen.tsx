@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Button, Col, Row, Table, Spin } from "antd";
 import { Link, NavLink, RouteComponentProps } from "react-router-dom";
-import { content, generateIcons, tableHeader } from "./functions";
+import { generateIcons, tableHeader } from "./functions";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
 import { Main } from "../../../AuthLayout/styled";
@@ -10,13 +10,13 @@ import { Cards } from "../../../../components/cards/frame/cards-frame";
 import SummaryData from "./_partials/SummaryData";
 
 import { CardSegmentStyled, RowStyled } from "./styled";
-import { createDataSource, createTableColumns } from "../helpers";
+import { createDataSource, createTableColumns, TableOptions } from "../helpers";
 import {
   useEcosystemContext,
   useOrganizationContext,
 } from "../../../../context";
 
-const DashboardScreen: FC<RouteComponentProps> = ({ history }) => {
+const DashboardScreen: FC<RouteComponentProps> = () => {
   const {
     isLoading: isOrganizationLoading,
     data: organizations,
@@ -108,11 +108,7 @@ const DashboardScreen: FC<RouteComponentProps> = ({ history }) => {
         {/* ECOSYSTEMS */}
         <Row gutter={25} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
-            <Cards
-              title="Explore by ecosystem segments"
-              size="large"
-              more={content}
-            >
+            <Cards title="Explore by ecosystem segments" size="large">
               {isEcosystemLoading ? (
                 <Row
                   style={{
@@ -164,7 +160,7 @@ const DashboardScreen: FC<RouteComponentProps> = ({ history }) => {
         {/* STATES */}
         <Row gutter={24} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
-            <Cards title="Explore by States" size="large" more={content}>
+            <Cards title="Explore by States" size="large">
               <RowStyled>
                 {statesData.map((state, i) => (
                   <Link
@@ -195,39 +191,13 @@ const DashboardScreen: FC<RouteComponentProps> = ({ history }) => {
           </Col>
         </Row>
 
-        {/* CHARTS */}
-        <Row gutter={[16, 16]} style={{ marginTop: "2rem" }}>
-          <Col xs={24} sm={24} md={12} lg={8}>
-            <Cards title="2020 Investments" size="large" more={content}>
-              <div
-                className="states-lga"
-                style={{ background: "#B1E2CB", height: "330px" }}
-              ></div>
-            </Cards>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} lg={8}>
-            <Cards title="Female Led Startups" size="large" more={content}>
-              <div
-                className="states-lga"
-                style={{ background: "#B1E2CB", height: "330px" }}
-              ></div>
-            </Cards>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} lg={8}>
-            <Cards title="Funding by Sector" size="large" more={content}>
-              <div
-                className="states-lga"
-                style={{ background: "#B1E2CB", height: "330px" }}
-              ></div>
-            </Cards>
-          </Col>
-        </Row>
+        {/* ========= CHARTS ========== */}
+        {/* <Charts /> */}
+        {/* ========= CHARTS ========== */}
 
         <Row gutter={15}>
           <Col xs={24}>
-            <Cards title={tableHeader} more={content}>
+            <Cards title={tableHeader} more={TableOptions}>
               <Table
                 className="table-responsive"
                 dataSource={createDataSource(

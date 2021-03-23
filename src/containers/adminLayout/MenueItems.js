@@ -13,6 +13,8 @@ import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
 
 import { useAuthContext } from "../../context";
 
+const LinkedIcon = ({ children, to }) => <NavLink to={to}>{children}</NavLink>;
+
 const MenuItems = props => {
   const { darkMode, topMenu, toggleCollapsed } = props;
 
@@ -29,11 +31,7 @@ const MenuItems = props => {
       overflowedIndicator={<FeatherIcon icon="more-vertical" />}
     >
       <Menu.Item
-        icon={
-          <NavLink to={`/d`}>
-            <DashboardIcon />
-          </NavLink>
-        }
+        icon={<LinkedIcon children={<DashboardIcon />} to="/d" />}
         key="/d"
       >
         <NavLink onClick={toggleCollapsed} to={`/d`}>
@@ -43,9 +41,10 @@ const MenuItems = props => {
 
       <Menu.Item
         icon={
-          <NavLink to={`/d/organizations`}>
-            <OrganizationNavIcon />
-          </NavLink>
+          <LinkedIcon
+            to={`/d/organizations`}
+            children={<OrganizationNavIcon />}
+          />
         }
         key="/d/organizations"
       >
@@ -54,14 +53,34 @@ const MenuItems = props => {
         </NavLink>
       </Menu.Item>
 
-      <Menu.Item icon={<DashboardIcon />} key="/d/states">
+      <Menu.Item
+        icon={
+          <LinkedIcon
+            children={<OrganizationNavIcon />}
+            to={`/d/pending_applications`}
+          />
+        }
+        key="/d/organizapending_applicationstions"
+      >
+        <NavLink onClick={toggleCollapsed} to={`/d/pending_applications`}>
+          Pending Applications
+        </NavLink>
+      </Menu.Item>
+
+      <Menu.Item
+        icon={<LinkedIcon children={<DashboardIcon />} to="/d/states" />}
+        key="/d/states"
+      >
         <NavLink onClick={toggleCollapsed} to={`/d/states`}>
           States
         </NavLink>
       </Menu.Item>
 
       {auth.isAuthenticated && (
-        <Menu.Item icon={<AccountsNavIcon />} key="/d/account">
+        <Menu.Item
+          icon={<LinkedIcon children={<AccountsNavIcon />} to="/d/account" />}
+          key="/d/account"
+        >
           <NavLink onClick={toggleCollapsed} to={`/d/account`}>
             Account
           </NavLink>
@@ -69,33 +88,48 @@ const MenuItems = props => {
       )}
 
       {auth.isAuthenticated && (
-        <Menu.Item icon={<AboutNavIcon />} key="/d/sectors">
+        <Menu.Item
+          icon={<LinkedIcon children={<AboutNavIcon />} to="/d/sectors" />}
+          key="/d/sectors"
+        >
           <NavLink onClick={toggleCollapsed} to={`/d/sectors`}>
             Sectors
           </NavLink>
         </Menu.Item>
       )}
 
-      <Menu.Item icon={<ContactNavIcon />} key="/d/contact">
+      <Menu.Item
+        icon={<LinkedIcon children={<ContactNavIcon />} to="/d/contact" />}
+        key="/d/contact"
+      >
         <NavLink onClick={toggleCollapsed} to={`/d/contact`}>
           Contact
         </NavLink>
       </Menu.Item>
 
-      <Menu.Item icon={<AboutNavIcon />} key="/d/project_brief">
+      <Menu.Item
+        icon={<LinkedIcon children={<AboutNavIcon />} to="/d/project_brief" />}
+        key="/d/project_brief"
+      >
         <NavLink onClick={toggleCollapsed} to={`/d/project_brief`}>
           Project Brief
         </NavLink>
       </Menu.Item>
 
-      <Menu.Item icon={<HelpNavIcon />} key="/d/help">
+      <Menu.Item
+        icon={<LinkedIcon children={<HelpNavIcon />} to="/d/help" />}
+        key="/d/help"
+      >
         <NavLink onClick={toggleCollapsed} to={`/d/help`}>
           Help Center
         </NavLink>
       </Menu.Item>
 
       {auth.isAuthenticated && (
-        <Menu.Item icon={<UserPlus />} key="/d/administrators">
+        <Menu.Item
+          icon={<LinkedIcon children={<UserPlus />} to="/d/administrators" />}
+          key="/d/administrators"
+        >
           <NavLink onClick={toggleCollapsed} to={`/d/administrators`}>
             Administrators
           </NavLink>
@@ -103,7 +137,10 @@ const MenuItems = props => {
       )}
 
       {auth.isAuthenticated && (
-        <Menu.Item icon={<LogOutNavIcon />} key="log_out">
+        <Menu.Item
+          icon={<LinkedIcon children={<LogOutNavIcon />} to="#" />}
+          key="log_out"
+        >
           <NavLink
             onClick={() => {
               toggleCollapsed();

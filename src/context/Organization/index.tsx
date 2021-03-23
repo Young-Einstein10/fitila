@@ -1,7 +1,7 @@
-import React, { useState, useEffect, createContext, FC, useRef } from "react";
+import React, { useState, useEffect, createContext, FC } from "react";
 import Axios from "axios";
 import { useApiContext } from "../Api";
-import { IOrganizationProps, IOrganizationStateProps } from "./types";
+import { IOrganizationStateProps } from "./types";
 import { useMountedState } from "../../utils/hooks";
 
 const OrganizationContext = createContext<IOrganizationStateProps | undefined>(
@@ -45,10 +45,6 @@ const OrganizationProvider: FC = ({ children }) => {
         });
 
         const { data } = res.data;
-
-        let resp = Object.entries(data[0]);
-
-        console.log(resp.map(val => val.toString()));
 
         if (isMounted()) {
           setOrganization(prevOrganizations => ({

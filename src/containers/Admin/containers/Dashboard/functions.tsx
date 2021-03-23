@@ -1,7 +1,4 @@
 import React from "react";
-import { Dropdown, Menu } from "antd";
-import FeatherIcon from "feather-icons-react";
-import { NavLink } from "react-router-dom";
 import { ECOSYSTEM_SEGMENTS } from "../../../../redux/constants";
 import { ReactComponent as BriefCase } from "../../../../static/svg/briefcase.svg";
 import { ReactComponent as BusinessSupportIcon } from "../../../../static/svg/business_support_icon.svg";
@@ -12,58 +9,9 @@ import { ReactComponent as RescourcesIcon } from "../../../../static/svg/resourc
 import { ReactComponent as ResearchIcon } from "../../../../static/svg/research.svg";
 import { ReactComponent as MSMEsIcon } from "../../../../static/svg/cone.svg";
 
-import { UserOutlined } from "@ant-design/icons";
-import { ReactComponent as ArrowDown } from "../../../../static/svg/arrowDown.svg";
-
-import { TableHeaderButtonStyled } from "./styled";
-
-const content = (
-  <>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="printer" />
-      <span>Printer</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="book-open" />
-      <span>PDF</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file-text" />
-      <span>Google Sheets</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="x" />
-      <span>Excel (XLSX)</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file" />
-      <span>CSV</span>
-    </NavLink>
-  </>
-);
-
-const menu = (
-  <Menu onClick={() => {}}>
-    <Menu.Item key="1" icon={<UserOutlined />}>
-      1st menu item
-    </Menu.Item>
-    <Menu.Item key="2" icon={<UserOutlined />}>
-      2nd menu item
-    </Menu.Item>
-    <Menu.Item key="3" icon={<UserOutlined />}>
-      3rd menu item
-    </Menu.Item>
-  </Menu>
-);
-
 const tableHeader = (
-  <div style={{ display: "flex", justifyContent: "space-between" }}>
+  <div>
     <span>Newly Added</span>
-    <Dropdown overlay={menu}>
-      <TableHeaderButtonStyled type="ghost" size="middle">
-        Past Month <ArrowDown />
-      </TableHeaderButtonStyled>
-    </Dropdown>
   </div>
 );
 
@@ -117,4 +65,4 @@ const capitalize = str => {
   }
 };
 
-export { content, tableHeader, generateIcons, capitalize };
+export { tableHeader, generateIcons, capitalize };

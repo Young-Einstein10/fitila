@@ -1,39 +1,13 @@
-import React, { FC, Fragment, useState } from "react";
-import { Button, Tooltip, Col, Row, Space, Table, Modal } from "antd";
-import { EditFilled, DeleteFilled } from "@ant-design/icons";
+import React, { Fragment, useState } from "react";
+import { Button, Col, Row, Space, Table, Modal } from "antd";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
-import {
-  useApiContext,
-  useOrganizationContext,
-  useSectorContext,
-} from "../../../../context";
+import { useApiContext, useSectorContext } from "../../../../context";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import AddSectorModal from "./_partials/AddSectorModal";
-import { ActionButtonStyled } from "../../../Styles";
 import EditSectorModal from "./_partials/EditSectorModal";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
-
-export const DeleteButton = props => (
-  <Tooltip title="Delete">
-    <ActionButtonStyled
-      {...props}
-      danger
-      type="default"
-      children={<DeleteFilled height="1.2em" width="1.2em" />}
-    />
-  </Tooltip>
-);
-
-export const EditButton = props => (
-  <Tooltip title="Edit">
-    <ActionButtonStyled
-      {...props}
-      type="default"
-      children={<EditFilled height="1.2em" width="1.2em" />}
-    />
-  </Tooltip>
-);
+import { DeleteButton, EditButton } from "../helpers";
 
 const Sectors = () => {
   const [isAddSectorModalOpen, setIsAddSectorModalOpen] = useState(false);

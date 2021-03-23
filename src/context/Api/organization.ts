@@ -11,6 +11,10 @@ export default class Organization {
     return this.client.get("/organizations", config);
   }
 
+  getPendingOrganization(config?: AxiosRequestConfig) {
+    return this.client.get("/organizations/pending");
+  }
+
   addBusiness(data) {
     return this.client.post("/add_organization/", data, {
       headers: {
