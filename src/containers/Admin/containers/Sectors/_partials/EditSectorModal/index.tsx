@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { Modal, Form, Button } from "antd";
 import { InputStyled } from "../../../../../Styles";
 import { useApiContext, useSectorContext } from "../../../../../../context";

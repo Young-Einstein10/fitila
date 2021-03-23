@@ -53,19 +53,18 @@ const MenuItems = props => {
         </NavLink>
       </Menu.Item>
 
-      <Menu.Item
-        icon={
-          <LinkedIcon
-            children={<OrganizationNavIcon />}
-            to={`/d/pending_applications`}
-          />
-        }
-        key="/d/organizapending_applicationstions"
-      >
-        <NavLink onClick={toggleCollapsed} to={`/d/pending_applications`}>
-          Pending Applications
-        </NavLink>
-      </Menu.Item>
+      {auth.isAuthenticated && (
+        <Menu.Item
+          icon={
+            <LinkedIcon children={<ContactNavIcon />} to={`/d/applications`} />
+          }
+          key="/d/applications"
+        >
+          <NavLink onClick={toggleCollapsed} to={`/d/applications`}>
+            Applications
+          </NavLink>
+        </Menu.Item>
+      )}
 
       <Menu.Item
         icon={<LinkedIcon children={<DashboardIcon />} to="/d/states" />}

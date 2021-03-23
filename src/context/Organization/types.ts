@@ -23,6 +23,7 @@ interface IOrganizationProps {
   is_startup?: boolean
   num_supported_business?: number;
   ceo_image?: any;
+  company_logo?: any;
   head_quarters?: string;
   facebook?: string;
   instagram?: string;
@@ -31,7 +32,7 @@ interface IOrganizationProps {
   is_entrepreneur?: boolean;
   is_ecosystem?: boolean;
   is_active?: boolean;
-  is_approved?: boolean;
+  is_approve?: boolean;
   date_created?: string;
   date_updated?: string
 

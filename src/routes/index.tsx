@@ -50,10 +50,7 @@ const Routes = () => {
 
       <CustomRoute path="/d/states" component={States} />
       <AuthRoute path="/d/account" component={Account} />
-      <AuthRoute
-        path="/d/pending_applications"
-        component={PendingApplication}
-      />
+      <AuthRoute path="/d/applications" component={PendingApplication} />
 
       <AuthRoute path="/d/administrators" component={Administrators} />
       <AuthRoute path="/d/sectors" component={Sectors} />

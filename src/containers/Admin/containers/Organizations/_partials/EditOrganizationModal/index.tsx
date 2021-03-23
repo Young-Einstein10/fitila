@@ -10,7 +10,6 @@ import {
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
 import { UploadButtonStyled } from "../../../../../Business/_partials/Uploads/styled";
 import { ReactComponent as UploadIcon } from "../../../../../../static/svg/upload.svg";
-import Uploads from "../../../../../Business/_partials/Uploads";
 
 const FormItem = Form.Item;
 const Option = Select.Option;

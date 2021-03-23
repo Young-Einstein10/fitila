@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { connect } from "react-redux";
 import { Row, Form, Select, Divider, Tooltip } from "antd";
 import { MainColStyled } from "../AddCompany/styled";
 import Heading from "../../../../components/heading/heading";
@@ -50,54 +49,10 @@ land and building) of 100million to 1billion naira`,
 ];
 
 const ListOrganization = ({ history }) => {
-  const [ecosystemDropdown] = useState({
-    business_support: [
-      "Business Advisory and Consulting Organizations",
-      "Mentoring (Individuals & Organization)",
-      "Incubators",
-      "Acceleratorss",
-      "Churches/Mosques",
-    ],
-    business_advisory: ["Mentoring", "Legal", "Tax", "HR", "Book-Keeping"],
-    enterpreneurship_training: [
-      "Enterprise Support Organizations",
-      "Incubators",
-      "Acceleratorss",
-      "Churches/Mosques",
-    ],
-    funding: [
-      "Loan Providers (*Rating, Loan disbursement data trend)",
-      "Grant Providers (Grant Disbursement Data)",
-      "Equity Funders (Equity Investment Data)",
-    ],
-    market_access: [
-      "Distribution Channels that Faciliatte Trade",
-      "Tech Platforms that facilitate Trade",
-    ],
-    policy_regulation: [
-      "Government",
-      "Regulators",
-      "Enterpreneurship Advocacy Groups/Think-Tanks",
-    ],
-    resources: [
-      "Virtual Resources",
-      "In-Person Resources",
-      "Tools",
-      "Services",
-    ],
-    research_development: [
-      "Markerspaces",
-      "Research Drivers",
-      "Innovation and Design Spaces for Hardware and Software",
-    ],
-    enterprises: [],
-  });
-  // const [subSegmentList, setSubSegmentList] = useState([]);
-  // const [ecosystem, setEcosystem] = useState([]);
   const [subSegment, setSubSegment] = useState([]);
   const [num_supported_business, setNum_supported_business] = useState();
   const [is_startUp, setIs_Startup] = useState(false);
-  const [subEcosystemSubClass, setSubEcosystemSubClass] = useState("");
+  // const [subEcosystemSubClass, setSubEcosystemSubClass] = useState("");
 
   const { data: ecosystem } = useEcosystemContext();
   const { states } = useOrganizationContext();
@@ -117,7 +72,7 @@ const ListOrganization = ({ history }) => {
     getEcosystem();
   }, [state]);
 
-  const handleSubEcosystemChange = value => setSubEcosystemSubClass(value);
+  // const handleSubEcosystemChange = value => setSubEcosystemSubClass(value);
 
   const handleSubmit = async () => {
     try {
@@ -131,7 +86,7 @@ const ListOrganization = ({ history }) => {
         eco => eco.name === values.ecosystem
       );
 
-      console.log(values);
+      // console.log(values);
 
       let selectedSubEcosystem = [];
 
@@ -348,20 +303,10 @@ const ListOrganization = ({ history }) => {
                     ]}
                   >
                     <Select
-                      onChange={e => handleSubEcosystemChange(e)}
+                      // onChange={e => handleSubEcosystemChange(e)}
                       placeholder="Sub-Segment"
                       allowClear
                     >
-                      {/* {subSegmentList.map((segment, key) => (
-                        <Option
-                          key={key}
-                          value={segment}
-                          style={{ textTransform: "capitalize" }}
-                        >
-                          {segment}
-                        </Option>
-                      ))} */}
-
                       {subSegment.map(segment => (
                         <Option key={segment.id} value={segment.name}>
                           {segment.name}

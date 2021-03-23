@@ -24,7 +24,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
         to="#"
         style={{
           padding: "1rem",
-          background: "#F7F9FA;",
+          background: "#F7F9FA",
           marginBottom: ".5rem",
           display: "flex",
           alignItems: "center",
@@ -55,15 +55,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
   return (
     <Div>
       <LayoutStyled className="layout nonAuthLayout">
-        <HeaderStyled
-        // style={{
-        //   position: "fixed",
-        //   width: "100%",
-        //   top: 0,
-        //   left: 0,
-        //   background: "#fff",
-        // }}
-        >
+        <HeaderStyled>
           <Row
             style={{ justifyContent: "space-between", alignItems: "center" }}
           >
@@ -71,10 +63,6 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
               <Link className={`striking-logo top-menu' `} to="/">
                 <img src={Logo} alt="Logo" />
               </Link>
-
-              {/* <Breadcrumb>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-              </Breadcrumb> */}
             </div>
 
             <div className="navItem-right">

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Row, Col, Table, Space } from "antd";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
@@ -36,7 +36,7 @@ const AdministratorScreen = () => {
           }
         }
 
-        console.log(res.data);
+        // console.log(res.data);
       } catch (error) {
         if (isMounted()) {
           setIsLoading(false);

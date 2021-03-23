@@ -129,22 +129,6 @@ const LandingScreen: FC<RouteComponentProps> = ({ history }) => {
             justifyContent: "center",
           }}
         >
-          {/* {segments.map((segment, key) => (
-            <Col key={key} className="text-center">
-              <NavLink
-                to={`/d/segments/${segment.name
-                  .split(" ")
-                  .join("_")
-                  .toLowerCase()}`}
-              >
-                <ButtonStyled>
-                  {segment.name}
-                  <Search style={{ marginLeft: "0.625rem" }} />
-                </ButtonStyled>
-              </NavLink>
-            </Col>
-          ))} */}
-
           {isEcosystemLoading ? (
             <p>Loading...</p>
           ) : (

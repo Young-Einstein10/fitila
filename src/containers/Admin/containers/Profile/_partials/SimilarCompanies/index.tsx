@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { connect } from "react-redux";
 import { Col, Row, Menu, Dropdown, Table } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import FeatherIcon from "feather-icons-react";

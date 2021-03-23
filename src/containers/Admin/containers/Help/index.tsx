@@ -1,15 +1,10 @@
 import React from "react";
-import { Menu, Col, Row, Dropdown, Collapse, Form } from "antd";
-import FeatherIcon from "feather-icons-react";
-import { UserOutlined } from "@ant-design/icons";
+import { Row, Collapse, Form, Col } from "antd";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
 import Heading from "../../../../components/heading/heading";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
-import { NavLink } from "react-router-dom";
-import { TableHeaderButtonStyled } from "../Dashboard/styled";
-import { ReactComponent as ArrowDown } from "../../../../static/svg/arrowDown.svg";
 import { ReactComponent as PlusIcon } from "../../../../static/svg/plus.svg";
 import { CollapseStyled } from "./styled";
 import { ButtonStyled, InputStyled } from "../../../Styles";
@@ -61,7 +56,7 @@ const Help = () => {
                     bordered={false}
                     defaultActiveKey={["1"]}
                     expandIconPosition="right"
-                    expandIcon={panelProps => <PlusIcon />}
+                    expandIcon={() => <PlusIcon />}
                   >
                     {[1, 2, 3, 4, 5, 6].map((_, key) => (
                       <Panel
@@ -84,9 +79,9 @@ const Help = () => {
                     bordered={false}
                     defaultActiveKey={["11"]}
                     expandIconPosition="right"
-                    expandIcon={panelProps => <PlusIcon />}
+                    expandIcon={() => <PlusIcon />}
                   >
-                    {[11, 12, 13, 14, 15, 16].map((num, key) => (
+                    {[11, 12, 13, 14, 15, 16].map(num => (
                       <Panel key={num} header="This is panel header 1">
                         {text}
                       </Panel>

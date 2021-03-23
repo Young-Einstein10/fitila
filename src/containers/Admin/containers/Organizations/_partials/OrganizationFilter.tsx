@@ -100,7 +100,6 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                     <Input
                       onChange={e => {
                         let input = e.target.value.toString().toLowerCase();
-                        console.log(e.target.value);
 
                         filterOrganizations(input, "search");
                       }}

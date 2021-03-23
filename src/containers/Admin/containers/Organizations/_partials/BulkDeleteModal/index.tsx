@@ -62,23 +62,19 @@ const BulkDeleteModal: FC<IBulkDeleteProps> = ({
       // console.log(responseList);
       refetchOrganizations();
 
-      responseList.some(res => {
-        if (res.status === "error") {
-          Modal.error({
-            title:
-              "An Error Occured during the operation. Some Organizations might not be deleted!",
-          });
-        }
-      });
+      if (responseList.some(res => res.status === "error")) {
+        Modal.error({
+          title:
+            "An Error Occured during the operation. Some Organizations might not be deleted!",
+        });
+      }
 
-      responseList.every(res => {
-        if (res.status === 204) {
-          Modal.success({
-            title: "Organization deleted successfully",
-            onOk: () => closeModal(),
-          });
-        }
-      });
+      if (responseList.every(res => res.status === 204)) {
+        Modal.success({
+          title: "Organization deleted successfully",
+          onOk: () => closeModal(),
+        });
+      }
 
       setisLoading(false);
     } catch (error) {

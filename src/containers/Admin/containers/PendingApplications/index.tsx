@@ -1,37 +1,30 @@
-import { Button, Col, Row, Space, Table } from "antd";
-import Axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Modal, Button, Col, Row, Space, Table } from "antd";
+import Axios from "axios";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
-import styled from "styled-components";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
-import api from "../../../../config/api";
-import { useApiContext } from "../../../../context";
+import { useApiContext, useAuthContext } from "../../../../context";
 import { IOrganizationProps } from "../../../../context/Organization/types";
 import { useMountedState } from "../../../../utils/hooks";
 import numberWithCommas from "../../../../utils/numberFormatter";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
+import { ImgPlaceholderStyled } from "../helpers";
 
 interface IPendingAppProps {
   isLoading: boolean;
   data: IOrganizationProps[];
 }
 
-export const ImgPlaceholderStyled = styled.span`
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
-  background: #e7833b;
-  margin-bottom: 0;
-`;
-
 const PendingApplications = () => {
   const [organizations, setOrganizations] = useState<IPendingAppProps>({
     isLoading: false,
     data: [],
   });
+  const [isApprovalLoading, setIsApprovalLoading] = useState(false);
 
   const { organization: api } = useApiContext();
+  const { auth } = useAuthContext();
 
   const isMounted = useMountedState();
 
@@ -82,6 +75,40 @@ const PendingApplications = () => {
       source.cancel("Operation canceled by the user.");
     };
   }, [isMounted, api]);
+
+  const refetchPendingApplications = async () => {
+    setOrganizations(prevOrganizations => ({
+      ...prevOrganizations,
+      isLoading: true,
+    }));
+
+    try {
+      const res = await api.getPendingOrganization();
+
+      const { data } = res.data;
+
+      if (isMounted()) {
+        setOrganizations(prevOrganizations => ({
+          ...prevOrganizations,
+          isLoading: false,
+          data,
+        }));
+      }
+    } catch (error) {
+      if (Axios.isCancel(error)) {
+        console.log("Request canceled", error.message);
+      }
+      // handle error
+      if (isMounted()) {
+        setOrganizations(prevOrganizations => ({
+          ...prevOrganizations,
+          isLoading: false,
+        }));
+
+        console.log(error);
+      }
+    }
+  };
 
   const columns: any = [
     {
@@ -175,9 +202,8 @@ const PendingApplications = () => {
           <Space size="middle">
             <Button
               type="primary"
-              onClick={() => {
-                console.log("Approved Business");
-              }}
+              onClick={() => handleApproval(record.id, record)}
+              loading={isApprovalLoading}
             >
               Approve
             </Button>
@@ -186,6 +212,46 @@ const PendingApplications = () => {
       },
     },
   ];
+
+  const handleApproval = async (id: number, record: IOrganizationProps) => {
+    setIsApprovalLoading(true);
+
+    delete record.ceo_image;
+    delete record.company_logo;
+    delete record.ecosystem;
+    delete record.sub_ecosystem;
+    delete record.ceo_name;
+
+    try {
+      const data: IOrganizationProps = {
+        ...record,
+        user: auth.user.id,
+        is_approve: true,
+      };
+
+      const formData = new FormData();
+
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+
+      const res = await api.editOrganization(id, formData);
+
+      console.log(res.data);
+
+      setIsApprovalLoading(false);
+
+      if (res.status === 201) {
+        Modal.success({
+          title: "Organization has been approved successfully.",
+        });
+        refetchPendingApplications();
+      }
+    } catch (error) {
+      console.log(error);
+      setIsApprovalLoading(false);
+    }
+  };
 
   return (
     <AdminSectionWrapper>

@@ -15,25 +15,6 @@ interface ISummaryProps {
 const Summary: FC<ISummaryProps> = ({ selectedOrganization }) => {
   const { data: organizations } = useOrganizationContext();
 
-  const cardsSummary = [
-    {
-      value: 14,
-      content: `Total Number of ${selectedOrganization[0].sector_name} Companies in ${selectedOrganization[0].state}`,
-    },
-    {
-      value: 3,
-      content: "Total No of Fintech companies in Sabo Yaba",
-    },
-    {
-      value: 12,
-      content: `Total Number of Companies in ${selectedOrganization[0].state}`,
-    },
-    // {
-    //   value: "₦8.5B",
-    //   content: "Total Market Capitalization Fintech companies",
-    // },
-  ];
-
   return (
     <Fragment>
       <Row>

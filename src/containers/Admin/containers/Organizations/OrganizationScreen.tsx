@@ -1,7 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import { NavLink, RouteComponentProps, useParams } from "react-router-dom";
 import { Button, Row, Modal, Col, Table } from "antd";
-import FeatherIcon from "feather-icons-react";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
 import { Main } from "../../../AuthLayout/styled";
@@ -191,7 +190,7 @@ const OrganizationScreen: FC<RouteComponentProps> = ({ location }) => {
                   <span>Organizations</span>
                 </div>
               }
-              more={TableOptions}
+              more={TableOptions()}
             >
               <Table
                 className="table-responsive"
