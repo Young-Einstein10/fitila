@@ -101,12 +101,12 @@ const ThemeLayout = WrappedComponent => {
                 : breadcrumbNameMap()[url]}
             </span>
           ) : (
-            <Link to={url}>
-              {filteredUrl.length >= 3
-                ? breadcrumbNameMap(filteredUrl[2], "")[url]
-                : breadcrumbNameMap()[url]}
-            </Link>
-          )}
+                  <Link to={url}>
+                    {filteredUrl.length >= 3
+                      ? breadcrumbNameMap(filteredUrl[2], "")[url]
+                      : breadcrumbNameMap()[url]}
+                  </Link>
+                )}
         </BreadcrumbItem>
       );
     });
@@ -218,14 +218,15 @@ const ThemeLayout = WrappedComponent => {
                 </Breadcrumb>
               </div>
 
-              {auth.isAuthenticated ? (
-                <CurrentUserButton size="large">
+              {(auth.isAuthenticated) ? (
+                <CurrentUserButton className="user-info" size="large">
                   <span></span>
                   {auth.user.first_name} {auth.user.last_name}
                 </CurrentUserButton>
+
               ) : (
-                <span></span>
-              )}
+                  <span></span>
+                )}
             </Row>
           </Header>
 

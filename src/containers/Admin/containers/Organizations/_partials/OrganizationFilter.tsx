@@ -90,13 +90,13 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
           <strong>Filter</strong>
         </p>
       </div>
-      <Row style={{ padding: "0 1.3rem 1.3rem" }}>
-        <Col span={24}>
+      <Row gutter={[16, 8]} style={{ padding: "0 1.3rem 1.3rem" }}>
+        <Col style={{ marginBottom: "0" }} span={24}>
           <Form layout="vertical" initialValues={{ state_filter: state }}>
             <Row gutter={[16, 16]}>
               {!state && (
                 <Col xs={24} sm={24} md={12} lg={12}>
-                  <FormItem name="search_filter">
+                  <FormItem style={{ marginBottom: 0 }} name="search_filter">
                     <Input
                       onChange={e => {
                         let input = e.target.value.toString().toLowerCase();
@@ -112,7 +112,7 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
               )}
 
               <Col xs={24} sm={24} md={12} lg={6}>
-                <FormItem name="state_filter">
+                <FormItem style={{ marginBottom: 0 }} name="state_filter">
                   <SelectStyled
                     suffixIcon={<ArrowDown />}
                     showSearch
@@ -145,8 +145,14 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
               </Col>
 
               {state && (
-                <Col xs={24} sm={24} md={12} lg={6}>
-                  <FormItem name="segment_filter">
+                <Col
+                  style={{ marginBottom: "0" }}
+                  xs={24}
+                  sm={24}
+                  md={12}
+                  lg={6}
+                >
+                  <FormItem style={{ marginBottom: 0 }} name="segment_filter">
                     <SelectStyled
                       suffixIcon={<ArrowDown />}
                       showSearch
@@ -180,8 +186,8 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                 </Col>
               )}
 
-              <Col xs={24} sm={24} md={12} lg={6}>
-                <FormItem name="sector_filter">
+              <Col style={{ marginBottom: 0 }} xs={24} sm={24} md={12} lg={6}>
+                <FormItem style={{ marginBottom: 0 }} name="sector_filter">
                   <SelectStyled
                     suffixIcon={<ArrowDown />}
                     showSearch
@@ -192,9 +198,6 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                       </span>
                     }
                     optionFilterProp="children"
-                    onChange={() => {}}
-                    onFocus={() => {}}
-                    onBlur={() => {}}
                     onSelect={(val: string) => {
                       filterOrganizations(val, "sector");
                     }}

@@ -21,7 +21,7 @@ const About = () => {
 
       <Main>
         <Row gutter={16}>
-          <Col span={12}>
+          <Col xs={24} md={24} lg={12}>
             <p>
               Enterprise Data Map by FATE Foundation is Nigeria’s foremost
               online centralized, keyword-searchable, index data source

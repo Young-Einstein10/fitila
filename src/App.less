@@ -1,41 +1,42 @@
-@import (css) url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap');
-
+@import (css)
+  url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap");
 
 html {
   font-size: 100%;
 }
 
 body {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: 1rem;
 }
 
 .section-list-organization,
 .preview-section,
 .business-uploads {
-
   input.ant-input,
   .ant-form-item-control-input-content textarea.ant-intput,
   .ant-select-selector,
   .ant-input-affix-wrapper {
-    background-color: #F9F9F9;
+    background-color: #f9f9f9;
   }
 
-
   .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    background-color: #F9F9F9;
+    background-color: #f9f9f9;
   }
 }
 
+.table-responsive .ant-table-content {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
 
 .section-landing {
-
   .ant-btn-icon-only.ant-btn-lg {
     height: 3.125rem;
     width: 3.125rem;
   }
 }
-
 
 .font-weight-700 {
   font-weight: 700;
@@ -56,7 +57,6 @@ body {
 section.section-list-organization,
 section.business-uploads,
 section.section-landing {
-
   &.ant-input::placeholder,
   .ant-select-selection-placeholder {
     color: #707070 !important;
@@ -68,8 +68,8 @@ section.section-landing {
 
   &.ant-input,
   #login_password,
-  &.ant-input-affix-wrapper>input.ant-input {
-    background-color: #F9F9F9;
+  &.ant-input-affix-wrapper > input.ant-input {
+    background-color: #f9f9f9;
   }
 }
 

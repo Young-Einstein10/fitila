@@ -1,9 +1,13 @@
 import React, { FunctionComponent } from "react";
-import { Layout, Col, Row, Dropdown } from "antd";
+import { Layout, Col, Row, Dropdown, Button } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../static/svg/logo.svg";
+import burgermenu from "../../static/svg/burgermenu.svg";
+
 import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
 import { ReactComponent as UserIcon } from "../../static/svg/usericon.svg";
+import { ButtonStyled } from "../Styles";
+import { DownOutlined } from "@ant-design/icons";
 import {
   BusinessButton,
   Div,
@@ -12,8 +16,7 @@ import {
   LayoutStyled,
   LinkStyled,
 } from "./styled";
-import { ButtonStyled } from "../Styles";
-import { DownOutlined } from "@ant-design/icons";
+import "./styles.less";
 
 const { Content } = Layout;
 
@@ -52,6 +55,30 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
     </div>
   );
 
+  const toggleMenuContent = (
+    <ul className="toggle-menu-content">
+      <li>
+        <BusinessButton size="large">
+          <NavLink to="/business">List Your Organization</NavLink>
+        </BusinessButton>
+      </li>
+
+      <li>
+        <ButtonStyled size="large">
+          <UserIcon style={{ marginRight: "10px" }} />
+          <LinkStyled to="/signin">Sign In</LinkStyled>
+        </ButtonStyled>
+      </li>
+
+      <li>
+        <ButtonStyled size="large">
+          <UserIcon style={{ marginRight: "10px" }} />
+          <LinkStyled to="#">Sign Up</LinkStyled>
+        </ButtonStyled>
+      </li>
+    </ul>
+  );
+
   return (
     <Div>
       <LayoutStyled className="layout nonAuthLayout">
@@ -65,7 +92,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
               </Link>
             </div>
 
-            <div className="navItem-right">
+            <div id="navItem-right" className="navItem-right">
               <BusinessButton size="large">
                 <NavLink to="/business">List Your Organization</NavLink>
               </BusinessButton>
@@ -79,26 +106,27 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
                   </strong>
                 </ButtonStyled>
               </Dropdown>
-              {/* 
-              <ButtonStyled size="large">
-                <LinkStyled to="/signup">
-                  <span>
-                    <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up
-                  </span>
-                </LinkStyled>
-              </ButtonStyled> */}
+            </div>
+
+            <div className="toggle-menu">
+              <Dropdown
+                overlay={toggleMenuContent}
+                placement="bottomRight"
+                trigger={["click"]}
+                overlayClassName="toggle-menu-container"
+                overlayStyle={{
+                  top: "65px",
+                }}
+              >
+                <Button>
+                  <img src={burgermenu} alt="menu" />
+                </Button>
+              </Dropdown>
             </div>
           </Row>
         </HeaderStyled>
 
-        <Content
-          style={{
-            padding: "0 3.125rem",
-            background: "#fff",
-            minHeight: "calc(100vh - 128px)",
-            marginTop: "4rem",
-          }}
-        >
+        <Content>
           <section>{children}</section>
         </Content>
 

@@ -268,6 +268,10 @@ const SelectStyled = Styled(Select)<{ width?: string }>`
   width: ${({ width }) => (width ? `${width} !important` : "100% !important")};
   font-size: 16px;
 
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+
   & span.ant-select-arrow {
     top: 43%;
     width: 21px;

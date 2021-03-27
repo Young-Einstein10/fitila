@@ -1,10 +1,31 @@
-.layout {
-  font-size: 16px;
+.toggle-menu {
+  display: none;
+}
 
-  .ant-btn {
-    border-color: #E7833B;
-    color: #E7833B;
-    font-size: 16px;
-    font-weight: bold;
+.toggle-menu-container {
+  width: 100%;
+  box-shadow: 0px 2px 8px rgb(53 55 81 / 4%);
+  padding-top: 2rem;
+  top: 68px !important;
+  background: #fff;
+  border-bottom: solid 1px #e6e6e6;
+}
+
+.toggle-menu-content {
+  list-style: none;
+  padding-bottom: 1rem;
+  max-width: 300px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 0;
+}
+
+@media screen and (max-width: 768px) {
+  #navItem-right {
+    display: none;
+  }
+
+  .toggle-menu {
+    display: block;
   }
 }

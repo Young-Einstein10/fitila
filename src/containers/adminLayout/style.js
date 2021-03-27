@@ -13,6 +13,12 @@ const Div = Styled.div`
             padding-left: 0;
             padding-right: 0;        
         }
+
+        @media screen and (max-width: 375px) {
+            .user-info {
+                display: none;                
+            }
+        }
      
 
         .navitem-left {
@@ -35,9 +41,9 @@ const Div = Styled.div`
 
         .ant-btn-link{
             ${({ darkMode }) =>
-              darkMode
-                ? `background: #272B41;border-color: #272B41;color: #7D808D !important`
-                : ""};
+        darkMode
+            ? `background: #272B41;border-color: #272B41;color: #7D808D !important`
+            : ""};
         }
 
         .head-example{
@@ -63,11 +69,11 @@ const Div = Styled.div`
                 &.ant-menu-submenu-open{
                     .ant-menu-submenu-title{
                         color: ${({ darkMode }) =>
-                          darkMode ? `#fff;` : "#5A5F7D"};
+        darkMode ? `#fff;` : "#5A5F7D"};
                         svg,
                         i{
                             color: ${({ darkMode }) =>
-                              darkMode ? `#fff;` : "#5A5F7D"};
+        darkMode ? `#fff;` : "#5A5F7D"};
                         }
                     }
                 }
@@ -75,20 +81,20 @@ const Div = Styled.div`
                     font-size: 14px;
                     font-weight: 500;
                     color: ${({ darkMode }) =>
-                      darkMode ? `#ffffff90;` : "#5A5F7D"};
+        darkMode ? `#ffffff90;` : "#5A5F7D"};
                     svg,
                     i{
                         color: ${({ darkMode }) =>
-                          darkMode ? `#ffffff90;` : "#5A5F7D"};
+        darkMode ? `#ffffff90;` : "#5A5F7D"};
                     }
                     .ant-menu-submenu-arrow{
                         font-family: "FontAwesome";
                         font-style: normal;
                         ${({ theme }) =>
-                          theme.rtl ? "margin-right" : "margin-left"}: 6px;
+        theme.rtl ? "margin-right" : "margin-left"}: 6px;
                         &:after{
                             color: ${({ darkMode }) =>
-                              darkMode ? `#ffffff90;` : "#9299B8"};
+        darkMode ? `#ffffff90;` : "#9299B8"};
                             content: '\f107';
                             background-color: transparent;
                         }
@@ -118,15 +124,14 @@ const Div = Styled.div`
         }
         &.top-menu{
             ${({ theme }) =>
-              theme.rtl ? "margin-right" : "margin-left"}: 15px;
+        theme.rtl ? "margin-right" : "margin-left"}: 15px;
         }
     }
     .certain-category-search-wrapper{
         ${({ darkMode, theme }) =>
-          darkMode
-            ? `${
-                !theme.rtl ? "border-right" : "border-left"
-              }: 1px solid #272B41;`
+        darkMode
+            ? `${!theme.rtl ? "border-right" : "border-left"
+            }: 1px solid #272B41;`
             : ""};
          @media only screen and (max-width: 767px){
             padding: 0 15px;
@@ -137,7 +142,7 @@ const Div = Styled.div`
             ${({ darkMode }) => (darkMode ? `color: #fff;` : "#5A5F7D")};
             @media only screen and (max-width: 875px){
                 ${({ theme }) =>
-                  !theme.rtl ? "padding-left" : "padding-right"}: 5px;
+        !theme.rtl ? "padding-left" : "padding-right"}: 5px;
             }
         }
     }
@@ -145,17 +150,17 @@ const Div = Styled.div`
     .navbar-brand{
         button{
             padding: ${({ theme }) =>
-              theme.rtl ? "0 15px 0 25px" : "0 25px 0 15px"};
+        theme.rtl ? "0 15px 0 25px" : "0 25px 0 15px"};
             line-height: 0;
             margin-top: 4px;
             color: ${({ theme }) => theme["extra-light-color"]};
             @media only screen and (max-width: 875px){
                 padding: ${({ theme }) =>
-                  theme.rtl ? "0 10px 0 25px" : "0 25px 0 10px"};
+        theme.rtl ? "0 10px 0 25px" : "0 25px 0 10px"};
             }
             @media only screen and (max-width: 767px){
                 padding: ${({ theme }) =>
-                  theme.rtl ? "0 0px 0 15px" : "0 15px 0 0px"};
+        theme.rtl ? "0 0px 0 15px" : "0 15px 0 0px"};
             }
         }
     }
@@ -191,7 +196,7 @@ const Div = Styled.div`
             .ant-menu{
                 overflow-x: hidden;
                 ${({ theme }) =>
-                  theme.rtl ? "border-left" : "border-right"}: 0 none;
+        theme.rtl ? "border-left" : "border-right"}: 0 none;
                 .ant-menu-submenu, .ant-menu-item{
                     .feather{
                         width: 16px;
@@ -200,7 +205,7 @@ const Div = Styled.div`
                     }
                     span{
                         ${({ theme }) =>
-                          !theme.rtl ? "padding-left" : "padding-right"}: 20px;
+        !theme.rtl ? "padding-left" : "padding-right"}: 20px;
                         display: inline-block;
                         color: ${({ theme }) => theme["dark-color"]};
                         transition: 0.3s ease;
@@ -226,7 +231,7 @@ const Div = Styled.div`
                         .ant-menu-submenu-arrow{
                             right: auto;
                             ${({ theme }) =>
-                              theme.rtl ? "left" : "right"}: 24px;
+        theme.rtl ? "left" : "right"}: 24px;
                             &:after,
                             &:before{
                                 width: 7px;
@@ -235,15 +240,15 @@ const Div = Styled.div`
                             }
                             &:before{
                                 transform: rotate(45deg) ${({ theme }) =>
-                                  !theme.rtl
-                                    ? "translateY(-3.3px)"
-                                    : "translateY(3.3px)"};
+        !theme.rtl
+            ? "translateY(-3.3px)"
+            : "translateY(3.3px)"};
                             }
                             &:after{
                                 transform: rotate(-45deg) ${({ theme }) =>
-                                  theme.rtl
-                                    ? "translateY(-3.3px)"
-                                    : "translateY(3.3px)"};
+        theme.rtl
+            ? "translateY(-3.3px)"
+            : "translateY(3.3px)"};
                             }
                         }
                     }
@@ -262,13 +267,13 @@ const Div = Styled.div`
                     }
                     .ant-menu-item{
                         ${({ theme }) =>
-                          theme.rtl
-                            ? "padding-right"
-                            : "padding-left"}: 50px !important;
+        theme.rtl
+            ? "padding-right"
+            : "padding-left"}: 50px !important;
                         ${({ theme }) =>
-                          theme.rtl
-                            ? "padding-left"
-                            : "padding-right"}: 0 !important;
+        theme.rtl
+            ? "padding-left"
+            : "padding-right"}: 0 !important;
                         transition: all 0.2s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
                     }
                 }
@@ -293,9 +298,9 @@ const Div = Styled.div`
                         }
                         span{
                             ${({ theme }) =>
-                              !theme.rtl
-                                ? "padding-left"
-                                : "padding-right"}: 20px;
+        !theme.rtl
+            ? "padding-left"
+            : "padding-right"}: 20px;
                             display: inline-block;
                             color: ${({ theme }) => theme["dark-color"]};
                         }
@@ -303,7 +308,7 @@ const Div = Styled.div`
                     &.ant-menu-item-selected{
                         color: ${({ theme }) => theme["secondary-color"]}
                         background-color: ${({ theme }) =>
-                          theme["secondary-hover"]};
+        theme["secondary-hover"]};
 
                         a, a:hover  {
                             color: ${({ theme }) => theme["secondary-color"]}
@@ -336,9 +341,9 @@ const Div = Styled.div`
                     &.ant-menu-submenu-active{
                         border-radius: 4px;
                         ${({ darkMode }) =>
-                          darkMode
-                            ? `background-color: rgba(255, 255, 255, .05);`
-                            : ""};
+        darkMode
+            ? `background-color: rgba(255, 255, 255, .05);`
+            : ""};
                     }
                 }
                 .sidebar-nav-title{
@@ -348,9 +353,9 @@ const Div = Styled.div`
                 &.ant-menu-inline-collapsed{
                     .ant-menu-submenu{
                         text-align: ${({ theme }) =>
-                          !theme.rtl
-                            ? "left"
-                            : "right"};                        
+        !theme.rtl
+            ? "left"
+            : "right"};                        
                         .ant-menu-submenu-title{
                             padding: 0 20px;
                             justify-content: center;
@@ -373,9 +378,9 @@ const Div = Styled.div`
             font-weight: 500;
             text-transform: uppercase;
             ${({ darkMode }) =>
-              darkMode
-                ? `color: rgba(255, 255, 255, .38);`
-                : "color: #9299B8;"};
+        darkMode
+            ? `color: rgba(255, 255, 255, .38);`
+            : "color: #9299B8;"};
             padding: 0 ${({ theme }) => (theme.rtl ? "20px" : "15px")};
             display: flex;
         }
@@ -386,7 +391,7 @@ const Div = Styled.div`
             }
             & + .atbd-main-layout{
                 ${({ theme }) =>
-                  !theme.rtl ? "margin-left" : "margin-right"}: 80px;
+        !theme.rtl ? "margin-left" : "margin-right"}: 80px;
             }
         }
     }
@@ -399,14 +404,14 @@ const Div = Styled.div`
 
     .atbd-main-layout{
     /* ${({ theme }) => (!theme.rtl ? "margin-left" : "margin-right")}: ${({
-  theme,
-}) => (theme.topMenu ? 0 : "220px")}; */
+            theme,
+        }) => (theme.topMenu ? 0 : "220px")}; */
         margin-left: 220px;
         margin-top: 64px;
         transition: 0.3s ease;
         @media only screen and (max-width: 1150px){
             /* ${({ theme }) =>
-              !theme.rtl ? "margin-left" : "margin-right"}: auto !important; */
+        !theme.rtl ? "margin-left" : "margin-right"}: auto !important; */
             margin-left: auto !important;
     }
 
@@ -426,7 +431,7 @@ const Div = Styled.div`
             color: ${({ theme }) => theme["light-color"]};
             &.btn-search{
                 ${({ theme }) =>
-                  theme.rtl ? "margin-left" : "margin-right"}: 18px;
+        theme.rtl ? "margin-left" : "margin-right"}: 18px;
             }
             svg{
                 width: 20px

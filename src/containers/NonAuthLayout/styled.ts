@@ -11,6 +11,21 @@ const LayoutStyled = Styled(Layout)`
     & header.ant-layout-header {
         box-shadow: 0px 2px 8px rgba(53,55,81,0.04);
         padding: 0 40px;
+
+        @media screen and (max-width: 768px) {
+          padding: 0 1rem;
+        }
+    }
+
+    & .ant-layout-content {
+      
+      background: #fff;
+      min-height: calc(100vh - 128px);
+      margin-top: 4rem;
+
+      @media screen and (min-width: 768px) {
+        padding: 0 3.125rem;
+      }
     }
 `;
 
@@ -19,6 +34,7 @@ const HeaderStyled = Styled(Header)`
     width: 100%;
     top: 0;
     left: 0;
+    z-index: 1000;
     background: #fff
 
     .ant-layout-header {
@@ -33,6 +49,8 @@ const HeaderStyled = Styled(Header)`
         display: flex;
         align-items: center;
     }   
+
+    
     
     .ant-breadcrumb {
         margin-left: 5rem;
@@ -43,6 +61,8 @@ const HeaderStyled = Styled(Header)`
     .account-btn {
         margin-top: 0;
     }
+
+   
 `;
 
 const FooterStyled = Styled(Footer)`
@@ -84,6 +104,7 @@ const BusinessButton = Styled(Button)`
   border: ${({ theme }) => `solid 1px ${theme["primary-color"]}`}
   color: ${({ theme }) => theme["primary-color"]}
   margin-right: 2rem;
+  width: 100%;
 `;
 
 const ButtonStyled = Styled(Button)`

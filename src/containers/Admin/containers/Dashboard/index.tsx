@@ -92,7 +92,7 @@ const Dashboard: FC<RouteComponentProps> = () => {
           title="Gain credible insights into Nigeria’s most thriving Organizations"
           buttons={[
             <div key="1" className="page-header-actions">
-              <Button size="large" type="primary">
+              <Button className="btn-main" size="large" type="primary">
                 <NavLink to="/business">List Your Business</NavLink>
               </Button>
             </div>,
