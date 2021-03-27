@@ -6,10 +6,10 @@ import { ReactComponent as SearchIconLeft } from "../../static/svg/SearchIconLef
 import { ReactComponent as SearchIconRight } from "../../static/svg/SearchIconRight.svg";
 
 import { SectionWrapper, SelectStyled } from "../Styles";
-import "./styles.less";
 import { NavLink, RouteComponentProps } from "react-router-dom";
 import Styled from "styled-components";
 import { useEcosystemContext, useOrganizationContext } from "../../context";
+import "./styles.less";
 
 const ButtonStyled = Styled(Button)`
   font-size: 0.875rem;
@@ -73,6 +73,7 @@ const Landing: FC<RouteComponentProps> = ({ history }) => {
             marginTop: "2.5rem",
             display: "flex",
             justifyContent: "center",
+            padding: "0 2rem",
           }}
         >
           <SelectStyled
