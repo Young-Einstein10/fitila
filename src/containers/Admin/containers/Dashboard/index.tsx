@@ -15,6 +15,7 @@ import {
   useEcosystemContext,
   useOrganizationContext,
 } from "../../../../context";
+import Charts from "./_partials/Charts";
 
 const Dashboard: FC<RouteComponentProps> = () => {
   const {
@@ -192,7 +193,7 @@ const Dashboard: FC<RouteComponentProps> = () => {
         </Row>
 
         {/* ========= CHARTS ========== */}
-        {/* <Charts /> */}
+        <Charts />
         {/* ========= CHARTS ========== */}
 
         <Row gutter={15}>

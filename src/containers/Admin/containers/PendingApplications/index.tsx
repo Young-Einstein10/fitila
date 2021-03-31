@@ -3,7 +3,7 @@ import { Modal, Button, Col, Row, Space, Table } from "antd";
 import Axios from "axios";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
-import { useApiContext, useAuthContext } from "../../../../context";
+import { useApiContext } from "../../../../context";
 import { IOrganizationProps } from "../../../../context/Organization/types";
 import { useMountedState } from "../../../../utils/hooks";
 import numberWithCommas from "../../../../utils/numberFormatter";
@@ -22,9 +22,9 @@ const PendingApplications = () => {
     data: [],
   });
   const [isApprovalLoading, setIsApprovalLoading] = useState(false);
+  const [isDeclineLoading, setIsDeclineLoading] = useState(false);
 
   const { organization: api } = useApiContext();
-  const { auth } = useAuthContext();
 
   const isMounted = useMountedState();
 
@@ -115,19 +115,16 @@ const PendingApplications = () => {
       title: "Rank",
       dataIndex: "rank",
       key: "rank",
-      // responsive: ["xs"],
     },
     {
       title: "Company",
       dataIndex: "company",
       key: "company",
-      // responsive: ["xs"],
     },
     {
       title: "Ceo/Founder",
       dataIndex: "ceo_name",
       key: "ceo_name",
-      // responsive: ["xs"],
 
       render: (record, text) => (
         <Space size="middle" style={{ display: "flex", alignItems: "center" }}>
@@ -161,26 +158,22 @@ const PendingApplications = () => {
       title: "State",
       dataIndex: "state",
       key: "state",
-      // responsive: ["xs"],
     },
     {
       title: "Sectors",
       dataIndex: "sectors",
       key: "sectors",
-      // responsive: ["xs"],
     },
 
     {
       title: "Employees",
       dataIndex: "employees",
       key: "employees",
-      // responsive: ["xs"],
     },
     {
       title: "Funding (₦)",
       dataIndex: "funding",
       key: "funding",
-      // responsive: ["xs"],
 
       render: (record, key) => {
         // console.log(key);
@@ -195,14 +188,20 @@ const PendingApplications = () => {
       title: "Actions",
       key: "action",
       align: "center",
-      // responsive: ["xs"],
 
       render: (record, key) => {
         return (
           <Space size="middle">
             <Button
+              onClick={() => handleDecline(record.id)}
+              loading={isDeclineLoading}
+              danger
+            >
+              Decline
+            </Button>
+            <Button
               type="primary"
-              onClick={() => handleApproval(record.id, record)}
+              onClick={() => handleApproval(record.id)}
               loading={isApprovalLoading}
             >
               Approve
@@ -213,37 +212,41 @@ const PendingApplications = () => {
     },
   ];
 
-  const handleApproval = async (id: number, record: IOrganizationProps) => {
-    setIsApprovalLoading(true);
-
-    delete record.ceo_image;
-    delete record.company_logo;
-    delete record.ecosystem;
-    delete record.sub_ecosystem;
-    delete record.ceo_name;
+  const handleDecline = async (id: number) => {
+    setIsDeclineLoading(true);
 
     try {
-      const data: IOrganizationProps = {
-        ...record,
-        user: auth.user.id,
-        is_approve: true,
-      };
+      const res = await api.declineOrganization(id);
 
-      const formData = new FormData();
+      console.log(res.data);
 
-      for (const key in data) {
-        formData.append(key, data[key]);
+      if (res.status === 200) {
+        Modal.success({
+          title: "Organization has been declined.",
+        });
+        refetchPendingApplications();
       }
 
-      const res = await api.editOrganization(id, formData);
+      setIsDeclineLoading(false);
+    } catch (error) {
+      console.log(error.message);
+      setIsDeclineLoading(false);
+    }
+  };
+
+  const handleApproval = async (id: number) => {
+    setIsApprovalLoading(true);
+
+    try {
+      const res = await api.approveOrganization(id);
 
       console.log(res.data);
 
       setIsApprovalLoading(false);
 
-      if (res.status === 201) {
+      if (res.status === 200) {
         Modal.success({
-          title: "Organization has been approved successfully.",
+          title: "Organization has been approved.",
         });
         refetchPendingApplications();
       }
@@ -252,6 +255,21 @@ const PendingApplications = () => {
       setIsApprovalLoading(false);
     }
   };
+
+  const dataSource = organizations.data.map((org, key) => {
+    return {
+      ...org,
+      key: org.id,
+      rank: key + 1,
+      company: org.name,
+      ceo_name: { name: org.ceo_name, avatar: org.ceo_image_url },
+      state: org.state,
+      sectors: org.sector_name || org.sector,
+      employees: org.num_of_employees,
+      funding: org.funding,
+      id: org.id,
+    };
+  });
 
   return (
     <AdminSectionWrapper>
@@ -268,20 +286,7 @@ const PendingApplications = () => {
             <Cards headless>
               <Table
                 className="table-responsive"
-                dataSource={organizations.data.map((org, key) => {
-                  return {
-                    ...org,
-                    key: org.id,
-                    rank: key + 1,
-                    company: org.name,
-                    ceo_name: { name: org.ceo_name, avatar: org.ceo_image_url },
-                    state: org.state,
-                    sectors: org.sector_name || org.sector,
-                    employees: org.num_of_employees,
-                    funding: org.funding,
-                    id: org.id,
-                  };
-                })}
+                dataSource={dataSource}
                 columns={columns}
                 loading={organizations.isLoading}
               />

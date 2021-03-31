@@ -15,6 +15,10 @@ import {
   useOrganizationContext,
   useSectorContext,
 } from "../../../../context";
+import {
+  ISubEcosystem,
+  // ISubclassProps,
+} from "../../../../context/Ecosystem/types";
 
 const { Option } = Select;
 const { Step } = StepsStyled;
@@ -49,10 +53,10 @@ land and building) of 100million to 1billion naira`,
 ];
 
 const ListOrganization = ({ history }) => {
-  const [subSegment, setSubSegment] = useState([]);
+  const [subSegment, setSubSegment] = useState<ISubEcosystem[]>([]);
   const [num_supported_business, setNum_supported_business] = useState();
+  // const [subEcosystemSubClass, setSubEcosystemSubClass] = useState<ISubclassProps[]>([]);
   const [is_startUp, setIs_Startup] = useState(false);
-  // const [subEcosystemSubClass, setSubEcosystemSubClass] = useState("");
 
   const { data: ecosystem } = useEcosystemContext();
   const { states } = useOrganizationContext();
@@ -72,7 +76,17 @@ const ListOrganization = ({ history }) => {
     getEcosystem();
   }, [state]);
 
-  // const handleSubEcosystemChange = value => setSubEcosystemSubClass(value);
+  const handleSubEcosystemChange = value => {
+    const selectedSubEcosystem = subSegment.filter(
+      subSegment => subSegment.name === value
+    );
+
+    console.log({ selectedSubEcosystem });
+
+    // if (selectedSubEcosystem.length > 0) {
+    //   setSubEcosystemSubClass(selectedSubEcosystem[0].sub_class);
+    // }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -191,12 +205,29 @@ const ListOrganization = ({ history }) => {
                   name="ceo_name"
                   rules={[
                     {
-                      message: "Please input your ceo/founder's name",
+                      message: "Please input your CEO/DG/founder's name",
                       required: true,
                     },
                   ]}
                 >
-                  <InputStyled placeholder="CEO/Founder's Name" />
+                  <InputStyled placeholder="CEO/DG/Founder's Name" />
+                </Form.Item>
+                {/* CEO/FOUNDER's ANME */}
+
+                {/* CEO/FOUNDER"S NAME */}
+                <Form.Item
+                  name="ceo_gender"
+                  rules={[
+                    {
+                      message: "Please select CEO/DG/Founder's gender",
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Select placeholder="Gender">
+                    <Option value="male">Male</Option>
+                    <Option value="female">Female</Option>
+                  </Select>
                 </Form.Item>
                 {/* CEO/FOUNDER's ANME */}
 
@@ -292,7 +323,8 @@ const ListOrganization = ({ history }) => {
                 {/* ECOSYTEM SEGMENT */}
 
                 {/* SUB-ECOSYTEM SEGMENT */}
-                {state.business_type === "Ecosystem Enabler" && (
+                {state.business_type === "Ecosystem Enabler" &&
+                subSegment.length > 0 ? (
                   <Form.Item
                     name="sub_ecosystem"
                     rules={[
@@ -303,7 +335,7 @@ const ListOrganization = ({ history }) => {
                     ]}
                   >
                     <Select
-                      // onChange={e => handleSubEcosystemChange(e)}
+                      onChange={e => handleSubEcosystemChange(e)}
                       placeholder="Sub-Segment"
                       allowClear
                     >
@@ -314,35 +346,32 @@ const ListOrganization = ({ history }) => {
                       ))}
                     </Select>
                   </Form.Item>
-                )}
+                ) : null}
                 {/* SUB-ECOSYTEM SEGMENT */}
 
                 {/* SUB-CLASS */}
-                {/* {
-                
-                state.business_type === "Ecosystem Enabler" &&
-                  subEcosystemSubClass === "Business Advisory" && (
-                    <Form.Item
-                      name="sub_ecosystem_sub_class"
-                      rules={[
-                        {
-                          message: "Please select a sub-segment class!",
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <Select placeholder="Sub-Class" allowClear>                       
-
-                        {ecosystemDropdown.business_advisory.map(
-                          (subclass, key) => (
-                            <Option key={key} value={subclass}>
-                              {subclass}
-                            </Option>
-                          )
-                        )}
-                      </Select>
-                    </Form.Item>
-                  )} */}
+                {/* {state.business_type === "Ecosystem Enabler" &&
+                // subEcosystemSubClass === "Business Advisory" &&
+                subEcosystemSubClass.length > 0 ? (
+                  <Form.Item
+                    name="sub_ecosystem_sub_class"
+                    rules={[
+                      {
+                        message: "Please select a sub-segment class!",
+                        required: true,
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Sub-Class" allowClear>
+              
+                      {subEcosystemSubClass.map((subClass, key) => (
+                          <Option key={key} value={subClass.name}>
+                            {subClass.name}
+                          </Option>
+                        ))}
+                    </Select>
+                  </Form.Item>
+                ) : null} */}
                 {/* SUB-CLASS */}
 
                 {/* BUSINESS SECTOR */}

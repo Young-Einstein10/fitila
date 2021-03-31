@@ -46,78 +46,78 @@ const EcosystemProvider: FC = ({ children }) => {
           //   };
           // });
 
-          const formattedData: IEcosystemProps[] = data
-            .filter(ecosystem => {
-              const res = ecosystem.sub_ecosystem.filter(
-                subEco =>
-                  subEco.name.toLowerCase() !== "Churches/Mosques".toLowerCase()
-              );
-              return {
-                ...ecosystem,
-                sub_ecosystem: res,
-              };
-            })
-            .filter(
-              ecosystem =>
-                ecosystem.name.toLowerCase() !== "Resources".toLowerCase()
-            )
-            .filter(
-              ecosystem =>
-                ecosystem.name.toLowerCase() !== "Research".toLowerCase()
-            )
-            .map(ecosystem => {
-              let sub_eco = ecosystem.sub_ecosystem.map(subeco => {
-                if (subeco.name === "Business Advisory") {
-                  subeco.sub_class = [
-                    {
-                      id: 1,
-                      name: "Mentoring",
-                      organizations: subeco.organizations,
-                    },
-                    {
-                      id: 2,
-                      name: "Legal",
-                      organizations: subeco.organizations,
-                    },
-                    {
-                      id: 3,
-                      name: "Tax",
-                      organizations: subeco.organizations,
-                    },
-                    {
-                      id: 4,
-                      name: "HR",
-                      organizations: subeco.organizations,
-                    },
-                    {
-                      id: 5,
-                      name: "Book-Keeping",
-                      organizations: subeco.organizations,
-                    },
-                  ];
-                } else {
-                  subeco.sub_class = [];
-                }
+          // const formattedData: IEcosystemProps[] = data
+          //   .filter(ecosystem => {
+          //     const res = ecosystem.sub_ecosystem.filter(
+          //       subEco =>
+          //         subEco.name.toLowerCase() !== "Churches/Mosques".toLowerCase()
+          //     );
+          //     return {
+          //       ...ecosystem,
+          //       sub_ecosystem: res,
+          //     };
+          //   })
+          //   .filter(
+          //     ecosystem =>
+          //       ecosystem.name.toLowerCase() !== "Resources".toLowerCase()
+          //   )
+          //   .filter(
+          //     ecosystem =>
+          //       ecosystem.name.toLowerCase() !== "Research".toLowerCase()
+          //   )
+          //   .map(ecosystem => {
+          //     let sub_eco = ecosystem.sub_ecosystem.map(subeco => {
+          //       if (subeco.name === "Business Advisory") {
+          //         subeco.sub_class = [
+          //           {
+          //             id: 1,
+          //             name: "Mentoring",
+          //             organizations: subeco.organizations,
+          //           },
+          //           {
+          //             id: 2,
+          //             name: "Legal",
+          //             organizations: subeco.organizations,
+          //           },
+          //           {
+          //             id: 3,
+          //             name: "Tax",
+          //             organizations: subeco.organizations,
+          //           },
+          //           {
+          //             id: 4,
+          //             name: "HR",
+          //             organizations: subeco.organizations,
+          //           },
+          //           {
+          //             id: 5,
+          //             name: "Book-Keeping",
+          //             organizations: subeco.organizations,
+          //           },
+          //         ];
+          //       } else {
+          //         subeco.sub_class = [];
+          //       }
 
-                return {
-                  ...subeco,
-                };
-              });
+          //       return {
+          //         ...subeco,
+          //       };
+          //     });
 
-              return {
-                ...ecosystem,
-                name:
-                  ecosystem.name === "Businesses"
-                    ? "MSMEs & Startups"
-                    : ecosystem.name,
-                sub_ecosystem: sub_eco,
-              };
-            });
+          //     return {
+          //       ...ecosystem,
+          //       name:
+          //         ecosystem.name === "Businesses"
+          //           ? "MSMEs & Startups"
+          //           : ecosystem.name,
+          //       sub_ecosystem: sub_eco,
+          //     };
+          //   });
 
           setEcosystem(prevEcosystems => ({
             ...prevEcosystems,
             isLoading: false,
-            data: formattedData,
+            data,
           }));
         }
       } catch (error) {

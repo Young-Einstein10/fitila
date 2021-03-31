@@ -39,6 +39,14 @@ export default class Organization {
     });
   }
 
+  approveOrganization(id) {
+    return this.client.get(`/organizations/approve/${id}`);
+  }
+
+  declineOrganization(id) {
+    return this.client.get(`/organizations/decline/${id}`);
+  }
+
   deleteOrganization(id) {
     return this.client.delete(`/organizations/${id}`);
   }

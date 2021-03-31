@@ -30,4 +30,4 @@ interface IEcosystemStateProps {
   refetchEcosystems: () => void;
 }
 
-export type { IEcosystemProps, IEcosystemStateProps }
+export type { IEcosystemProps, ISubEcosystem, ISubclassProps, IEcosystemStateProps }
