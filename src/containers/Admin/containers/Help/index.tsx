@@ -80,7 +80,6 @@ const Help = () => {
                     className="styled-collapse"
                     accordion
                     bordered={false}
-                    defaultActiveKey={["11"]}
                     expandIconPosition="right"
                     expandIcon={() => <PlusIcon />}
                   >
@@ -114,9 +113,8 @@ const Help = () => {
                   <div>
                     <div>
                       <Heading
-                        className="text-center font-weight-700"
+                        className="message-header text-center font-weight-700"
                         as="h3"
-                        style={{ fontSize: "36px", marginBottom: "2.5rem" }}
                       >
                         Send Us A Message
                       </Heading>
