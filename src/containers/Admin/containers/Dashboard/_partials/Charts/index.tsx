@@ -1,7 +1,9 @@
-import React from "react";
-import { Row, Col } from "antd";
+import React, { Suspense, lazy } from "react";
+import { Row, Col, Skeleton } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { TableOptions } from "../../../helpers";
+
+const DoughnutChart = lazy(() => import("./_partials/DoughnutChart"));
 
 const Charts = () => {
   return (
@@ -25,12 +27,17 @@ const Charts = () => {
       </Col>
 
       <Col xs={24} sm={24} md={12} lg={8}>
-        <Cards title="Funding by Sector" size="large" more={TableOptions}>
-          <div
-            className="states-lga"
-            style={{ background: "#B1E2CB", height: "330px" }}
-          ></div>
-        </Cards>
+        <Suspense
+          fallback={
+            <Cards headless>
+              <Skeleton active />
+            </Cards>
+          }
+        >
+          <Cards title="Funding by Sector" size="large" more={TableOptions}>
+            <DoughnutChart />
+          </Cards>
+        </Suspense>
       </Col>
     </Row>
   );
