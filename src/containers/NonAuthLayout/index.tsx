@@ -66,14 +66,14 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
       <li>
         <ButtonStyled size="large">
           <UserIcon style={{ marginRight: "10px" }} />
-          <LinkStyled to="/signin">Sign In</LinkStyled>
+          <NavLink to="/signin">Sign In</NavLink>
         </ButtonStyled>
       </li>
 
       <li>
         <ButtonStyled size="large">
           <UserIcon style={{ marginRight: "10px" }} />
-          <LinkStyled to="#">Sign Up</LinkStyled>
+          <NavLink to="#">Sign Up</NavLink>
         </ButtonStyled>
       </li>
     </ul>
@@ -116,6 +116,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
                 overlayClassName="toggle-menu-container"
                 overlayStyle={{
                   top: "65px",
+                  boxShadow: "0px 2px 8px rgb(53 55 81 / 4%)",
                 }}
               >
                 <Button>

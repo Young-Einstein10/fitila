@@ -68,35 +68,48 @@ const HeaderStyled = Styled(Header)`
 const FooterStyled = Styled(Footer)`
 
   &.ant-layout-footer {
-    height: 64px;
+    min-height: 64px;
     background: #F2F2F2;
     color: #5F6368;
-
+    font-size: 16px;
   }
  
           span.admin-footer__copyright{
-              display: inline-block;
-              width: 100%;
-              color: ${({ theme }) => theme["light-color"]};
-              @media only screen and (max-width: 767px){
-                  text-align: center;
-                  margin-bottom: 10px;
-              }
-          }
+            display: inline-block;
+            width: 100%;
+            color: ${({ theme }) => theme["light-color"]};
+            @media only screen and (max-width: 767px){
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+        }
           div.admin-footer__links{
-              text-align: right;
-              @media only screen and (max-width: 767px){
-                  text-align: center;
-              }
-              a{
-                  color: ${({ theme }) => theme["light-color"]};
-                  margin-left: 15px;
-                  
-                  &:hover{
-                      color: ${({ theme }) => theme["primary-color"]};
+            text-align: right;
+            
+            @media only screen and (max-width: 767px){
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            a{
+                color: ${({ theme }) => theme["light-color"]};
+
+                &:not(:last-child){
+                  margin-right: 15px;                      
+                }
+
+                @media only screen and (max-width: 767px){
+                  &:not(:last-child), &:last-child {
+                      margin: 0.6rem 0
                   }
-              }
-          }
+                }
+
+                &:hover{
+                    color: ${({ theme }) => theme["primary-color"]};
+                }
+
+            }
+        }
       
 `;
 
@@ -109,13 +122,13 @@ const BusinessButton = Styled(Button)`
 
 const ButtonStyled = Styled(Button)`
   background: #F7F9FA
-  color: #000000;
+   color: ${({ theme }) => theme["primary-color"]}
   font-weight: 700;
   border: 0;
 
   &:hover, &:active {
    background: #F7F9FA
-  color: #000000;
+   color: ${({ theme }) => theme["primary-color"]}
   font-weight: 700;
   border: 0;
   }
@@ -123,7 +136,7 @@ const ButtonStyled = Styled(Button)`
 
 const LinkStyled = Styled(Link)`
   background: #F7F9FA; 
-
+   color: ${({ theme }) => theme["primary-color"]}
   
   &:first-child {
     margin-bottom: 0.625rem
@@ -136,7 +149,7 @@ const LinkStyled = Styled(Link)`
   span {
     display: flex;
     align-items: center;
-    color: #000
+     color: ${({ theme }) => theme["primary-color"]}
     font-weight: bold;
     font-size: 1rem
   }

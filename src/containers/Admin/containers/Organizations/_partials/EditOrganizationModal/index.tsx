@@ -8,7 +8,7 @@ import {
   useSectorContext,
 } from "../../../../../../context";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
-import { UploadButtonStyled } from "../../../../../Business/_partials/Uploads/styled";
+import { UploadButtonStyled } from "../../../../../Business/_partials/ListOrganization/_partials/Uploads/styled";
 import { ReactComponent as UploadIcon } from "../../../../../../static/svg/upload.svg";
 
 const FormItem = Form.Item;
