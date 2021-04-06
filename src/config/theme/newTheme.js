@@ -1,7 +1,7 @@
-const primaryColor = "#1D429C"; // blue
-const primaryHover = "#f7f7f7";
-const secondaryColor = "#BF1E2E"; // orange #BF1E2E;
-const secondaryHover = "#FFECDD"; // #FFECDD
+const primaryColor = "#E7833B"; // orange #BF1E2E
+const primaryHover = "#E7833B"; // #FFECDD
+const secondaryColor = "#1D429C"; // blue
+const secondaryHover = "#f7f7f7";
 const linkColor = "#FF6D00";
 const linkHover = "#FF6D00";
 const headingColor = "rgba(0, 0, 0, 0.85)";

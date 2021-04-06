@@ -286,7 +286,7 @@ const Div = Styled.div`
                         border-radius: 4px;
                         
                         a {
-                            color: ${({ theme }) => theme["primary-color"]};
+                            color: ${({ theme }) => theme["seconadry-color"]};
 
                         }
                     }
@@ -307,25 +307,25 @@ const Div = Styled.div`
                         }
                     }
                     &.ant-menu-item-selected{
-                        color: ${({ theme }) => theme["primary-color"]}
+                        color: ${({ theme }) => theme["secondary-color"]}
                         background-color: ${({ theme }) =>
-                          theme["primary-hover"]};
+                          theme["secondary-hover"]};
 
                         a, a:hover  {
-                            color: ${({ theme }) => theme["primary-color"]}
+                            color: ${({ theme }) => theme["secondary-color"]}
                             font-weight: bold;
                         }
 
                         svg,
                         i{
-                            color: ${({ theme }) => theme["primary-color"]};
+                            color: ${({ theme }) => theme["secondary-color"]};
                         }
                     }
                 }
 
                 .ant-menu-item-active {
                     a {
-                        color: ${({ theme }) => theme["primary-color"]}
+                        color: ${({ theme }) => theme["secondary-color"]}
                     }
                 }
 

@@ -14,8 +14,8 @@ import "./styles.less";
 const ButtonStyled = Styled(Button)`
   font-size: 0.875rem;
   font-weight: bold;
-  color: ${({ theme }) => theme["primary-color"]};
-  background: ${({ theme }) => theme["primary-hover"]};
+  color: ${({ theme }) => theme["secondary-color"]};
+  background: ${({ theme }) => theme["secondary-hover"]};
   margin-left: 0.9375rem;
   margin-top: 0.625rem;
   box-shadow: none;
@@ -23,8 +23,8 @@ const ButtonStyled = Styled(Button)`
   border: 0;
 
   &:hover {
-    background: ${({ theme }) => theme["primary-hover"]};
-    color: ${({ theme }) => theme["primary-color"]};
+    background: ${({ theme }) => theme["secondary-hover"]};
+    color: ${({ theme }) => theme["secondary-color"]};
   }
 `;
 
