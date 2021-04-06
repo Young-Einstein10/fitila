@@ -2,7 +2,12 @@ import Styled from "styled-components";
 
 const ChartContainer = Styled.div`
     display: block;
-    font-family: "Raleway";
+
+
+    canvas {
+      height: 320px;
+    }
+
     .chart-divider {
         display: block;
         width: 100%;

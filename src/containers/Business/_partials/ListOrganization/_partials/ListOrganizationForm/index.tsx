@@ -48,9 +48,18 @@ land and building) of 100million to 1billion naira`,
   },
 ];
 
+const business_subclass = [
+  "Tax",
+  "Book-Keeping",
+  "Human Resources",
+  "Legal",
+  "Mentoring",
+];
+
 const ListOrganizationForm = ({ next }) => {
   const [subSegment, setSubSegment] = useState<ISubEcosystem[]>([]);
   const [num_supported_business, setNum_supported_business] = useState();
+  const [selectedSubEcosystem, setSelectedSubEcosystem] = useState(null);
   // const [subEcosystemSubClass, setSubEcosystemSubClass] = useState<ISubclassProps[]>([]);
   const [is_startUp, setIs_Startup] = useState(false);
 
@@ -78,6 +87,8 @@ const ListOrganizationForm = ({ next }) => {
     );
 
     console.log({ selectedSubEcosystem });
+
+    setSelectedSubEcosystem(selectedSubEcosystem[0]);
 
     // if (selectedSubEcosystem.length > 0) {
     //   setSubEcosystemSubClass(selectedSubEcosystem[0].sub_class);
@@ -320,28 +331,46 @@ const ListOrganizationForm = ({ next }) => {
       {/* SUB-ECOSYTEM SEGMENT */}
 
       {/* SUB-CLASS */}
-      {/* {state.business_type === "Ecosystem Enabler" &&
-                // subEcosystemSubClass === "Business Advisory" &&
-                subEcosystemSubClass.length > 0 ? (
-                  <Form.Item
-                    name="sub_ecosystem_sub_class"
-                    rules={[
-                      {
-                        message: "Please select a sub-segment class!",
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <Select placeholder="Sub-Class" allowClear>
-              
-                      {subEcosystemSubClass.map((subClass, key) => (
-                          <Option key={key} value={subClass.name}>
-                            {subClass.name}
-                          </Option>
-                        ))}
-                    </Select>
-                  </Form.Item>
-                ) : null} */}
+      {state.business_type === "Ecosystem Enabler" &&
+      selectedSubEcosystem &&
+      selectedSubEcosystem.name === "Business Advisory" ? (
+        <Form.Item
+          name="sub_ecosystem_sub_class"
+          rules={[
+            {
+              message: "Please select a sub-segment class!",
+              required: true,
+            },
+          ]}
+        >
+          <Select placeholder="Sub-Class" allowClear>
+            {business_subclass.map((subClass, key) => (
+              <Option key={key} value={subClass}>
+                {subClass}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+      ) : null}
+
+      {state.business_type === "Ecosystem Enabler" &&
+      selectedSubEcosystem &&
+      selectedSubEcosystem.name === "Equity Funders" ? (
+        <Form.Item
+          name="sub_ecosystem_sub_class"
+          rules={[
+            {
+              message: "Please select a sub-segment class!",
+              required: true,
+            },
+          ]}
+        >
+          <Select placeholder="Sub-Class" allowClear>
+            <Option value="Angel Investors">Angel Investors</Option>
+            <Option value="Venture Capitalist">Venture Capitalist</Option>
+          </Select>
+        </Form.Item>
+      ) : null}
       {/* SUB-CLASS */}
 
       {/* BUSINESS SECTOR */}

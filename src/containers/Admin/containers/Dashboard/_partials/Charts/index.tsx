@@ -2,11 +2,21 @@ import React, { Suspense, lazy } from "react";
 import { Row, Col, Skeleton } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { TableOptions } from "../../../helpers";
+import { useOrganizationContext } from "../../../../../../context";
 
 const DoughnutChart = lazy(() => import("./_partials/DoughnutChart"));
 const BarChart = lazy(() => import("./_partials/BarChart"));
 
 const Charts = () => {
+  const { data: organizationData } = useOrganizationContext();
+
+  const maleFounders = organizationData.filter(
+    organization => organization.ceo_gender.toLowerCase() === "male"
+  );
+  const femaleFounders = organizationData.filter(
+    organization => organization.ceo_gender.toLowerCase() === "female"
+  );
+
   const chartOptions = {
     legend: {
       display: false,
@@ -65,7 +75,7 @@ const Charts = () => {
               labels={["Male", "Female"]}
               datasets={[
                 {
-                  data: [20, 60],
+                  data: [maleFounders.length, femaleFounders.length],
                   backgroundColor: "#EFEFFE",
                   hoverBackgroundColor: "#5F63F2",
                   label: "Founders",

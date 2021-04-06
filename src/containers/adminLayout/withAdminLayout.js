@@ -101,12 +101,12 @@ const ThemeLayout = WrappedComponent => {
                 : breadcrumbNameMap()[url]}
             </span>
           ) : (
-                  <Link to={url}>
-                    {filteredUrl.length >= 3
-                      ? breadcrumbNameMap(filteredUrl[2], "")[url]
-                      : breadcrumbNameMap()[url]}
-                  </Link>
-                )}
+            <Link to={url}>
+              {filteredUrl.length >= 3
+                ? breadcrumbNameMap(filteredUrl[2], "")[url]
+                : breadcrumbNameMap()[url]}
+            </Link>
+          )}
         </BreadcrumbItem>
       );
     });
@@ -177,6 +177,8 @@ const ThemeLayout = WrappedComponent => {
       return <div style={{ ...style, ...thumbStyle }} props={props} />;
     };
 
+    const YEAR = new Date().getFullYear();
+
     return (
       <Div>
         <Layout className="layout">
@@ -218,15 +220,14 @@ const ThemeLayout = WrappedComponent => {
                 </Breadcrumb>
               </div>
 
-              {(auth.isAuthenticated) ? (
+              {auth.isAuthenticated ? (
                 <CurrentUserButton className="user-info" size="large">
                   <span></span>
                   {auth.user.first_name} {auth.user.last_name}
                 </CurrentUserButton>
-
               ) : (
-                  <span></span>
-                )}
+                <span></span>
+              )}
             </Row>
           </Header>
 
@@ -279,7 +280,7 @@ const ThemeLayout = WrappedComponent => {
                   <Row>
                     <Col md={8} xs={24}>
                       <span className="admin-footer__copyright">
-                        2020 ©, Copyright, Enterprise Data Map
+                        {YEAR} © Copyright. Enterprise Data Map
                       </span>
                     </Col>
                     <Col md={16} xs={24}>

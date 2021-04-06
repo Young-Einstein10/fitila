@@ -101,7 +101,7 @@ const BarChart = props => {
     <ChartContainer className="parentContainer">
       <Bar
         data={data}
-        height={window.innerWidth <= 575 ? 230 : height}
+        height={window.innerWidth <= 575 ? 200 : height}
         options={{
           ...options,
           ...layout,
@@ -135,7 +135,7 @@ const BarChart = props => {
 };
 
 BarChart.defaultProps = {
-  height: 176,
+  height: 200,
   labels: [
     "Jan",
     "Feb",
@@ -152,12 +152,12 @@ BarChart.defaultProps = {
   ],
   datasets: [
     {
-      data: [20, 60, ],
+      data: [20, 60],
       backgroundColor: "rgba(0,23,55, .5)",
       label: "Profit",
     },
     {
-      data: [10, 40,],
+      data: [10, 40],
       backgroundColor: "rgba(28,225,172, .5)",
       label: "Lose",
     },
@@ -169,7 +169,7 @@ BarChart.defaultProps = {
     legend: {
       display: true,
       position: "bottom",
-      align: "start",
+      align: "center",
       labels: {
         boxWidth: 6,
         display: true,

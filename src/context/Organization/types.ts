@@ -13,6 +13,7 @@ interface IOrganizationProps {
   ecosystem_name?: string;
   sub_ecosystem_name?: string;
   user?: any;
+  ceo_gender?: string;
   address?: string;
   ecosystem?: number;
   sub_ecosystem?: number;
