@@ -61,6 +61,10 @@ const ColStyled = Styled(Col)`
 
 const MainColStyled = Styled(Col)`
   max-width: 400px;
+
+  @media screen and (max-width: 576px) {
+    width: 100%
+  }
 `;
 
 const SpanFooter = Styled.span`

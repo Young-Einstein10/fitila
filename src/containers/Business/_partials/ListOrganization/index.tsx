@@ -62,7 +62,7 @@ const ListOrganization = () => {
                 </Heading>
 
                 <StepsStyled
-                  labelPlacement="vertical"
+                  // labelPlacement="vertical"
                   current={current}
                   progressDot={customDot}
                 >
