@@ -79,6 +79,8 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
     </ul>
   );
 
+  const YEAR = new Date().getFullYear();
+
   return (
     <Div>
       <LayoutStyled className="layout nonAuthLayout">
@@ -135,7 +137,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
           <Row>
             <Col md={12} xs={24}>
               <span className="admin-footer__copyright">
-                2020 ©, Copyright, Enterprise Data Map
+                {YEAR} © Copyright. Enterprise Data Map
               </span>
             </Col>
 

@@ -1,12 +1,12 @@
-import { override, addLessLoader, fixBabelImports } from 'customize-cra';
-import hotLoader from 'react-app-rewire-hot-loader';
-import { theme } from './src/config/theme/themeVariables';
+import { override, addLessLoader, fixBabelImports } from "customize-cra";
+import hotLoader from "react-app-rewire-hot-loader";
+import { theme } from "./src/config/theme/newTheme";
 
 const supportMjs = () => webpackConfig => {
   webpackConfig.module.rules.push({
     test: /\.mjs$/,
     include: /node_modules/,
-    loader: 'css-loader',
+    loader: "css-loader",
     options: {
       modules: true, // must add this
     },
@@ -22,9 +22,9 @@ module.exports = override(
       ...theme,
     },
   }),
-  fixBabelImports('import', {
-    libraryName: 'antd',
-    libraryDirectory: 'es',
+  fixBabelImports("import", {
+    libraryName: "antd",
+    libraryDirectory: "es",
     style: true,
     modules: true,
 
@@ -32,10 +32,10 @@ module.exports = override(
       modules: true, // must add this
     },
     test: /\.css$/,
-    loaders: ['style-loader', 'css-loader?modules'],
+    loaders: ["style-loader", "css-loader?modules"],
   }),
   supportMjs(),
   (config, env) => {
     return hotLoader(config, env);
-  },
+  }
 );

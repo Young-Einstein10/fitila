@@ -14,8 +14,8 @@ import "./styles.less";
 const ButtonStyled = Styled(Button)`
   font-size: 0.875rem;
   font-weight: bold;
-  color: #BF1E2E;
-  background:#FFECDD;
+  color: ${({ theme }) => theme["primary-color"]};
+  background: ${({ theme }) => theme["primary-hover"]};
   margin-left: 0.9375rem;
   margin-top: 0.625rem;
   box-shadow: none;
@@ -23,8 +23,8 @@ const ButtonStyled = Styled(Button)`
   border: 0;
 
   &:hover {
-    background: #FFECDD;
-    color: #BF1E2E;
+    background: ${({ theme }) => theme["primary-hover"]};
+    color: ${({ theme }) => theme["primary-color"]};
   }
 `;
 
@@ -119,7 +119,7 @@ const Landing: FC<RouteComponentProps> = ({ history }) => {
           paddingBottom: "6rem",
         }}
       >
-        <p style={{ fontSize: "1rem", color: "#1D429C" }}>
+        <p style={{ fontSize: "1rem", color: "#BF1E2E" }}>
           Explore ecosystem players by segment
         </p>
 

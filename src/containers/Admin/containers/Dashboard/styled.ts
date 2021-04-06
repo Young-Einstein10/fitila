@@ -23,6 +23,11 @@ const CardSegmentStyled = Styled(Card)`
 const ViewProfileBtnStyled = Styled(Button)`
   color: #FF6D00
   border: 1px solid #FF6D00
+
+  &:hover {
+    color: #FF6D00
+    border: 1px solid #FF6D00
+  }
 `;
 
 const TableHeaderButtonStyled = Styled(Button)`

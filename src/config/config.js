@@ -1,11 +1,10 @@
-import { theme, darkTheme } from './theme/themeVariables';
+import { theme } from "./theme/newTheme";
 
 const config = {
   darkMode: false,
   topMenu: false,
   rtl: false,
   theme,
-  darkTheme,
 };
 
 export default config;
