@@ -271,6 +271,12 @@ const PendingApplications = () => {
     };
   });
 
+  const cardHeader = (
+    <div>
+      <span>Pending Applications</span>
+    </div>
+  );
+
   return (
     <AdminSectionWrapper>
       <PageHeader
@@ -283,7 +289,7 @@ const PendingApplications = () => {
       <Main>
         <Row>
           <Col span={24}>
-            <Cards headless>
+            <Cards title={cardHeader}>
               <Table
                 className="table-responsive"
                 dataSource={dataSource}

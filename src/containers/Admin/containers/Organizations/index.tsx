@@ -5,7 +5,7 @@ import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
-import { createDataSource, createTableColumns, TableOptions } from "../helpers";
+import { createDataSource, createTableColumns } from "../helpers";
 import {
   useApiContext,
   useAuthContext,
@@ -190,7 +190,6 @@ const Organization: FC<RouteComponentProps> = ({ location }) => {
                   <span>Organizations</span>
                 </div>
               }
-              more={TableOptions()}
             >
               <Table
                 className="table-responsive"

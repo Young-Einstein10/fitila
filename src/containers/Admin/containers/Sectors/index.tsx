@@ -46,6 +46,12 @@ const Sectors = () => {
     }
   };
 
+  const cardHeader = (
+    <div>
+      <span>Newly Added</span>
+    </div>
+  );
+
   const columns: any = [
     {
       title: "S/N",
@@ -103,7 +109,7 @@ const Sectors = () => {
       <Main>
         <Row>
           <Col span={24}>
-            <Cards headless>
+            <Cards title={cardHeader}>
               <Table
                 className="table-responsive"
                 dataSource={sectors.map((sector, key) => {

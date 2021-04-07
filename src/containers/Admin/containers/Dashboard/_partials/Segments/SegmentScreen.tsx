@@ -1,6 +1,5 @@
 import React, { Fragment, FC } from "react";
 import { Button, Dropdown, Row, Spin, Menu, Col, Table } from "antd";
-import FeatherIcon from "feather-icons-react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../../../components/page-headers/page-headers";
@@ -54,31 +53,6 @@ const generateTableTitle = title => {
 
   return template;
 };
-
-const content = (
-  <>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="printer" />
-      <span>Printer</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="book-open" />
-      <span>PDF</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file-text" />
-      <span>Google Sheets</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="x" />
-      <span>Excel (XLSX)</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file" />
-      <span>CSV</span>
-    </NavLink>
-  </>
-);
 
 const menu = (
   <Menu onClick={() => {}}>
@@ -143,7 +117,7 @@ const SegmentScreen: FC<{ match?: any }> = ({
             <Fragment>
               <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
                 <Col xs={24}>
-                  <Cards title={generateTableTitle(subEco.name)} more={content}>
+                  <Cards title={generateTableTitle(subEco.name)}>
                     <Table
                       className="table-responsive"
                       dataSource={createDataSource(subEco.organizations)}

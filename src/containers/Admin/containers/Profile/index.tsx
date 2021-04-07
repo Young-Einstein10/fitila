@@ -4,11 +4,11 @@ import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import { Child, TabBasic } from "../../../../components/tabs/style";
 import SimilarCompanies from "./_partials/SimilarCompanies";
-import Revenue from "./_partials/Revenue";
-import Ratings from "./_partials/Ratings";
-import PressReleases from "./_partials/PressReleases";
-import Funding from "./_partials/Funding";
-import SocialMedia from "./_partials/SocialMedia";
+// import Revenue from "./_partials/Revenue";
+// import Ratings from "./_partials/Ratings";
+// import PressReleases from "./_partials/PressReleases";
+// import Funding from "./_partials/Funding";
+// import SocialMedia from "./_partials/SocialMedia";
 import Contact from "./_partials/Contact";
 import Summary from "./_partials/Summary";
 import { RowStyled } from "./styled";
@@ -42,36 +42,36 @@ const Profile: FC<RouteComponentProps> = ({ match }) => {
         <SimilarCompanies selectedOrganization={selectedOrganization[0]} />
       ),
     },
-    {
-      id: 3,
-      title: "Revenue",
-      tabTitle: "Revenue",
-      content: <Revenue />,
-    },
-    {
-      id: 3,
-      title: "Funding",
-      tabTitle: "Funding",
-      content: <Funding />,
-    },
-    {
-      id: 3,
-      title: "Press Releases",
-      tabTitle: "Press Releases",
-      content: <PressReleases />,
-    },
-    {
-      id: 3,
-      title: "Social Media",
-      tabTitle: "Social Media",
-      content: <SocialMedia />,
-    },
-    {
-      id: 3,
-      title: "Ratings",
-      tabTitle: "Ratings",
-      content: <Ratings />,
-    },
+    // {
+    //   id: 3,
+    //   title: "Revenue",
+    //   tabTitle: "Revenue",
+    //   content: <Revenue />,
+    // },
+    // {
+    //   id: 3,
+    //   title: "Funding",
+    //   tabTitle: "Funding",
+    //   content: <Funding />,
+    // },
+    // {
+    //   id: 3,
+    //   title: "Press Releases",
+    //   tabTitle: "Press Releases",
+    //   content: <PressReleases />,
+    // },
+    // {
+    //   id: 3,
+    //   title: "Social Media",
+    //   tabTitle: "Social Media",
+    //   content: <SocialMedia />,
+    // },
+    // {
+    //   id: 3,
+    //   title: "Ratings",
+    //   tabTitle: "Ratings",
+    //   content: <Ratings />,
+    // },
     {
       id: 3,
       title: "Contact",

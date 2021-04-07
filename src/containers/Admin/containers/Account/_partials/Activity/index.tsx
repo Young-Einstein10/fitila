@@ -1,7 +1,5 @@
 import { Col, Row, Table } from "antd";
 import React from "react";
-import FeatherIcon from "feather-icons-react";
-import { NavLink } from "react-router-dom";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 
 const Activity = () => {
@@ -78,35 +76,10 @@ const Activity = () => {
     },
   ];
 
-  const content = (
-    <>
-      <NavLink to="#">
-        <FeatherIcon size={16} icon="printer" />
-        <span>Printer</span>
-      </NavLink>
-      <NavLink to="#">
-        <FeatherIcon size={16} icon="book-open" />
-        <span>PDF</span>
-      </NavLink>
-      <NavLink to="#">
-        <FeatherIcon size={16} icon="file-text" />
-        <span>Google Sheets</span>
-      </NavLink>
-      <NavLink to="#">
-        <FeatherIcon size={16} icon="x" />
-        <span>Excel (XLSX)</span>
-      </NavLink>
-      <NavLink to="#">
-        <FeatherIcon size={16} icon="file" />
-        <span>CSV</span>
-      </NavLink>
-    </>
-  );
-
   return (
     <Row gutter={15}>
       <Col xs={24}>
-        <Cards title="Activities" more={content}>
+        <Cards title="Activities">
           <Table
             className="table-responsive"
             pagination={false}

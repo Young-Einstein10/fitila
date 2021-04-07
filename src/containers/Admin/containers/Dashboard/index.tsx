@@ -10,7 +10,7 @@ import { Cards } from "../../../../components/cards/frame/cards-frame";
 import SummaryData from "./_partials/SummaryData";
 
 import { CardSegmentStyled, RowStyled } from "./styled";
-import { createDataSource, createTableColumns, TableOptions } from "../helpers";
+import { createDataSource, createTableColumns } from "../helpers";
 import {
   useEcosystemContext,
   useOrganizationContext,
@@ -198,7 +198,8 @@ const Dashboard: FC<RouteComponentProps> = () => {
 
         <Row gutter={15}>
           <Col xs={24}>
-            <Cards title={tableHeader} more={TableOptions()}>
+            {/* // more={TableOptions()} */}
+            <Cards title={tableHeader}>
               <Table
                 className="table-responsive"
                 dataSource={createDataSource(

@@ -5,7 +5,7 @@ import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import { NavLink } from "react-router-dom";
-import { createDataSource, createTableColumns, TableOptions } from "../helpers";
+import { createDataSource, createTableColumns } from "../helpers";
 import { useOrganizationContext } from "../../../../context";
 
 const cardHeader = (
@@ -49,7 +49,7 @@ const States = () => {
 
         <Row gutter={15}>
           <Col xs={24}>
-            <Cards title={cardHeader} more={TableOptions()}>
+            <Cards title={cardHeader}>
               <Table
                 className="table-responsive"
                 dataSource={createDataSource(organizations)}

@@ -4,40 +4,14 @@ import { ReactComponent as UnknownAvatar } from "../../../../../../static/svg/un
 
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { InputStyled } from "../../../../../Styles";
-import FeatherIcon from "feather-icons-react";
 import { NavLink } from "react-router-dom";
 import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
 import { IUserProps } from "../../../../../../context/Auth/types";
 
 const { Option } = Select;
 
-const content = (
-  <>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="printer" />
-      <span>Printer</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="book-open" />
-      <span>PDF</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file-text" />
-      <span>Google Sheets</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="x" />
-      <span>Excel (XLSX)</span>
-    </NavLink>
-    <NavLink to="#">
-      <FeatherIcon size={16} icon="file" />
-      <span>CSV</span>
-    </NavLink>
-  </>
-);
-
 export const ModifyAccount = () => (
-  <Cards title="Modify Account Role" more={content}>
+  <Cards title="Modify Account Role">
     <Row>
       <Col span={12}>
         <div>
@@ -77,7 +51,7 @@ export const ModifyAccount = () => (
 );
 
 export const Deactivate = () => (
-  <Cards title="Deactivate" more={content}>
+  <Cards title="Deactivate">
     <Row>
       <Col span={16}>
         <div>
@@ -132,7 +106,7 @@ const Security = () => {
   };
 
   return (
-    <Cards title="Security" more={content}>
+    <Cards title="Security">
       <Row>
         <Col span={24}>
           <Form
@@ -220,7 +194,7 @@ const Profile: FC<{ user: IUserProps }> = ({
   };
 
   return (
-    <Cards title="Your Profile" more={content}>
+    <Cards title="Your Profile">
       <Row>
         <Col span={24}>
           <div
