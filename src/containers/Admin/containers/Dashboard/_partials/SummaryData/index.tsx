@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Card } from "antd";
 import { ReactComponent as Icon1 } from "../../../../../../static/svg/icon1.svg";
 import { ReactComponent as StarIcon } from "../../../../../../static/svg/star.svg";
-import { ReactComponent as LocationIcon } from "../../../../../../static/svg/location.svg";
+// import { ReactComponent as LocationIcon } from "../../../../../../static/svg/location.svg";
 import { ReactComponent as HandBagIcon } from "../../../../../../static/svg/handbag.svg";
 import Styled from "styled-components";
 import {

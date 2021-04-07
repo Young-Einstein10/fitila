@@ -156,7 +156,7 @@ const Organization: FC<RouteComponentProps> = ({ location }) => {
 
       <Main>
         <Row gutter={15}>
-          {selectedRowKeys.length ? (
+          {auth.isAuthenticated && selectedRowKeys.length ? (
             <Col xs={24}>
               <div
                 style={{
@@ -194,7 +194,7 @@ const Organization: FC<RouteComponentProps> = ({ location }) => {
             >
               <Table
                 className="table-responsive"
-                rowSelection={rowSelection}
+                rowSelection={auth.isAuthenticated ? rowSelection : null}
                 dataSource={createDataSource(filteredOrganizations)}
                 columns={createTableColumns(
                   handleEdit,
