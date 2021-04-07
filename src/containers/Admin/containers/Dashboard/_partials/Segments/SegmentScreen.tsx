@@ -13,6 +13,7 @@ import { capitalize, generateIcons } from "../../functions";
 import { createDataSource, createTableColumns } from "../../../helpers";
 import { useEcosystemContext } from "../../../../../../context";
 import { SpinnerStyled } from "../../../../../Styles";
+import { ISubclassProps } from "../../../../../../context/Ecosystem/types";
 
 const LoadingSpinner = <LoadingOutlined style={{ fontSize: 50 }} spin />;
 
@@ -94,6 +95,27 @@ const SegmentScreen: FC<{ match?: any }> = ({
       .filter(subEco => subEco.name)
       .filter(subEco => subEco.name !== "Churches/Mosques")
       .map(subEco => {
+        const subClassList = [
+          ...new Set(
+            subEco.organizations.map(org => org.sub_ecosystem_sub_class)
+          ),
+        ].filter(a => a);
+
+        const sub_class: ISubclassProps[] = subClassList.map(subClass => {
+          let organizations = subEco.organizations.filter(
+            org =>
+              org.sub_ecosystem_sub_class.toLowerCase() ===
+              subClass.toLowerCase()
+          );
+
+          return {
+            name: subClass,
+            organizations,
+          };
+        });
+
+        // console.log({ subClassList, sub_class });
+
         return {
           id: subEco.id,
           title: subEco.name,
@@ -112,36 +134,23 @@ const SegmentScreen: FC<{ match?: any }> = ({
                 </Col>
               </Row>
 
-              {/* {subEco.sub_class.length ? (
-                subEco.sub_class.map(subclass => (
-                  <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
-                    <Col xs={24}>
-                      <Cards
-                        title={generateTableTitle(subclass.name)}
-                        more={content}
-                      >
-                        <Table
-                          className="table-responsive"
-                          dataSource={createDataSource(subclass.organizations)}
-                          columns={createTableColumns()}
-                        />
-                      </Cards>
-                    </Col>
-                  </Row>
-                ))
-              ) : (
-                <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
-                  <Col xs={24}>
-                    <Cards title={generateTableTitle("")} more={""}>
-                      <Table
-                        className="table-responsive"
-                        dataSource={createDataSource([])}
-                        columns={createTableColumns()}
-                      />
-                    </Cards>
-                  </Col>
-                </Row>
-              )} */}
+              {sub_class.length
+                ? sub_class.map((subclass, idx) => (
+                    <Row key={idx} gutter={15} style={{ marginTop: "2rem" }}>
+                      <Col xs={24}>
+                        <Cards title={generateTableTitle(subclass.name)}>
+                          <Table
+                            className="table-responsive"
+                            dataSource={createDataSource(
+                              subclass.organizations
+                            )}
+                            columns={createTableColumns()}
+                          />
+                        </Cards>
+                      </Col>
+                    </Row>
+                  ))
+                : null}
             </Fragment>
           ),
         };

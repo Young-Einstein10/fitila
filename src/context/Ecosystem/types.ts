@@ -2,8 +2,8 @@ import { IOrganizationProps } from "../Organization/types";
 
 
 interface ISubclassProps {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
   organizations?: IOrganizationProps[]
 }
 
