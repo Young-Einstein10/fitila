@@ -267,6 +267,15 @@ const AuthWrapper = Styled.div`
 const SelectStyled = Styled(Select)<{ width?: string }>`
   width: ${({ width }) => (width ? `${width} !important` : "100% !important")};
   font-size: 16px;
+  border-color: ${({ theme }) => theme["secondary-color"]}
+
+  &.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color: ${({ theme }) => theme["secondary-color"]}
+  }
+
+  &.ant-select:focus-visible {
+    border-color: ${({ theme }) => theme["secondary-color"]}
+  }
 
   @media screen and (max-width: 768px) {
     font-size: 14px;

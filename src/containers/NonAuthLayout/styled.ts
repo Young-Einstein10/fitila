@@ -129,10 +129,15 @@ const FooterStyled = Styled(Footer)`
 `;
 
 const BusinessButton = Styled(Button)`
-  border: ${({ theme }) => `solid 1px ${theme["primary-color"]}`}
-  color: ${({ theme }) => theme["primary-color"]}
+  border: ${({ theme }) => `solid 1px ${theme["secondary-color"]}`}
+  color: ${({ theme }) => theme["secondary-color"]}
   margin-right: 2rem;
   width: 100%;
+
+  &:hover {
+    border: ${({ theme }) => `solid 1px ${theme["secondary-color"]}`}
+    color: ${({ theme }) => theme["secondary-color"]}
+  }
 `;
 
 const ButtonStyled = Styled(Button)`
