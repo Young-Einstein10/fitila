@@ -1,11 +1,11 @@
-import React, { FC, useEffect } from "react";
-import { Row, Col, Input, Form } from "antd";
-import { ReactComponent as ArrowDown } from "../../../../../static/svg/arrowDown.svg";
-import { ReactComponent as FilterOutlined } from "../../../../../static/svg/filter.svg";
-import { ReactComponent as SearchIconLeft } from "../../../../../static/svg/SearchIconLeft.svg";
-import { SelectStyled } from "../../../../Styles";
-import { IOrganizationProps } from "../../../../../context/Organization/types";
-import { ISectorProps } from "../../../../../context/Sector/types";
+import React, { FC, useEffect, useState } from "react";
+import { Row, Col, Input, Form, Button } from "antd";
+import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
+import { ReactComponent as FilterOutlined } from "../../../../../../static/svg/filter.svg";
+import { ReactComponent as SearchIconLeft } from "../../../../../../static/svg/SearchIconLeft.svg";
+import { SelectStyled } from "../../../../../Styles";
+import { IOrganizationProps } from "../../../../../../context/Organization/types";
+import { ISectorProps } from "../../../../../../context/Sector/types";
 
 const { Option } = SelectStyled;
 const FormItem = Form.Item;
@@ -31,6 +31,11 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
   sectors,
   states,
 }) => {
+  const [filter, setFilter] = useState<IFilterOption | null>(null);
+  const [currentFilterResult, setCurrentFilterResult] = useState<
+    IOrganizationProps[]
+  >([]);
+
   useEffect(() => {
     if (state) {
       const result = organizations
@@ -44,6 +49,12 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
     }
   }, [state, organizations, setFilteredOrganizations]);
 
+  const clearFilters = () => {
+    setFilter(null);
+
+    setFilteredOrganizations(organizations);
+  };
+
   const filterOrganizations = (
     filterValue: string,
     filterMethod: IFilterOption
@@ -51,20 +62,56 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
     if (filterValue === "") {
       return;
     } else {
-      if (filterMethod === "sector") {
-        const result = organizations
-          .map(organization => organization)
-          .filter(organization => organization.sector_name === filterValue);
+      if (filterMethod === "state") {
+        if (filter === "search" || filter === "sector") {
+          const result = currentFilterResult
+            .map(organization => organization)
+            .filter(
+              organization =>
+                organization.state.toLowerCase() === filterValue.toLowerCase()
+            );
 
-        setFilteredOrganizations(result);
+          setCurrentFilterResult(result);
+          setFilteredOrganizations(result);
+        } else {
+          const result = organizations
+            .map(organization => organization)
+            .filter(
+              organization =>
+                organization.state.toLowerCase() === filterValue.toLowerCase()
+            );
+
+          setFilteredOrganizations(result);
+          setCurrentFilterResult(result);
+          // console.log({ result });
+        }
       }
 
-      if (filterMethod === "state") {
-        const result = organizations
-          .map(organization => organization)
-          .filter(organization => organization.state === filterValue);
+      if (filterMethod === "sector") {
+        if (filter === "search" || filter === "state") {
+          const result = currentFilterResult
+            .map(organization => organization)
+            .filter(
+              organization =>
+                organization.sector_name.toLowerCase() ===
+                filterValue.toLowerCase()
+            );
 
-        setFilteredOrganizations(result);
+          setCurrentFilterResult(result);
+          setFilteredOrganizations(result);
+        } else {
+          const result = organizations
+            .map(organization => organization)
+            .filter(
+              organization =>
+                organization.sector_name.toLowerCase() ===
+                filterValue.toLowerCase()
+            );
+
+          setCurrentFilterResult(result);
+
+          setFilteredOrganizations(result);
+        }
       }
 
       if (filterMethod === "search") {
@@ -78,6 +125,9 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                 .includes(filterValue)
           );
         });
+
+        setCurrentFilterResult(filteredData);
+
         setFilteredOrganizations(filteredData);
       }
     }
@@ -86,8 +136,18 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
   return (
     <section className="organization-filter">
       <div style={{ padding: "0 1.3rem" }}>
-        <p>
+        <p
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <strong>Filter</strong>
+
+          {filter && (
+            <Button onClick={() => clearFilters()}>Clear Filters</Button>
+          )}
         </p>
       </div>
       <Row gutter={[16, 8]} style={{ padding: "0 1.3rem 1.3rem" }}>
@@ -100,6 +160,7 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                     <Input
                       onChange={e => {
                         let input = e.target.value.toString().toLowerCase();
+                        setFilter("search");
 
                         filterOrganizations(input, "search");
                       }}
@@ -123,10 +184,9 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                       </span>
                     }
                     optionFilterProp="children"
-                    onChange={() => {}}
-                    onFocus={() => {}}
-                    onBlur={() => {}}
                     onSelect={(val: string) => {
+                      setFilter("state");
+
                       filterOrganizations(val, "state");
                     }}
                     filterOption={(input, option) =>
@@ -163,10 +223,9 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                         </span>
                       }
                       optionFilterProp="children"
-                      onChange={() => {}}
-                      onFocus={() => {}}
-                      onBlur={() => {}}
                       onSelect={(val: string) => {
+                        setFilter("state");
+
                         filterOrganizations(val, "state");
                       }}
                       filterOption={(input, option) =>
@@ -199,6 +258,8 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                     }
                     optionFilterProp="children"
                     onSelect={(val: string) => {
+                      setFilter("sector");
+
                       filterOrganizations(val, "sector");
                     }}
                     filterOption={(input, option) =>

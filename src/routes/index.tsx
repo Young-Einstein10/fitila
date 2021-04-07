@@ -6,7 +6,6 @@ import {
   States,
   Help,
   About,
-  Account,
   Contact,
   Administrators,
   Profile,
@@ -43,7 +42,7 @@ const Routes = () => {
       />
 
       <CustomRoute path="/d/states" component={States} />
-      <AuthRoute path="/d/account" component={Account} />
+      {/* <AuthRoute path="/d/account" component={Account} /> */}
       <AuthRoute path="/d/applications" component={PendingApplication} />
 
       <AuthRoute path="/d/administrators" component={Administrators} />
@@ -54,7 +53,7 @@ const Routes = () => {
       <CustomRoute path="/d/privacy" component={PrivacyPolicy} />
       <CustomRoute path="/d/terms" component={TermsConditions} />
 
-      <CustomRoute exact path="/d/profile/:id" component={Profile} />
+      <CustomRoute path="/d/profile/:id" component={Profile} />
       {/* <Route path="/d/segments/training" component={Training} />
       <Route
         path="/d/segments/business_support"

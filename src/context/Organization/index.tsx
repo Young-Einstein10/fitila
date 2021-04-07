@@ -3,6 +3,7 @@ import Axios from "axios";
 import { useApiContext } from "../Api";
 import { IOrganizationStateProps } from "./types";
 import { useMountedState } from "../../utils/hooks";
+import { capitalize } from "../../utils/helpers";
 
 const OrganizationContext = createContext<IOrganizationStateProps | undefined>(
   undefined
@@ -46,11 +47,16 @@ const OrganizationProvider: FC = ({ children }) => {
 
         const { data } = res.data;
 
+        const states = [
+          ...new Set<any>(data.map(org => capitalize(org.state))),
+        ].filter(a => a);
+
         if (isMounted()) {
           setOrganization(prevOrganizations => ({
             ...prevOrganizations,
             isLoading: false,
             data,
+            states,
           }));
         }
       } catch (error) {
@@ -88,10 +94,15 @@ const OrganizationProvider: FC = ({ children }) => {
 
       const { data } = res.data;
 
+      const states = [
+        ...new Set<any>(data.map(org => capitalize(org.state))),
+      ].filter(a => a);
+
       setOrganization(prevOrganizations => ({
         ...prevOrganizations,
         isLoading: false,
         data,
+        states,
       }));
     } catch (error) {
       setOrganization(prevOrganizations => ({

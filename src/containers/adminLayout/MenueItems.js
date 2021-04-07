@@ -5,7 +5,7 @@ import FeatherIcon from "feather-icons-react";
 import { ReactComponent as DashboardIcon } from "../../static/svg/dashboardIcon.svg";
 import { ReactComponent as OrganizationNavIcon } from "../../static/svg/orgNavIcon.svg";
 import { ReactComponent as HelpNavIcon } from "../../static/svg/helpNavIcon.svg";
-import { ReactComponent as AccountsNavIcon } from "../../static/svg/accountsNavIcon.svg";
+// import { ReactComponent as AccountsNavIcon } from "../../static/svg/accountsNavIcon.svg";
 import { ReactComponent as ContactNavIcon } from "../../static/svg/contactNavIcon.svg";
 import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.svg";
 import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.svg";
@@ -75,7 +75,7 @@ const MenuItems = props => {
         </NavLink>
       </Menu.Item>
 
-      {auth.isAuthenticated && (
+      {/* {auth.isAuthenticated && (
         <Menu.Item
           icon={<LinkedIcon children={<AccountsNavIcon />} to="/d/account" />}
           key="/d/account"
@@ -84,7 +84,7 @@ const MenuItems = props => {
             Account
           </NavLink>
         </Menu.Item>
-      )}
+      )} */}
 
       {auth.isAuthenticated && (
         <Menu.Item
