@@ -1,12 +1,11 @@
 import React, { Fragment, FC } from "react";
-import { Button, Dropdown, Row, Spin, Menu, Col, Table } from "antd";
+import { Button, Row, Spin, Col, Table } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { UserOutlined } from "@ant-design/icons";
+// import { UserOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../../../components/page-headers/page-headers";
-import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
+// import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { NavLink } from "react-router-dom";
-import Styled from "styled-components";
 import { AdminSectionWrapper } from "../../../../styled";
 import { Child, TabBasic } from "../../../../../../components/tabs/style";
 import SummaryData from "../SummaryData";
@@ -17,22 +16,22 @@ import { SpinnerStyled } from "../../../../../Styles";
 
 const LoadingSpinner = <LoadingOutlined style={{ fontSize: 50 }} spin />;
 
-const TableHeaderButtonStyled = Styled(Button)`
-  background: #F7F9FA;
-  color: #1D429C;
-  font-weight: 700;
-  border: 0;
+// const TableHeaderButtonStyled = Styled(Button)`
+//   background: #F7F9FA;
+//   color: #1D429C;
+//   font-weight: 700;
+//   border: 0;
 
-  &:hover {
-    background: #F7F9FA;
-    color: #1D429C;
-    border-color: #F7F9FA;
-  }
+//   &:hover {
+//     background: #F7F9FA;
+//     color: #1D429C;
+//     border-color: #F7F9FA;
+//   }
 
-  svg {
-    margin-left: 25px
-  }
-`;
+//   svg {
+//     margin-left: 25px
+//   }
+// `;
 
 const generateTableTitle = title => {
   const template = (
@@ -43,30 +42,16 @@ const generateTableTitle = title => {
       }}
     >
       <span>{title}</span>
-      <Dropdown overlay={menu}>
+      {/* <Dropdown overlay={menu}>
         <TableHeaderButtonStyled type="ghost" size="middle">
           Past Month <ArrowDown />
         </TableHeaderButtonStyled>
-      </Dropdown>
+      </Dropdown> */}
     </div>
   );
 
   return template;
 };
-
-const menu = (
-  <Menu onClick={() => {}}>
-    <Menu.Item key="1" icon={<UserOutlined />}>
-      1st menu item
-    </Menu.Item>
-    <Menu.Item key="2" icon={<UserOutlined />}>
-      2nd menu item
-    </Menu.Item>
-    <Menu.Item key="3" icon={<UserOutlined />}>
-      3rd menu item
-    </Menu.Item>
-  </Menu>
-);
 
 // const tableHeader = (
 //   <div style={{ display: "flex", justifyContent: "space-between" }}>
