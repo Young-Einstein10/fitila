@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import { createDataSource, createTableColumns } from "../helpers";
 import { useOrganizationContext } from "../../../../context";
 import { RowStyled } from "../Dashboard/styled";
+import { capitalize } from "../../../../utils/helpers";
 
 const cardHeader = (
   <div>
@@ -20,65 +21,78 @@ const States = () => {
   const {
     isLoading: isOrganizationLoading,
     data: organizations,
+    states,
   } = useOrganizationContext();
 
-  const statesData = [
-    {
-      id: 1,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 2,
-      name: "Abuja",
-      organizations: 40,
-    },
-    {
-      id: 3,
-      name: "Kano",
-      organizations: 40,
-    },
-    {
-      id: 4,
-      name: "Ogun",
-      organizations: 40,
-    },
-    {
-      id: 5,
-      name: "Kaduna",
-      organizations: 40,
-    },
-    {
-      id: 6,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 7,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 8,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 9,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 10,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 11,
-      name: "Lagos",
-      organizations: 40,
-    },
-  ];
+  const statesData = states.slice(0, 11).map((state, idx) => {
+    let organizationList = organizations.filter(
+      org => org.state.toLowerCase() === state.toLowerCase()
+    );
+
+    return {
+      id: idx + 1,
+      name: capitalize(state),
+      organizations: organizationList.length,
+    };
+  });
+
+  // const statesData = [
+  //   {
+  //     id: 1,
+  //     name: "Lagos",
+  //     organizations: 40,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Abuja",
+  //     organizations: 40,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Kano",
+  //     organizations: 40,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Ogun",
+  //     organizations: 40,
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Kaduna",
+  //     organizations: 40,
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Lagos",
+  //     organizations: 40,
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "Lagos",
+  //     organizations: 40,
+  //   },
+  //   {
+  //     id: 8,
+  //     name: "Lagos",
+  //     organizations: 40,
+  //   },
+  //   {
+  //     id: 9,
+  //     name: "Lagos",
+  //     organizations: 40,
+  //   },
+  //   {
+  //     id: 10,
+  //     name: "Lagos",
+  //     organizations: 40,
+  //   },
+  //   {
+  //     id: 11,
+  //     name: "Lagos",
+  //     organizations: 40,
+  //   },
+  // ];
 
   return (
     <AdminSectionWrapper>

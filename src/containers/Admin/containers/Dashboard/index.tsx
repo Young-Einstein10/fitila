@@ -21,6 +21,7 @@ const Dashboard: FC<RouteComponentProps> = () => {
   const {
     isLoading: isOrganizationLoading,
     data: organizations,
+    states,
   } = useOrganizationContext();
 
   const {
@@ -28,63 +29,17 @@ const Dashboard: FC<RouteComponentProps> = () => {
     data: ecosystems,
   } = useEcosystemContext();
 
-  const statesData = [
-    {
-      id: 1,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 2,
-      name: "Abuja",
-      organizations: 40,
-    },
-    {
-      id: 3,
-      name: "Kano",
-      organizations: 40,
-    },
-    {
-      id: 4,
-      name: "Ogun",
-      organizations: 40,
-    },
-    {
-      id: 5,
-      name: "Kaduna",
-      organizations: 40,
-    },
-    {
-      id: 6,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 7,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 8,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 9,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 10,
-      name: "Lagos",
-      organizations: 40,
-    },
-    {
-      id: 11,
-      name: "Lagos",
-      organizations: 40,
-    },
-  ];
+  const statesData = states.slice(0, 11).map((state, idx) => {
+    let organizationList = organizations.filter(
+      org => org.state.toLowerCase() === state.toLowerCase()
+    );
+
+    return {
+      id: idx + 1,
+      name: capitalize(state),
+      organizations: organizationList.length,
+    };
+  });
 
   return (
     <AdminSectionWrapper className="dashboard">

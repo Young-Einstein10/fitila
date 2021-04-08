@@ -79,14 +79,14 @@ const RowStyled = Styled(Row)`
       transform: scale(1.03);
     }
   }
-    .cell--1 {
+    .cell--2 {
       background: rgb(177, 226, 203);
       /* grid-area: A; */
       grid-column: 1 / 6;
       grid-row: 1 / -1;
     }
 
-    .cell--2 {
+    .cell--4 {
       background: #B7BEE6;
       /* grid-area: B; */
       grid-column: 6 / 9;
@@ -100,7 +100,7 @@ const RowStyled = Styled(Row)`
       grid-row: 1 / 7;
     } 
 
-    .cell--4 {
+    .cell--1 {
       background: #B7BEE6;
       /* grid-area: D; */
       grid-column: 6 / 12;
@@ -121,7 +121,7 @@ const RowStyled = Styled(Row)`
       grid-row: 1 / 5;
     }
 
-    .cell--7 {
+    .cell--11 {
       background: #EDB29F;
       /* grid-area: G; */
       grid-column: 16 / 18;
@@ -149,7 +149,7 @@ const RowStyled = Styled(Row)`
       grid-row: 4 / 9;
     }
 
-    .cell--11 {
+    .cell--7 {
       background: #9FBEED;
       /* grid-area: K; */
       grid-column: 12 / 18;
