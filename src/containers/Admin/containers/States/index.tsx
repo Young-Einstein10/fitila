@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Col, Row, Table } from "antd";
+import { Link } from "react-router-dom";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
@@ -7,6 +8,7 @@ import { AdminSectionWrapper } from "../../styled";
 import { NavLink } from "react-router-dom";
 import { createDataSource, createTableColumns } from "../helpers";
 import { useOrganizationContext } from "../../../../context";
+import { RowStyled } from "../Dashboard/styled";
 
 const cardHeader = (
   <div>
@@ -19,6 +21,64 @@ const States = () => {
     isLoading: isOrganizationLoading,
     data: organizations,
   } = useOrganizationContext();
+
+  const statesData = [
+    {
+      id: 1,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 2,
+      name: "Abuja",
+      organizations: 40,
+    },
+    {
+      id: 3,
+      name: "Kano",
+      organizations: 40,
+    },
+    {
+      id: 4,
+      name: "Ogun",
+      organizations: 40,
+    },
+    {
+      id: 5,
+      name: "Kaduna",
+      organizations: 40,
+    },
+    {
+      id: 6,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 7,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 8,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 9,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 10,
+      name: "Lagos",
+      organizations: 40,
+    },
+    {
+      id: 11,
+      name: "Lagos",
+      organizations: 40,
+    },
+  ];
 
   return (
     <AdminSectionWrapper>
@@ -39,10 +99,20 @@ const States = () => {
         <Row gutter={24} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
             <Cards title="Explore by States" size="large">
-              <div
-                className="states-lga"
-                style={{ background: "#B1E2CB", height: "400px" }}
-              ></div>
+              <RowStyled>
+                {statesData.map((state, i) => (
+                  <Link
+                    className={`cell cell--${i + 1}`}
+                    key={state.id}
+                    to={`/d/organizations/${state.name}`}
+                  >
+                    <div>
+                      <p>{state.name}</p>
+                      <span>{state.organizations} Organizations</span>
+                    </div>
+                  </Link>
+                ))}
+              </RowStyled>
             </Cards>
           </Col>
         </Row>

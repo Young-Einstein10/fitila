@@ -24,7 +24,7 @@ const TermsConditions = () => {
         <Row gutter={24}>
           <Col span={24}>
             <Row gutter={24}>
-              <Col span={12}>
+              <Col xs={24} md={12} lg={12}>
                 <div>
                   <p>
                     Blandit tellus, morbi etiam aenean nunc, tristique. Ipsum
@@ -129,7 +129,7 @@ const TermsConditions = () => {
                 </div>
               </Col>
 
-              <Col span={12}>
+              <Col xs={24} md={12} lg={12}>
                 <div>
                   <PrivacyHeader>
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit.

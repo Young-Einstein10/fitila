@@ -144,9 +144,9 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
             <Col md={12} xs={24}>
               <div className="admin-footer__links">
                 <NavLink to="/login">Admin</NavLink>
-                <NavLink to="/d/privacy">Privacy Poilicy</NavLink>
+                <NavLink to="/d/privacy">Privacy Policy</NavLink>
                 <NavLink to="/d/terms">Terms and Condition</NavLink>
-                <NavLink to="#">Cookie Poilicy</NavLink>
+                {/* <NavLink to="#">Cookie Policy</NavLink> */}
               </div>
             </Col>
           </Row>
