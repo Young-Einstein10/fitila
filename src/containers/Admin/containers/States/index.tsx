@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Col, Row, Table } from "antd";
+import { Button, Col, Row, Table, Skeleton } from "antd";
 import { Link } from "react-router-dom";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
@@ -112,22 +112,28 @@ const States = () => {
       <Main>
         <Row gutter={24} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
-            <Cards title="Explore by States" size="large">
-              <RowStyled>
-                {statesData.map((state, i) => (
-                  <Link
-                    className={`cell cell--${i + 1}`}
-                    key={state.id}
-                    to={`/d/organizations/${state.name}`}
-                  >
-                    <div>
-                      <p>{state.name}</p>
-                      <span>{state.organizations} Organizations</span>
-                    </div>
-                  </Link>
-                ))}
-              </RowStyled>
-            </Cards>
+            {isOrganizationLoading ? (
+              <Cards headless>
+                <Skeleton active />
+              </Cards>
+            ) : (
+              <Cards title="Explore by States" size="large">
+                <RowStyled>
+                  {statesData.map((state, i) => (
+                    <Link
+                      className={`cell cell--${i + 1}`}
+                      key={state.id}
+                      to={`/d/organizations/${state.name}`}
+                    >
+                      <div>
+                        <p>{state.name}</p>
+                        <span>{state.organizations} Organizations</span>
+                      </div>
+                    </Link>
+                  ))}
+                </RowStyled>
+              </Cards>
+            )}
           </Col>
         </Row>
 

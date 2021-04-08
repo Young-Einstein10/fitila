@@ -18,7 +18,7 @@ import { RouteComponentProps } from "react-router-dom";
 const Profile: FC<RouteComponentProps> = ({ match }) => {
   const { id: organizationId } = match.params as any;
 
-  const { data: organizations } = useOrganizationContext();
+  const { data: organizations, isLoading } = useOrganizationContext();
 
   const selectedOrganization = organizations.filter(
     // eslint-disable-next-line eqeqeq
@@ -32,7 +32,12 @@ const Profile: FC<RouteComponentProps> = ({ match }) => {
       id: 1,
       title: "Summary",
       tabTitle: "Summary",
-      content: <Summary selectedOrganization={selectedOrganization} />,
+      content: (
+        <Summary
+          isLoading={isLoading}
+          selectedOrganization={selectedOrganization}
+        />
+      ),
     },
     {
       id: 2,

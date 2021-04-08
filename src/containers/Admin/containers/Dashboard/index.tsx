@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button, Col, Row, Table, Spin } from "antd";
+import { Button, Col, Row, Table, Spin, Skeleton } from "antd";
 import { Link, NavLink, RouteComponentProps } from "react-router-dom";
 import { generateIcons, tableHeader } from "./functions";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
@@ -117,34 +117,28 @@ const Dashboard: FC<RouteComponentProps> = () => {
         {/* STATES */}
         <Row gutter={24} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
-            <Cards title="Explore by States" size="large">
-              <RowStyled>
-                {statesData.map((state, i) => (
-                  <Link
-                    className={`cell cell--${i + 1}`}
-                    key={state.id}
-                    to={`/d/organizations/${state.name}`}
-                  >
-                    <div>
-                      <p>{state.name}</p>
-                      <span>{state.organizations} Organizations</span>
-                    </div>
-                  </Link>
-                ))}
-
-                {/* 
-                <div className="cell cell--2" />
-                <div className="cell cell--3" />
-                <div className="cell cell--4" />
-                <div className="cell cell--5" />
-                <div className="cell cell--6" />
-                <div className="cell cell--7" />
-                <div className="cell cell--8" />
-                <div className="cell cell--9" />
-                <div className="cell cell--10" />
-                <div className="cell cell--11" /> */}
-              </RowStyled>
-            </Cards>
+            {isOrganizationLoading ? (
+              <Cards headless>
+                <Skeleton active />
+              </Cards>
+            ) : (
+              <Cards title="Explore by States" size="large">
+                <RowStyled>
+                  {statesData.map((state, i) => (
+                    <Link
+                      className={`cell cell--${i + 1}`}
+                      key={state.id}
+                      to={`/d/organizations/${state.name}`}
+                    >
+                      <div>
+                        <p>{state.name}</p>
+                        <span>{state.organizations} Organizations</span>
+                      </div>
+                    </Link>
+                  ))}
+                </RowStyled>
+              </Cards>
+            )}
           </Col>
         </Row>
 

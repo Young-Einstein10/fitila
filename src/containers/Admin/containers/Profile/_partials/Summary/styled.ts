@@ -53,9 +53,14 @@ const ProfileCardStyled = Styled(Cards)`
 
     .founder-name-wrapper {
       margin-left: 15px;
+      font-weight: normal;
+
+      p {
+        margin: 0;
+      }
 
       span {
-        display: block;
+        color: #A0A0A0;
       }
     }
   }

@@ -14,6 +14,10 @@ const RowStyled = Style(Row)`
       span {
         width: 50%
       }
+
+      span:first-child {
+        color: #A0A0A0;
+      }
     }
   }
 `;
