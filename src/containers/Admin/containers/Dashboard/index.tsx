@@ -16,6 +16,7 @@ import {
   useOrganizationContext,
 } from "../../../../context";
 import Charts from "./_partials/Charts";
+import { capitalize } from "../../../../utils/helpers";
 
 const Dashboard: FC<RouteComponentProps> = () => {
   const {
