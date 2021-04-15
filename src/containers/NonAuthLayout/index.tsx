@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import Logo from "../../static/svg/logo.svg";
 import burgermenu from "../../static/svg/burgermenu.svg";
 
-import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
+// import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
 import { ReactComponent as UserIcon } from "../../static/svg/usericon.svg";
 
 import {
@@ -13,50 +13,49 @@ import {
   FooterStyled,
   HeaderStyled,
   LayoutStyled,
-  LinkStyled,
 } from "./styled";
 import "./styles.less";
 
 const { Content } = Layout;
 
 const NonAuthLayout: FunctionComponent = ({ children }) => {
-  const menu = (
-    <div style={{ padding: "1rem", background: "#fff" }}>
-      {/* <LinkStyled
-        to="#"
-        style={{
-          padding: "1rem",
-          background: "#F7F9FA",
-          marginBottom: ".5rem",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <span>
-          <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up
-        </span>
-      </LinkStyled> */}
+  // const menu = (
+  //   <div style={{ padding: "1rem", background: "#fff" }}>
+  //     {/* <LinkStyled
+  //       to="#"
+  //       style={{
+  //         padding: "1rem",
+  //         background: "#F7F9FA",
+  //         marginBottom: ".5rem",
+  //         display: "flex",
+  //         alignItems: "center",
+  //       }}
+  //     >
+  //       <span>
+  //         <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up
+  //       </span>
+  //     </LinkStyled> */}
 
-      <LinkStyled
-        to="/signin"
-        style={{
-          padding: "1rem",
-          background: "#F7F9FA;",
-          marginBottom: ".5rem",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <span>
-          <UserPlus style={{ marginRight: "1.25rem" }} /> Sign In
-        </span>
-      </LinkStyled>
-    </div>
-  );
+  //     <LinkStyled
+  //       to="/signin"
+  //       style={{
+  //         padding: "1rem",
+  //         background: "#F7F9FA;",
+  //         marginBottom: ".5rem",
+  //         display: "flex",
+  //         alignItems: "center",
+  //       }}
+  //     >
+  //       <span>
+  //         <UserPlus style={{ marginRight: "1.25rem" }} /> Sign In
+  //       </span>
+  //     </LinkStyled>
+  //   </div>
+  // );
 
   const toggleMenuContent = (
     <ul className="toggle-menu-content">
-      <li>
+      <li style={{ marginBottom: "1.5rem" }}>
         <BusinessButton size="large">
           <NavLink to="/business">List Your Organization</NavLink>
         </BusinessButton>
