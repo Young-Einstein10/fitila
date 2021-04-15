@@ -134,6 +134,10 @@ const BusinessButton = Styled(Button)`
   margin-right: 2rem;
   width: 100%;
 
+  a {
+    color: ${({ theme }) => theme["secondary-color"]}
+  }
+
   &:hover {
     border: ${({ theme }) => `solid 1px ${theme["secondary-color"]}`}
     color: ${({ theme }) => theme["secondary-color"]}

@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Modal, Upload, Button, notification } from "antd";
+import { Modal, Upload, Button, notification, message } from "antd";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { useApiContext } from "../../../../../../context";
 
@@ -27,12 +27,6 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({
     try {
       console.log(csvFile);
 
-      Modal.info({
-        title:
-          "Your Upload has started. You will get notification once its completed.",
-      });
-      closeModal();
-
       let data = { file: csvFile[0] };
 
       const formData = new FormData();
@@ -41,11 +35,18 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({
         formData.append(key, data[key]);
       }
 
+      message.info(
+        "Your Upload has started. You will get a notification once its completed.",
+        5
+      );
+
+      closeModal();
+
       const res = await api.upload(formData);
 
       console.log(res.data);
 
-      if (res.status === 201) {
+      if (res.status === 200) {
         notification.success({
           message: "Upload Completed.",
           placement: "bottomRight",
@@ -65,7 +66,7 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({
         const index = prevState.indexOf(file);
         const newFileList = csvFile.slice();
         newFileList.splice(index, 1);
-        return [...prevState, newFileList];
+        return [...newFileList];
       });
     },
     beforeUpload: file => {

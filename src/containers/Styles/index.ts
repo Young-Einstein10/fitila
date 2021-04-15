@@ -273,6 +273,13 @@ const SelectStyled = Styled(Select)<{ width?: string }>`
     border-color: ${({ theme }) => theme["secondary-color"]}
   }
 
+  &.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-color: ${({ theme }) => theme["secondary-color"]}
+    border-right-width: 1px !important;
+    outline: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
   &.ant-select:focus-visible {
     border-color: ${({ theme }) => theme["secondary-color"]}
   }

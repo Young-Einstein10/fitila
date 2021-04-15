@@ -71,6 +71,9 @@ const ApiProvider: FC = ({ children }) => {
               message:
                 typeof errorResponse.data.error === "string"
                   ? errorResponse.data.error
+                  : errorResponse.data.errors.length &&
+                    errorResponse.data.errors[0]
+                  ? errorResponse.data.errors.toString()
                   : typeof errorResponse.data.error === "object"
                   ? Object.entries(errorResponse.data.error)[0][1]
                   : errorResponse.data.message,
