@@ -3,6 +3,7 @@ import { Row, Col, Skeleton } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { useOrganizationContext } from "../../../../../../context";
 
+const StateChart = lazy(() => import("./_partials/StateChart"));
 const DoughnutChart = lazy(() => import("./_partials/DoughnutChart"));
 const BarChart = lazy(() => import("./_partials/BarChart"));
 
@@ -53,12 +54,17 @@ const Charts = () => {
   return (
     <Row gutter={[16, 16]} style={{ marginTop: "2rem" }}>
       <Col xs={24} sm={24} md={12} lg={8}>
-        <Cards title="2020 Investments" size="large">
-          <div
-            className="states-lga"
-            style={{ background: "#B1E2CB", height: "330px" }}
-          ></div>
-        </Cards>
+        <Suspense
+          fallback={
+            <Cards headless>
+              <Skeleton active />
+            </Cards>
+          }
+        >
+          <Cards title="Startups Ranking by State" size="large">
+            <StateChart />
+          </Cards>
+        </Suspense>
       </Col>
 
       <Col xs={24} sm={24} md={12} lg={8}>
@@ -69,7 +75,7 @@ const Charts = () => {
             </Cards>
           }
         >
-          <Cards title="Female Led Startups" size="large">
+          <Cards title="Female and Male Led Startups" size="large">
             <BarChart
               labels={["Male", "Female"]}
               datasets={[
@@ -94,7 +100,7 @@ const Charts = () => {
             </Cards>
           }
         >
-          <Cards title="Funding by Sector" size="large">
+          <Cards title="Top Performing Sectors" size="large">
             <DoughnutChart />
           </Cards>
         </Suspense>

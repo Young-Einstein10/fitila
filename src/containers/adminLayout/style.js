@@ -307,25 +307,25 @@ const Div = Styled.div`
                         }
                     }
                     &.ant-menu-item-selected{
-                        color: ${({ theme }) => theme["secondary-color"]}
+                        color: ${({ theme }) => theme["text-primary"]}
                         background-color: ${({ theme }) =>
                           theme["secondary-hover"]};
 
                         a, a:hover  {
-                            color: ${({ theme }) => theme["secondary-color"]}
+                            color: ${({ theme }) => theme["text-primary"]}
                             font-weight: bold;
                         }
 
                         svg,
                         i{
-                            color: ${({ theme }) => theme["secondary-color"]};
+                            color: ${({ theme }) => theme["text-primary"]};
                         }
                     }
                 }
 
                 .ant-menu-item-active {
                     a {
-                        color: ${({ theme }) => theme["secondary-color"]}
+                        color: ${({ theme }) => theme["text-primary"]}
                     }
                 }
 

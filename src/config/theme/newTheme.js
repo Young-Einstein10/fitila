@@ -1,7 +1,9 @@
 const primaryColor = "#E7833B"; // orange #BF1E2E
 const primaryHover = "#E7833B"; // #FFECDD
-const secondaryColor = "#1D429C"; // blue
+const secondaryColor = "#e53f4f"; // red
 const secondaryHover = "#f7f7f7";
+const textPrimary = "#1D429C"; // blue
+const textSecondary = "#BF1E2E"; // red
 const linkColor = "#FF6D00";
 const linkHover = "#FF6D00";
 const headingColor = "rgba(0, 0, 0, 0.85)";
@@ -43,6 +45,8 @@ const theme = {
   "primary-hover": primaryHover, // primary color for all components
   "secondary-color": secondaryColor, // secondary color for all components
   "secondary-hover": secondaryHover, // secondary color for all components
+  "text-primary": textPrimary,
+  "text-secondary": textSecondary,
   "link-color": linkColor, // link color
   "link-hover": linkHover, // link color
   "success-color": successColor, // success state color

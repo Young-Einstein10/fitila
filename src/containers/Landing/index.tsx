@@ -119,7 +119,7 @@ const Landing: FC<RouteComponentProps> = ({ history }) => {
           paddingBottom: "6rem",
         }}
       >
-        <p style={{ fontSize: "1rem", color: "#BF1E2E" }}>
+        <p style={{ fontSize: "1rem", color: "#1D429C" }}>
           Explore ecosystem players by segment
         </p>
 
