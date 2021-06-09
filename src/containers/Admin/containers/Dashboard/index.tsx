@@ -7,7 +7,7 @@ import { AdminSectionWrapper } from "../../styled";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
 
-import SummaryData from "./_partials/SummaryData";
+import Summary from "./_partials/Summary";
 
 import { CardSegmentStyled, RowStyled } from "./styled";
 import { createDataSource, createTableColumns } from "../helpers";
@@ -60,7 +60,11 @@ const Dashboard: FC<RouteComponentProps> = () => {
       </div>
 
       <Main style={{ padding: "1.3rem" }}>
-        <SummaryData />
+        <Summary />
+
+        {/* ========= CHARTS ========== */}
+        <Charts />
+        {/* ========= CHARTS ========== */}
 
         {/* ECOSYSTEMS */}
         <Row gutter={25} style={{ marginTop: "2rem" }}>
@@ -141,10 +145,6 @@ const Dashboard: FC<RouteComponentProps> = () => {
             )}
           </Col>
         </Row>
-
-        {/* ========= CHARTS ========== */}
-        <Charts />
-        {/* ========= CHARTS ========== */}
 
         <Row gutter={15}>
           <Col xs={24}>

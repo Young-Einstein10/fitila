@@ -136,29 +136,16 @@ const BarChart = props => {
 
 BarChart.defaultProps = {
   height: 200,
-  labels: [
-    "Jan",
-    "Feb",
-    // "Mar",
-    // "Apr",
-    // "May",
-    // "Jun",
-    // "Jul",
-    // "Aug",
-    // "Sep",
-    // "Oct",
-    // "Nov",
-    // "Dec",
-  ],
+  labels: ["Female", "Male"],
   datasets: [
     {
       data: [20, 60],
-      backgroundColor: "rgba(0,23,55, .5)",
+      backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
       label: "Profit",
     },
     {
       data: [10, 40],
-      backgroundColor: "rgba(28,225,172, .5)",
+      backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
       label: "Lose",
     },
   ],

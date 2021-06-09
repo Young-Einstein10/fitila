@@ -77,12 +77,18 @@ const Charts = () => {
         >
           <Cards title="Female and Male Led Startups" size="large">
             <BarChart
-              labels={["Male", "Female"]}
+              labels={["Female", "Male"]}
               datasets={[
                 {
-                  data: [maleFounders.length, femaleFounders.length],
-                  backgroundColor: "#EFEFFE",
-                  hoverBackgroundColor: "#5F63F2",
+                  data: [femaleFounders.length, maleFounders.length],
+                  backgroundColor: [
+                    "rgba(245, 71, 109, 0.645)",
+                    "rgba(39, 149, 221, 0.686)",
+                  ],
+                  hoverBackgroundColor: [
+                    "rgb(255, 0, 55)",
+                    "rgb(10, 134, 216)",
+                  ],
                   label: "Founders",
                 },
               ]}

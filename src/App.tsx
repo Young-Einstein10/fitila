@@ -13,6 +13,7 @@ import {
   OrganizationProvider,
   SectorProvider,
 } from "./context";
+import ScrollToTop from "./components/scrollToTop";
 
 const { theme } = config;
 
@@ -31,7 +32,9 @@ function App() {
                 <SectorProvider>
                   <Router>
                     <BusinessProvider>
-                      <Routes />
+                      <ScrollToTop>
+                        <Routes />
+                      </ScrollToTop>
                     </BusinessProvider>
                   </Router>
                 </SectorProvider>

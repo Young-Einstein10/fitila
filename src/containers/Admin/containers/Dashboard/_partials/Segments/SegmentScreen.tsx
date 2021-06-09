@@ -17,23 +17,6 @@ import { ISubclassProps } from "../../../../../../context/Ecosystem/types";
 
 const LoadingSpinner = <LoadingOutlined style={{ fontSize: 50 }} spin />;
 
-// const TableHeaderButtonStyled = Styled(Button)`
-//   background: #F7F9FA;
-//   color: #1D429C;
-//   font-weight: 700;
-//   border: 0;
-
-//   &:hover {
-//     background: #F7F9FA;
-//     color: #1D429C;
-//     border-color: #F7F9FA;
-//   }
-
-//   svg {
-//     margin-left: 25px
-//   }
-// `;
-
 const generateTableTitle = title => {
   const template = (
     <div
@@ -43,27 +26,11 @@ const generateTableTitle = title => {
       }}
     >
       <span>{title}</span>
-      {/* <Dropdown overlay={menu}>
-        <TableHeaderButtonStyled type="ghost" size="middle">
-          Past Month <ArrowDown />
-        </TableHeaderButtonStyled>
-      </Dropdown> */}
     </div>
   );
 
   return template;
 };
-
-// const tableHeader = (
-//   <div style={{ display: "flex", justifyContent: "space-between" }}>
-//     <span>Business Advisory and Consulting organizations</span>
-//     <Dropdown overlay={menu}>
-//       <TableHeaderButtonStyled type="ghost" size="middle">
-//         Past Month <ArrowDown />
-//       </TableHeaderButtonStyled>
-//     </Dropdown>
-//   </div>
-// );
 
 const SegmentScreen: FC<{ match?: any }> = ({
   match: {
@@ -87,7 +54,7 @@ const SegmentScreen: FC<{ match?: any }> = ({
         .toLowerCase() === name
   );
 
-  console.log(currEcosystem);
+  // console.log(currEcosystem);
 
   const ecosystemTabData =
     currEcosystem.length &&

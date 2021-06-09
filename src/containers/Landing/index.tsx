@@ -14,7 +14,7 @@ import "./styles.less";
 const ButtonStyled = Styled(Button)`
   font-size: 0.875rem;
   font-weight: bold;
-  color: ${({ theme }) => theme["secondary-color"]};
+  color: ${({ theme }) => theme["text-primary"]};
   background: ${({ theme }) => theme["secondary-hover"]};
   margin-left: 0.9375rem;
   margin-top: 0.625rem;
@@ -24,7 +24,7 @@ const ButtonStyled = Styled(Button)`
 
   &:hover {
     background: ${({ theme }) => theme["secondary-hover"]};
-    color: ${({ theme }) => theme["secondary-color"]};
+    color: ${({ theme }) => theme["text-primary"]};
   }
 `;
 
@@ -91,13 +91,31 @@ const Landing: FC<RouteComponentProps> = ({ history }) => {
               setDropdownIsOpen(open);
             }}
             onSelect={val => {
+              // let value = val.toString().toLowerCase();
+
+              // const filteredData = organizations.find(record => {
+              //   console.log({ record });
+
+              //   return Object.keys(record).some(
+              //     key =>
+              //       record &&
+              //       record[key]
+              //         .toString()
+              //         .toLowerCase()
+              //         .includes(value)
+              //   );
+              // });
+
+              // console.log(filteredData);
+
               let selectedOrg = organizations.find(org => org.name === val);
-              console.log(selectedOrg);
               selectedOrg.id && history.push(`/d/profile/${selectedOrg.id}`);
             }}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
+            filterOption={(input, option) => {
+              return (
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              );
+            }}
             loading={isOrganizationLoading}
           >
             {organizations.map((org, key) => (
