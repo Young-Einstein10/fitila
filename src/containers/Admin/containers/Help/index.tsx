@@ -39,7 +39,7 @@ const Help = () => {
         <PageHeader
           title={
             <Heading as="h3" style={{ fontSize: "24px", fontWeight: "bold" }}>
-              FAQ's
+              Enterprise Data Map Guide.
             </Heading>
           }
           style={{ marginBottom: "0" }}

@@ -12,7 +12,7 @@ const About = () => {
         <PageHeader
           title={
             <Heading as="h2" style={{ fontSize: "30px", fontWeight: "bold" }}>
-              Project Brief
+              About Us
             </Heading>
           }
           style={{ marginBottom: "0" }}

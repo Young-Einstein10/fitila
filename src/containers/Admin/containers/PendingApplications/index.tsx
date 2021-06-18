@@ -10,6 +10,7 @@ import numberWithCommas from "../../../../utils/numberFormatter";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import { ImgPlaceholderStyled } from "../helpers";
+import ViewDetails from "./_partials/ViewDetails";
 
 interface IPendingAppProps {
   isLoading: boolean;
@@ -23,6 +24,8 @@ const PendingApplications = () => {
   });
   const [isApprovalLoading, setIsApprovalLoading] = useState(false);
   const [isDeclineLoading, setIsDeclineLoading] = useState(false);
+  const [currentListing, setCurrentListing] = useState(null);
+  const [isViewDetailsModalOpen, setIsViewDetailsModalOpen] = useState(false);
 
   const { organization: api } = useApiContext();
 
@@ -109,6 +112,8 @@ const PendingApplications = () => {
       }
     }
   };
+
+  const toggleViewDetailsModal = () => setIsViewDetailsModalOpen(open => !open);
 
   const columns: any = [
     {
@@ -295,10 +300,28 @@ const PendingApplications = () => {
                 dataSource={dataSource}
                 columns={columns}
                 loading={organizations.isLoading}
+                onRow={(record, rowIndex) => {
+                  return {
+                    onClick: () => {
+                      setCurrentListing(record);
+                      toggleViewDetailsModal();
+                    },
+                  };
+                }}
               />
             </Cards>
           </Col>
         </Row>
+
+        {isViewDetailsModalOpen ? (
+          <ViewDetails
+            visible={isViewDetailsModalOpen}
+            closeModal={toggleViewDetailsModal}
+            currentListing={currentListing}
+            handleDecline={handleDecline}
+            handleApproval={handleApproval}
+          />
+        ) : null}
       </Main>
     </AdminSectionWrapper>
   );

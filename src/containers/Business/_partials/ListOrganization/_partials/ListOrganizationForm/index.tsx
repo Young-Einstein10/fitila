@@ -16,6 +16,7 @@ import {
   ISubEcosystem,
   // ISubclassProps,
 } from "../../../../../../context/Ecosystem/types";
+import states from "../../../../../../states.json"
 
 const { Option } = Select;
 const InputGroup = InputStyled.Group;
@@ -46,6 +47,10 @@ land and building) of 10million to 99million naira`,
     description: `businesses with 50 - 199 employees and total assets (excluding
 land and building) of 100million to 1billion naira`,
   },
+  {
+    name: "Startup",
+    description: "a fast/high growth young business typically between 0-5 years"
+  }
 ];
 
 const business_subclass = [
@@ -64,7 +69,6 @@ const ListOrganizationForm = ({ next }) => {
   const [is_startUp, setIs_Startup] = useState(false);
 
   const { data: ecosystem } = useEcosystemContext();
-  const { states } = useOrganizationContext();
   const { data: sectors } = useSectorContext();
 
   const [form] = Form.useForm();
@@ -192,7 +196,7 @@ const ListOrganizationForm = ({ next }) => {
           },
         ]}
       >
-        <InputStyled placeholder="CEO/DG/Founder's Name" />
+        <InputStyled placeholder={state.business_type === "Enterpreneur" ? "CEO/Founder's Name" : "CEO/DG/Founder's Name"} />
       </Form.Item>
       {/* CEO/FOUNDER's ANME */}
 
@@ -227,26 +231,7 @@ const ListOrganizationForm = ({ next }) => {
                 </Form.Item> */}
       {/* HEADQUARTERS */}
 
-      {/* STATE */}
-      <Form.Item
-        name="state"
-        rules={[
-          {
-            message: "Please select state organization is located in",
-            required: true,
-          },
-        ]}
-      >
-        <Select placeholder="State" allowClear>
-          {states.map((state, i) => (
-            <Option key={i} value={state}>
-              {state}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
-      {/* STATE */}
-
+      
       {/* ADDRESS */}
       <Form.Item
         name="address"
@@ -260,6 +245,26 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder="Address" />
       </Form.Item>
       {/* ADDRESS */}
+
+      {/* STATE */}
+      <Form.Item
+        name="state"
+        rules={[
+          {
+            message: "Please select state organization is located in",
+            required: true,
+          },
+        ]}
+      >
+        <Select placeholder="State" allowClear>
+          {states.map(({ name, code }) => (
+            <Option key={code} value={name}>
+              {name}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
+      {/* STATE */}
 
       <Divider />
 
@@ -539,12 +544,12 @@ const ListOrganizationForm = ({ next }) => {
       {/* WEBSITE */}
       <Form.Item
         name="website"
-        rules={[
-          {
-            message: "Please input your organization website !",
-            required: true,
-          },
-        ]}
+        // rules={[
+        //   {
+        //     message: "Please input your organization website !",
+        //     required: true,
+        //   },
+        // ]}
       >
         <InputStyled placeholder="Website Address" />
       </Form.Item>

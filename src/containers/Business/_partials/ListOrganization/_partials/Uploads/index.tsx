@@ -186,7 +186,9 @@ const Uploads = ({ next }) => {
         </Form.Item>
       )}
 
-      <Form.Item name="funding" style={{ marginBottom: 0 }}>
+      {
+        state.business_type === "Enterpreneur" &&
+        <Form.Item label="" name="funding" style={{ marginBottom: 0 }}>
         <InputGroup compact style={{ display: "flex" }}>
           <Form.Item initialValue="₦" name="currency">
             <Select>
@@ -212,11 +214,11 @@ const Uploads = ({ next }) => {
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               }
               parser={value => value.replace(/\bNGN\s?|(,*)/g, "")}
-              placeholder="Funding"
+              placeholder="Total Funding raised so far"
             />
           </Form.Item>
         </InputGroup>
-      </Form.Item>
+      </Form.Item>}
 
       {/* <Form.Item name="gov_id">
                   <InputStyled placeholder="Government ID" />

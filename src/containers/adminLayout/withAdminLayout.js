@@ -52,9 +52,10 @@ const ThemeLayout = WrappedComponent => {
       "/d": "Dashboard",
       "/d/organizations": "Organizations",
       "/d/states": "States",
+      "/d/listings": "Listings",
       "/d/account": "Account",
       "/d/contact": "Contact",
-      "/d/project_brief": "Project Brief",
+      "/d/about": "ABout Us",
       "/d/help": "Help",
       "/business": "Add Company",
       "/business/listorg": "List Organization",
@@ -280,7 +281,7 @@ const ThemeLayout = WrappedComponent => {
                   <Row>
                     <Col md={8} xs={24}>
                       <span className="admin-footer__copyright">
-                        {YEAR} © Copyright. Enterprise Data Map
+                        {YEAR} © Copyright. Ecosystem Data Map, by <a href="#" rel="noopener">FATE Foundation</a>
                       </span>
                     </Col>
                     <Col md={16} xs={24}>
