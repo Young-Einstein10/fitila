@@ -21,12 +21,12 @@ const CardSegmentStyled = Styled(Card)`
 `;
 
 const ViewProfileBtnStyled = Styled(Button)`
-  color: #FF6D00
-  border: 1px solid #FF6D00
+  color: ${({ theme }) => theme['text-primary']}}
+  border: 1px solid ${({ theme }) => theme['text-primary']};
 
   &:hover {
-    color: #FF6D00
-    border: 1px solid #FF6D00
+    color: ${({ theme }) => theme['text-primary']}}
+    border: 1px solid ${({ theme }) => theme['text-primary']};
   }
 `;
 

@@ -20,13 +20,9 @@ const ListOrganization = () => {
 
   const { state } = useContext(BusinessContext);
 
-  const next = () => {
-    setCurrent(current + 1);
-  };
+  const prev = () => setCurrent(current - 1);
 
-  // const prev = () => {
-  //   setCurrent(current - 1);
-  // };
+  const next = () => setCurrent(current + 1);
 
   const steps = [
     {
@@ -35,11 +31,11 @@ const ListOrganization = () => {
     },
     {
       title: "Upload",
-      content: <Uploads next={next} />,
+      content: <Uploads prev={prev} next={next} />,
     },
     {
       title: "Finish",
-      content: <Preview />,
+      content: <Preview prev={prev} />,
     },
   ];
 

@@ -88,7 +88,7 @@ const Profile: FC<RouteComponentProps> = ({ match }) => {
   return (
     <AdminSectionWrapper className="company-profile">
       <RowStyled className="company-profile-row" gutter={25}>
-        <Col span={24}>
+        {/* <Col span={24}>
           <TabBasic defaultActiveKey="1" tabPosition={"top"}>
             {data.map(item => {
               const { content: tabContent, tabTitle } = item;
@@ -102,6 +102,17 @@ const Profile: FC<RouteComponentProps> = ({ match }) => {
               );
             })}
           </TabBasic>
+        </Col> */}
+
+        <Col span={24}>
+          <Summary
+            isLoading={isLoading}
+            selectedOrganization={selectedOrganization}
+          />
+
+          <SimilarCompanies selectedOrganization={selectedOrganization[0]} />
+
+          <Contact selectedOrganization={selectedOrganization[0]} />
         </Col>
       </RowStyled>
     </AdminSectionWrapper>

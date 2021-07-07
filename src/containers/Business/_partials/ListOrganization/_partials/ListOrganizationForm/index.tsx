@@ -9,14 +9,13 @@ import { useHistory } from "react-router-dom";
 import { BusinessContext } from "../../../../context";
 import {
   useEcosystemContext,
-  useOrganizationContext,
   useSectorContext,
 } from "../../../../../../context";
 import {
   ISubEcosystem,
   // ISubclassProps,
 } from "../../../../../../context/Ecosystem/types";
-import states from "../../../../../../states.json"
+import states from "../../../../../../states.json";
 
 const { Option } = Select;
 const InputGroup = InputStyled.Group;
@@ -49,8 +48,9 @@ land and building) of 100million to 1billion naira`,
   },
   {
     name: "Startup",
-    description: "a fast/high growth young business typically between 0-5 years"
-  }
+    description:
+      "a fast/high growth young business typically between 0-5 years",
+  },
 ];
 
 const business_subclass = [
@@ -81,9 +81,18 @@ const ListOrganizationForm = ({ next }) => {
     if (!state.business_type) {
       history.push("/business");
     }
-
-    // getEcosystem();
   }, [state, history]);
+
+  // useEffect(() => {
+  //   const userData = JSON.parse(localStorage.getItem("userData"))
+  
+  //   if (userData) {
+  //     form.setFieldsValue({
+  //       ...userData
+  //     })
+  //   }
+    
+  // }, [form])
 
   const handleSubEcosystemChange = value => {
     const selectedSubEcosystem = subSegment.filter(
@@ -120,7 +129,7 @@ const ListOrganizationForm = ({ next }) => {
           sub_eco => sub_eco.name === values.sub_ecosystem
         );
 
-        setState({
+        const userData = {
           ...state,
           ...values,
           company_valuation: `${values.currency}${values.currency_value}`,
@@ -131,9 +140,16 @@ const ListOrganizationForm = ({ next }) => {
             state.business_type === "Ecosystem Enabler" ? true : false,
           is_enterpreneur:
             state.business_type === "Enterpreneur" ? true : false,
-        });
+        };
+
+        localStorage.setItem(
+          "userData",
+          JSON.stringify(userData)
+        );
+
+        setState(userData);
       } else {
-        setState({
+        const userData = {
           ...state,
           ...values,
           company_valuation: `${values.currency}${values.currency_value}`,
@@ -141,13 +157,18 @@ const ListOrganizationForm = ({ next }) => {
             state.business_type === "Ecosystem Enabler" ? true : false,
           is_enterpreneur:
             state.business_type === "Enterpreneur" ? true : false,
-        });
+        };
+
+        localStorage.setItem(
+          "userData",
+          JSON.stringify(userData)
+        );
+
+        setState(userData);
       }
 
       // Move to Next Step
       next();
-
-      // history.push("/business/uploads");
     } catch (error) {
       console.log(error);
     }
@@ -196,7 +217,13 @@ const ListOrganizationForm = ({ next }) => {
           },
         ]}
       >
-        <InputStyled placeholder={state.business_type === "Enterpreneur" ? "CEO/Founder's Name" : "CEO/DG/Founder's Name"} />
+        <InputStyled
+          placeholder={
+            state.business_type === "Enterpreneur"
+              ? "CEO/Founder's Name"
+              : "CEO/DG/Founder's Name"
+          }
+        />
       </Form.Item>
       {/* CEO/FOUNDER's ANME */}
 
@@ -231,7 +258,6 @@ const ListOrganizationForm = ({ next }) => {
                 </Form.Item> */}
       {/* HEADQUARTERS */}
 
-      
       {/* ADDRESS */}
       <Form.Item
         name="address"

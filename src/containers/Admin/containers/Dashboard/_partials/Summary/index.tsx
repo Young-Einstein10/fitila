@@ -163,7 +163,7 @@ const Summary = () => {
         </CardStyled>
       </Col>
 
-      <Col xs={24} sm={12} md={8} lg={8}>
+      {/* <Col xs={24} sm={12} md={8} lg={8}>
         <CardStyled>
           <p style={{ color: "#81868C", borderRadius: "4px" }}>
             Funding Raised by Startups
@@ -242,7 +242,7 @@ const Summary = () => {
             <HandBagIcon />
           </div>
         </CardStyled>
-      </Col>
+      </Col> */}
     </Row>
   );
 };

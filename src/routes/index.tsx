@@ -53,7 +53,7 @@ const Routes = () => {
       <CustomRoute path="/d/privacy" component={PrivacyPolicy} />
       <CustomRoute path="/d/terms" component={TermsConditions} />
 
-      <CustomRoute path="/d/profile/:id" component={Profile} />
+      <CustomRoute exact path="/d/profile/:id" component={Profile} />
       {/* <Route path="/d/segments/training" component={Training} />
       <Route
         path="/d/segments/business_support"

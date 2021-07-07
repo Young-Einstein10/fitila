@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { useLocation } from "react-router-dom";
 import { Col, Row, Table } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 // import FeatherIcon from "feather-icons-react";
@@ -10,6 +11,7 @@ import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { createDataSource, createTableColumns } from "../../../helpers";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
 import { useOrganizationContext } from "../../../../../../context";
+import { RestFilled } from "@ant-design/icons";
 
 interface ISimilarCompaniesProps {
   selectedOrganization: IOrganizationProps;
@@ -19,6 +21,10 @@ const SimilarCompanies: FC<ISimilarCompaniesProps> = ({
   selectedOrganization,
 }) => {
   const { data: organizations } = useOrganizationContext();
+
+  const { pathname } = useLocation()
+
+  const isViewingProfile = pathname.split('/').length >= 4 ? true : false
 
   const similarCompanies = organizations.filter(
     organization => organization.sector === selectedOrganization.sector
@@ -47,7 +53,7 @@ const SimilarCompanies: FC<ISimilarCompaniesProps> = ({
           <Table
             className="table-responsive"
             dataSource={createDataSource(similarCompanies)}
-            columns={createTableColumns()}
+            columns={createTableColumns(null, null, null, null, isViewingProfile)}
           />
         </Cards>
       </Col>

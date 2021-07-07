@@ -36,6 +36,10 @@ const AdminSectionWrapper = Styled.section<{ background?: string }>`
     }
   }
 
+  &.company-profile {
+    padding: 2rem 1.3rem 1.3rem;
+  }
+
   .ant-form-item .ant-upload {
     width: 100%;
   }

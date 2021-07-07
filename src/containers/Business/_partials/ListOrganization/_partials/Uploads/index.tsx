@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Form, Select, Upload } from "antd";
+import React, { FC, useContext, useState, useEffect } from "react";
+import { Form, Select, Upload, Row, Col } from "antd";
 import {
   ButtonStyled,
   InputNumberStyled,
@@ -13,18 +13,31 @@ import { UploadButtonStyled } from "./styled";
 const InputGroup = InputStyled.Group;
 const Option = Select.Option;
 
-const Uploads = ({ next }) => {
+interface IUploadProps {
+  prev: () => void;
+  next: () => void;
+}
+
+const Uploads: FC<IUploadProps> = ({ prev, next }) => {
   const [num_of_employees_custom, setNum_of_employees_custom] = useState();
   const [file, setFile] = useState({
     ceo_image: [],
     compnay_logo: [],
   });
 
-  // const history = useHistory();
-
   const [form] = Form.useForm();
 
   const { state, setState } = useContext(BusinessContext);
+
+  // useEffect(() => {
+  //   const userData = JSON.parse(localStorage.getItem("userData"))
+  
+  //   if (userData) {
+  //     form.setFieldsValue({
+  //       ...userData
+  //     })
+  //   }
+  // }, [form]);
 
   const handleSubmit = async () => {
     try {
@@ -33,17 +46,20 @@ const Uploads = ({ next }) => {
       if (values.num_of_employees === "Above 1000") {
         values.num_of_employees = values.num_of_employees_custom;
       }
-      console.log(values);
-      setState({
+
+      const userData = {
         ...state,
         ...values,
         funding: `${values.currency}${values.currency_value}`,
         company_logo: file.compnay_logo[0],
         ceo_image: file.ceo_image[0],
-      });
+      };
+
+      localStorage.setItem("userData", JSON.stringify(userData));
+
+      setState(userData);
 
       next();
-      // history.push("/business/preview");
     } catch (error) {
       console.log(error);
     }
@@ -139,13 +155,14 @@ const Uploads = ({ next }) => {
       <Form.Item
         name="cac_doc"
         rules={[
+          { type: "number", message: "Only numbers are allowed" },
           {
             message: "Please input your Business RC Number!",
             required: true,
           },
         ]}
       >
-        <InputStyled type="number" placeholder="Business RC Number" />
+        <InputStyled type="text" placeholder="Business RC Number" />
       </Form.Item>
 
       <Form.Item
@@ -186,39 +203,39 @@ const Uploads = ({ next }) => {
         </Form.Item>
       )}
 
-      {
-        state.business_type === "Enterpreneur" &&
+      {state.business_type === "Enterpreneur" && (
         <Form.Item label="" name="funding" style={{ marginBottom: 0 }}>
-        <InputGroup compact style={{ display: "flex" }}>
-          <Form.Item initialValue="₦" name="currency">
-            <Select>
-              <Option value="₦">₦</Option>
-              <Option value="$">$</Option>
-            </Select>
-          </Form.Item>
+          <InputGroup compact style={{ display: "flex" }}>
+            <Form.Item initialValue="₦" name="currency">
+              <Select>
+                <Option value="₦">₦</Option>
+                <Option value="$">$</Option>
+              </Select>
+            </Form.Item>
 
-          <Form.Item
-            name="currency_value"
-            style={{ width: "100%" }}
-            rules={[
-              { type: "number", message: "Only Numbers are allowed" },
-              {
-                message: "Please input this field!",
-                required: true,
-              },
-            ]}
-          >
-            <InputNumberStyled
-              size="large"
-              formatter={value =>
-                `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              }
-              parser={value => value.replace(/\bNGN\s?|(,*)/g, "")}
-              placeholder="Total Funding raised so far"
-            />
-          </Form.Item>
-        </InputGroup>
-      </Form.Item>}
+            <Form.Item
+              name="currency_value"
+              style={{ width: "100%" }}
+              rules={[
+                { type: "number", message: "Only numbers are allowed" },
+                {
+                  message: "Please input this field!",
+                  required: true,
+                },
+              ]}
+            >
+              <InputNumberStyled
+                size="large"
+                formatter={value =>
+                  `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                parser={value => value.replace(/\bNGN\s?|(,*)/g, "")}
+                placeholder="Total Funding raised so far"
+              />
+            </Form.Item>
+          </InputGroup>
+        </Form.Item>
+      )}
 
       {/* <Form.Item name="gov_id">
                   <InputStyled placeholder="Government ID" />
@@ -228,17 +245,25 @@ const Uploads = ({ next }) => {
         <InputStyled.TextArea placeholder="Organization Description" />
       </Form.Item>
 
-      <Form.Item>
-        <ButtonStyled
-          className=""
-          htmlType="submit"
-          type="primary"
-          size="large"
-          // onClick={() => history.push("/business/preview")}
-        >
-          Continue
-        </ButtonStyled>
-      </Form.Item>
+      <Row gutter={8}>
+        <Col span={12}>
+          <Form.Item>
+            <ButtonStyled type="primary" size="large" onClick={() => prev()}>
+              Previous
+            </ButtonStyled>
+          </Form.Item>
+        </Col>
+
+        <Col span={12}>
+          <ButtonStyled
+            // htmlType="submit"
+            type="primary"
+            size="large"
+          >
+            Next
+          </ButtonStyled>
+        </Col>
+      </Row>
       {/* 
                 <SpanFooter>
                   Please note, each upload cannot be larger than 20 MB, Document

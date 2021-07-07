@@ -43,7 +43,8 @@ const createTableColumns = (
   handleEdit?: (record: any) => void,
   handleDelete?: (record: any) => void,
   isAdmin?: boolean,
-  isOrganizationRoute?: boolean
+  isOrganizationRoute?: boolean,
+  isViewingProfile?: boolean
 ) => {
   const columns: any = [
     {
@@ -139,9 +140,16 @@ const createTableColumns = (
       render: (record, key) => {
         return (
           <Space size="middle">
-            <ViewProfileBtnStyled>
-              <Link to={`/d/profile/${record.id}`}>View Profile</Link>
-            </ViewProfileBtnStyled>
+            {/* Render a anchor link if user is viewing a company profile currently, so when View Profile button in SimilarCompanies is clicked, it'll route to the compnay page */}
+            {isViewingProfile ? (
+              <ViewProfileBtnStyled>
+                <a href={`/d/profile/${record.id}`}>View Profile</a>
+              </ViewProfileBtnStyled>
+            ) : (
+              <ViewProfileBtnStyled>
+                <Link to={`/d/profile/${record.id}`}>View Profile</Link>
+              </ViewProfileBtnStyled>
+            )}
             {/* <Button onClick={() => handleEdit(record)}>
               <EditFilled
                 style={{

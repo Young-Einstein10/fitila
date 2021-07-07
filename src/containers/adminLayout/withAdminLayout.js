@@ -5,7 +5,7 @@ import { Scrollbars } from "react-custom-scrollbars";
 import { ThemeProvider } from "styled-components";
 import MenueItems from "./MenueItems";
 import { CurrentUserButton, Div } from "./style";
-import logo from "../../static/svg/logo.svg";
+import logo from "../../static/img/logo.png";
 import { ReactComponent as ArrowRight } from "../../static/svg/arrowright.svg";
 import burgermenu from "../../static/svg/burgermenu.svg";
 import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
@@ -57,7 +57,7 @@ const ThemeLayout = WrappedComponent => {
       "/d/contact": "Contact",
       "/d/about": "ABout Us",
       "/d/help": "Help",
-      "/business": "Add Company",
+      "/business": "List Organization",
       "/business/listorg": "List Organization",
       "/business/uploads": "List Organization",
       "/business/preview": "Preview Form",
@@ -279,12 +279,12 @@ const ThemeLayout = WrappedComponent => {
 
                 <Footer className="admin-footer" style={footerStyle}>
                   <Row>
-                    <Col md={8} xs={24}>
+                    <Col md={10} xs={24}>
                       <span className="admin-footer__copyright">
-                        {YEAR} © Copyright. Ecosystem Data Map, by <a href="#" rel="noopener">FATE Foundation</a>
+                        {YEAR} © Copyright. Ecosystem Data Map, by <a href="http://www.fatefoundation.org" rel="noopener">FATE Foundation</a>
                       </span>
                     </Col>
-                    <Col md={16} xs={24}>
+                    <Col md={14} xs={24}>
                       <div className="admin-footer__links">
                         <NavLink to="/login">Admin</NavLink>
                         <NavLink to="/d/privacy">Privacy Policy</NavLink>

@@ -1,4 +1,4 @@
-const primaryColor = "#E7833B"; // orange #BF1E2E
+const primaryColor = "#e53f4f"; // #E7833B orange #BF1E2E
 const primaryHover = "#E7833B"; // #FFECDD
 const secondaryColor = "#e53f4f"; // red
 const secondaryHover = "#f7f7f7";

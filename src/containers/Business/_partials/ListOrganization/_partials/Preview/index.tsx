@@ -1,11 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, FC } from "react";
 import { ButtonStyled } from "../../../../../Styles";
 import { numberWithCommas } from "../../../../../../utils/helpers";
 import { useApiContext, useEcosystemContext } from "../../../../../../context";
 import { BusinessContext } from "../../../../context";
 import { useHistory } from "react-router-dom";
 
-const Preview = () => {
+
+interface IPreviewProps {
+  prev: () => void
+}
+
+
+const Preview: FC<IPreviewProps> = ({ prev }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [ecosystem, setEcosystem] = useState([]);
   const [selectedEcosystem, setSelectedEcosystem] = useState([]);
@@ -77,7 +83,7 @@ const Preview = () => {
     selectedEcosystem,
   ]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setIsLoading(true);
 
     const data = { ...state, user: "" };
@@ -94,6 +100,7 @@ const Preview = () => {
       .then(res => {
         setIsLoading(false);
         if (res && res.status === 201) {
+          localStorage.removeItem("userData")
           history.push("/business/success");
         }
       })

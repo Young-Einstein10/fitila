@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import React, { FC, Fragment, Suspense } from "react";
 import { Row, Col, Skeleton } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
@@ -24,7 +24,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
           <Row gutter={[16, 8]}>
             <Col xs={24} sm={24} md={24} lg={14}>
               {isLoading ? (
-                <Cards>
+                <Cards headless>
                   <Skeleton active />
                 </Cards>
               ) : (
@@ -87,92 +87,100 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
 
             {/* =============== COMPANY DETAILS =================== */}
             <Col xs={24} sm={24} md={12} lg={10}>
-              <Cards
-                style={{
-                  height: "202px",
-                }}
-                title={
-                  <div
-                    className="company-founder-wrapper"
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
+              {isLoading ? (
+                <Cards headless>
+                  <Skeleton active />
+                </Cards>
+              ) : (
+                <Cards
+                  style={{
+                    height: "202px",
+                  }}
+                  title={
                     <div
-                      className="founder-image-wrapper"
-                      style={{ width: "50px", height: "50px" }}
+                      className="company-founder-wrapper"
+                      style={{ display: "flex", alignItems: "center" }}
                     >
-                      {selectedOrganization[0] &&
-                      selectedOrganization[0].ceo_image_url ? (
-                        <img
-                          src={selectedOrganization[0].ceo_image_url}
-                          alt="John Doe"
-                          style={{
-                            width: "100%",
-                            height: "auto",
-                            borderRadius: "50px",
-                          }}
-                        />
-                      ) : (
-                        <UnknownAvatar
-                          className="img-placeholder"
-                          style={{ width: "60px", height: "60px" }}
-                        />
-                      )}
-                    </div>
-
-                    <div
-                      className="founder-name-wrapper"
-                      style={{ marginLeft: "2rem" }}
-                    >
-                      <p style={{ marginBottom: 0 }}>
+                      <div
+                        className="founder-image-wrapper"
+                        style={{ width: "50px", height: "50px" }}
+                      >
                         {selectedOrganization[0] &&
-                          selectedOrganization[0].ceo_name}
-                      </p>
-                      <span style={{ color: "#A0A0A0", fontWeight: "normal" }}>
-                        CEO/Founder
-                      </span>
-                    </div>
-                  </div>
-                }
-              >
-                <Row>
-                  <div className="profile-summary-data">
-                    <div>
-                      <span>Sector</span>
-                      <span>
-                        {selectedOrganization[0] &&
-                          selectedOrganization[0].sector_name}
-                      </span>
-                    </div>
+                        selectedOrganization[0].ceo_image_url ? (
+                          <img
+                            src={selectedOrganization[0].ceo_image_url}
+                            alt="John Doe"
+                            style={{
+                              width: "100%",
+                              height: "auto",
+                              borderRadius: "50px",
+                            }}
+                          />
+                        ) : (
+                          <UnknownAvatar
+                            className="img-placeholder"
+                            style={{ width: "60px", height: "60px" }}
+                          />
+                        )}
+                      </div>
 
-                    <div>
-                      <span>Employees</span>
-                      <span>
-                        {selectedOrganization[0] &&
-                          selectedOrganization[0].num_of_employees}
-                      </span>
+                      <div
+                        className="founder-name-wrapper"
+                        style={{ marginLeft: "2rem" }}
+                      >
+                        <p style={{ marginBottom: 0 }}>
+                          {selectedOrganization[0] &&
+                            selectedOrganization[0].ceo_name}
+                        </p>
+                        <span
+                          style={{ color: "#A0A0A0", fontWeight: "normal" }}
+                        >
+                          CEO/Founder
+                        </span>
+                      </div>
                     </div>
+                  }
+                >
+                  <Row>
+                    <div className="profile-summary-data">
+                      <div>
+                        <span>Sector</span>
+                        <span>
+                          {selectedOrganization[0] &&
+                            selectedOrganization[0].sector_name}
+                        </span>
+                      </div>
 
-                    <div>
-                      <span>State</span>
-                      <span>
-                        {selectedOrganization[0] &&
-                          selectedOrganization[0].state}
-                      </span>
-                    </div>
+                      <div>
+                        <span>Employees</span>
+                        <span>
+                          {selectedOrganization[0] &&
+                            selectedOrganization[0].num_of_employees}
+                        </span>
+                      </div>
 
-                    <div>
-                      <span>Headquarters</span>
-                      <span>Nigeria</span>
+                      <div>
+                        <span>State</span>
+                        <span>
+                          {selectedOrganization[0] &&
+                            selectedOrganization[0].state}
+                        </span>
+                      </div>
+
+                      <div>
+                        <span>Headquarters</span>
+                        <span>Nigeria</span>
+                      </div>
                     </div>
-                  </div>
-                </Row>
-              </Cards>
+                  </Row>
+                </Cards>
+              )}
             </Col>
             {/* =============== COMPANY DETAILS =================== */}
           </Row>
 
           {/* =============== CARD SUMMARY =================== */}
-          <Row gutter={[16, 8]}>
+          {/* <Row gutter={[16, 8]}>
             <Col xs={24} sm={24} md={8} lg={8}>
               {isLoading ? (
                 <Cards>
@@ -207,6 +215,13 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
             </Col>
 
             <Col xs={24} sm={24} md={8} lg={8}>
+              {
+                isLoading ? (
+                  <Cards headless>
+                    <Skeleton active />
+                  </Cards>
+                ) : (
+                    
               <Cards headless bodypadding="15px">
                 <p
                   style={{
@@ -219,8 +234,10 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                 </p>
                 <span>{`Total Number of Companies in Nigeria`}</span>
               </Cards>
+                )
+              }
             </Col>
-          </Row>
+          </Row> */}
           {/* =============== CARD SUMMARY =================== */}
         </Col>
       </Row>
