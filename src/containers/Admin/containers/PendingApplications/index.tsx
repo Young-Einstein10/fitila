@@ -11,11 +11,23 @@ import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import { ImgPlaceholderStyled } from "../helpers";
 import ViewDetails from "./_partials/ViewDetails";
+import styled from "styled-components";
 
 interface IPendingAppProps {
   isLoading: boolean;
   data: IOrganizationProps[];
 }
+
+const ButtonApproveStyled = styled(Button)`
+  background-color: ${({ theme }) => theme["text-primary"]};
+  color: #fff;
+
+  &:hover {
+    background-color: ${({ theme }) => theme["text-primary"]};
+    border: solid 1px ${({ theme }) => theme["text-primary"]};
+    color: #fff;
+  }
+`;
 
 const PendingApplications = () => {
   const [organizations, setOrganizations] = useState<IPendingAppProps>({
@@ -204,13 +216,13 @@ const PendingApplications = () => {
             >
               Decline
             </Button>
-            <Button
-              type="primary"
+
+            <ButtonApproveStyled
               onClick={() => handleApproval(record.id)}
               loading={isApprovalLoading}
             >
               Approve
-            </Button>
+            </ButtonApproveStyled>
           </Space>
         );
       },

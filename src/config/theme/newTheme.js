@@ -36,11 +36,15 @@ const bgGrayColorNormal = "#F4F5F7";
 const lightGrayColor = "#868EAE";
 const sliderRailColor = "rgba(95,99,242,0.2)";
 const graySolid = "#9299b8";
+const primaryIconColor = "#fb5666";
+const secondaryIconColor = "#e53f4f";
 const btnlg = "56px";
 const btnsm = "36px";
 const btnxs = "29px";
 
 const theme = {
+  "primary-icon-color": primaryIconColor,
+  "secondary-icon-color": secondaryIconColor,
   "primary-color": primaryColor, // primary color for all components
   "primary-hover": primaryHover, // primary color for all components
   "secondary-color": secondaryColor, // secondary color for all components

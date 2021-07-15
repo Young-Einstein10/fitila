@@ -1,4 +1,4 @@
-import React, { FC, Fragment, Suspense } from "react";
+import React, { FC, Fragment } from "react";
 import { Row, Col, Skeleton } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { ViewProfileBtnStyled } from "../../../Dashboard/styled";

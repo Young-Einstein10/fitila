@@ -55,9 +55,7 @@ const MenuItems = props => {
 
       {auth.isAuthenticated && (
         <Menu.Item
-          icon={
-            <LinkedIcon children={<ContactNavIcon />} to={`/d/listings`} />
-          }
+          icon={<LinkedIcon children={<ContactNavIcon />} to={`/d/listings`} />}
           key="/d/listings"
         >
           <NavLink onClick={toggleCollapsed} to={`/d/listings`}>
@@ -66,14 +64,14 @@ const MenuItems = props => {
         </Menu.Item>
       )}
 
-      <Menu.Item
+      {/* <Menu.Item
         icon={<LinkedIcon children={<DashboardIcon />} to="/d/states" />}
         key="/d/states"
       >
         <NavLink onClick={toggleCollapsed} to={`/d/states`}>
           States
         </NavLink>
-      </Menu.Item>
+      </Menu.Item> */}
 
       {/* {auth.isAuthenticated && (
         <Menu.Item

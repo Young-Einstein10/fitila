@@ -1,13 +1,15 @@
 import React from "react";
 import { ECOSYSTEM_SEGMENTS } from "../../../../redux/constants";
-import { ReactComponent as BriefCase } from "../../../../static/svg/briefcase.svg";
-import { ReactComponent as BusinessSupportIcon } from "../../../../static/svg/business_support_icon.svg";
-import { ReactComponent as TrainingIcon } from "../../../../static/svg/training.svg";
-import { ReactComponent as MarketAccessIcon } from "../../../../static/svg/funnel.svg";
-import { ReactComponent as PolicyRegulationIcon } from "../../../../static/svg/policyreg.svg";
-import { ReactComponent as RescourcesIcon } from "../../../../static/svg/resources.svg";
-import { ReactComponent as ResearchIcon } from "../../../../static/svg/research.svg";
-import { ReactComponent as MSMEsIcon } from "../../../../static/svg/cone.svg";
+import {
+  BriefCase,
+  BusinessSupportIcon,
+  TrainingIcon,
+  MarketAccessIcon,
+  MsmesIcon,
+  PolicyRegulationIcon,
+  ResearchIcon,
+  ResourcesIcon,
+} from "../../../../components/svgs";
 
 const tableHeader = (
   <div>
@@ -29,28 +31,28 @@ const generateIcons = (name, style?: React.CSSProperties) => {
 
   switch (name) {
     case BUSINESS_SUPPORT:
-      return <BusinessSupportIcon style={{ ...style }} />;
+      return <BusinessSupportIcon />;
 
     case TRAINING:
-      return <TrainingIcon style={{ ...style }} />;
+      return <TrainingIcon />;
 
     case FUNDING:
-      return <BriefCase style={{ ...style }} />;
+      return <BriefCase />;
 
     case MARKET_ACCESS:
-      return <MarketAccessIcon style={{ ...style }} />;
+      return <MarketAccessIcon />;
 
     case RESEARCH_AND_DEVELOPMENT:
-      return <ResearchIcon style={{ ...style }} />;
+      return <ResearchIcon />;
 
     case POLICY_AND_REGULATION:
-      return <PolicyRegulationIcon style={{ ...style }} />;
+      return <PolicyRegulationIcon />;
 
     case RESOURCES:
-      return <RescourcesIcon style={{ ...style }} />;
+      return <ResourcesIcon />;
 
     case MSMES_AND_STARTUPS:
-      return <MSMEsIcon style={{ ...style }} />;
+      return <MsmesIcon />;
 
     default:
       return <BriefCase style={{ ...style }} />;

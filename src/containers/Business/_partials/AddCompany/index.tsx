@@ -2,7 +2,8 @@ import React, { FC, useContext, useState } from "react";
 import Heading from "../../../../components/heading/heading";
 import { ReactComponent as Enterpreneur } from "../../../../static/svg/enterpreneur.svg";
 import { ReactComponent as Ecosystem } from "../../../../static/svg/ecosystem.svg";
-import { ReactComponent as EcosystemColored } from "../../../../static/svg/ecosystemcolored.svg";
+// import { ReactComponent as EcosystemColored } from "../../../../static/svg/ecosystemcolored.svg";
+import { EcosystemColored } from "../../../../components/svgs";
 
 import { Col, Row, Tooltip } from "antd";
 import { ColStyled, SpanStyled, SpanFooter } from "./styled";

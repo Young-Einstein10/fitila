@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Layout, Col, Row, Dropdown, Button } from "antd";
 import { Link, NavLink } from "react-router-dom";
-import Logo from "../../static/svg/logo.svg";
+import Logo from "../../static/img/logo.png";
 import burgermenu from "../../static/svg/burgermenu.svg";
 
 // import { ReactComponent as UserPlus } from "../../static/svg/user.svg";

@@ -27,7 +27,7 @@ const LayoutStyled = Styled(Layout)`
     & .ant-layout-content {
       
       background: #fff;
-      min-height: calc(100vh - 152px);
+      min-height: calc(100vh - 140px);
       margin-top: 4rem;
 
       @media screen and (min-width: 768px) {
@@ -44,8 +44,7 @@ const HeaderStyled = Styled(Header)`
     z-index: 1000;
     background: #fff
 
-    .ant-layout-header {
-      
+    .ant-layout-header {      
         min-height: 76px;
         /* box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04) !important; */
         padding: 0.2rem 3rem;
@@ -55,9 +54,15 @@ const HeaderStyled = Styled(Header)`
     .navItem-right {
         display: flex;
         align-items: center;
-    }   
+    }
 
-    
+    .navItem-left {
+      width: 7rem;
+
+      img {
+        width: 100%;
+      }
+    }
     
     .ant-breadcrumb {
         margin-left: 5rem;

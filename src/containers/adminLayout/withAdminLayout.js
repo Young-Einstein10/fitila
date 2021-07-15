@@ -55,8 +55,10 @@ const ThemeLayout = WrappedComponent => {
       "/d/listings": "Listings",
       "/d/account": "Account",
       "/d/contact": "Contact",
-      "/d/about": "ABout Us",
+      "/d/about": "About Us",
       "/d/help": "Help",
+      "/d/sectors": "Sectors",
+      "/d/administrators": "Administrators",
       "/business": "List Organization",
       "/business/listorg": "List Organization",
       "/business/uploads": "List Organization",
@@ -213,7 +215,7 @@ const ThemeLayout = WrappedComponent => {
                   }
                   to="/"
                 >
-                  <img src={logo} alt="Logo" style={{ width: "100px" }} />
+                  <img src={logo} alt="Logo" />
                 </Link>
 
                 <Breadcrumb separator={<ArrowRight />}>
@@ -221,13 +223,11 @@ const ThemeLayout = WrappedComponent => {
                 </Breadcrumb>
               </div>
 
-              {auth.isAuthenticated ? (
+              {auth.isAuthenticated && (
                 <CurrentUserButton className="user-info" size="large">
                   <span></span>
                   {auth.user.first_name} {auth.user.last_name}
                 </CurrentUserButton>
-              ) : (
-                <span></span>
               )}
             </Row>
           </Header>
@@ -281,7 +281,10 @@ const ThemeLayout = WrappedComponent => {
                   <Row>
                     <Col md={10} xs={24}>
                       <span className="admin-footer__copyright">
-                        {YEAR} © Copyright. Ecosystem Data Map, by <a href="http://www.fatefoundation.org" rel="noopener">FATE Foundation</a>
+                        {YEAR} © Copyright. Ecosystem Data Map, by{" "}
+                        <a href="http://www.fatefoundation.org" rel="noopener">
+                          FATE Foundation
+                        </a>
                       </span>
                     </Col>
                     <Col md={14} xs={24}>

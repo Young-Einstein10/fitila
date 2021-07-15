@@ -1,14 +1,15 @@
 import React from "react";
 import { Row, Col, Card } from "antd";
-import { ReactComponent as Icon1 } from "../../../../../../static/svg/icon1.svg";
-import { ReactComponent as StarIcon } from "../../../../../../static/svg/star.svg";
-// import { ReactComponent as LocationIcon } from "../../../../../../static/svg/location.svg";
-import { ReactComponent as HandBagIcon } from "../../../../../../static/svg/handbag.svg";
 import Styled from "styled-components";
 import {
   useOrganizationContext,
   useSectorContext,
 } from "../../../../../../context";
+import {
+  Icon1,
+  StarIcon,
+  HandbagIcon,
+} from "../../../../../../components/svgs";
 
 const CardStyled = Styled(Card)`
   box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
@@ -104,7 +105,7 @@ const Summary = () => {
             >
               {sectors.length}
             </p>
-            <HandBagIcon />
+            <HandbagIcon />
           </div>
         </CardStyled>
       </Col>
@@ -131,7 +132,7 @@ const Summary = () => {
             >
               {numOfStartUps}
             </p>
-            <HandBagIcon />
+            <HandbagIcon />
           </div>
         </CardStyled>
       </Col>
@@ -158,7 +159,7 @@ const Summary = () => {
             >
               {numOfFemaleFounders}
             </p>
-            <HandBagIcon />
+            <HandbagIcon />
           </div>
         </CardStyled>
       </Col>

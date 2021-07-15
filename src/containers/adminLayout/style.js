@@ -112,14 +112,15 @@ const Div = Styled.div`
     }
 
     .striking-logo{
+        width: 7rem;
+
         @media only screen and (max-width: 875px){
             ${({ theme }) => (theme.rtl ? "margin-left" : "margin-right")}: 4px;
         }
         @media only screen and (max-width: 767px){
             ${({ theme }) => (theme.rtl ? "margin-left" : "margin-right")}: 0;
         }
-        img{
-            max-width: ${({ theme }) => (theme.topMenu ? "140px" : "120px")};
+        img{            
             width: 100%;
         }
         &.top-menu{
@@ -519,8 +520,8 @@ const CurrentUserButton = Styled(Button)`
         height: 30px;
         width: 30px;
         border-radius: 50px;
-        margin-right: 10px
-        background: #e6e6e6
+        margin-right: 10px;
+        background: #e6e6e6;
     }
 `;
 

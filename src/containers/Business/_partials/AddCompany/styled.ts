@@ -17,15 +17,15 @@ const SpanStyled = Styled.span`
       svg {
      
         path:nth-child(2) {            
-          fill: #ffdec6
+          fill: ${({ theme }) => theme["primary-icon-color"]};
         }
 
         path:nth-child(3) {            
-          fill: #E7833B
+          fill: ${({ theme }) => theme["secondary-icon-color"]};;
         }
 
         path:nth-child(4) {            
-          fill: #CF702A;
+          fill: #000;
         }
       }
   }
@@ -36,15 +36,15 @@ const SpanStyled = Styled.span`
       svg {
      
         path:nth-child(2) {            
-          fill: #ffdec6
+          fill: ${({ theme }) => theme["primary-icon-color"]};
         }
 
         path:nth-child(3) {            
-          fill: #E7833B
+          fill: ${({ theme }) => theme["secondary-icon-color"]};
         }
 
         path:nth-child(4) {            
-          fill: #CF702A;
+          fill: #000;
         }
       }
 
