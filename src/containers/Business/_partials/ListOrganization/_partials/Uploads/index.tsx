@@ -1,11 +1,10 @@
-import React, { FC, useContext, useState, useEffect } from "react";
+import React, { FC, useContext, useState } from "react";
 import { Form, Select, Upload, Row, Col } from "antd";
 import {
   ButtonStyled,
   InputNumberStyled,
   InputStyled,
 } from "../../../../../Styles";
-// import {  useHistory } from "react-router-dom";
 import { BusinessContext } from "../../../../context";
 import { ReactComponent as UploadIcon } from "../../../../../../static/svg/upload.svg";
 import { UploadButtonStyled } from "./styled";
@@ -29,16 +28,6 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
 
   const { state, setState } = useContext(BusinessContext);
 
-  // useEffect(() => {
-  //   const userData = JSON.parse(localStorage.getItem("userData"))
-  
-  //   if (userData) {
-  //     form.setFieldsValue({
-  //       ...userData
-  //     })
-  //   }
-  // }, [form]);
-
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
@@ -55,7 +44,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
         ceo_image: file.ceo_image[0],
       };
 
-      localStorage.setItem("userData", JSON.stringify(userData));
+      console.log(userData);
 
       setState(userData);
 
@@ -155,10 +144,21 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
       <Form.Item
         name="cac_doc"
         rules={[
-          { type: "number", message: "Only numbers are allowed" },
+          // { type: "number", message: "Only numbers are allowed" },
           {
             message: "Please input your Business RC Number!",
             required: true,
+          },
+          {
+            validator: async (rule, value) => {
+              try {
+                if (isNaN(value)) {
+                  throw new Error("Only numbers are allowed!");
+                }
+              } catch (err) {
+                throw new Error(err);
+              }
+            },
           },
         ]}
       >
@@ -237,10 +237,6 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
         </Form.Item>
       )}
 
-      {/* <Form.Item name="gov_id">
-                  <InputStyled placeholder="Government ID" />
-                </Form.Item> */}
-
       <Form.Item name="description">
         <InputStyled.TextArea placeholder="Organization Description" />
       </Form.Item>
@@ -255,11 +251,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
         </Col>
 
         <Col span={12}>
-          <ButtonStyled
-            // htmlType="submit"
-            type="primary"
-            size="large"
-          >
+          <ButtonStyled htmlType="submit" type="primary" size="large">
             Next
           </ButtonStyled>
         </Col>

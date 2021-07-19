@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Checkbox, Button, Form } from "antd";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import Heading from "../../components/heading/heading";
 import { AuthWrapper } from "../Styles";
-// import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
-// import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
-// import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
-// import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
+import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
+import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
+import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
+import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
 import { InputStyled } from "../Styles";
 import { useApiContext, useAuthContext } from "../../context";
 
@@ -113,7 +113,7 @@ const Login = ({ history, location }) => {
             </Button>
           </Form.Item>
 
-          {/* <p className="auth-notice">
+          <p className="auth-notice">
             Don&rsquo;t have an account?{" "}
             <NavLink to="/signup">Sign up here</NavLink>
           </p>
@@ -139,7 +139,7 @@ const Login = ({ history, location }) => {
                 <LinkedIn />
               </Link>
             </li>
-          </ul> */}
+          </ul>
         </Form>
       </div>
     </AuthWrapper>

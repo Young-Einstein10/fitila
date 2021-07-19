@@ -85,13 +85,13 @@ const ListOrganizationForm = ({ next }) => {
 
   // useEffect(() => {
   //   const userData = JSON.parse(localStorage.getItem("userData"))
-  
+
   //   if (userData) {
   //     form.setFieldsValue({
   //       ...userData
   //     })
   //   }
-    
+
   // }, [form])
 
   const handleSubEcosystemChange = value => {
@@ -142,10 +142,7 @@ const ListOrganizationForm = ({ next }) => {
             state.business_type === "Enterpreneur" ? true : false,
         };
 
-        localStorage.setItem(
-          "userData",
-          JSON.stringify(userData)
-        );
+        console.log(userData);
 
         setState(userData);
       } else {
@@ -159,10 +156,7 @@ const ListOrganizationForm = ({ next }) => {
             state.business_type === "Enterpreneur" ? true : false,
         };
 
-        localStorage.setItem(
-          "userData",
-          JSON.stringify(userData)
-        );
+        console.log(userData);
 
         setState(userData);
       }
@@ -225,7 +219,7 @@ const ListOrganizationForm = ({ next }) => {
           }
         />
       </Form.Item>
-      {/* CEO/FOUNDER's ANME */}
+      {/* CEO/FOUNDER's NAME */}
 
       {/* CEO/FOUNDER"S NAME */}
       <Form.Item
@@ -242,20 +236,20 @@ const ListOrganizationForm = ({ next }) => {
           <Option value="female">Female</Option>
         </Select>
       </Form.Item>
-      {/* CEO/FOUNDER's ANME */}
+      {/* CEO/FOUNDER's NAME */}
 
       {/* HEADQUARTERS */}
       {/* <Form.Item
-                  name="head_quarters"
-                  rules={[
-                    {
-                      message: "Please input your headquarters",
-                      required: true,
-                    },
-                  ]}
-                >
-                  <InputStyled placeholder="CEO/Founder's Name" />
-                </Form.Item> */}
+        name="head_quarters"
+        rules={[
+          {
+            message: "Please input your headquarters",
+            required: true,
+          },
+        ]}
+      >
+        <InputStyled placeholder="CEO/Founder's Name" />
+      </Form.Item> */}
       {/* HEADQUARTERS */}
 
       {/* ADDRESS */}
@@ -311,19 +305,19 @@ const ListOrganizationForm = ({ next }) => {
             allowClear
           >
             {/* {Object.keys(ecosystemDropdown).map((ecosystem, key) => (
-                        <Option
-                          key={key}
-                          value={ecosystem
-                            .split("_")
-                            .join(" ")
-                            .toLocaleUpperCase()}
-                        >
-                          {ecosystem
-                            .split("_")
-                            .join(" ")
-                            .toLocaleUpperCase()}
-                        </Option>
-                      ))} */}
+              <Option
+                key={key}
+                value={ecosystem
+                  .split("_")
+                  .join(" ")
+                  .toLocaleUpperCase()}
+              >
+                {ecosystem
+                  .split("_")
+                  .join(" ")
+                  .toLocaleUpperCase()}
+              </Option>
+            ))} */}
 
             {ecosystem.map((eco, key) => (
               <Option key={eco.id} value={eco.name}>
@@ -640,7 +634,6 @@ const ListOrganizationForm = ({ next }) => {
           htmlType="submit"
           type="primary"
           size="large"
-          // onClick={() => history.push("")}
         >
           Continue
         </ButtonStyled>

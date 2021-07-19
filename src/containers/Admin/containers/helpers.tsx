@@ -51,19 +51,16 @@ const createTableColumns = (
       title: "Rank",
       dataIndex: "rank",
       key: "rank",
-      // responsive: ["xs"],
     },
     {
       title: "Company",
       dataIndex: "company",
       key: "company",
-      // responsive: ["xs"],
     },
     {
       title: "Ceo/Founder",
       dataIndex: "ceo_name",
       key: "ceo_name",
-      // responsive: ["xs"],
 
       render: (record, text) => (
         <Space size="middle" style={{ display: "flex", alignItems: "center" }}>
@@ -97,33 +94,23 @@ const createTableColumns = (
       title: "State",
       dataIndex: "state",
       key: "state",
-      // responsive: ["xs"],
     },
     {
       title: "Sectors",
       dataIndex: "sectors",
       key: "sectors",
-      // responsive: ["xs"],
     },
-    // {
-    //   title: "Market Cap",
-    //   dataIndex: "market_cap",
-    //   key: "market_cap",
-    // },
     {
       title: "Employees",
       dataIndex: "employees",
       key: "employees",
-      // responsive: ["xs"],
     },
     {
       title: "Funding (₦)",
       dataIndex: "funding",
       key: "funding",
-      // responsive: ["xs"],
 
       render: (record, key) => {
-        // console.log(key);
         let result = record ? record.split("₦") : [];
 
         return (
@@ -135,7 +122,6 @@ const createTableColumns = (
       title: "Actions",
       key: "action",
       align: "center",
-      // responsive: ["xs"],
 
       render: (record, key) => {
         return (
@@ -150,22 +136,7 @@ const createTableColumns = (
                 <Link to={`/d/profile/${record.id}`}>View Profile</Link>
               </ViewProfileBtnStyled>
             )}
-            {/* <Button onClick={() => handleEdit(record)}>
-              <EditFilled
-                style={{
-                  width: "1.2rem",
-                  height: "1.2rem",
-                }}
-              />
-            </Button> */}
-            {/* <Button onClick={() => handleDelete(record.id)}>
-              <DeleteFilled
-                style={{
-                  width: "1.2rem",
-                  height: "1.2rem",
-                }}
-              />
-            </Button> */}
+
             {isAdmin && isOrganizationRoute ? (
               <Fragment>
                 <EditButton onClick={() => handleEdit(record)} />

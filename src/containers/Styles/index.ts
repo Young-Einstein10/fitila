@@ -134,12 +134,15 @@ const AuthWrapper = Styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
     form{
       width: 420px;
+
       h1{
-        font-size: 24px;
-        font-weight: 600;
-        margin-bottom: 45px;
+        font-size: 48px;
+        font-weight: bold;
+        margin: 2rem 0;
+
         @media only screen and (max-width: 767px){
           margin-bottom: 28px;
         }
@@ -147,10 +150,12 @@ const AuthWrapper = Styled.div`
           color: ${({ theme }) => theme["extra-light-color"]};
         }
       }
+
       .auth-form-action{
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         display: flex;
         justify-content: space-between;
+
         @media only screen and (max-width: 379px){
           flex-flow: column;
           .forgot-pass-link{
@@ -212,7 +217,8 @@ const AuthWrapper = Styled.div`
         }
       }
       li{
-        padding:6px;
+        padding: 10px;
+
         a{
           display: flex;
           align-items: center;
