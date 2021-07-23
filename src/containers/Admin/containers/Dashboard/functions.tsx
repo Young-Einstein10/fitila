@@ -1,5 +1,4 @@
 import React from "react";
-import { ECOSYSTEM_SEGMENTS } from "../../../../redux/constants";
 import {
   BriefCase,
   BusinessSupportIcon,
@@ -16,6 +15,17 @@ const tableHeader = (
     <span>Newly Added</span>
   </div>
 );
+
+const ECOSYSTEM_SEGMENTS = {
+  BUSINESS_SUPPORT: "business support",
+  TRAINING: "training",
+  FUNDING: "funding",
+  MARKET_ACCESS: "market access",
+  RESEARCH_AND_DEVELOPMENT: "research and development",
+  POLICY_AND_REGULATION: "policy and regulation",
+  RESOURCES: "resources",
+  MSMES_AND_STARTUPS: "msmes and startups",
+};
 
 const generateIcons = (name, style?: React.CSSProperties) => {
   const {
@@ -55,7 +65,7 @@ const generateIcons = (name, style?: React.CSSProperties) => {
       return <MsmesIcon />;
 
     default:
-      return <BriefCase style={{ ...style }} />;
+      return <BriefCase  />;
   }
 };
 

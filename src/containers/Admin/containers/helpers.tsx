@@ -58,7 +58,7 @@ const createTableColumns = (
       key: "company",
     },
     {
-      title: "Ceo/Founder",
+      title: "CEO/Founder",
       dataIndex: "ceo_name",
       key: "ceo_name",
 

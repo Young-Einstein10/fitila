@@ -113,10 +113,10 @@ const Login = ({ history, location }) => {
             </Button>
           </Form.Item>
 
-          <p className="auth-notice">
+          {/* <p className="auth-notice">
             Don&rsquo;t have an account?{" "}
             <NavLink to="/signup">Sign up here</NavLink>
-          </p>
+          </p> */}
 
           <ul className="social-login">
             <li>

@@ -99,7 +99,7 @@ const Dashboard: FC<RouteComponentProps> = () => {
                           .toLowerCase()}`}
                       >
                         <CardSegmentStyled>
-                          {generateIcons(segment.name)}
+                          {generateIcons(segment.name.toLowerCase())}
 
                           <div>
                             <strong>{segment.name}</strong>

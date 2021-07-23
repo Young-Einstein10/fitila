@@ -10,7 +10,7 @@ import { AuthWrapper } from "../Styles";
 import Heading from "../../components/heading/heading";
 import { InputStyled } from "../Styles";
 import { connect } from "react-redux";
-import { signupUser } from "../../redux/actions/authActions";
+
 
 const { Option } = Select;
 
@@ -162,4 +162,4 @@ const mapStateToProps = (state: any) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { signupUser })(Signup);
+export default connect(mapStateToProps, null)(Signup);

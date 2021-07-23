@@ -67,9 +67,9 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
           <NavLink to="/signin">Sign In</NavLink>
         </ButtonStyled> */}
 
-        <BusinessButton size="large" icon={<UserIcon />}>
-          <NavLink style={{ marginLeft: "1rem" }} to="/login">
-            Sign In
+        <BusinessButton size="large">
+          <NavLink to="/d">
+            See Dashboard
           </NavLink>
         </BusinessButton>
       </li>
@@ -103,9 +103,9 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
                 <NavLink to="/business">List Your Organization</NavLink>
               </BusinessButton>
 
-              <BusinessButton size="large" icon={<UserIcon />}>
-                <NavLink style={{ marginLeft: "1rem" }} to="/login">
-                  Sign In
+              <BusinessButton size="large">
+                <NavLink to="/d">
+                  See Dashboard
                 </NavLink>
               </BusinessButton>
 

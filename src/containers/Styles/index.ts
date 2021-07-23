@@ -134,6 +134,8 @@ const AuthWrapper = Styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: 3rem;
+    padding-bottom: 8rem;
 
     form{
       width: 420px;

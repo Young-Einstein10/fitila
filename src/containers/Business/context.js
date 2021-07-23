@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../../config/api";
+import { useApiContext } from "../../context";
 export const BusinessContext = React.createContext();
 
 const BusinessProvider = ({ children }) => {
@@ -38,8 +38,10 @@ const BusinessProvider = ({ children }) => {
     user: null,
   });
 
+  const { organization } = useApiContext();
+
   const addBusiness = async businessData => {
-    const res = await api.business.addBusiness(businessData);
+    const res = await organization.addBusiness(businessData);
 
     if (res.status && res.status === 200) {
       console.log("DATA", res.data);
