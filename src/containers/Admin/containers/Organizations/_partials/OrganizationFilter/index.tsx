@@ -6,6 +6,7 @@ import { ReactComponent as SearchIconLeft } from "../../../../../../static/svg/S
 import { SelectStyled } from "../../../../../Styles";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
 import { ISectorProps } from "../../../../../../context/Sector/types";
+import { capitalize } from "../../../Dashboard/functions";
 
 const { Option } = SelectStyled;
 const FormItem = Form.Item;
@@ -19,6 +20,7 @@ interface IOrganizationFilterProps {
   states: string[];
   sectors: ISectorProps[];
   state: string;
+  sector?: string;
 }
 
 type IFilterOption = "name" | "state" | "sector" | "search";
@@ -30,6 +32,7 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
   state,
   sectors,
   states,
+  sector,
 }) => {
   const [filter, setFilter] = useState<IFilterOption | null>(null);
   const [currentFilterResult, setCurrentFilterResult] = useState<
@@ -47,7 +50,24 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
 
       setFilteredOrganizations(result);
     }
-  }, [state, organizations, setFilteredOrganizations]);
+
+    if (sector) {
+      const result = organizations
+        .map(organization => organization)
+        .filter(
+          organization =>
+            organization.sector_name.toLowerCase() === sector.toLowerCase()
+        );
+
+      // console.log({ result });
+
+      setCurrentFilterResult(result);
+
+      setTimeout(() => {
+        setFilteredOrganizations(result);
+      }, 1000);
+    }
+  }, [state, organizations, setFilteredOrganizations, sector]);
 
   const clearFilters = () => {
     setFilter(null);
@@ -109,7 +129,6 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
             );
 
           setCurrentFilterResult(result);
-
           setFilteredOrganizations(result);
         }
       }
@@ -127,7 +146,6 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
         });
 
         setCurrentFilterResult(filteredData);
-
         setFilteredOrganizations(filteredData);
       }
     }
@@ -150,9 +168,16 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
           )}
         </p>
       </div>
+
       <Row gutter={[16, 8]} style={{ padding: "0 1.3rem 1.3rem" }}>
         <Col style={{ marginBottom: "0" }} span={24}>
-          <Form layout="vertical" initialValues={{ state_filter: state }}>
+          <Form
+            layout="vertical"
+            initialValues={{
+              state_filter: capitalize(state),
+              sector_filter: capitalize(sector),
+            }}
+          >
             <Row gutter={[16, 16]}>
               {!state && (
                 <Col xs={24} sm={24} md={12} lg={12}>
@@ -186,7 +211,6 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                     optionFilterProp="children"
                     onSelect={(val: string) => {
                       setFilter("state");
-
                       filterOrganizations(val, "state");
                     }}
                     filterOption={(input, option) =>
@@ -204,7 +228,7 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                 </FormItem>
               </Col>
 
-              {state && (
+              {/* {state && (
                 <Col
                   style={{ marginBottom: "0" }}
                   xs={24}
@@ -243,7 +267,7 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                     </SelectStyled>
                   </FormItem>
                 </Col>
-              )}
+              )} */}
 
               <Col style={{ marginBottom: 0 }} xs={24} sm={24} md={12} lg={6}>
                 <FormItem style={{ marginBottom: 0 }} name="sector_filter">

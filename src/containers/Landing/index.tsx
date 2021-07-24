@@ -17,7 +17,50 @@ const Landing: FC<RouteComponentProps> = ({ history }) => {
   const {
     isLoading: isOrganizationLoading,
     data: organizations,
+    states,
+    sectors,
   } = useOrganizationContext();
+
+  const handleSearch = (val: string) => {
+    let result = JSON.parse(val);
+
+    const { type, value } = result;
+
+    // console.log(result);
+    const filteredData = organizations.find(record => {
+      if (type === "organization") {
+        return Object.keys(record).some(
+          key =>
+            record &&
+            record[key] &&
+            record[key]
+              .toString()
+              .toLowerCase()
+              .includes(value.name.toLowerCase())
+        );
+      } else {
+        return Object.keys(record).some(
+          key =>
+            record &&
+            record[key] &&
+            record[key]
+              .toString()
+              .toLowerCase()
+              .includes(value.toLowerCase())
+        );
+      }
+    });
+
+    // console.log(filteredData);
+
+    type === "sector"
+      ? history.push(`/d/organizations`, {
+          sector: value.toLowerCase(),
+        })
+      : type === "state"
+      ? history.push(`/d/organizations/${value.toLowerCase()}`)
+      : filteredData.id && history.push(`/d/profile/${filteredData.id}`);
+  };
 
   return (
     <SectionWrapper className="section-landing">
@@ -47,37 +90,36 @@ const Landing: FC<RouteComponentProps> = ({ history }) => {
             onDropdownVisibleChange={open => {
               setDropdownIsOpen(open);
             }}
-            onSelect={val => {
-              // let value = val.toString().toLowerCase();
-
-              // const filteredData = organizations.find(record => {
-              //   console.log({ record });
-
-              //   return Object.keys(record).some(
-              //     key =>
-              //       record &&
-              //       record[key]
-              //         .toString()
-              //         .toLowerCase()
-              //         .includes(value)
-              //   );
-              // });
-
-              // console.log(filteredData);
-
-              let selectedOrg = organizations.find(org => org.name === val);
-              selectedOrg.id && history.push(`/d/profile/${selectedOrg.id}`);
-            }}
-            filterOption={(input, option) => {
-              return (
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              );
-            }}
+            onSelect={handleSearch}
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
             loading={isOrganizationLoading}
           >
             {organizations.map((org, key) => (
-              <Option key={key} value={org.name}>
+              <Option
+                key={key}
+                value={JSON.stringify({ type: "organization", value: org })}
+              >
                 {org.name}
+              </Option>
+            ))}
+
+            {sectors.map((sector, key) => (
+              <Option
+                key={key + sector}
+                value={JSON.stringify({ type: "sector", value: sector })}
+              >
+                {sector}
+              </Option>
+            ))}
+
+            {states.map((state, key) => (
+              <Option
+                key={key + state}
+                value={JSON.stringify({ type: "state", value: state })}
+              >
+                {state}
               </Option>
             ))}
           </SelectStyled>

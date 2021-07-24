@@ -132,7 +132,7 @@ const Dashboard: FC<RouteComponentProps> = () => {
                     <Link
                       className={`cell cell--${i + 1}`}
                       key={state.id}
-                      to={`/d/organizations/${state.name}`}
+                      to={`/d/organizations/${state.name.toLowerCase()}`}
                     >
                       <div>
                         <p>{state.name}</p>

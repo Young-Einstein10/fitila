@@ -1,5 +1,10 @@
 import React, { FC, useState, useEffect } from "react";
-import { NavLink, RouteComponentProps, useParams } from "react-router-dom";
+import {
+  NavLink,
+  RouteComponentProps,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import { Button, Row, Modal, Col, Table } from "antd";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
@@ -19,7 +24,12 @@ import CSVUploadModal from "./_partials/CSVUploadModal";
 import { UploadOutlined } from "@ant-design/icons";
 import BulkDeleteModal from "./_partials/BulkDeleteModal";
 
-const Organization: FC<RouteComponentProps> = ({ location }) => {
+type ILocationStateProps = {
+  sector?: string;
+  state?: string;
+};
+
+const Organization: FC<RouteComponentProps> = () => {
   const [
     isEditOrganizationModalOpen,
     setIsEditOrganizationModalOpen,
@@ -35,7 +45,9 @@ const Organization: FC<RouteComponentProps> = ({ location }) => {
     IOrganizationProps[]
   >([]);
 
-  const { state } = useParams() as any;
+  const { state } = useParams<{ state: string }>();
+
+  const location = useLocation<ILocationStateProps>();
 
   const isOrganizationRoute = location.pathname === "/d/organizations";
 
@@ -43,7 +55,6 @@ const Organization: FC<RouteComponentProps> = ({ location }) => {
     isLoading: isOrganizationLoading,
     data: organizations,
     states,
-    // sectors,
     refetchOrganizations,
   } = useOrganizationContext();
 
@@ -57,7 +68,9 @@ const Organization: FC<RouteComponentProps> = ({ location }) => {
     if (!state && organizations.length) {
       setFilteredOrganizations(organizations);
     }
-  }, [organizations, state]);
+
+    console.log(location.state);
+  }, [organizations, state, location]);
 
   const handleDelete = organizationId => {
     if (organizationId) {
@@ -150,7 +163,8 @@ const Organization: FC<RouteComponentProps> = ({ location }) => {
           setFilteredOrganizations={setFilteredOrganizations}
           states={states}
           sectors={sectors}
-          state={state}
+          state={state || location.state?.state}
+          sector={location.state?.sector}
         />
       </div>
 
