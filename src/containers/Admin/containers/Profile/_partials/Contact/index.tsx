@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
-import { Col, Row } from "antd";
+import { Col, Row, Spin } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
-
 import {
   useLoadScript,
   GoogleMap,
@@ -12,6 +11,7 @@ import { Libraries } from "@react-google-maps/api/dist/utils/make-load-script-ur
 import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
 import { Geocode } from "./Geocode";
 import ErrorMsg from "../../../../../../components/messages/error";
+import { IOrganizationProps } from "../../../../../../context/Organization/types";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const sampleAddress = `
@@ -36,10 +36,11 @@ const options = {
 };
 
 interface ContactProps {
-  selectedOrganization: any;
+  isLoading: boolean;
+  selectedOrganization?: IOrganizationProps;
 }
 
-const Contact: FC<ContactProps> = ({ selectedOrganization }) => {
+const Contact: FC<ContactProps> = props => {
   const [isGeocodingAddress, setIsGeocodingAddress] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [mapCenter, setMapCenter] = useState({
@@ -48,7 +49,7 @@ const Contact: FC<ContactProps> = ({ selectedOrganization }) => {
   });
   const [error, setError] = useState(null);
 
-  const { name, address, phone, website } = selectedOrganization;
+  const { isLoading } = props;
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: GOOGLE_API_KEY,
@@ -56,8 +57,10 @@ const Contact: FC<ContactProps> = ({ selectedOrganization }) => {
   });
 
   useEffect(() => {
+    const { address } = props?.selectedOrganization;
+
     setIsGeocodingAddress(true);
-    if (address) {
+    if (!isLoading && address) {
       // Get latitude & longitude from address.
       Geocode.fromAddress(address)
         .then(response => {
@@ -77,7 +80,7 @@ const Contact: FC<ContactProps> = ({ selectedOrganization }) => {
           setError("Please restructure address");
         });
     }
-  }, [address]);
+  }, [isLoading, props.selectedOrganization]);
 
   // wrapping to a function is useful in case you want to access `window.google`
   // to eg. setup options or create latLng object, it won't be available otherwise
@@ -85,6 +88,9 @@ const Contact: FC<ContactProps> = ({ selectedOrganization }) => {
   const onLoad = React.useCallback(function onLoad(mapInstance) {
     // do something with map Instance
   }, []);
+
+  const { name, address, phone, website } =
+    props?.selectedOrganization && props.selectedOrganization;
 
   return (
     <Row gutter={15}>
@@ -106,85 +112,99 @@ const Contact: FC<ContactProps> = ({ selectedOrganization }) => {
             </div>
           }
         >
-          <Row
-            style={{
-              height: "100%",
-            }}
-          >
-            <Col xs={24} sm={24} md={24} lg={16}>
-              {error && <ErrorMsg content={error} />}
-              <div style={{ height: "400px" }} className="contact-chart">
-                {isLoaded && !isGeocodingAddress ? (
-                  <GoogleMap
-                    mapContainerStyle={{
-                      width: "100%",
-                      height: "100%",
-                    }}
-                    options={options}
-                    zoom={14}
-                    onLoad={onLoad}
-                    center={mapCenter}
-                  >
-                    {/* Markers */}
-                    <Marker
-                      position={mapCenter}
-                      onClick={() => {
-                        setShowInfo(true);
+          {isLoading ? (
+            <Row
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                height: "200px",
+              }}
+            >
+              <Spin />
+            </Row>
+          ) : (
+            <Row
+              style={{
+                height: "100%",
+              }}
+            >
+              <Col xs={24} sm={24} md={24} lg={16}>
+                {error && <ErrorMsg content={error} />}
+                <div style={{ height: "400px" }} className="contact-chart">
+                  {isLoaded && !isGeocodingAddress ? (
+                    <GoogleMap
+                      mapContainerStyle={{
+                        width: "100%",
+                        height: "100%",
                       }}
-                      onLoad={() => {
-                        // console.log(
-                        //   `Marker for ${selectedOrganization.name} loaded...`
-                        // );
-                        setMapCenter({
-                          ...mapCenter,
-                          lat: mapCenter.lat,
-                          lng: mapCenter.lng,
-                        });
-                      }}
-                    />
-
-                    {/* InfoWindow */}
-                    {showInfo && (
-                      <InfoWindow
+                      options={options}
+                      zoom={14}
+                      onLoad={onLoad}
+                      center={mapCenter}
+                    >
+                      {/* Markers */}
+                      <Marker
                         position={mapCenter}
-                        onCloseClick={() => {
-                          setShowInfo(false);
+                        onClick={() => {
+                          setShowInfo(true);
                         }}
-                      >
-                        <div>
-                          <h2>{name}</h2>
-                          <p>{address}</p>
-                        </div>
-                      </InfoWindow>
-                    )}
-                  </GoogleMap>
-                ) : (
-                  "Loading..."
-                )}
+                        onLoad={() => {
+                          // console.log(
+                          //   `Marker for ${selectedOrganization.name} loaded...`
+                          // );
+                          setMapCenter({
+                            ...mapCenter,
+                            lat: mapCenter.lat,
+                            lng: mapCenter.lng,
+                          });
+                        }}
+                      />
 
-                {loadError && <div>Map cannot be loaded right now, sorry.</div>}
-              </div>
-            </Col>
+                      {/* InfoWindow */}
+                      {showInfo && (
+                        <InfoWindow
+                          position={mapCenter}
+                          onCloseClick={() => {
+                            setShowInfo(false);
+                          }}
+                        >
+                          <div>
+                            <h2>{name}</h2>
+                            <p>{address}</p>
+                          </div>
+                        </InfoWindow>
+                      )}
+                    </GoogleMap>
+                  ) : (
+                    "Loading..."
+                  )}
 
-            <Col xs={24} sm={24} md={16} lg={8}>
-              <div style={{ padding: "1.5rem" }}>
-                <h2>
-                  <strong>{name}</strong>
-                </h2>
-                <p>{address}</p>
+                  {loadError && (
+                    <div>Map cannot be loaded right now, sorry.</div>
+                  )}
+                </div>
+              </Col>
 
-                <a href={website} target="_blank" rel="noreferrer noopener">
-                  {website}
-                </a>
+              <Col xs={24} sm={24} md={16} lg={8}>
+                <div style={{ padding: "1.5rem" }}>
+                  <h2>
+                    <strong>{name}</strong>
+                  </h2>
+                  <p>{address}</p>
 
-                <p>
-                  <span>{phone}</span>
-                </p>
+                  <a href={website} target="_blank" rel="noreferrer noopener">
+                    {website}
+                  </a>
 
-                <ViewProfileBtnStyled>Add to Favorites</ViewProfileBtnStyled>
-              </div>
-            </Col>
-          </Row>
+                  <p>
+                    <span>{phone}</span>
+                  </p>
+
+                  <ViewProfileBtnStyled>Add to Favorites</ViewProfileBtnStyled>
+                </div>
+              </Col>
+            </Row>
+          )}
         </Cards>
       </Col>
     </Row>

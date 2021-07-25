@@ -3,7 +3,6 @@ import { Row, Col, Skeleton } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
 import { ReactComponent as UnknownAvatar } from "../../../../../../static/svg/unknownAvatar.svg";
-import { useOrganizationContext } from "../../../../../../context";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
 // import cowrywise_small from "../../../../../../static/img/cowrywise_small.png";
 // import john_doe from "../../../../../../static/img/john_doe.png";
@@ -14,8 +13,6 @@ interface ISummaryProps {
 }
 
 const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
-  const { data: organizations } = useOrganizationContext();
-
   return (
     <Fragment>
       <Row>

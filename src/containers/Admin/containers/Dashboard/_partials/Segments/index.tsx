@@ -1,15 +1,13 @@
 import React, { Fragment, FC } from "react";
 import { Button, Row, Spin, Col, Table } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-// import { UserOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../../../components/page-headers/page-headers";
-// import { ReactComponent as ArrowDown } from "../../../../../../static/svg/arrowDown.svg";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { NavLink, RouteComponentProps } from "react-router-dom";
 import { AdminSectionWrapper } from "../../../../styled";
 import { Child, TabBasic } from "../../../../../../components/tabs/style";
 import SummaryData from "../SummaryData";
-import { capitalize, generateIcons } from "../../functions";
+import { generateIcons } from "../../functions";
 import { createDataSource, createTableColumns } from "../../../helpers";
 import { useEcosystemContext } from "../../../../../../context";
 import { SpinnerStyled } from "../../../../../Styles";
@@ -151,10 +149,10 @@ const Segment: FC<RouteComponentProps<{ name: string }>> = ({
                                   textTransform: "capitalize",
                                 }}
                               >
-                                {generateIcons(capitalize(pageHeader), {
-                                  marginRight: "15px",
-                                })}{" "}
-                                {pageHeader}
+                                {generateIcons(pageHeader.toLowerCase())}{" "}
+                                <span style={{ marginLeft: "15px" }}>
+                                  {pageHeader}
+                                </span>
                               </p>
                             </div>
                           }

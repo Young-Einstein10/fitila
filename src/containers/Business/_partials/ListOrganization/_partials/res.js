@@ -38,3 +38,5 @@ const res = {
   user: "",
   website: "https://www.tywizivogojo.org.uk",
 };
+
+export { res };

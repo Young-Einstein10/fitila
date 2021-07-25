@@ -314,9 +314,12 @@ const PendingApplications = () => {
                 loading={organizations.isLoading}
                 onRow={(record, rowIndex) => {
                   return {
-                    onClick: () => {
+                    onClick: e => {
                       setCurrentListing(record);
                       toggleViewDetailsModal();
+                    },
+                    onMouseOver: (e: any) => {
+                      e.target.style.cursor = "pointer";
                     },
                   };
                 }}

@@ -1,15 +1,17 @@
-import React from "react";
-import { Row, Collapse, Form, Col, Divider } from "antd";
+import React, { FC, useState } from "react";
+import { Row, Collapse, Form, Col, Divider, Button, Spin } from "antd";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
 import Heading from "../../../../components/heading/heading";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import { ReactComponent as PlusIcon } from "../../../../static/svg/plus.svg";
-import { CollapseStyled } from "./styled";
 import { ButtonStyled, InputStyled } from "../../../Styles";
+import AddFaqModal from "./_partials/AddFaqModal";
 
+// Styling
 import "./help.less";
+import { useAuthContext, useFAQContext } from "../../../../context";
 
 const { Panel } = Collapse;
 
@@ -19,28 +21,53 @@ const tableHeader = (
   </div>
 );
 
-const text = (
-  <p>
-    Nam varius risus, donec sed imperdiet cursus sollicitudin leo. Magna mi
-    viverra sit diam posuere porttitor aliquet venenatis elementum. Quis lorem
-    nisl vitae nullam eros. Maecenas dui neque ut ultrices consectetur sed orci.
-    Quis.
-  </p>
-);
+// const text = (
+//   <p>
+//     Nam varius risus, donec sed imperdiet cursus sollicitudin leo. Magna mi
+//     viverra sit diam posuere porttitor aliquet venenatis elementum. Quis lorem
+//     nisl vitae nullam eros. Maecenas dui neque ut ultrices consectetur sed orci.
+//     Quis.
+//   </p>
+// );
 
-const Help = () => {
+// var testData = [1, 2, 3, 4, 5, 6, 11, 12, 13, 14, 15, 16];
+
+const Help: FC = props => {
+  const [isFaqModalOpen, setIsFaqModalOpen] = useState(false);
+  const {
+    auth: { isAuthenticated },
+  } = useAuthContext();
+  const { isLoading, data } = useFAQContext();
   const [form] = Form.useForm();
 
   const handleSubmit = () => {};
 
+  const toggleAddFaqModal = () => setIsFaqModalOpen(open => !open);
+
   return (
-    <AdminSectionWrapper>
+    <AdminSectionWrapper className="help-section">
       <div>
         <PageHeader
           title={
             <Heading as="h3" style={{ fontSize: "24px", fontWeight: "bold" }}>
               Enterprise Data Map Guide.
             </Heading>
+          }
+          buttons={
+            isAuthenticated
+              ? [
+                  <div key="1" className="page-header-actions">
+                    <Button
+                      className="add-faq-btn"
+                      size="large"
+                      type="primary"
+                      onClick={toggleAddFaqModal}
+                    >
+                      Add FAQ
+                    </Button>
+                  </div>,
+                ]
+              : null
           }
           style={{ marginBottom: "0" }}
         />
@@ -50,114 +77,117 @@ const Help = () => {
         <Row gutter={24}>
           <Col xs={24}>
             <Cards title={tableHeader}>
-              <Row gutter={24}>
-                <Col xs={24} md={16} lg={12}>
-                  <Collapse
-                    className="styled-collapse"
-                    accordion
-                    bordered={false}
-                    defaultActiveKey={["1"]}
-                    expandIconPosition="right"
-                    expandIcon={() => <PlusIcon />}
-                  >
-                    {[1, 2, 3, 4, 5, 6].map((_, key) => (
-                      <Panel
-                        key={key + 1}
-                        header={
-                          <p style={{ marginBottom: 0, fontWeight: 700 }}>
-                            A proin dolor at turpis arcu. Lectus interdum purus.
-                          </p>
-                        }
-                      >
-                        {text}
-                      </Panel>
-                    ))}
-                  </Collapse>
-                </Col>
-
-                <Col xs={24} md={16} lg={12}>
-                  <CollapseStyled
-                    className="styled-collapse"
-                    accordion
-                    bordered={false}
-                    expandIconPosition="right"
-                    expandIcon={() => <PlusIcon />}
-                  >
-                    {[11, 12, 13, 14, 15, 16].map(num => (
-                      <Panel
-                        key={num}
-                        header={
-                          <p style={{ marginBottom: 0, fontWeight: 700 }}>
-                            A proin dolor at turpis arcu. Lectus interdum purus.
-                          </p>
-                        }
-                      >
-                        {text}
-                      </Panel>
-                    ))}
-                  </CollapseStyled>
-                </Col>
-
-                <Divider />
-
-                <Col
-                  xs={24}
-                  md={24}
-                  lg={12}
+              {isLoading ? (
+                <Row
                   style={{
-                    paddingRight: "1.5rem",
-                    paddingLeft: "1.5rem",
-                    marginTop: "3rem",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "200px",
                   }}
                 >
-                  <div>
-                    <div>
-                      <Heading
-                        className="message-header text-center font-weight-700"
-                        as="h3"
+                  <Spin />
+                </Row>
+              ) : (
+                <Row gutter={32}>
+                  {data.map((d, key) => (
+                    <Col key={key} xs={24} md={16} lg={11}>
+                      <Collapse
+                        className="styled-collapse"
+                        accordion
+                        bordered={false}
+                        // defaultActiveKey={[key + 1]}
+                        expandIconPosition="right"
+                        expandIcon={() => <PlusIcon />}
                       >
-                        Send Us A Message
-                      </Heading>
-                    </div>
-
-                    <Form
-                      form={form}
-                      onFinish={handleSubmit}
-                      className="uploads"
-                      layout="vertical"
-                    >
-                      <Form.Item name="firstname">
-                        <InputStyled placeholder="First Name" />
-                      </Form.Item>
-
-                      <Form.Item name="lastname">
-                        <InputStyled placeholder="Last Name" />
-                      </Form.Item>
-
-                      <Form.Item name="message">
-                        <InputStyled.TextArea
-                          placeholder="Message"
-                          style={{ height: "165px" }}
-                        />
-                      </Form.Item>
-
-                      <Form.Item>
-                        <ButtonStyled
-                          className=""
-                          htmlType="submit"
-                          type="primary"
-                          size="large"
+                        <Panel
+                          key={key + 1}
+                          header={
+                            <p style={{ marginBottom: 0, fontWeight: 700 }}>
+                              {d.question}
+                            </p>
+                          }
                         >
-                          Send
-                        </ButtonStyled>
-                      </Form.Item>
-                    </Form>
-                  </div>
-                </Col>
-              </Row>
+                          {d.answer}
+                        </Panel>
+                      </Collapse>
+                    </Col>
+                  ))}
+
+                  <Divider />
+
+                  <Col
+                    xs={24}
+                    md={24}
+                    lg={24}
+                    style={{
+                      paddingRight: "1.5rem",
+                      paddingLeft: "1.5rem",
+                      marginTop: "3rem",
+                      textAlign: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        maxWidth: "500px",
+                        width: "100%",
+                        margin: "0 auto",
+                        textAlign: "center",
+                      }}
+                    >
+                      <div>
+                        <Heading
+                          className="message-header text-center font-weight-700"
+                          as="h3"
+                        >
+                          Send Us A Message
+                        </Heading>
+                      </div>
+
+                      <Form
+                        form={form}
+                        onFinish={handleSubmit}
+                        className="uploads"
+                        layout="vertical"
+                      >
+                        <Form.Item name="firstname">
+                          <InputStyled placeholder="First Name" />
+                        </Form.Item>
+
+                        <Form.Item name="lastname">
+                          <InputStyled placeholder="Last Name" />
+                        </Form.Item>
+
+                        <Form.Item name="message">
+                          <InputStyled.TextArea
+                            placeholder="Message"
+                            style={{ height: "165px" }}
+                          />
+                        </Form.Item>
+
+                        <Form.Item>
+                          <ButtonStyled
+                            htmlType="submit"
+                            type="primary"
+                            size="large"
+                          >
+                            Send
+                          </ButtonStyled>
+                        </Form.Item>
+                      </Form>
+                    </div>
+                  </Col>
+                </Row>
+              )}
             </Cards>
           </Col>
         </Row>
+
+        {isFaqModalOpen ? (
+          <AddFaqModal
+            visible={isFaqModalOpen}
+            closeModal={toggleAddFaqModal}
+          />
+        ) : null}
       </Main>
     </AdminSectionWrapper>
   );

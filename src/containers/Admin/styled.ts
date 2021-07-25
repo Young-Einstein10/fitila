@@ -14,10 +14,6 @@ const AdminSectionWrapper = Styled.section<{ background?: string }>`
       }
   }
 
-  section {
-
-  }
-
   .ant-page-header {
     background: none;
   }
@@ -26,7 +22,9 @@ const AdminSectionWrapper = Styled.section<{ background?: string }>`
   &.section-list-organization,
   &.preview-section,
   &.business-uploads,
-  &.section-sdd-business-success {
+  &.section-add-business-success,
+  &.contact-us,
+  &.help-section {
 
     button {
       &.ant-btn-lg{

@@ -12,7 +12,7 @@ interface ApiProps {
   organization: Organization;
   ecosystem: Ecosystem;
   sector: Sector;
-  faq: FAQ,
+  faq: FAQ;
   HttpClient: AxiosInstance;
 }
 
@@ -34,7 +34,6 @@ const ApiProvider: FC = ({ children }) => {
     ecosystem: new Ecosystem(axiosInstance),
     sector: new Sector(axiosInstance),
     faq: new FAQ(axiosInstance),
-
     HttpClient: axiosInstance,
   });
 
@@ -44,7 +43,7 @@ const ApiProvider: FC = ({ children }) => {
     //Intercept For Error reset
     axiosInstance.interceptors.request.use(
       function(config: any) {
-        // Reset error state before make a fresh API call
+        // Reset error state before making a fresh API call
         dispatch({
           type: "RESET_ERROR",
         });
@@ -93,7 +92,6 @@ const ApiProvider: FC = ({ children }) => {
 
   const setApiHeaders = (token: string) => {
     api.HttpClient.defaults.headers.common["authorization"] = `Bearer ${token}`;
-
     api.HttpClient.defaults.headers.common["Content-Type"] = "application/json";
   };
 

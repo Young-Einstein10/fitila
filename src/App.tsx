@@ -10,6 +10,7 @@ import {
   AuthProvider,
   EcosystemProvider,
   ErrorProvider,
+  FAQProvider,
   OrganizationProvider,
   SectorProvider,
 } from "./context";
@@ -32,9 +33,11 @@ function App() {
                 <SectorProvider>
                   <Router>
                     <BusinessProvider>
-                      <ScrollToTop>
-                        <Routes />
-                      </ScrollToTop>
+                      <FAQProvider>
+                        <ScrollToTop>
+                          <Routes />
+                        </ScrollToTop>
+                      </FAQProvider>
                     </BusinessProvider>
                   </Router>
                 </SectorProvider>

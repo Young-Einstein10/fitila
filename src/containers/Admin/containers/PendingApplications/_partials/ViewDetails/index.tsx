@@ -22,7 +22,6 @@ const ViewDetails: FC<IViewDetailsProps> = ({
     name,
     ceo_name,
     state,
-      sector,
     sector_name,
     num_of_employees,
     funding,

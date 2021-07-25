@@ -4,6 +4,7 @@ import { AuthProvider, useAuthContext } from "./Auth";
 import { EcosystemProvider, useEcosystemContext } from "./Ecosystem";
 import { OrganizationProvider, useOrganizationContext } from "./Organization";
 import { SectorProvider, useSectorContext } from "./Sector";
+import { FAQProvider, useFAQContext } from "./FAQs";
 
 export {
   ErrorProvider,
@@ -18,4 +19,6 @@ export {
   useOrganizationContext,
   SectorProvider,
   useSectorContext,
+  FAQProvider,
+  useFAQContext,
 };

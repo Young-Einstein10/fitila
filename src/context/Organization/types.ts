@@ -31,13 +31,14 @@ interface IOrganizationProps {
   instagram?: string;
   linkedIn?: string;
   twitter?; string;
+  phone?: string;
+  website?: string;
   is_entrepreneur?: boolean;
   is_ecosystem?: boolean;
   is_active?: boolean;
   is_approve?: boolean;
   date_created?: string;
   date_updated?: string
-
 }
 
 

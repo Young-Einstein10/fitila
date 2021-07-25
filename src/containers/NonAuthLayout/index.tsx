@@ -4,9 +4,6 @@ import { Link, NavLink } from "react-router-dom";
 import Logo from "../../static/img/logo.png";
 import burgermenu from "../../static/svg/burgermenu.svg";
 
-// import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
-import { ReactComponent as UserIcon } from "../../static/svg/usericon.svg";
-
 import {
   BusinessButton,
   Div,
@@ -68,9 +65,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
         </ButtonStyled> */}
 
         <BusinessButton size="large">
-          <NavLink to="/d">
-            See Dashboard
-          </NavLink>
+          <NavLink to="/d">See Dashboard</NavLink>
         </BusinessButton>
       </li>
       {/* 
@@ -104,9 +99,7 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
               </BusinessButton>
 
               <BusinessButton size="large">
-                <NavLink to="/d">
-                  See Dashboard
-                </NavLink>
+                <NavLink to="/d">See Dashboard</NavLink>
               </BusinessButton>
 
               {/* <Dropdown className="account-btn" overlay={menu}>

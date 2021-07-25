@@ -65,7 +65,7 @@ const generateIcons = (name, style?: React.CSSProperties) => {
       return <MsmesIcon />;
 
     default:
-      return <BriefCase  />;
+      return <BriefCase />;
   }
 };
 

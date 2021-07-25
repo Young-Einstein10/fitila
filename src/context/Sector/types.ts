@@ -1,7 +1,6 @@
 import { IOrganizationProps } from "../Organization/types";
 
 interface ISectorProps {
-
   id: number;
   name: string;
   organization?: IOrganizationProps[];

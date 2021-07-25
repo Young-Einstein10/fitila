@@ -6,9 +6,6 @@ import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
-
-import Summary from "./_partials/Summary";
-
 import { CardSegmentStyled, RowStyled } from "./styled";
 import { createDataSource, createTableColumns } from "../helpers";
 import {
@@ -16,6 +13,7 @@ import {
   useOrganizationContext,
 } from "../../../../context";
 import Charts from "./_partials/Charts";
+import Summary from "./_partials/Summary";
 import { capitalize } from "../../../../utils/helpers";
 
 const Dashboard: FC<RouteComponentProps> = () => {

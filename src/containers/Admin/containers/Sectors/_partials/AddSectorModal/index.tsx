@@ -43,24 +43,27 @@ const AddSectorModal = ({ visible, closeModal }) => {
       visible={visible}
       onCancel={closeModal}
       footer={[
-        <Button key="cancel">Cancel</Button>,
+        <Button key="cancel" onClick={closeModal}>
+          Cancel
+        </Button>,
         <Button
           loading={isLoading}
           key="create"
           type="primary"
           onClick={() => handleSubmit()}
         >
-          Create
+          Add
         </Button>,
       ]}
       destroyOnClose
     >
-      <Form form={form}>
+      <Form form={form} layout="vertical">
         <Form.Item
           name="name"
+          label="Name of Sector"
           rules={[{ message: "Please input sector name!", required: true }]}
         >
-          <InputStyled placeholder="Name of Sector" />
+          <InputStyled />
         </Form.Item>
       </Form>
     </Modal>

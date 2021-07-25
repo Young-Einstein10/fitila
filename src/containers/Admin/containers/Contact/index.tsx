@@ -11,7 +11,7 @@ const Contact = () => {
   const handleSubmit = () => {};
 
   return (
-    <AdminSectionWrapper className="business-uploads" background="#fff">
+    <AdminSectionWrapper className="contact-us" background="#fff">
       <Main background="#fff">
         <Row style={{ justifyContent: "center", padding: "5rem 0" }}>
           <Col xs={24} md={12} lg={10}>
