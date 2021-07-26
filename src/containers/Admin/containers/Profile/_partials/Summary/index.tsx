@@ -63,9 +63,9 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                       )}
                     </div>
 
-                    <ViewProfileBtnStyled>
+                    {/* <ViewProfileBtnStyled>
                       Add to Favorites
-                    </ViewProfileBtnStyled>
+                    </ViewProfileBtnStyled> */}
                   </div>
 
                   <div>

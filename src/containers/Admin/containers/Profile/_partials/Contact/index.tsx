@@ -200,7 +200,7 @@ const Contact: FC<ContactProps> = props => {
                     <span>{phone}</span>
                   </p>
 
-                  <ViewProfileBtnStyled>Add to Favorites</ViewProfileBtnStyled>
+                  {/* <ViewProfileBtnStyled>Add to Favorites</ViewProfileBtnStyled> */}
                 </div>
               </Col>
             </Row>
