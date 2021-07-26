@@ -174,7 +174,7 @@ const Segment: FC<RouteComponentProps<{ name: string }>> = ({
                           style={{ paddingLeft: 0, paddingRight: 0 }}
                         />
 
-                        <SummaryData />
+                        <SummaryData currEcosystem={currEcosystem[0]} />
                       </div>
 
                       {tabContent}

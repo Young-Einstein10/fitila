@@ -11,7 +11,9 @@ import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.
 import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.svg";
 import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
 
-import { useAuthContext } from "../../context";
+import { useAuthContext, useEcosystemContext } from "../../context";
+
+const { SubMenu } = Menu;
 
 const LinkedIcon = ({ children, to }) => <NavLink to={to}>{children}</NavLink>;
 
@@ -21,6 +23,8 @@ const MenuItems = props => {
   // console.log(props);
   const location = useLocation();
   const { auth, signOut } = useAuthContext();
+
+  const { data: ecosystemData } = useEcosystemContext();
 
   return (
     <Menu
@@ -38,6 +42,30 @@ const MenuItems = props => {
           Dashboard
         </NavLink>
       </Menu.Item>
+
+      <SubMenu
+        key="sub4"
+        icon={
+          <LinkedIcon
+            to={`/d/organizations`}
+            children={<OrganizationNavIcon />}
+          />
+        }
+        title="Ecosystem Segments"
+      >
+        {ecosystemData.map(ecosystem => {
+          const routePath = `/d/segments/${ecosystem.name
+            .split(" ")
+            .join("_")
+            .toLowerCase()}`;
+
+          return (
+            <Menu.Item key={routePath}>
+              <NavLink to={routePath}>{ecosystem.name}</NavLink>
+            </Menu.Item>
+          );
+        })}
+      </SubMenu>
 
       <Menu.Item
         icon={

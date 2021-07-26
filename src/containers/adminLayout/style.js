@@ -182,9 +182,9 @@ const Div = Styled.div`
                             padding: 0 30px !important;
                         }
                     }
-                    .ant-menu-item{
+                    .ant-menu-item, .ant-menu-submenu, .ecosystem-submenu {
                         padding: 0 30px !important;
-                    }
+                    }                    
                 }
             }
         }
@@ -214,6 +214,8 @@ const Div = Styled.div`
                     }
                 }
                 .ant-menu-submenu{
+                    padding-left: 3rem;
+
                     .ant-menu-submenu-title{
                         display: flex;
                         align-items: center;
@@ -223,11 +225,16 @@ const Div = Styled.div`
                     > .ant-menu-submenu-title{
                         display: flex;
                         align-items: center;
-                        padding: 0 15px !important;
-                        svg,
-                        img{
-                            width: 16px;
-                            height: 16px;
+                        padding-left: 0 !important;
+                        padding-right: 15px !important;
+
+                        a {
+                            display: flex;
+                            
+                            img{
+                                width: 16px;
+                                height: 16px;
+                            }
                         }
                                                 
                         .ant-menu-submenu-arrow{
@@ -405,15 +412,10 @@ const Div = Styled.div`
     }
 
     .atbd-main-layout{
-    /* ${({ theme }) => (!theme.rtl ? "margin-left" : "margin-right")}: ${({
-  theme,
-}) => (theme.topMenu ? 0 : "220px")}; */
-        margin-left: 220px;
+        margin-left: 300px;
         margin-top: 64px;
         transition: 0.3s ease;
         @media only screen and (max-width: 1150px){
-            /* ${({ theme }) =>
-              !theme.rtl ? "margin-left" : "margin-right"}: auto !important; */
             margin-left: auto !important;
     }
 

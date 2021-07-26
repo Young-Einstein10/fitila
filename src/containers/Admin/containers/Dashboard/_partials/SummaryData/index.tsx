@@ -1,24 +1,21 @@
-import React from "react";
+import React, { FC } from "react";
 import { Row, Col, Card } from "antd";
-import { ReactComponent as Icon1 } from "../../../../../../static/svg/icon1.svg";
-import { ReactComponent as StarIcon } from "../../../../../../static/svg/star.svg";
-// import { ReactComponent as LocationIcon } from "../../../../../../static/svg/location.svg";
-import { ReactComponent as HandBagIcon } from "../../../../../../static/svg/handbag.svg";
 import Styled from "styled-components";
+import { IEcosystemProps } from "../../../../../../context/Ecosystem/types";
 import {
-  useOrganizationContext,
-  useSectorContext,
-} from "../../../../../../context";
+  Icon1,
+  StarIcon,
+  HandbagIcon,
+} from "../../../../../../components/svgs";
 
 const CardStyled = Styled(Card)`
   box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
   border-radius: 4px;
 `;
 
-const SummaryData = () => {
-  const { states, data: organizations } = useOrganizationContext();
-  const { data: sectors } = useSectorContext();
-
+const SummaryData: FC<{ currEcosystem: IEcosystemProps }> = ({
+  currEcosystem,
+}) => {
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={12} md={8} lg={8}>
@@ -41,7 +38,7 @@ const SummaryData = () => {
                 marginBottom: "0px",
               }}
             >
-              {organizations.length}
+              {currEcosystem.num_of_organization || 0}
             </p>
             <Icon1 />
           </div>
@@ -68,7 +65,7 @@ const SummaryData = () => {
                 marginBottom: "0px",
               }}
             >
-              {states.length}
+              {currEcosystem.num_of_states || 0}
             </p>
             <StarIcon />
           </div>
@@ -95,9 +92,9 @@ const SummaryData = () => {
                 marginBottom: "0px",
               }}
             >
-              {sectors.length}
+              {currEcosystem.num_of_sectors || 0}
             </p>
-            <HandBagIcon />
+            <HandbagIcon />
           </div>
         </CardStyled>
       </Col>

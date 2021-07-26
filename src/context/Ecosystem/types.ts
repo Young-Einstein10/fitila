@@ -20,6 +20,9 @@ interface IEcosystemProps {
   date_updated: string;
   id: number;
   name: string;
+  num_of_sectors: number;
+  num_of_states: number;
+  num_of_organization: number;
   sub_ecosystem: ISubEcosystem[]
 }
 

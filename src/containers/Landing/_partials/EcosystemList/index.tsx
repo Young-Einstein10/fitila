@@ -38,11 +38,12 @@ const ButtonStyled = styled(Button)`
   margin-top: 0.625rem;
   box-shadow: none;
   text-shadow: none;
-  border: 0;
+  border: solid 1px ${({ theme }) => theme["secondary-color"]};
 
   &:hover {
     background: ${({ theme }) => theme["secondary-hover"]};
     color: ${({ theme }) => theme["text-primary"]};
+    border: solid 1px ${({ theme }) => theme["secondary-color"]};
   }
 `;
 
