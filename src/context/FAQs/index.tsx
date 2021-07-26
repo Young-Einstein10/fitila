@@ -8,7 +8,7 @@ interface IFAQStateProps {
   refetchFAQs: () => void;
 }
 
-interface IFAQProps {
+export interface IFAQProps {
   id: string;
   question: string;
   answer: string;

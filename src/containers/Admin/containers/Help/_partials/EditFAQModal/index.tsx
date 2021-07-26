@@ -2,13 +2,19 @@ import React, { FC, useState } from "react";
 import { Modal, Button, Form } from "antd";
 import { InputStyled } from "../../../../../Styles";
 import { useApiContext, useFAQContext } from "../../../../../../context";
+import { IFAQProps } from "../../../../../../context/FAQs";
 
-type IAddFaqModalProps = {
+type IEditFAQModalProps = {
   visible: boolean;
   closeModal: () => void;
+  currentFAQ: IFAQProps;
 };
 
-const AddFaqModal: FC<IAddFaqModalProps> = ({ visible, closeModal }) => {
+const EditFAQModal: FC<IEditFAQModalProps> = ({
+  visible,
+  closeModal,
+  currentFAQ,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const api = useApiContext();
@@ -21,11 +27,14 @@ const AddFaqModal: FC<IAddFaqModalProps> = ({ visible, closeModal }) => {
 
       setIsLoading(true);
 
-      const res = await api.faq.addFaq({ ...values, is_active: true });
+      const res = await api.faq.editFaq(currentFAQ.id, {
+        ...values,
+        is_active: true,
+      });
 
-      if (res.status === 201) {
+      if (res.status === 202) {
         Modal.success({
-          title: "Question added successfully.",
+          title: "Question edited successfully",
           onOk: async () => {
             await refetchFAQs();
             closeModal();
@@ -41,7 +50,7 @@ const AddFaqModal: FC<IAddFaqModalProps> = ({ visible, closeModal }) => {
 
   return (
     <Modal
-      title={<strong>Add a FAQ</strong>}
+      title={<strong>Edit FAQ</strong>}
       visible={visible}
       onCancel={closeModal}
       footer={[
@@ -57,7 +66,12 @@ const AddFaqModal: FC<IAddFaqModalProps> = ({ visible, closeModal }) => {
       ]}
       destroyOnClose
     >
-      <Form form={form}>
+      <Form
+        form={form}
+        initialValues={{
+          ...currentFAQ,
+        }}
+      >
         <Form.Item
           name="question"
           rules={[{ message: "please enter a question!", required: true }]}
@@ -79,4 +93,4 @@ const AddFaqModal: FC<IAddFaqModalProps> = ({ visible, closeModal }) => {
   );
 };
 
-export default AddFaqModal;
+export default EditFAQModal;

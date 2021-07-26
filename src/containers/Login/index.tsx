@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Button, Form } from "antd";
-import { NavLink, Link } from "react-router-dom";
+import { Button, Form } from "antd";
+import { Link } from "react-router-dom";
 import Heading from "../../components/heading/heading";
 import { AuthWrapper } from "../Styles";
 import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
@@ -69,7 +69,6 @@ const Login = ({ history, location }) => {
           <Heading style={{ fontSize: "4opx" }} className="text-center" as="h3">
             Sign In
           </Heading>
-
           <Form.Item
             name="email"
             rules={[
@@ -85,21 +84,19 @@ const Login = ({ history, location }) => {
           >
             <InputStyled placeholder="Email Address" />
           </Form.Item>
-
           <Form.Item
             name="password"
             rules={[{ message: "Please input your password", required: true }]}
           >
             <InputStyled.Password placeholder="Password" />
           </Form.Item>
-
-          <div className="auth-form-action">
+          s
+          {/* <div className="auth-form-action">
             <Checkbox>Remember Me</Checkbox>
             <NavLink className="forgot-pass-link" to="#">
               Forgot password?
             </NavLink>
-          </div>
-
+          </div> */}
           <Form.Item>
             <Button
               className="btn-signin"
@@ -112,12 +109,10 @@ const Login = ({ history, location }) => {
               Sign In
             </Button>
           </Form.Item>
-
           {/* <p className="auth-notice">
             Don&rsquo;t have an account?{" "}
             <NavLink to="/signup">Sign up here</NavLink>
           </p> */}
-
           <ul className="social-login">
             <li>
               <Link className="facebook-sign" to="#">

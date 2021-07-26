@@ -19,8 +19,8 @@ export default class FAQ {
     return this.client.get(`/cms/faqs/${faq_id}/`);
   }
 
-  editFaq(faq_id) {
-    return this.client.put(`/cms/faqs/${faq_id}/`);
+  editFaq(faq_id, data) {
+    return this.client.put(`/cms/faqs/${faq_id}/`, data);
   }
 
   deleteFaq(faq_id) {

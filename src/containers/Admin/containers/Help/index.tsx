@@ -12,12 +12,13 @@ import AddFaqModal from "./_partials/AddFaqModal";
 // Styling
 import "./help.less";
 import { useAuthContext, useFAQContext } from "../../../../context";
+import EditFAQModal from "./_partials/EditFAQModal";
 
 const { Panel } = Collapse;
 
 const tableHeader = (
   <div style={{ display: "flex", justifyContent: "space-between" }}>
-    <span>General</span>
+    <span>FAQs</span>
   </div>
 );
 
@@ -34,6 +35,9 @@ const tableHeader = (
 
 const Help: FC = props => {
   const [isFaqModalOpen, setIsFaqModalOpen] = useState(false);
+  const [isEditFAQModalOpen, setIsEditFAQModalOpen] = useState(false);
+  const [currentFAQ, setCurrentFAQ] = useState(null);
+
   const {
     auth: { isAuthenticated },
   } = useAuthContext();
@@ -43,6 +47,7 @@ const Help: FC = props => {
   const handleSubmit = () => {};
 
   const toggleAddFaqModal = () => setIsFaqModalOpen(open => !open);
+  const toggleEditFaqModal = () => setIsEditFAQModalOpen(open => !open);
 
   return (
     <AdminSectionWrapper className="help-section">
@@ -108,6 +113,19 @@ const Help: FC = props => {
                           }
                         >
                           {d.answer}
+
+                          {isAuthenticated && (
+                            <div className="edit-content-btn">
+                              <Button
+                                onClick={() => {
+                                  setCurrentFAQ(d);
+                                  toggleEditFaqModal();
+                                }}
+                              >
+                                Edit
+                              </Button>
+                            </div>
+                          )}
                         </Panel>
                       </Collapse>
                     </Col>
@@ -186,6 +204,14 @@ const Help: FC = props => {
           <AddFaqModal
             visible={isFaqModalOpen}
             closeModal={toggleAddFaqModal}
+          />
+        ) : null}
+
+        {isEditFAQModalOpen ? (
+          <EditFAQModal
+            visible={isEditFAQModalOpen}
+            closeModal={toggleEditFaqModal}
+            currentFAQ={currentFAQ}
           />
         ) : null}
       </Main>
