@@ -90,7 +90,7 @@ const Login = ({ history, location }) => {
           >
             <InputStyled.Password placeholder="Password" />
           </Form.Item>
-          s
+
           {/* <div className="auth-form-action">
             <Checkbox>Remember Me</Checkbox>
             <NavLink className="forgot-pass-link" to="#">

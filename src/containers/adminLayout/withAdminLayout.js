@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Layout, Button, Row, Col, Breadcrumb } from "antd";
 import { NavLink, Link, withRouter } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
-import { ThemeProvider } from "styled-components";
 import MenueItems from "./MenueItems";
 import { CurrentUserButton, Div } from "./style";
 import logo from "../../static/img/logo.png";
@@ -11,8 +10,6 @@ import burgermenu from "../../static/svg/burgermenu.svg";
 import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
 import { capitalize } from "../Admin/containers/Dashboard/functions";
 import { useAuthContext } from "../../context";
-
-const { darkTheme } = require("../../config/theme/themeVariables");
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -76,16 +73,10 @@ const ThemeLayout = WrappedComponent => {
 
     const pathSnippets = location.pathname.split("/").filter(i => i);
 
-    // console.log("Path Snippets", pathSnippets);
-
     const extraBreadcrumbItems = pathSnippets.map((_, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
 
-      // console.log(`URL ${index}`, url);
-
       let filteredUrl = url.split("/").filter(i => i);
-
-      // console.log(`Filtered URL ${index}`, filteredUrl);
 
       return (
         <BreadcrumbItem key={url}>
@@ -119,26 +110,6 @@ const ThemeLayout = WrappedComponent => {
         <Link to="/">Home</Link>
       </BreadcrumbItem>,
     ].concat(extraBreadcrumbItems);
-
-    const footerStyle = {
-      padding: "20px 30px 18px",
-      color: "rgba(0, 0, 0, 0.65)",
-      fontSize: "16px",
-      background: "#F2F2F2",
-      boxShadow: "0 -5px 10px rgba(146,153,184, 0.05)",
-    };
-
-    const SideBarStyle = {
-      margin: "63px 0 0 0",
-      padding: "15px 15px 55px 0",
-      overflowY: "auto",
-      height: "100vh",
-      position: "fixed",
-      left: 0,
-      zIndex: 998,
-      boxShadow: "0px 2px 8px rgba(53, 55, 81, 0.08)",
-      background: "#fff",
-    };
 
     const renderView = ({ style, ...props }) => {
       const customStyle = {
@@ -185,21 +156,8 @@ const ThemeLayout = WrappedComponent => {
     return (
       <Div>
         <Layout className="layout">
-          <Header
-            style={{
-              position: "fixed",
-              width: "100%",
-              top: 0,
-              left: 0,
-              background: "#fff",
-            }}
-          >
-            <Row
-              style={{
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
+          <Header>
+            <Row>
               <div className="navitem-left">
                 {window.innerWidth <= 1200 ? (
                   <Button type="link" onClick={toggleCollapsed}>
@@ -234,29 +192,23 @@ const ThemeLayout = WrappedComponent => {
 
           <Layout>
             {!topMenu || window.innerWidth <= 991 ? (
-              <ThemeProvider theme={darkTheme}>
-                <Sider
-                  width={300}
-                  style={SideBarStyle}
-                  collapsed={collapsed}
-                  theme={"light"}
+              <Sider width={300} collapsed={collapsed} theme={"light"}>
+                <Scrollbars
+                  className="custom-scrollbar"
+                  autoHide
+                  autoHideTimeout={500}
+                  autoHideDuration={200}
+                  renderThumbHorizontal={renderThumbHorizontal}
+                  renderThumbVertical={renderThumbVertical}
+                  renderView={renderView}
+                  renderTrackVertical={renderTrackVertical}
                 >
-                  <Scrollbars
-                    className="custom-scrollbar"
-                    autoHide
-                    autoHideTimeout={500}
-                    autoHideDuration={200}
-                    renderThumbHorizontal={renderThumbHorizontal}
-                    renderThumbVertical={renderThumbVertical}
-                    renderView={renderView}
-                    renderTrackVertical={renderTrackVertical}
-                  >
-                    <MenueItems
-                      topMenu={topMenu}
-                      rtl={rtl}
-                      toggleCollapsed={toggleCollapsedMobile}
-                    />
-                    {/* 
+                  <MenueItems
+                    topMenu={topMenu}
+                    rtl={rtl}
+                    toggleCollapsed={toggleCollapsedMobile}
+                  />
+                  {/* 
                     <SidebarFooterStyled>
                       <p>2020, Copyright, Enterprise Data Map</p>
 
@@ -266,9 +218,8 @@ const ThemeLayout = WrappedComponent => {
                         <li>Cookie Policy</li>
                       </ul>
                     </SidebarFooterStyled> */}
-                  </Scrollbars>
-                </Sider>
-              </ThemeProvider>
+                </Scrollbars>
+              </Sider>
             ) : null}
 
             <Layout className="atbd-main-layout">
@@ -277,22 +228,21 @@ const ThemeLayout = WrappedComponent => {
                 <WrappedComponent {...props} />
                 {/* =================== WRAPPED COMPONENT =================== */}
 
-                <Footer className="admin-footer" style={footerStyle}>
+                <Footer className="admin-footer">
                   <Row>
-                    <Col md={10} xs={24}>
+                    <Col md={12} xs={24}>
                       <span className="admin-footer__copyright">
-                        {YEAR} © Copyright. Ecosystem Data Map, by{" "}
+                        {YEAR} © Copyright. Ecosystem Data Map by{" "}
                         <a href="http://www.fatefoundation.org" rel="noopener">
                           FATE Foundation
                         </a>
                       </span>
                     </Col>
-                    <Col md={14} xs={24}>
+                    <Col md={12} xs={24}>
                       <div className="admin-footer__links">
                         <NavLink to="/login">Admin</NavLink>
                         <NavLink to="/d/privacy">Privacy Policy</NavLink>
                         <NavLink to="/d/terms">Terms and Condition</NavLink>
-                        {/* <NavLink to="#">Cookie Policy</NavLink> */}
                       </div>
                     </Col>
                   </Row>

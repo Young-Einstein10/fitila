@@ -4,10 +4,25 @@ import Styled from "styled-components";
 const Div = Styled.div`
     position: relative;
     header{
+        height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
         ${({ darkMode }) => (darkMode ? `background: #272B41;` : "")};
         z-index: 999;        
         padding: 0 3rem;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background: #fff;
+
+        .ant-row {
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+        }
 
         @media screen and (max-width: 1200px) {
             padding-left: 0;
@@ -169,7 +184,16 @@ const Div = Styled.div`
 
     /* Sidebar styles */
     .ant-layout-sider{
-        box-shadow: 0 0 30px #9299B810;
+        box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.08);
+        margin: 76px 0 0 0;
+        padding: 15px 15px 55px 0;
+        overflowY: auto;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        z-index: 998;
+        background: #fff;
+
         @media (max-width: 991px){
             box-shadow: 0 0 10px #00000020;
         }
@@ -215,6 +239,10 @@ const Div = Styled.div`
                 }
                 .ant-menu-submenu{
                     padding-left: 3rem;
+
+                    @media screen and (max-width: 1200px) and (min-width: 1151px) {
+                        padding-left: 0;
+                    }
 
                     .ant-menu-submenu-title{
                         display: flex;
@@ -413,7 +441,7 @@ const Div = Styled.div`
 
     .atbd-main-layout{
         margin-left: 300px;
-        margin-top: 64px;
+        margin-top: 76px;
         transition: 0.3s ease;
         @media only screen and (max-width: 1150px){
             margin-left: auto !important;
@@ -444,6 +472,12 @@ const Div = Styled.div`
         }
     }
     .admin-footer{
+        padding: 20px 30px 18px;
+        color: rgba(0, 0, 0, .65);
+        font-size: 16px;
+        background: #F2F2F2;
+        box-shadow: 0 -5px 10px rgba(146,153,184, 0.05);
+
         .admin-footer__copyright{
             display: inline-block;
             width: 100%;

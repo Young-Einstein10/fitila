@@ -81,7 +81,11 @@ const ListOrganizationForm = ({ next }) => {
     if (!state.business_type) {
       history.push("/business");
     }
-  }, [state, history]);
+
+    if (state.is_startup) {
+      setIs_Startup(state.is_startup);
+    }
+  }, [state.business_type, state.is_startup, history]);
 
   // useEffect(() => {
   //   const userData = JSON.parse(localStorage.getItem("userData"))
@@ -112,6 +116,8 @@ const ListOrganizationForm = ({ next }) => {
     try {
       const values = await form.validateFields();
 
+      console.log({ values });
+
       if (values.num_supported_business === "Above 1000") {
         values.num_supported_business = values.num_supported_business_custom;
       }
@@ -119,8 +125,6 @@ const ListOrganizationForm = ({ next }) => {
       const selectedEcosystem = ecosystem.filter(
         eco => eco.name === values.ecosystem
       );
-
-      // console.log(values);
 
       let selectedSubEcosystem = [];
 
@@ -142,7 +146,7 @@ const ListOrganizationForm = ({ next }) => {
             state.business_type === "Enterpreneur" ? true : false,
         };
 
-        console.log(userData);
+        console.log({ userData });
 
         setState(userData);
       } else {
@@ -156,7 +160,7 @@ const ListOrganizationForm = ({ next }) => {
             state.business_type === "Enterpreneur" ? true : false,
         };
 
-        console.log(userData);
+        console.log({ userData });
 
         setState(userData);
       }
@@ -180,12 +184,24 @@ const ListOrganizationForm = ({ next }) => {
     }
   };
 
+  const ceo_name_label =
+    state.business_type === "Enterpreneur"
+      ? "CEO/Founder's Name"
+      : "CEO/DG/Head/Founder's Name";
+
   return (
     <Form
       form={form}
       onFinish={handleSubmit}
       layout="vertical"
       className="list-organization"
+      initialValues={{
+        ...state,
+        is_startUp: is_startUp ? "Yes" : "No",
+        currency: state.currency || "₦",
+        currency_value: state.currency_value,
+        num_supported_business_custom: state.num_supported_business,
+      }}
     >
       {/* BUSINESS NAME */}
       <Form.Item
@@ -200,27 +216,19 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder="Business Name" />
       </Form.Item>
       {/* BUSINESS NAME */}
-
       {/* CEO/FOUNDER"S NAME */}
       <Form.Item
         name="ceo_name"
         rules={[
           {
-            message: "Please input your CEO/DG/founder's name",
+            message: `Please input your ${ceo_name_label}`,
             required: true,
           },
         ]}
       >
-        <InputStyled
-          placeholder={
-            state.business_type === "Enterpreneur"
-              ? "CEO/Founder's Name"
-              : "CEO/DG/Founder's Name"
-          }
-        />
+        <InputStyled placeholder={ceo_name_label} />
       </Form.Item>
       {/* CEO/FOUNDER's NAME */}
-
       {/* CEO/FOUNDER"S NAME */}
       <Form.Item
         name="ceo_gender"
@@ -237,7 +245,6 @@ const ListOrganizationForm = ({ next }) => {
         </Select>
       </Form.Item>
       {/* CEO/FOUNDER's NAME */}
-
       {/* HEADQUARTERS */}
       {/* <Form.Item
         name="head_quarters"
@@ -251,7 +258,6 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder="CEO/Founder's Name" />
       </Form.Item> */}
       {/* HEADQUARTERS */}
-
       {/* ADDRESS */}
       <Form.Item
         name="address"
@@ -265,7 +271,6 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder="Address" />
       </Form.Item>
       {/* ADDRESS */}
-
       {/* STATE */}
       <Form.Item
         name="state"
@@ -285,9 +290,7 @@ const ListOrganizationForm = ({ next }) => {
         </Select>
       </Form.Item>
       {/* STATE */}
-
       <Divider />
-
       {/* ECOSYTEM SEGMENT */}
       {state.business_type === "Ecosystem Enabler" && (
         <Form.Item
@@ -328,7 +331,6 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       )}
       {/* ECOSYTEM SEGMENT */}
-
       {/* SUB-ECOSYTEM SEGMENT */}
       {state.business_type === "Ecosystem Enabler" && subSegment.length > 0 ? (
         <Form.Item
@@ -354,11 +356,10 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       ) : null}
       {/* SUB-ECOSYTEM SEGMENT */}
-
       {/* SUB-CLASS */}
       {state.business_type === "Ecosystem Enabler" &&
       selectedSubEcosystem &&
-      selectedSubEcosystem.name === "Business Advisory" ? (
+      selectedSubEcosystem.name.toLowerCase() === "business advisory" ? (
         <Form.Item
           name="sub_ecosystem_sub_class"
           rules={[
@@ -377,10 +378,9 @@ const ListOrganizationForm = ({ next }) => {
           </Select>
         </Form.Item>
       ) : null}
-
       {state.business_type === "Ecosystem Enabler" &&
       selectedSubEcosystem &&
-      selectedSubEcosystem.name === "Equity Funders" ? (
+      selectedSubEcosystem.name.toLowerCase() === "equity funders" ? (
         <Form.Item
           name="sub_ecosystem_sub_class"
           rules={[
@@ -397,9 +397,7 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       ) : null}
       {/* SUB-CLASS */}
-
       {/* BUSINESS SECTOR */}
-
       <Form.Item
         name="sector"
         rules={[
@@ -411,15 +409,13 @@ const ListOrganizationForm = ({ next }) => {
       >
         <Select placeholder="Sector" allowClear>
           {sectors.map((sector, i) => (
-            <Option key={i} value={sector.id}>
+            <Option key={i} value={sector.name.toLowerCase()}>
               {sector.name}
             </Option>
           ))}
         </Select>
       </Form.Item>
-
       {/* BUSINESS SECTOR */}
-
       {/* BUSINESS LEVEL */}
       {state.business_type === "Enterpreneur" && (
         <Form.Item
@@ -443,7 +439,6 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       )}
       {/* BUSINESS LEVEL */}
-
       {/* ARE YOU A STARTUP */}
       {state.business_type === "Enterpreneur" && (
         <Form.Item
@@ -476,12 +471,11 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       )}
       {/* ARE YOU A STARTUP */}
-
       {/* COMPANY VALUATION */}
       {state.business_type === "Enterpreneur" && is_startUp && (
         <Form.Item name="company_valuation">
           <InputGroup compact style={{ display: "flex" }}>
-            <Form.Item initialValue="₦" name="currency">
+            <Form.Item name="currency">
               <Select>
                 <Option value="₦">₦</Option>
                 <Option value="$">$</Option>
@@ -515,7 +509,6 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       )}
       {/* COMPANY VALUATION */}
-
       {/* NUMBER OF SUPPORTED BUSINESSES */}
       {state.business_type === "Ecosystem Enabler" && (
         <Form.Item
@@ -542,7 +535,6 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       )}
       {/* NUMBER OF SUPPORTED BUSINESSES */}
-
       {/* NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000 */}
       {state.business_type === "Ecosystem Enabler" &&
         num_supported_business === "Above 1000" && (
@@ -560,7 +552,6 @@ const ListOrganizationForm = ({ next }) => {
           </Form.Item>
         )}
       {/* NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000 */}
-
       {/* WEBSITE */}
       <Form.Item
         name="website"
@@ -574,7 +565,6 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder="Website Address" />
       </Form.Item>
       {/* WEBSITE */}
-
       {/* ORGANIZATION EMAIL */}
       <Form.Item
         name="email"
@@ -592,9 +582,7 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder="Email Address" />
       </Form.Item>
       {/* ORGANIZATION EMAIL */}
-
       <Divider />
-
       {/* ORGANIZATION PHONE */}
       <Form.Item
         name="phone"
@@ -608,7 +596,6 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder="Phone Number" />
       </Form.Item>
       {/* ORGANIZATION PHONE */}
-
       {[
         { name: "Facebook Url", key: "facebook" },
         { name: "Instagram Url", key: "instagram" },
@@ -619,15 +606,18 @@ const ListOrganizationForm = ({ next }) => {
           <InputStyled placeholder={inputField.name} />
         </Form.Item>
       ))}
-
       <p style={{ fontWeight: "bold" }}>Press Realeases, Web mentions</p>
-
       {["Url 1", "Url 2", "Url 3"].map((url, key) => (
-        <Form.Item key={key} name={url}>
+        <Form.Item
+          key={key}
+          name={url
+            .toLowerCase()
+            .split(" ")
+            .join("_")}
+        >
           <InputStyled placeholder={url} />
         </Form.Item>
       ))}
-
       <Form.Item>
         <ButtonStyled
           className=""

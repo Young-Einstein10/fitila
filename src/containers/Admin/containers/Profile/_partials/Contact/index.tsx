@@ -8,7 +8,6 @@ import {
   Marker,
 } from "@react-google-maps/api";
 import { Libraries } from "@react-google-maps/api/dist/utils/make-load-script-url";
-import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
 import { Geocode } from "./Geocode";
 import ErrorMsg from "../../../../../../components/messages/error";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";

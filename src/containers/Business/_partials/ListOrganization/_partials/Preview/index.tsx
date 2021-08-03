@@ -1,15 +1,17 @@
 import React, { useContext, useState, useEffect, FC } from "react";
 import { ButtonStyled } from "../../../../../Styles";
-import { numberWithCommas } from "../../../../../../utils/helpers";
-import { useApiContext, useEcosystemContext } from "../../../../../../context";
+import { capitalize, numberWithCommas } from "../../../../../../utils/helpers";
+import {
+  useApiContext,
+  useEcosystemContext,
+  useSectorContext,
+} from "../../../../../../context";
 import { BusinessContext } from "../../../../context";
 import { useHistory } from "react-router-dom";
 
-
 interface IPreviewProps {
-  prev: () => void
+  prev: () => void;
 }
-
 
 const Preview: FC<IPreviewProps> = ({ prev }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,28 +23,33 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
 
   const history = useHistory();
 
-  const { state } = useContext(BusinessContext);
+  const { state, clearBusinessData } = useContext(BusinessContext);
 
   const {
-    business_type,
-    name,
-    ceo_name,
-    // ceo_image,
-    // comapany_logo,
-    address,
     state: organization_state,
     ecosystem: ecosystemId,
     // sub_ecosystem,
-    // sub_ecosystem_sub_class,
+    sub_ecosystem_sub_class,
     sub_segment: subSegmentId,
-    business_sector,
+    business_type,
+    name,
+    description,
+    // headquarters,
+    ceo_name,
+    ceo_gender,
+    // ceo_image,
+    // company_logo,
+    address,
+    sector,
     business_level,
-    is_startup,
-    company_valuation,
-    funding,
     num_supported_business,
-    num_of_employees,
     website,
+    num_of_employees,
+    funding_currency,
+    funding_currency_value,
+    company_valuation,
+    currency,
+    currency_value,
     email,
     phone,
     facebook,
@@ -50,13 +57,15 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
     linkedin,
     twitter,
     cac_doc,
+    is_startup,
   } = state;
 
   const { data: ecosystemData } = useEcosystemContext();
+  const { data: sectors } = useSectorContext();
 
   useEffect(() => {
-    const getEcosystem = async () => {
-      if (ecosystem.length) {
+    const getEcosystem = () => {
+      if (!ecosystem.length) {
         setEcosystem(ecosystemData);
 
         let selectedecosystem = ecosystemData.filter(
@@ -86,13 +95,19 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
   const handleSubmit = () => {
     setIsLoading(true);
 
-    const data = { ...state, user: "" };
+    const selectedSector = sectors.find(
+      sector => sector.name.toLowerCase() === state.sector
+    );
+
+    const data = { ...state, sector: selectedSector.id, user: "" };
     console.log(data);
 
     const formData = new FormData();
 
     for (const key in data) {
-      formData.append(key, data[key]);
+      if (data[key]) {
+        formData.append(key, data[key]);
+      }
     }
 
     api
@@ -100,7 +115,7 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
       .then(res => {
         setIsLoading(false);
         if (res && res.status === 201) {
-          localStorage.removeItem("userData")
+          clearBusinessData();
           history.push("/business/success");
         }
       })
@@ -109,6 +124,11 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
         setIsLoading(false);
       });
   };
+
+  const ceo_name_label =
+    state.business_type === "Enterpreneur"
+      ? "CEO/Founder's Name"
+      : "CEO/DG/Head/Founder's Name";
 
   return (
     <div>
@@ -119,12 +139,6 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           {business_type}
         </p>
 
-        {/* <p>
-                  <strong>Business Kind:</strong>
-                  <br />
-                  Business Support, Mentoring
-                </p> */}
-
         <p>
           <strong>Organization Name:</strong>
           <br />
@@ -132,21 +146,27 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
         </p>
 
         <p>
-          <strong>Founder's Name:</strong>
+          <strong>{ceo_name_label}:</strong>
           <br />
           {ceo_name}
         </p>
 
         <p>
-          <strong>State:</strong>
+          <strong>Gender:</strong>
           <br />
-          {organization_state}
+          {capitalize(ceo_gender)}
         </p>
 
         <p>
           <strong>Business Address:</strong>
           <br />
           {address}
+        </p>
+
+        <p>
+          <strong>State:</strong>
+          <br />
+          {organization_state}
         </p>
 
         {business_type === "Ecosystem Enabler" && (
@@ -165,13 +185,21 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           </p>
         )}
 
-        {business_type === "Enterpreneur" && (
+        {business_type === "Ecosystem Enabler" && (
+          <p>
+            <strong>Sub-Segement SubClass:</strong>
+            <br />
+            {sub_ecosystem_sub_class || "--"}
+          </p>
+        )}
+
+        {
           <p>
             <strong>Sector:</strong>
             <br />
-            {business_sector}
+            {capitalize(sector)}
           </p>
-        )}
+        }
 
         {business_type === "Enterpreneur" && (
           <p>
@@ -183,17 +211,18 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
 
         {business_type === "Enterpreneur" && (
           <p>
-            <strong>Are You A StartUp:</strong>
+            <strong>Are You A Startup:</strong>
             <br />
             {is_startup ? "Yes" : "No"}
           </p>
         )}
 
-        {business_type === "Enterpreneur" && is_startup && (
+        {business_type === "Enterpreneur" && is_startup && company_valuation && (
           <p>
             <strong>Company Valuation:</strong>
             <br />
-            {numberWithCommas(company_valuation)}
+            {currency}
+            {numberWithCommas(currency_value)}
           </p>
         )}
 
@@ -207,25 +236,13 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           </p>
         )}
 
-        {
+        {funding_currency_value && (
           <p>
             <strong>Funding:</strong>
             <br />
-            {numberWithCommas(funding)}
+            {`${funding_currency}${numberWithCommas(funding_currency_value)}`}
           </p>
-        }
-
-        <p>
-          <strong>CAC Registration Number:</strong>
-          <br />
-          {cac_doc}
-        </p>
-
-        <p>
-          <strong>Number of Employees:</strong>
-          <br />
-          {num_of_employees}
-        </p>
+        )}
 
         <p>
           <strong>Website Address:</strong>
@@ -276,23 +293,26 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
             {twitter}
           </p>
         )}
-        {/* <p>
-                  <strong>Year Established:</strong>
-                  <br />
-                  2010
-                </p>
 
-                <p>
-                  <strong>Valuation:</strong>
-                  <br />
-                  $30m
-                </p>
+        {/* Add Image Upload Previews Here */}
 
-                <p>
-                  <strong>Investors:</strong>
-                  <br />
-                  Luminate, Bill & Melinda Gates, Ford
-                </p> */}
+        <p>
+          <strong>Business RC Number:</strong>
+          <br />
+          {cac_doc}
+        </p>
+
+        <p>
+          <strong>Number of Employees:</strong>
+          <br />
+          {num_of_employees}
+        </p>
+
+        <p>
+          <strong>Description:</strong>
+          <br />
+          {description || "--"}
+        </p>
       </div>
 
       <ButtonStyled

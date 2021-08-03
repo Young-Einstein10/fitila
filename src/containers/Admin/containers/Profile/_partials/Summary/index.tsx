@@ -1,7 +1,6 @@
 import React, { FC, Fragment } from "react";
 import { Row, Col, Skeleton } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
-import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
 import { ReactComponent as UnknownAvatar } from "../../../../../../static/svg/unknownAvatar.svg";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
 // import cowrywise_small from "../../../../../../static/img/cowrywise_small.png";

@@ -2,41 +2,48 @@ import React, { useState } from "react";
 import { useApiContext } from "../../context";
 export const BusinessContext = React.createContext();
 
+const initialState = {
+  business_type: null,
+  name: null,
+  description: null,
+  headquarters: null,
+  ceo_name: null,
+  ceo_gender: null,
+  ceo_image: null,
+  company_logo: null,
+  sub_ecosystem: null,
+  sub_ecosystem_sub_class: null,
+  address: null,
+  state: null,
+  ecosystem: null,
+  sub_segment: null,
+  sector: null,
+  business_level: null,
+  num_supported_business: null,
+  website: null,
+  num_of_employees: null,
+  funding: null,
+  funding_currency: null,
+  funding_currency_value: null,
+  company_valuation: null,
+  currency: null,
+  currency_value: null,
+  email: null,
+  phone: null,
+  facebook: null,
+  instagram: null,
+  linkedin: null,
+  twitter: null,
+  cac_doc: null,
+  is_enterpreneur: null,
+  is_ecosystem: null,
+  is_active: true,
+  is_startup: null,
+  user: null,
+};
+
 const BusinessProvider = ({ children }) => {
-  const [state, setState] = useState({
-    business_type: "",
-    name: "",
-    description: "",
-    headquarters: "",
-    ceo_name: "",
-    ceo_image: null,
-    company_logo: null,
-    sub_ecosystem: "",
-    sub_ecosystem_sub_class: null,
-    address: "",
-    state: "",
-    ecosystem: "",
-    sub_segment: "",
-    sector: "",
-    business_level: "",
-    is_startup: "",
-    num_supported_business: "",
-    website: "",
-    num_of_employees: "",
-    funding: "",
-    company_valuation: "",
-    email: "",
-    phone: "",
-    facebook: "",
-    instagram: "",
-    linkedin: "",
-    twitter: "",
-    cac_doc: "",
-    is_enterpreneur: false,
-    is_ecosystem: false,
-    is_active: true,
-    user: null,
-  });
+  const [state, setState] = useState(initialState);
 
   const { organization } = useApiContext();
 
@@ -48,8 +55,12 @@ const BusinessProvider = ({ children }) => {
     }
   };
 
+  const clearBusinessData = () => setState(initialState);
+
   return (
-    <BusinessContext.Provider value={{ state, setState, addBusiness }}>
+    <BusinessContext.Provider
+      value={{ state, clearBusinessData, setState, addBusiness }}
+    >
       {children}
     </BusinessContext.Provider>
   );

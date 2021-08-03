@@ -55,7 +55,7 @@ const Help: FC = props => {
         <PageHeader
           title={
             <Heading as="h3" style={{ fontSize: "24px", fontWeight: "bold" }}>
-              Enterprise Data Map Guide.
+              Enterprise Data Map Guide
             </Heading>
           }
           buttons={

@@ -48,7 +48,7 @@ const createTableColumns = (
 ) => {
   const columns: any = [
     {
-      title: "Rank",
+      title: "S/N",
       dataIndex: "rank",
       key: "rank",
     },

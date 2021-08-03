@@ -39,7 +39,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
       const userData = {
         ...state,
         ...values,
-        funding: `${values.currency}${values.currency_value}`,
+        funding: `${values.funding_currency}${values.funding_currency_value}`,
         company_logo: file.compnay_logo[0],
         ceo_image: file.ceo_image[0],
       };
@@ -108,6 +108,14 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
       onFinish={handleSubmit}
       className="uploads"
       layout="vertical"
+      initialValues={{
+        ...state,
+        funding_currency: state.funding_currency || "₦",
+        num_of_employees: num_of_employees_custom
+          ? "Above 1000"
+          : state.num_of_employees,
+        num_of_employees_custom: state.num_of_employees,
+      }}
     >
       <Form.Item
         name="company_logo"
@@ -206,7 +214,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
       {state.business_type === "Enterpreneur" && (
         <Form.Item label="" name="funding" style={{ marginBottom: 0 }}>
           <InputGroup compact style={{ display: "flex" }}>
-            <Form.Item initialValue="₦" name="currency">
+            <Form.Item name="funding_currency">
               <Select>
                 <Option value="₦">₦</Option>
                 <Option value="$">$</Option>
@@ -214,7 +222,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
             </Form.Item>
 
             <Form.Item
-              name="currency_value"
+              name="funding_currency_value"
               style={{ width: "100%" }}
               rules={[
                 { type: "number", message: "Only numbers are allowed" },
