@@ -1,96 +1,38 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
+import { Cards } from "../../../../../../../../components/cards/frame/cards-frame";
+import { useOrganizationContext } from "../../../../../../../../context";
+import { customTooltips } from "../../../../../../../../utils/helpers";
 import { ChartContainer } from "./styled";
 
-// Custom Tooltip
-const customTooltips = function(tooltip) {
-  // Tooltip Element
-  let tooltipEl: HTMLElement = document.querySelector(".chartjs-tooltip");
-
-  if (!this._chart.canvas.closest(".parentContainer").contains(tooltipEl)) {
-    tooltipEl = document.createElement("div");
-    tooltipEl.className = "chartjs-tooltip";
-    tooltipEl.innerHTML = "<table></table>";
-
-    document.querySelectorAll(".parentContainer").forEach(el => {
-      if (el.contains(document.querySelector(".chartjs-tooltip"))) {
-        document.querySelector(".chartjs-tooltip").remove();
-      }
-    });
-
-    this._chart.canvas.closest(".parentContainer").appendChild(tooltipEl);
-  }
-
-  // Hide if no tooltip
-  if (tooltip.opacity === 0) {
-    tooltipEl.style.opacity = "0";
-    return;
-  }
-
-  // Set caret Position
-  tooltipEl.classList.remove("above", "below", "no-transform");
-  if (tooltip.yAlign) {
-    tooltipEl.classList.add(tooltip.yAlign);
-  } else {
-    tooltipEl.classList.add("no-transform");
-  }
-
-  function getBody(bodyItem) {
-    return bodyItem.lines;
-  }
-
-  // Set Text
-  if (tooltip.body) {
-    const titleLines = tooltip.title || [];
-    const bodyLines = tooltip.body.map(getBody);
-
-    let innerHtml = "<thead>";
-
-    titleLines.forEach(function(title) {
-      innerHtml += `<div class='tooltip-title'>${title}</div>`;
-    });
-    innerHtml += "</thead><tbody>";
-
-    bodyLines.forEach(function(body, i) {
-      const colors = tooltip.labelColors[i];
-      let style = `background:${colors.backgroundColor}`;
-      style += `; border-color:${colors.borderColor}`;
-      style += "; border-width: 2px";
-      style += "; border-radius: 30px";
-      const span = `<span class="chartjs-tooltip-key" style="${style}"></span>`;
-      innerHtml += `<tr><td>${span}${body}</td></tr>`;
-    });
-
-    innerHtml += "</tbody>";
-
-    const tableRoot = tooltipEl.querySelector("table");
-    tableRoot.innerHTML = innerHtml;
-  }
-
-  const positionY = this._chart.canvas.offsetTop;
-  const positionX = this._chart.canvas.offsetLeft;
-  const toolTip = document.querySelector(".chartjs-tooltip");
-  const toolTipHeight = toolTip.clientHeight;
-
-  // Display, position, and set styles for font
-
-  tooltipEl.style.opacity = "1";
-  tooltipEl.style.left = `${positionX + tooltip.caretX}px`;
-  tooltipEl.style.top = `${positionY +
-    tooltip.caretY -
-    (tooltip.caretY > 10
-      ? toolTipHeight > 100
-        ? toolTipHeight + 5
-        : toolTipHeight + 15
-      : 70)}px`;
-  tooltipEl.style.fontFamily = tooltip._bodyFontFamily;
-  tooltipEl.style.fontSize = `${tooltip.bodyFontSize}px`;
-  tooltipEl.style.fontStyle = tooltip._bodyFontStyle;
-  tooltipEl.style.padding = `${tooltip.yPadding}px ${tooltip.xPadding}px`;
-};
-
 const BarChart = props => {
-  const { labels, datasets, options, height, layout } = props;
+  const { labels, options, width, height, layout } = props;
+
+  const { data: organizationData, isLoading } = useOrganizationContext();
+
+  const maleFounders = organizationData.filter(
+    organization => organization.ceo_gender.toLowerCase() === "male"
+  );
+  const femaleFounders = organizationData.filter(
+    organization => organization.ceo_gender.toLowerCase() === "female"
+  );
+
+  const datasets = [
+    {
+      data: [femaleFounders.length, maleFounders.length],
+      backgroundColor: [
+        "rgba(245, 71, 109, 0.645)",
+        "rgba(39, 149, 221, 0.686)",
+        // "rgba(255, 99, 132, 0.2)",
+        // "rgba(54, 162, 235, 0.2)",
+      ],
+      borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+      borderWidth: 1,
+      hoverBackgroundColor: ["rgb(255, 0, 55)", "rgb(10, 134, 216)"],
+      label: "Founders",
+      barPercentage: 0.6,
+    },
+  ];
 
   const data = {
     labels,
@@ -98,71 +40,59 @@ const BarChart = props => {
   };
 
   return (
-    <ChartContainer className="parentContainer">
-      <Bar
-        data={data}
-        height={window.innerWidth <= 575 ? 200 : height}
-        options={{
-          ...options,
-          ...layout,
-          tooltips: {
-            mode: "label",
-            intersect: false,
-            position: "average",
-            enabled: false,
-            custom: customTooltips,
-            callbacks: {
-              label(t, d) {
-                const dstLabel = d.datasets[t.datasetIndex].label;
-                const { yLabel } = t;
-                return `<span class="chart-data">${yLabel}</span> <span class="data-label">${dstLabel}</span>`;
-              },
-              labelColor(tooltipItem, chart) {
-                const dataset =
-                  chart.config.data.datasets[tooltipItem.datasetIndex];
-                return {
-                  backgroundColor: dataset.hoverBackgroundColor,
-                  borderColor: "transparent",
-                  usePointStyle: true,
-                };
+    <Cards loading={isLoading} title="Female and Male Led Startups">
+      <ChartContainer className="parentContainer">
+        <Bar
+          data={data}
+          width={width}
+          height={height}
+          options={{
+            ...options,
+            ...layout,
+            tooltips: {
+              mode: "label",
+              intersect: false,
+              position: "average",
+              enabled: false,
+              custom: customTooltips,
+              callbacks: {
+                label(t, d) {
+                  const dstLabel = d.datasets[t.datasetIndex].label;
+                  const { yLabel } = t;
+                  return `<span class="chart-data">${yLabel}</span> <span class="data-label">${dstLabel}</span>`;
+                },
+                labelColor(tooltipItem, chart) {
+                  const dataset =
+                    chart.config.data.datasets[tooltipItem.datasetIndex];
+                  return {
+                    backgroundColor: dataset.hoverBackgroundColor,
+                    borderColor: "transparent",
+                    usePointStyle: true,
+                  };
+                },
               },
             },
-          },
-        }}
-      />
-    </ChartContainer>
+          }}
+        />
+      </ChartContainer>
+    </Cards>
   );
 };
 
 BarChart.defaultProps = {
   height: 200,
+  width: 200,
   labels: ["Female", "Male"],
-  datasets: [
-    {
-      data: [20, 60],
-      backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
-      label: "Profit",
-    },
-    {
-      data: [10, 40],
-      backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
-      label: "Lose",
-    },
-  ],
 
   options: {
+    // legend: {
+    //   display: false,
+    //   labels: {
+    //     display: false,
+    //   },
+    // },
     maintainAspectRatio: true,
     responsive: true,
-    legend: {
-      display: true,
-      position: "bottom",
-      align: "center",
-      labels: {
-        boxWidth: 6,
-        display: true,
-        usePointStyle: true,
-      },
-    },
     layout: {
       padding: {
         left: "0",
@@ -171,9 +101,26 @@ BarChart.defaultProps = {
         bottom: "0",
       },
     },
+    legend: {
+      display: false,
+      position: "top",
+      align: "center",
+      labels: {
+        boxWidth: 6,
+        display: false,
+        usePointStyle: true,
+      },
+    },
     scales: {
       yAxes: [
         {
+          stacked: true,
+          // gridLines: {
+          //   display: false,
+          // },
+          // ticks: {
+          //   display: false,
+          // },
           gridLines: {
             color: "#e5e9f2",
           },
@@ -181,20 +128,23 @@ BarChart.defaultProps = {
             beginAtZero: true,
             fontSize: 13,
             fontColor: "#182b49",
-            max: 80,
-            stepSize: 20,
+            max: 400,
+            stepSize: 50,
             callback(value, index, values) {
-              return `${value}k`;
+              return `${value}`;
             },
           },
         },
       ],
       xAxes: [
         {
+          stacked: true,
           gridLines: {
             display: false,
           },
-          barPercentage: 0.6,
+          // ticks: {
+          //   display: false,
+          // },
           ticks: {
             beginAtZero: true,
             fontSize: 13,

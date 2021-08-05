@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button, Col, Row, Table, Spin, Skeleton } from "antd";
+import { Button, Col, Row, Table } from "antd";
 import { Link, NavLink, RouteComponentProps } from "react-router-dom";
 import { generateIcons, tableHeader } from "./functions";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
@@ -67,18 +67,12 @@ const Dashboard: FC<RouteComponentProps> = () => {
         {/* ECOSYSTEMS */}
         <Row gutter={25} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
-            <Cards title="Explore by ecosystem segments" size="large">
-              {isEcosystemLoading ? (
-                <Row
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "200px",
-                  }}
-                >
-                  <Spin />
-                </Row>
-              ) : (
+            <Cards
+              loading={isEcosystemLoading}
+              title="Explore by ecosystem segments"
+              size="large"
+            >
+              {
                 <Row gutter={[16, 16]}>
                   {ecosystems.map(segment => (
                     <Col
@@ -111,7 +105,7 @@ const Dashboard: FC<RouteComponentProps> = () => {
                     </Col>
                   ))}
                 </Row>
-              )}
+              }
             </Cards>
           </Col>
         </Row>
@@ -119,12 +113,12 @@ const Dashboard: FC<RouteComponentProps> = () => {
         {/* STATES */}
         <Row gutter={24} style={{ marginTop: "2rem" }}>
           <Col xs={24}>
-            {isOrganizationLoading ? (
-              <Cards headless>
-                <Skeleton active />
-              </Cards>
-            ) : (
-              <Cards title="Explore by States" size="large">
+            {
+              <Cards
+                loading={isOrganizationLoading}
+                title="Explore by States"
+                size="large"
+              >
                 <RowStyled>
                   {statesData.map((state, i) => (
                     <Link
@@ -140,7 +134,7 @@ const Dashboard: FC<RouteComponentProps> = () => {
                   ))}
                 </RowStyled>
               </Cards>
-            )}
+            }
           </Col>
         </Row>
 

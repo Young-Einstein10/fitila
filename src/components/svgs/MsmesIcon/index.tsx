@@ -11,7 +11,7 @@ export const MsmesIcon = props => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0)">
+      <g clipPath="url(#clip0)">
         <path
           d="M37.2126 32.5836C34.6877 30.2389 28.0748 28.4955 20.4399 28.4955C12.805 28.4955 6.19213 30.2389 3.66719 32.5836L2.5249 34.7478C2.5249 38.1745 10.5806 41 20.5 41C30.4193 41 38.475 38.1745 38.475 34.7478L37.2126 32.5836Z"
           fill={theme["primary-icon-color"]}

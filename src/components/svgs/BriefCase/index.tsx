@@ -11,7 +11,7 @@ export const BriefCase = props => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0)">
+      <g clipPath="url(#clip0)">
         <path
           d="M14.8142 5.37257H23.2731V7.43011H26.0165V5.37257C26.0165 3.81799 24.8277 2.62915 23.2731 2.62915H14.8142C13.2596 2.62915 12.0708 3.81799 12.0708 5.37257V7.43011H14.8142V5.37257Z"
           fill="black"

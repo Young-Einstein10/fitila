@@ -11,7 +11,7 @@ export const PolicyRegulationIcon = props => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0)">
+      <g clipPath="url(#clip0)">
         <path
           d="M29.0345 5.25827H12.1168V8.00169H29.0345V5.25827Z"
           fill={theme["primary-icon-color"]}

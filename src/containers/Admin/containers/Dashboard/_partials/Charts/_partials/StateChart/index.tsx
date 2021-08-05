@@ -1,5 +1,6 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
+import { Cards } from "../../../../../../../../components/cards/frame/cards-frame";
 import { useOrganizationContext } from "../../../../../../../../context";
 import useChartData from "../../hooks";
 import "../DoughnutChart/index.less";
@@ -14,9 +15,9 @@ function getRandomColor() {
 }
 
 const StateChart = props => {
-  const { labels, datasets, options, height } = props;
+  const { labels, datasets, options, width, height } = props;
 
-  const { states, data: organizations } = useOrganizationContext();
+  const { states, isLoading, data: organizations } = useOrganizationContext();
 
   const stateData = states.map(state => {
     const organizationsInState = organizations.filter(
@@ -53,24 +54,26 @@ const StateChart = props => {
   };
 
   return (
-    <div className="sector-funding-chart">
-      <p>
-        <span>{states.length}</span> Total States
-      </p>
-      <Doughnut
-        ref={ref}
-        data={dataInfo}
-        height={height}
-        options={options}
-        width={200}
-      />
-    </div>
+    <Cards loading={isLoading} title="Startups Ranking by State" size="large">
+      <div className="sector-funding-chart">
+        <p>
+          <span>{states.length}</span> Total States
+        </p>
+        <Doughnut
+          ref={ref}
+          data={dataInfo}
+          height={height}
+          options={options}
+          width={width}
+        />
+      </div>
+    </Cards>
   );
 };
 
 StateChart.defaultProps = {
   height: 200,
-  // width: 220,
+  width: 200,
   labels: ["Jan", "Feb", "Mar", "Apr", "May"],
   datasets: [
     {

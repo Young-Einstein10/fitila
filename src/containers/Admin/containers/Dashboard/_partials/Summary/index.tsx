@@ -10,6 +10,7 @@ import {
   StarIcon,
   HandbagIcon,
 } from "../../../../../../components/svgs";
+import numberWithCommas from "../../../../../../utils/numberFormatter";
 
 const CardStyled = Styled(Card)`
   box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
@@ -164,6 +165,33 @@ const Summary = () => {
         </CardStyled>
       </Col>
 
+      <Col xs={24} sm={12} md={8} lg={8}>
+        <CardStyled>
+          <p style={{ color: "#81868C", borderRadius: "4px" }}>
+            Funding disbursed by Support Organizations
+          </p>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "48px",
+                fontWeight: "bold",
+                marginBottom: "0px",
+              }}
+            >
+              ${numberWithCommas(500000)}
+            </p>
+            <HandbagIcon />
+          </div>
+        </CardStyled>
+      </Col>
+
       {/* <Col xs={24} sm={12} md={8} lg={8}>
         <CardStyled>
           <p style={{ color: "#81868C", borderRadius: "4px" }}>
@@ -218,32 +246,8 @@ const Summary = () => {
         </CardStyled>
       </Col>
 
-      <Col xs={24} sm={12} md={8} lg={8}>
-        <CardStyled>
-          <p style={{ color: "#81868C", borderRadius: "4px" }}>
-            Funding disbursed by Support Organizations
-          </p>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                fontSize: "48px",
-                fontWeight: "bold",
-                marginBottom: "0px",
-              }}
-            >
-              $5000000
-            </p>
-            <HandBagIcon />
-          </div>
-        </CardStyled>
-      </Col> */}
+      
+      */}
     </Row>
   );
 };
