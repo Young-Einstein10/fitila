@@ -1,5 +1,5 @@
 import React, { FC, Fragment } from "react";
-import { Row, Col, Skeleton } from "antd";
+import { Row, Col } from "antd";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { ReactComponent as UnknownAvatar } from "../../../../../../static/svg/unknownAvatar.svg";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
@@ -19,12 +19,10 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
         <Col xs={24}>
           <Row gutter={[16, 8]}>
             <Col xs={24} sm={24} md={24} lg={14}>
-              {isLoading ? (
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              ) : (
+              {
                 <Cards
+                  // bgColor="rgba(100, 141, 236, 0.37)"
+                  loading={isLoading}
                   headless
                   bodypadding="15px"
                   style={{
@@ -77,20 +75,18 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     </p>
                   </div>
                 </Cards>
-              )}
+              }
             </Col>
             {/* =============== COMPANY NAME =================== */}
 
             {/* =============== COMPANY DETAILS =================== */}
             <Col xs={24} sm={24} md={12} lg={10}>
-              {isLoading ? (
-                <Cards headless>
-                  <Skeleton active />
-                </Cards>
-              ) : (
+              {
                 <Cards
+                  // bgColor="rgba(192, 233, 255, 0.52)"
+                  loading={isLoading}
                   style={{
-                    height: "202px",
+                    minHeight: "202px",
                   }}
                   title={
                     <div
@@ -170,7 +166,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     </div>
                   </Row>
                 </Cards>
-              )}
+              }
             </Col>
             {/* =============== COMPANY DETAILS =================== */}
           </Row>

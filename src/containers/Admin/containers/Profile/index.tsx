@@ -110,17 +110,16 @@ const Profile: FC<RouteComponentProps> = ({ match }) => {
             selectedOrganization={selectedOrganization}
           />
 
-          <SimilarCompanies
-            isLoading={isLoading}
-            selectedOrganization={selectedOrganization[0]}
-          />
-
           {selectedOrganization[0] && (
             <Contact
               isLoading={isLoading}
               selectedOrganization={selectedOrganization[0]}
             />
           )}
+          <SimilarCompanies
+            isLoading={isLoading}
+            selectedOrganization={selectedOrganization[0]}
+          />
         </Col>
       </RowStyled>
     </AdminSectionWrapper>

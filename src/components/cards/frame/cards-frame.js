@@ -9,6 +9,7 @@ import { ReactComponent as BurgerMenu } from "../../../static/svg/burgermenu.svg
 const Cards = props => {
   const {
     title,
+    bgColor,
     children,
     more,
     moreText,
@@ -34,6 +35,8 @@ const Cards = props => {
           bordered={border}
           loading={loading}
           bodypadding={bodypadding && bodypadding}
+          bg
+          bgColor={bgColor}
           extra={
             <>
               {more && (
@@ -59,6 +62,7 @@ const Cards = props => {
           style={{ ...style, width: "100%" }}
           bordered={border}
           loading={loading}
+          bgColor={bgColor}
         >
           {title && <Heading as="h4">{title}</Heading>}
           {caption && <p>{caption}</p>}
@@ -92,6 +96,7 @@ Cards.propTypes = {
   headless: PropTypes.bool,
   loading: PropTypes.bool,
   border: PropTypes.bool,
+  bgColor: PropTypes.string,
   caption: PropTypes.string,
   bodypadding: PropTypes.string,
   moreText: PropTypes.bool,
