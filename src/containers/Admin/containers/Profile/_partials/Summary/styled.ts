@@ -1,8 +1,8 @@
-import Styled from "styled-components";
+import { Row } from "antd";
+import styled from "styled-components";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 
-const ProfileCardStyled = Styled(Cards)`
-
+const ProfileCardStyled = styled(Cards)`
   &.ant-card-body {
     min-height: 202px;
     background: navy-blue;
@@ -26,10 +26,7 @@ const ProfileCardStyled = Styled(Cards)`
         }
       }
     }
-
   }
-
-
 
   &.company-founder-wrapper {
     display: flex;
@@ -60,10 +57,50 @@ const ProfileCardStyled = Styled(Cards)`
       }
 
       span {
-        color: #A0A0A0;
+        color: #a0a0a0;
       }
     }
   }
 `;
 
-export { ProfileCardStyled };
+const RowStyled = styled(Row)`
+  .profile-summary-data {
+    width: 100%;
+
+    div {
+      display: flex;
+      align-items: center;
+
+      span {
+        flex: 1;
+
+        :first-child {
+          flex: 0 0 30%;
+          color: #5b5b5b;
+        }
+      }
+    }
+  }
+`;
+
+const StyledCompanyLogo = styled.div`
+  display: flex;
+  align-items: center;
+
+  .company-image-wrapper {
+    width: 100px;
+    margin-right: 1.2rem;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    svg {
+      height: 100px;
+      width: 100px;
+    }
+  }
+`;
+
+export { ProfileCardStyled, RowStyled, StyledCompanyLogo };

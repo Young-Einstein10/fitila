@@ -23,11 +23,14 @@ const Cards = props => {
     border,
     loading,
     bodypadding,
+    className,
+    ...rest
   } = props;
   return (
     <>
       {!headless ? (
         <CardFrame
+          className={className}
           size={size}
           title={title}
           bodyStyle={bodyStyle && bodyStyle}
@@ -35,7 +38,6 @@ const Cards = props => {
           bordered={border}
           loading={loading}
           bodypadding={bodypadding && bodypadding}
-          bg
           bgColor={bgColor}
           extra={
             <>
@@ -50,19 +52,23 @@ const Cards = props => {
               {isbutton && isbutton}
             </>
           }
-          style={{ ...style, width: "100%" }}
+          style={{ ...style }}
+          {...rest}
         >
           {children}
         </CardFrame>
       ) : (
         <CardFrame
+          className={className}
           bodypadding={bodypadding && bodypadding}
           bodyStyle={bodyStyle && bodyStyle}
           size={size}
-          style={{ ...style, width: "100%" }}
+          style={{ ...style }}
           bordered={border}
           loading={loading}
           bgColor={bgColor}
+          headless={headless}
+          {...rest}
         >
           {title && <Heading as="h4">{title}</Heading>}
           {caption && <p>{caption}</p>}
@@ -84,6 +90,7 @@ Cards.propTypes = {
     PropTypes.node,
   ]),
   size: PropTypes.string,
+  className: PropTypes.string,
   more: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,

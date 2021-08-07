@@ -86,10 +86,19 @@ const CardFrame = Styled(Card)`
     color: #1D429C; /* BLUE */ 
   }
   .ant-card-body{
+    border-bottom-left-radius: ${({ theme }) => theme["card-radius"]};
+    border-bottom-right-radius: ${({ theme }) => theme["card-radius"]};
+
     ${props => props.bgColor && `background-color: ${props.bgColor};`}
     padding: ${({ bodypadding }) => (bodypadding ? `${bodypadding}` : "20px")};
+    ${({ headless, theme }) =>
+      headless &&
+      `
+        border-top-left-radius: ${theme["card-radius"]};
+        border-top-right-radius: ${theme["card-radius"]};
+      `};
 
-
+ 
     table{
       .ant-tag{
         line-height: 18px;
@@ -150,6 +159,21 @@ const CardFrame = Styled(Card)`
     ${({ theme }) => (!theme.rtl ? " left" : " right")}: 5px;
   }
  
+
+  &.card-exception {
+    .ant-card-body {
+      /* Loading Skeleton */
+      .ant-card-loading-content {
+        .ant-row {
+          .ant-col {
+            .ant-card-loading-block {
+              background: linear-gradient(90deg, rgb(66 69 70 / 20%), rgb(111 115 117 / 40%), rgb(53 55 56 / 20%));
+            }
+          }
+        }
+      }  
+    }
+  }
 `;
 
 export { CardFrame };

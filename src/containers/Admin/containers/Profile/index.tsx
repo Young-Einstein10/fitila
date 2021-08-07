@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Col } from "antd";
+import { Col, Row } from "antd";
 import { AdminSectionWrapper } from "../../styled";
 import SimilarCompanies from "./_partials/SimilarCompanies";
 // import Revenue from "./_partials/Revenue";
@@ -9,7 +9,6 @@ import SimilarCompanies from "./_partials/SimilarCompanies";
 // import SocialMedia from "./_partials/SocialMedia";
 import Contact from "./_partials/Contact";
 import Summary from "./_partials/Summary";
-import { RowStyled } from "./styled";
 import { useOrganizationContext } from "../../../../context";
 import { RouteComponentProps } from "react-router-dom";
 
@@ -87,7 +86,7 @@ const Profile: FC<RouteComponentProps> = ({ match }) => {
 
   return (
     <AdminSectionWrapper className="company-profile">
-      <RowStyled className="company-profile-row" gutter={25}>
+      <Row className="company-profile-row" gutter={25}>
         {/* <Col span={24}>
           <TabBasic defaultActiveKey="1" tabPosition={"top"}>
             {data.map(item => {
@@ -121,7 +120,7 @@ const Profile: FC<RouteComponentProps> = ({ match }) => {
             selectedOrganization={selectedOrganization[0]}
           />
         </Col>
-      </RowStyled>
+      </Row>
     </AdminSectionWrapper>
   );
 };
