@@ -117,15 +117,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
         num_of_employees_custom: state.num_of_employees,
       }}
     >
-      <Form.Item
-        name="company_logo"
-        rules={[
-          {
-            message: "Please upload your company logo!",
-            required: true,
-          },
-        ]}
-      >
+      <Form.Item name="company_logo">
         <Upload {...companyLogoProps} listType="picture">
           <UploadButtonStyled size="large">
             Upload Company Logo <UploadIcon />
@@ -151,26 +143,16 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
 
       <Form.Item
         name="cac_doc"
+        style={{ width: "100%" }}
         rules={[
-          // { type: "number", message: "Only numbers are allowed" },
+          { type: "number", message: "Only numbers are allowed" },
           {
             message: "Please input your Business RC Number!",
             required: true,
           },
-          {
-            validator: async (rule, value) => {
-              try {
-                if (isNaN(value)) {
-                  throw new Error("Only numbers are allowed!");
-                }
-              } catch (err) {
-                throw new Error(err);
-              }
-            },
-          },
         ]}
       >
-        <InputStyled type="text" placeholder="Business RC Number" />
+        <InputNumberStyled placeholder="Business RC Number" />
       </Form.Item>
 
       <Form.Item
@@ -187,13 +169,10 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
           onChange={e => onNumberOfEmployeesChange(e)}
           allowClear
         >
-          <Option value="1-100">1-100</Option>
-          <Option value="101-200">101-200</Option>
-          <Option value="201-300">201-300</Option>
-          <Option value="301-400">301-400</Option>
-          <Option value="401-500">401-500</Option>
-          <Option value="501-600">501-1000</Option>
-          <Option value="Above 1000">Above 1000</Option>
+          <Option value="1-100">0-9</Option>
+          <Option value="101-200">10-49</Option>
+          <Option value="201-300">50-100</Option>
+          <Option value="301-400">100+</Option>
         </Select>
       </Form.Item>
 
@@ -212,12 +191,12 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
       )}
 
       {state.business_type === "Enterpreneur" && (
-        <Form.Item label="" name="funding" style={{ marginBottom: 0 }}>
+        <Form.Item name="funding" style={{ marginBottom: 0 }}>
           <InputGroup compact style={{ display: "flex" }}>
             <Form.Item name="funding_currency">
               <Select>
                 <Option value="₦">₦</Option>
-                <Option value="$">$</Option>
+                {/* <Option value="$">$</Option> */}
               </Select>
             </Form.Item>
 
@@ -227,7 +206,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
               rules={[
                 { type: "number", message: "Only numbers are allowed" },
                 {
-                  message: "Please input this field!",
+                  message: "Please enter funding!",
                   required: true,
                 },
               ]}

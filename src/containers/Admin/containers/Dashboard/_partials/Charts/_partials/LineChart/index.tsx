@@ -5,7 +5,7 @@ import {
   useOrganizationContext,
   useSectorContext,
 } from "../../../../../../../../context";
-import { ChartContainer } from "../BarChart/styled";
+import { ChartContainer } from "../FemaleBarChart/styled";
 
 interface ILineChartProps {
   height?: number;
@@ -54,9 +54,10 @@ const LineChart: FC<ILineChartProps> = props => {
 
   const result = sectorFundings.filter((sector, index) => index !== lastIndex);
 
-  const chartLabels = [...result, sectorFundings[lastIndex]].map(sector =>
-    sector ? sector.name : ""
-  );
+  const chartLabels = [
+    ...result.sort(),
+    sectorFundings[lastIndex],
+  ].map(sector => (sector ? sector.name : ""));
 
   const bgColor = new Array(sectorFundings.length).fill("#ddf4ff");
 

@@ -51,8 +51,6 @@ const Landing: FC<RouteComponentProps> = ({ history }) => {
       }
     });
 
-    // console.log(filteredData);
-
     type === "sector"
       ? history.push(`/d/organizations`, {
           sector: value.toLowerCase(),

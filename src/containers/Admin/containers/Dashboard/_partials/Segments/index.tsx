@@ -3,7 +3,7 @@ import { Button, Row, Spin, Col, Table } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../../../components/page-headers/page-headers";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
-import { NavLink, RouteComponentProps } from "react-router-dom";
+import { NavLink, RouteComponentProps, useRouteMatch } from "react-router-dom";
 import { AdminSectionWrapper } from "../../../../styled";
 import { Child, TabBasic } from "../../../../../../components/tabs/style";
 import SummaryData from "../SummaryData";
@@ -30,11 +30,11 @@ const generateTableTitle = title => {
   return template;
 };
 
-const Segment: FC<RouteComponentProps<{ name: string }>> = ({
-  match: {
+const Segment: FC<RouteComponentProps> = () => {
+  const {
     params: { name },
-  },
-}) => {
+  } = useRouteMatch<{ name: string }>();
+
   let counter = 0;
 
   const {

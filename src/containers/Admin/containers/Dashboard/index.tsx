@@ -97,7 +97,7 @@ const Dashboard: FC<RouteComponentProps> = () => {
                             <strong>{segment.name}</strong>
                             <br />
                             <span>
-                              {segment.sub_ecosystem.length} Sub-Classes
+                              {segment.sub_ecosystem.length} Sub-Ecosystem
                             </span>
                           </div>
                         </CardSegmentStyled>

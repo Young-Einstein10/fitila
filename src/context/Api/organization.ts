@@ -16,7 +16,7 @@ export default class Organization {
   }
 
   addBusiness(data) {
-    return this.client.post("/add_organization/", data, {
+    return this.client.post("/organizations/add/", data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

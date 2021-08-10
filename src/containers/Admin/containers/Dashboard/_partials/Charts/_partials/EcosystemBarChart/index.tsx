@@ -2,24 +2,32 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import { Cards } from "../../../../../../../../components/cards/frame/cards-frame";
 import { useOrganizationContext } from "../../../../../../../../context";
-import { customTooltips } from "../../../../../../../../utils/helpers";
-import { ChartContainer } from "./styled";
+import {
+  customTooltips,
+  getTotalFunding,
+} from "../../../../../../../../utils/helpers";
+import { abbreviateNumberShort } from "../../../../../../../../utils/numberAbbreviator";
+import { ChartContainer } from "../FemaleBarChart/styled";
 
-const BarChart = props => {
+const EcosystemBarChart = props => {
   const { labels, options, width, height, layout } = props;
 
   const { data: organizationData, isLoading } = useOrganizationContext();
 
-  const maleFounders = organizationData.filter(
-    organization => organization.ceo_gender.toLowerCase() === "male"
-  );
-  const femaleFounders = organizationData.filter(
-    organization => organization.ceo_gender.toLowerCase() === "female"
-  );
+  const ecosystemOrg = organizationData.filter(org => org.is_ecosystem);
+  const enterpreneurOrg = organizationData.filter(org => org.is_entrepreneur);
+
+  const ecosystemFunding = ecosystemOrg.length
+    ? getTotalFunding(ecosystemOrg)
+    : getTotalFunding(organizationData);
+
+  const enterpreneurFunding = enterpreneurOrg.length
+    ? getTotalFunding(enterpreneurOrg)
+    : getTotalFunding(organizationData);
 
   const datasets = [
     {
-      data: [femaleFounders.length, maleFounders.length],
+      data: [enterpreneurFunding, ecosystemFunding],
       backgroundColor: [
         "rgba(245, 71, 109, 0.645)",
         "rgba(39, 149, 221, 0.686)",
@@ -29,7 +37,7 @@ const BarChart = props => {
       borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
       borderWidth: 1,
       hoverBackgroundColor: ["rgb(255, 0, 55)", "rgb(10, 134, 216)"],
-      label: "Founders",
+      label: "",
       barPercentage: 0.6,
     },
   ];
@@ -40,7 +48,7 @@ const BarChart = props => {
   };
 
   return (
-    <Cards loading={isLoading} title="Female and Male Led Startups">
+    <Cards loading={isLoading} title="Funding by Ecosystem and Enterpreneurs">
       <ChartContainer className="parentContainer">
         <Bar
           data={data}
@@ -79,18 +87,12 @@ const BarChart = props => {
   );
 };
 
-BarChart.defaultProps = {
+EcosystemBarChart.defaultProps = {
   height: 200,
   width: 200,
-  labels: ["Female", "Male"],
+  labels: ["Enterpreneurs", "Ecosystem Players"],
 
   options: {
-    // legend: {
-    //   display: false,
-    //   labels: {
-    //     display: false,
-    //   },
-    // },
     maintainAspectRatio: true,
     responsive: true,
     layout: {
@@ -115,12 +117,6 @@ BarChart.defaultProps = {
       yAxes: [
         {
           stacked: true,
-          // gridLines: {
-          //   display: false,
-          // },
-          // ticks: {
-          //   display: false,
-          // },
           gridLines: {
             color: "#e5e9f2",
           },
@@ -128,10 +124,10 @@ BarChart.defaultProps = {
             beginAtZero: true,
             fontSize: 13,
             fontColor: "#182b49",
-            max: 400,
-            stepSize: 50,
+            max: 100000000,
+            stepSize: 5000000,
             callback(value, index, values) {
-              return `${value}`;
+              return `${abbreviateNumberShort(Number(value))}`;
             },
           },
         },
@@ -142,9 +138,6 @@ BarChart.defaultProps = {
           gridLines: {
             display: false,
           },
-          // ticks: {
-          //   display: false,
-          // },
           ticks: {
             beginAtZero: true,
             fontSize: 13,
@@ -156,4 +149,4 @@ BarChart.defaultProps = {
   },
 };
 
-export default BarChart;
+export default EcosystemBarChart;

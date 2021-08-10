@@ -5,7 +5,7 @@ import { useSectorContext } from "../../../../../../../../context";
 import useChartData from "../../hooks";
 import "./index.less";
 
-const DoughnutChart = props => {
+const MSMEsChart = props => {
   const { labels, datasets, options, width, height } = props;
 
   const { isLoading: isSectorLoading } = useSectorContext();
@@ -60,7 +60,7 @@ const DoughnutChart = props => {
   );
 };
 
-DoughnutChart.defaultProps = {
+MSMEsChart.defaultProps = {
   height: 200,
   width: 200,
   labels: ["MSMEs", "Startups"],
@@ -86,4 +86,4 @@ DoughnutChart.defaultProps = {
   },
 };
 
-export default DoughnutChart;
+export default MSMEsChart;

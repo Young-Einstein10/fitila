@@ -62,13 +62,13 @@ const BtnWraper = theme => `
 
 const CardFrame = Styled(Card)`
   ${({ isbutton, theme }) => isbutton && BtnWraper(theme)}
-  ${props => props.bgColor && `background-color: ${props.bgColor}`}
+  ${props => props.bgcolor && `background-color: ${props.bgcolor}`}
   border-radius: 4px;
   margin-bottom: 25px !important;
 
   .ant-card-head{
     border-color: #F1F2F6; 
-    ${props => props.bgColor && `background-color: ${props.bgColor};`}
+    ${props => props.bgcolor && `background-color: ${props.bgcolor};`}
   }
 
   .ant-card-head-extra {
@@ -89,7 +89,7 @@ const CardFrame = Styled(Card)`
     border-bottom-left-radius: ${({ theme }) => theme["card-radius"]};
     border-bottom-right-radius: ${({ theme }) => theme["card-radius"]};
 
-    ${props => props.bgColor && `background-color: ${props.bgColor};`}
+    ${props => props.bgcolor && `background-color: ${props.bgcolor};`}
     padding: ${({ bodypadding }) => (bodypadding ? `${bodypadding}` : "20px")};
     ${({ headless, theme }) =>
       headless &&

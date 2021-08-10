@@ -318,6 +318,14 @@ const Div = Styled.div`
                     display: flex;
                     align-items: center;
                     padding-left: 3rem !important;
+
+                    :hover, :focus, :active {
+                        color: ${({ theme }) => theme["text-primary"]};
+                        background-color: ${({ theme }) =>
+                          theme["secondary-hover"]};
+                        font-weight: bold;
+                    }
+
                     &.ant-menu-item-active{
                         border-radius: 4px;
                         
@@ -326,6 +334,7 @@ const Div = Styled.div`
 
                         }
                     }
+
                     a{
                         display: flex !important;
                         align-items: center;
@@ -342,6 +351,7 @@ const Div = Styled.div`
                             color: ${({ theme }) => theme["dark-color"]};
                         }
                     }
+
                     &.ant-menu-item-selected{
                         color: ${({ theme }) => theme["text-primary"]}
                         background-color: ${({ theme }) =>

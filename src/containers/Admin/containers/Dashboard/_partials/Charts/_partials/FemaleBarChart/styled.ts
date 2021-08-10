@@ -3,7 +3,6 @@ import Styled from "styled-components";
 const ChartContainer = Styled.div`
     display: block;
 
-
     canvas {
       height: 320px;
     }

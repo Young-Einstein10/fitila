@@ -14,4 +14,12 @@ export default class Ecosystem {
   getSubEcosystem(config?: AxiosRequestConfig) {
     return this.client.get("/sub_ecosystem", config);
   }
+
+  getSubClass(config?: AxiosRequestConfig) {
+    return this.client.get("/subclass/", config);
+  }
+
+  addEcosystem(data?: any) {
+    return this.client.post("/ecosystem/", data);
+  }
 }

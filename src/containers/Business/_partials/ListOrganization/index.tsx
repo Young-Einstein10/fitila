@@ -5,11 +5,10 @@ import ListOrganizationForm from "./_partials/ListOrganizationForm";
 import Uploads from "./_partials/Uploads";
 import Preview from "./_partials/Preview";
 import { MainColStyled } from "../AddCompany/styled";
-import { StepsStyled } from "./styled";
-
 import { BusinessContext } from "../../context";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
+import { StepsStyled } from "./styled";
 
 const { Step } = StepsStyled;
 

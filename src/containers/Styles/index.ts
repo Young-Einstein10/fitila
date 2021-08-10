@@ -23,6 +23,11 @@ const InputStyled = Styled(Input)`
 const InputNumberStyled = Styled(InputNumber)`
   background-color: #F9F9F9;
   border-radius: 6px;
+  width: 100% !important;
+
+  .ant-input-number-handler-wrap {
+    display: none;
+  }
 
   &.ant-input-number-lg {
     width: 100%;
@@ -38,8 +43,7 @@ const InputNumberStyled = Styled(InputNumber)`
     color: ${({ theme }) => theme["extra-light-color"]};
   }
   
-  &.ant-input-number, #login_password, &.ant-input-affix-wrapper > input.ant-input-number {
-    
+  &.ant-input-number, #login_password, &.ant-input-affix-wrapper > input.ant-input-number {    
     background-color: #F9F9F9;  
   }
 `;
@@ -276,6 +280,8 @@ const SelectStyled = Styled(Select)<{ width?: string }>`
   width: ${({ width }) => (width ? `${width} !important` : "100% !important")};
   font-size: 16px;
   border-color: ${({ theme }) => theme["secondary-color"]}
+
+  
 
   &.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
     border-color: ${({ theme }) => theme["secondary-color"]}

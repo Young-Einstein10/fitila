@@ -103,4 +103,24 @@ const StyledCompanyLogo = styled.div`
   }
 `;
 
-export { ProfileCardStyled, RowStyled, StyledCompanyLogo };
+const StyledCard = styled(Cards)`
+  ${props => props.bgcolor && `background-color: ${props.bgcolor}`}
+
+  &&.ant-card-head {
+    ${props =>
+      props.bgcolor && `background-color: ${props.bgcolor} !important;`}
+  }
+
+  .ant-card-body {
+    ${props => props.bgcolor && `background-color: ${props.bgcolor};`}
+
+    ${({ headless, theme }) =>
+      headless &&
+      `
+        border-top-left-radius: ${theme["card-radius"]};
+        border-top-right-radius: ${theme["card-radius"]};
+      `};
+  }
+`;
+
+export { ProfileCardStyled, StyledCard, RowStyled, StyledCompanyLogo };

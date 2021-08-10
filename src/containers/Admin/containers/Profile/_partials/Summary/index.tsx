@@ -1,9 +1,9 @@
 import React, { FC, Fragment } from "react";
 import { Row, Col } from "antd";
-import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { ReactComponent as UnknownAvatar } from "../../../../../../static/svg/unknownAvatar.svg";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
 import { RowStyled, StyledCompanyLogo } from "./styled";
+import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 
 interface ISummaryProps {
   selectedOrganization: IOrganizationProps[];
@@ -24,7 +24,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
           {
             <Cards
               className="card-exception"
-              bgColor="rgba(100, 141, 236, 0.37)"
+              bgcolor="rgba(100, 141, 236, 0.37)"
               loading={isLoading}
               headless
               bodypadding="15px"
@@ -62,7 +62,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
           {
             <Cards
               className="card-exception"
-              bgColor="rgba(192, 233, 255, 0.52)"
+              bgcolor="rgba(192, 233, 255, 0.52)"
               loading={isLoading}
               title={
                 <div

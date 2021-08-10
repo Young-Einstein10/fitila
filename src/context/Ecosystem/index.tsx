@@ -1,11 +1,42 @@
+import { AxiosResponse } from "axios";
 import React, { useState, useEffect, createContext, FC } from "react";
 import { useMountedState } from "../../utils/hooks";
 import { useApiContext } from "../Api";
-import { IEcosystemProps, IEcosystemStateProps } from "./types";
+import {
+  IEcosystemProps,
+  IEcosystemStateProps,
+  ISubclassProps,
+  ISubclassResponse,
+} from "./types";
 
 const EcosystemContext = createContext<IEcosystemStateProps | undefined>(
   undefined
 );
+
+function restructureData(
+  ecosystemData: IEcosystemProps[],
+  subClassData: ISubclassProps[]
+): IEcosystemProps[] {
+  const result = ecosystemData.map(subEco => {
+    const newSubEcosystem = subEco.sub_ecosystem.map(subEcosystem => {
+      const subClass = subClassData.filter(
+        ({ sub_ecosystem }) => subEcosystem.id === sub_ecosystem
+      );
+
+      return {
+        ...subEcosystem,
+        sub_class: subClass,
+      };
+    });
+
+    return {
+      ...subEco,
+      sub_ecosystem: newSubEcosystem,
+    };
+  });
+
+  return result;
+}
 
 const EcosystemProvider: FC = ({ children }) => {
   const [ecosystem, setEcosystem] = useState<{
@@ -21,6 +52,13 @@ const EcosystemProvider: FC = ({ children }) => {
   const isMounted = useMountedState();
 
   useEffect(() => {
+    const getSubClasses = async (): Promise<AxiosResponse<
+      ISubclassResponse
+    >> => {
+      const res = await api.getSubClass();
+      return res;
+    };
+
     const getEcosystems = async () => {
       setEcosystem(prevEcosystems => ({
         ...prevEcosystems,
@@ -30,94 +68,19 @@ const EcosystemProvider: FC = ({ children }) => {
       try {
         const res = await api.getEcosystem();
 
-        const data: IEcosystemProps[] = res.data.data;
+        const ecosystemData: IEcosystemProps[] = res.data.data;
+
+        const {
+          data: { data: subClassData },
+        } = await getSubClasses();
+
+        const result = restructureData(ecosystemData, subClassData);
 
         if (isMounted()) {
-          // let RESOURCES = data
-          //   .map(ecosystem => ecosystem)
-          //   .find(ecosystem => ecosystem.name === "Resources");
-
-          // RESOURCES = RESOURCES.sub_ecosystem.map(subeco => {
-          //   let result = [];
-
-          //   return {
-          //     ...subeco,
-          //     sub_class: result,
-          //   };
-          // });
-
-          // const formattedData: IEcosystemProps[] = data
-          //   .filter(ecosystem => {
-          //     const res = ecosystem.sub_ecosystem.filter(
-          //       subEco =>
-          //         subEco.name.toLowerCase() !== "Churches/Mosques".toLowerCase()
-          //     );
-          //     return {
-          //       ...ecosystem,
-          //       sub_ecosystem: res,
-          //     };
-          //   })
-          //   .filter(
-          //     ecosystem =>
-          //       ecosystem.name.toLowerCase() !== "Resources".toLowerCase()
-          //   )
-          //   .filter(
-          //     ecosystem =>
-          //       ecosystem.name.toLowerCase() !== "Research".toLowerCase()
-          //   )
-          //   .map(ecosystem => {
-          //     let sub_eco = ecosystem.sub_ecosystem.map(subeco => {
-          //       if (subeco.name === "Business Advisory") {
-          //         subeco.sub_class = [
-          //           {
-          //             id: 1,
-          //             name: "Mentoring",
-          //             organizations: subeco.organizations,
-          //           },
-          //           {
-          //             id: 2,
-          //             name: "Legal",
-          //             organizations: subeco.organizations,
-          //           },
-          //           {
-          //             id: 3,
-          //             name: "Tax",
-          //             organizations: subeco.organizations,
-          //           },
-          //           {
-          //             id: 4,
-          //             name: "HR",
-          //             organizations: subeco.organizations,
-          //           },
-          //           {
-          //             id: 5,
-          //             name: "Book-Keeping",
-          //             organizations: subeco.organizations,
-          //           },
-          //         ];
-          //       } else {
-          //         subeco.sub_class = [];
-          //       }
-
-          //       return {
-          //         ...subeco,
-          //       };
-          //     });
-
-          //     return {
-          //       ...ecosystem,
-          //       name:
-          //         ecosystem.name === "Businesses"
-          //           ? "MSMEs & Startups"
-          //           : ecosystem.name,
-          //       sub_ecosystem: sub_eco,
-          //     };
-          //   });
-
           setEcosystem(prevEcosystems => ({
             ...prevEcosystems,
             isLoading: false,
-            data,
+            data: result,
           }));
         }
       } catch (error) {

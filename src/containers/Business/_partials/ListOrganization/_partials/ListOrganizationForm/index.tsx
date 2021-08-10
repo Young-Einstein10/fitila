@@ -12,60 +12,24 @@ import {
   useSectorContext,
 } from "../../../../../../context";
 import {
+  ISubclassProps,
   ISubEcosystem,
-  // ISubclassProps,
 } from "../../../../../../context/Ecosystem/types";
 import states from "../../../../../../states.json";
+import { businessLevels } from "../../../../../../utils/helpers";
 
 const { Option } = Select;
 const InputGroup = InputStyled.Group;
 
-const numOfBusinessessSupported = [
-  "1-100",
-  "101-200",
-  "201-300",
-  "301-400",
-  "401-500",
-  "501-1000",
-  "Above 1000",
-];
-
-const businessLevels = [
-  {
-    name: "Micro",
-    description:
-      "businesses with 0 - 9 employees and  total assets (excluding land and building) of less than 10 million naira",
-  },
-  {
-    name: "Small",
-    description: `businesses with 10 - 49 employees and total assets (excluding
-land and building) of 10million to 99million naira`,
-  },
-  {
-    name: "Medium",
-    description: `businesses with 50 - 199 employees and total assets (excluding
-land and building) of 100million to 1billion naira`,
-  },
-  {
-    name: "Startup",
-    description:
-      "a fast/high growth young business typically between 0-5 years",
-  },
-];
-
-const business_subclass = [
-  "Tax",
-  "Book-Keeping",
-  "Human Resources",
-  "Legal",
-  "Mentoring",
-];
-
 const ListOrganizationForm = ({ next }) => {
   const [subSegment, setSubSegment] = useState<ISubEcosystem[]>([]);
-  const [num_supported_business, setNum_supported_business] = useState();
-  const [selectedSubEcosystem, setSelectedSubEcosystem] = useState(null);
-  // const [subEcosystemSubClass, setSubEcosystemSubClass] = useState<ISubclassProps[]>([]);
+  const [currEcosystem, setCurrEcosystem] = useState("");
+  const [num_supported_business] = useState();
+  // const [selectedSubEcosystem, setSelectedSubEcosystem] = useState(null);
+  const [subEcosystemSubClass, setSubEcosystemSubClass] = useState<
+    ISubclassProps[]
+  >([]);
+  const [currSubClass, setCurrSubClass] = useState<ISubclassProps>(null);
   const [is_startUp, setIs_Startup] = useState(false);
 
   const { data: ecosystem } = useEcosystemContext();
@@ -78,6 +42,15 @@ const ListOrganizationForm = ({ next }) => {
   const { state, setState } = useContext(BusinessContext);
 
   useEffect(() => {
+    if (state.ecosystem_name) {
+      setCurrEcosystem(state.ecosystem_name);
+      const selectedEcosystem = ecosystem.filter(
+        eco => eco.name === state.ecosystem_name
+      );
+
+      setSubSegment(selectedEcosystem[0].sub_ecosystem);
+    }
+
     if (!state.business_type) {
       history.push("/business");
     }
@@ -85,31 +58,48 @@ const ListOrganizationForm = ({ next }) => {
     if (state.is_startup) {
       setIs_Startup(state.is_startup);
     }
-  }, [state.business_type, state.is_startup, history]);
+  }, [
+    state.business_type,
+    state.ecosystem_name,
+    state.is_startup,
+    ecosystem,
+    history,
+  ]);
 
-  // useEffect(() => {
-  //   const userData = JSON.parse(localStorage.getItem("userData"))
+  useEffect(() => {
+    if (state.sub_ecosystem_name) {
+      const selectedSubEcosystem = subSegment.filter(
+        subSegment => subSegment.name === state.sub_ecosystem_name
+      );
 
-  //   if (userData) {
-  //     form.setFieldsValue({
-  //       ...userData
-  //     })
-  //   }
+      console.log({ selectedSubEcosystem });
 
-  // }, [form])
+      if (selectedSubEcosystem.length > 0) {
+        setSubEcosystemSubClass(selectedSubEcosystem[0].sub_class);
+      }
+    }
+  }, [state.sub_ecosystem_name, subSegment]);
 
   const handleSubEcosystemChange = value => {
     const selectedSubEcosystem = subSegment.filter(
       subSegment => subSegment.name === value
     );
 
-    console.log({ selectedSubEcosystem });
+    // console.log({ selectedSubEcosystem });
 
-    setSelectedSubEcosystem(selectedSubEcosystem[0]);
+    // setSelectedSubEcosystem(selectedSubEcosystem[0]);
 
-    // if (selectedSubEcosystem.length > 0) {
-    //   setSubEcosystemSubClass(selectedSubEcosystem[0].sub_class);
-    // }
+    if (selectedSubEcosystem.length > 0) {
+      setSubEcosystemSubClass(selectedSubEcosystem[0].sub_class);
+    }
+  };
+
+  const handleSubClassChange = value => {
+    const currSubClass = subEcosystemSubClass.find(
+      subclass => subclass.name.toLowerCase() === value
+    );
+
+    setCurrSubClass(currSubClass);
   };
 
   const handleSubmit = async () => {
@@ -138,8 +128,14 @@ const ListOrganizationForm = ({ next }) => {
           ...values,
           company_valuation: `${values.currency}${values.currency_value}`,
           ecosystem: selectedEcosystem[0].id,
+          ecosystem_name: selectedEcosystem[0].name,
           sub_ecosystem: selectedSubEcosystem[0].id,
+          sub_ecosystem_name: selectedSubEcosystem[0].name,
           sub_segment: selectedSubEcosystem[0].id,
+          sub_ecosystem_sub_class: currSubClass ? currSubClass.id : null,
+          sub_ecosystem_sub_class_name: currSubClass
+            ? currSubClass.name
+            : values.sub_ecosystem_sub_class,
           is_ecosystem:
             state.business_type === "Ecosystem Enabler" ? true : false,
           is_enterpreneur:
@@ -173,15 +169,10 @@ const ListOrganizationForm = ({ next }) => {
   };
 
   const updateSubSegment = value => {
+    setCurrEcosystem(value);
     const selectedEcosystem = ecosystem.filter(eco => eco.name === value);
 
     setSubSegment(selectedEcosystem[0].sub_ecosystem);
-  };
-
-  const onNumberOfBusinessChange = value => {
-    if (value === "Above 1000") {
-      setNum_supported_business(value);
-    }
   };
 
   const ceo_name_label =
@@ -201,6 +192,9 @@ const ListOrganizationForm = ({ next }) => {
         currency: state.currency || "₦",
         currency_value: state.currency_value,
         num_supported_business_custom: state.num_supported_business,
+        ecosystem: state.ecosystem_name,
+        sub_ecosystem: state.sub_ecosystem_name,
+        sub_ecosystem_sub_class: state.sub_ecosystem_sub_class_name,
       }}
     >
       {/* BUSINESS NAME */}
@@ -307,21 +301,6 @@ const ListOrganizationForm = ({ next }) => {
             placeholder="Ecosystem Segment"
             allowClear
           >
-            {/* {Object.keys(ecosystemDropdown).map((ecosystem, key) => (
-              <Option
-                key={key}
-                value={ecosystem
-                  .split("_")
-                  .join(" ")
-                  .toLocaleUpperCase()}
-              >
-                {ecosystem
-                  .split("_")
-                  .join(" ")
-                  .toLocaleUpperCase()}
-              </Option>
-            ))} */}
-
             {ecosystem.map((eco, key) => (
               <Option key={eco.id} value={eco.name}>
                 {eco.name}
@@ -331,6 +310,7 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       )}
       {/* ECOSYTEM SEGMENT */}
+
       {/* SUB-ECOSYTEM SEGMENT */}
       {state.business_type === "Ecosystem Enabler" && subSegment.length > 0 ? (
         <Form.Item
@@ -356,10 +336,10 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       ) : null}
       {/* SUB-ECOSYTEM SEGMENT */}
+
       {/* SUB-CLASS */}
       {state.business_type === "Ecosystem Enabler" &&
-      selectedSubEcosystem &&
-      selectedSubEcosystem.name.toLowerCase() === "business advisory" ? (
+      subEcosystemSubClass.length > 0 ? (
         <Form.Item
           name="sub_ecosystem_sub_class"
           rules={[
@@ -369,34 +349,57 @@ const ListOrganizationForm = ({ next }) => {
             },
           ]}
         >
-          <Select placeholder="Sub-Class" allowClear>
-            {business_subclass.map((subClass, key) => (
-              <Option key={key} value={subClass}>
-                {subClass}
+          <Select
+            onChange={e => handleSubClassChange(e)}
+            placeholder="Sub-Class"
+            allowClear
+          >
+            {subEcosystemSubClass.map((subClass, key) => (
+              <Option key={key} value={subClass.name.toLowerCase()}>
+                {subClass.name}
               </Option>
             ))}
           </Select>
         </Form.Item>
       ) : null}
-      {state.business_type === "Ecosystem Enabler" &&
-      selectedSubEcosystem &&
-      selectedSubEcosystem.name.toLowerCase() === "equity funders" ? (
-        <Form.Item
-          name="sub_ecosystem_sub_class"
-          rules={[
-            {
-              message: "Please select a sub-segment class!",
-              required: true,
-            },
-          ]}
-        >
-          <Select placeholder="Sub-Class" allowClear>
-            <Option value="Angel Investors">Angel Investors</Option>
-            <Option value="Venture Capitalist">Venture Capitalist</Option>
-          </Select>
-        </Form.Item>
-      ) : null}
       {/* SUB-CLASS */}
+
+      {state.business_type === "Ecosystem Enabler" &&
+        currEcosystem === "Funding" &&
+        subSegment.length > 0 && (
+          <Form.Item name="funding" style={{ marginBottom: 0 }}>
+            <InputGroup compact style={{ display: "flex" }}>
+              <Form.Item name="funding_disbursed_currency">
+                <Select>
+                  <Option value="₦">₦</Option>
+                  {/* <Option value="$">$</Option> */}
+                </Select>
+              </Form.Item>
+
+              <Form.Item
+                name="funding_disbursed_support"
+                style={{ width: "100%" }}
+                rules={[
+                  { type: "number", message: "Only numbers are allowed" },
+                  {
+                    message: "Please enter funding disbursed to businesses!",
+                    required: true,
+                  },
+                ]}
+              >
+                <InputNumberStyled
+                  placeholder="Funding disbursed to businesses so far"
+                  size="large"
+                  formatter={value =>
+                    `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  }
+                  parser={value => value.replace(/\bNGN\s?|(,*)/g, "")}
+                />
+              </Form.Item>
+            </InputGroup>
+          </Form.Item>
+        )}
+
       {/* BUSINESS SECTOR */}
       <Form.Item
         name="sector"
@@ -416,6 +419,7 @@ const ListOrganizationForm = ({ next }) => {
         </Select>
       </Form.Item>
       {/* BUSINESS SECTOR */}
+
       {/* BUSINESS LEVEL */}
       {state.business_type === "Enterpreneur" && (
         <Form.Item
@@ -439,6 +443,7 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       )}
       {/* BUSINESS LEVEL */}
+
       {/* ARE YOU A STARTUP */}
       {state.business_type === "Enterpreneur" && (
         <Form.Item
@@ -471,6 +476,7 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       )}
       {/* ARE YOU A STARTUP */}
+
       {/* COMPANY VALUATION */}
       {state.business_type === "Enterpreneur" && is_startUp && (
         <Form.Item name="company_valuation">
@@ -509,11 +515,13 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       )}
       {/* COMPANY VALUATION */}
+
       {/* NUMBER OF SUPPORTED BUSINESSES */}
       {state.business_type === "Ecosystem Enabler" && (
         <Form.Item
           name="num_supported_business"
           rules={[
+            { type: "number", message: "Only numbers are allowed" },
             {
               message:
                 "Please input the number of businesses you've supported!",
@@ -521,20 +529,14 @@ const ListOrganizationForm = ({ next }) => {
             },
           ]}
         >
-          <Select
-            placeholder=" Number of businesses supported over the last 5 years"
-            onChange={e => onNumberOfBusinessChange(e)}
-            allowClear
-          >
-            {numOfBusinessessSupported.map((value, i) => (
-              <Option value={value} key={i}>
-                {value}
-              </Option>
-            ))}
-          </Select>
+          <InputNumberStyled
+            placeholder="Number of businesses supported over the last 5 years"
+            size="large"
+          />
         </Form.Item>
       )}
       {/* NUMBER OF SUPPORTED BUSINESSES */}
+
       {/* NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000 */}
       {state.business_type === "Ecosystem Enabler" &&
         num_supported_business === "Above 1000" && (
@@ -548,20 +550,12 @@ const ListOrganizationForm = ({ next }) => {
               },
             ]}
           >
-            <InputStyled type="number" />
+            <InputNumberStyled type="number" />
           </Form.Item>
         )}
       {/* NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000 */}
       {/* WEBSITE */}
-      <Form.Item
-        name="website"
-        // rules={[
-        //   {
-        //     message: "Please input your organization website !",
-        //     required: true,
-        //   },
-        // ]}
-      >
+      <Form.Item name="website">
         <InputStyled placeholder="Website Address" />
       </Form.Item>
       {/* WEBSITE */}
@@ -606,6 +600,7 @@ const ListOrganizationForm = ({ next }) => {
           <InputStyled placeholder={inputField.name} />
         </Form.Item>
       ))}
+
       <p style={{ fontWeight: "bold" }}>Press Realeases, Web mentions</p>
       {["Url 1", "Url 2", "Url 3"].map((url, key) => (
         <Form.Item
@@ -618,6 +613,7 @@ const ListOrganizationForm = ({ next }) => {
           <InputStyled placeholder={url} />
         </Form.Item>
       ))}
+
       <Form.Item>
         <ButtonStyled
           className=""

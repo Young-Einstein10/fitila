@@ -1,6 +1,15 @@
+import { IOrganizationProps } from "../context/Organization/types";
+
 export const numberWithCommas = num => {
   if (!num || num === undefined) return;
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+export const getTotalFunding = (arr: IOrganizationProps[]) => {
+  return arr.reduce(
+    (total, org) => Number(org.funding ? org.funding : 20000) + total,
+    0
+  );
 };
 
 export const capitalize = str => {
@@ -106,3 +115,44 @@ export const customTooltips = function(tooltip) {
   tooltipEl.style.fontStyle = tooltip._bodyFontStyle;
   tooltipEl.style.padding = `${tooltip.yPadding}px ${tooltip.xPadding}px`;
 };
+
+export const numOfBusinessessSupported = [
+  "1-100",
+  "101-200",
+  "201-300",
+  "301-400",
+  "401-500",
+  "501-1000",
+  "Above 1000",
+];
+
+export const businessLevels = [
+  {
+    name: "Micro",
+    description:
+      "businesses with 0 - 9 employees and  total assets (excluding land and building) of less than 10 million naira",
+  },
+  {
+    name: "Small",
+    description: `businesses with 10 - 49 employees and total assets (excluding
+land and building) of 10million to 99million naira`,
+  },
+  {
+    name: "Medium",
+    description: `businesses with 50 - 199 employees and total assets (excluding
+land and building) of 100million to 1billion naira`,
+  },
+  {
+    name: "Startup",
+    description:
+      "a fast/high growth young business typically between 0-5 years",
+  },
+];
+
+export const business_subclass = [
+  "Tax",
+  "Book-Keeping",
+  "Human Resources",
+  "Legal",
+  "Mentoring",
+];
