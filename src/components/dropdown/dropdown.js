@@ -1,10 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Content, DropdownStyle } from './dropdown-style';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { Content, DropdownStyle } from "./dropdown-style";
 
 const Dropdown = props => {
-  const { content, placement, title, action, children, style, className } = props;
+  const {
+    content,
+    placement,
+    title,
+    action,
+    children,
+    style,
+    className,
+  } = props;
 
   return (
     <DropdownStyle
@@ -35,11 +43,11 @@ const content = (
 );
 
 Dropdown.defaultProps = {
-  action: ['hover'],
-  placement: 'bottomCenter',
+  action: ["hover"],
+  placement: "bottomCenter",
   content,
   style: {},
-  className: 'strikingDash-dropdown',
+  className: "custom-dropdown",
 };
 
 Dropdown.propTypes = {

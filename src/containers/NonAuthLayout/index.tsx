@@ -1,54 +1,32 @@
-import React, { FunctionComponent } from "react";
+import React, { FC } from "react";
 import { Layout, Col, Row, Dropdown, Button } from "antd";
 import { Link, NavLink } from "react-router-dom";
+import FeatherIcon from "feather-icons-react";
 import Logo from "../../static/img/logo.png";
 import burgermenu from "../../static/svg/burgermenu.svg";
-
+import { ReactComponent as UserIcon } from "../../static/svg/usericon.svg";
+import { ReactComponent as ArrowDown } from "../../static/svg/arrowDown.svg";
+// import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
 import {
   BusinessButton,
+  ButtonStyled,
   Div,
   FooterStyled,
   HeaderStyled,
   LayoutStyled,
 } from "./styled";
 import "./styles.less";
+import { useAuthContext } from "../../context";
+// import { DownOutlined } from "@ant-design/icons";
+import { Popover } from "../../components/popup/popup";
+import { UserDropdown } from "../adminLayout/style";
 
 const { Content } = Layout;
 
-const NonAuthLayout: FunctionComponent = ({ children }) => {
-  // const menu = (
-  //   <div style={{ padding: "1rem", background: "#fff" }}>
-  //     {/* <LinkStyled
-  //       to="#"
-  //       style={{
-  //         padding: "1rem",
-  //         background: "#F7F9FA",
-  //         marginBottom: ".5rem",
-  //         display: "flex",
-  //         alignItems: "center",
-  //       }}
-  //     >
-  //       <span>
-  //         <UserPlus style={{ marginRight: "1.25rem" }} /> Sign Up
-  //       </span>
-  //     </LinkStyled> */}
-
-  //     <LinkStyled
-  //       to="/signin"
-  //       style={{
-  //         padding: "1rem",
-  //         background: "#F7F9FA;",
-  //         marginBottom: ".5rem",
-  //         display: "flex",
-  //         alignItems: "center",
-  //       }}
-  //     >
-  //       <span>
-  //         <UserPlus style={{ marginRight: "1.25rem" }} /> Sign In
-  //       </span>
-  //     </LinkStyled>
-  //   </div>
-  // );
+const NonAuthLayout: FC = ({ children }) => {
+  const {
+    auth: { isAuthenticated },
+  } = useAuthContext();
 
   const toggleMenuContent = (
     <ul className="toggle-menu-content">
@@ -58,24 +36,53 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
         </BusinessButton>
       </li>
 
-      <li>
-        {/* <ButtonStyled size="large">
-          <UserIcon style={{ marginRight: "10px" }} />
-          <NavLink to="/signin">Sign In</NavLink>
-        </ButtonStyled> */}
+      {isAuthenticated ? (
+        <li>
+          <BusinessButton size="large" type="link">
+            <NavLink to="/d">See Dashboard</NavLink>
+          </BusinessButton>
+        </li>
+      ) : (
+        <>
+          <li style={{ marginBottom: "1.5rem" }}>
+            <NavLink to="/login">
+              <BusinessButton size="large">
+                <UserIcon style={{ marginRight: "10px" }} />
+                Log In
+              </BusinessButton>
+            </NavLink>
+          </li>
 
-        <BusinessButton size="large">
-          <NavLink to="/d">See Dashboard</NavLink>
-        </BusinessButton>
-      </li>
-      {/* 
-      <li>
-        <ButtonStyled size="large">
-          <UserIcon style={{ marginRight: "10px" }} />
-          <NavLink to="#">Sign Up</NavLink>
-        </ButtonStyled>
-      </li> */}
+          <li>
+            <NavLink to="/signup">
+              <BusinessButton size="large">
+                <UserIcon style={{ marginRight: "10px" }} />
+                Sign Up
+              </BusinessButton>
+            </NavLink>
+          </li>
+        </>
+      )}
     </ul>
+  );
+
+  const userContent = (
+    <UserDropdown>
+      <div className="user-dropdwon">
+        <ul className="user-dropdwon__links">
+          <li>
+            <Link to="/login">
+              <FeatherIcon icon="user" /> <strong>Log In</strong>
+            </Link>
+          </li>
+          <li>
+            <Link to="/signup">
+              <FeatherIcon icon="settings" /> <strong>Sign Up</strong>
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </UserDropdown>
   );
 
   const YEAR = new Date().getFullYear();
@@ -98,19 +105,23 @@ const NonAuthLayout: FunctionComponent = ({ children }) => {
                 <NavLink to="/business">List Your Organization</NavLink>
               </BusinessButton>
 
-              <BusinessButton size="large">
-                <NavLink to="/d">See Dashboard</NavLink>
-              </BusinessButton>
-
-              {/* <Dropdown className="account-btn" overlay={menu}>
-                <ButtonStyled size="large">
-                  <UserIcon style={{ marginRight: "10px" }} />
-                  <strong>
-                    Sign In
-                    <DownOutlined style={{ marginLeft: "10px" }} />
-                  </strong>
-                </ButtonStyled>
-              </Dropdown> */}
+              {isAuthenticated ? (
+                <BusinessButton size="large">
+                  <NavLink to="/d">See Dashboard</NavLink>
+                </BusinessButton>
+              ) : (
+                <Popover
+                  placement="bottomRight"
+                  action="click"
+                  content={userContent}
+                >
+                  <ButtonStyled size="large">
+                    <UserIcon />
+                    <strong>Account</strong>
+                    <ArrowDown />
+                  </ButtonStyled>
+                </Popover>
+              )}
             </div>
 
             <div className="toggle-menu">

@@ -39,7 +39,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
       const userData = {
         ...state,
         ...values,
-        funding: `${values.funding_currency}${values.funding_currency_value}`,
+        funding: `${values.funding_currency_value}`,
         company_logo: file.compnay_logo[0],
         ceo_image: file.ceo_image[0],
       };

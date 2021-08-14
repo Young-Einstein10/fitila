@@ -1,42 +1,41 @@
 import React, { FC } from "react";
 import { Button, Col, Row, Table } from "antd";
-import { Link, NavLink, RouteComponentProps } from "react-router-dom";
-import { generateIcons, tableHeader } from "./functions";
+import { NavLink, RouteComponentProps } from "react-router-dom";
+import { tableHeader } from "./functions";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { AdminSectionWrapper } from "../../styled";
 import { Main } from "../../../AuthLayout/styled";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
-import { CardSegmentStyled, RowStyled } from "./styled";
 import { createDataSource, createTableColumns } from "../helpers";
-import {
-  useEcosystemContext,
-  useOrganizationContext,
-} from "../../../../context";
+import { useOrganizationContext } from "../../../../context";
 import Charts from "./_partials/Charts";
 import Summary from "./_partials/Summary";
-import { capitalize } from "../../../../utils/helpers";
+import EcosystemList from "./_partials/EcosystemList";
+import { MapOfNigeria } from "../../../../components/svgs/MapOfNigeria";
+import states from "../../../../states.json";
 
 const Dashboard: FC<RouteComponentProps> = () => {
   const {
     isLoading: isOrganizationLoading,
     data: organizations,
-    states,
   } = useOrganizationContext();
 
-  const {
-    isLoading: isEcosystemLoading,
-    data: ecosystems,
-  } = useEcosystemContext();
+  const statesData = states.map((state, idx) => {
+    const organizationList = organizations.filter(
+      org => org.state.toLowerCase() === state.name.toLowerCase()
+    );
 
-  const statesData = states.slice(0, 11).map((state, idx) => {
-    let organizationList = organizations.filter(
-      org => org.state.toLowerCase() === state.toLowerCase()
+    const totalFunding = organizationList.reduce(
+      (total, org) => total + Number(org.funding ? org.funding : 0),
+      0
     );
 
     return {
-      id: idx + 1,
-      name: capitalize(state),
-      organizations: organizationList.length,
+      id: state.code,
+      name: state.name,
+      funding: totalFunding,
+      organizations: organizationList,
+      numOfOrganizations: organizationList.length,
     };
   });
 
@@ -65,50 +64,7 @@ const Dashboard: FC<RouteComponentProps> = () => {
         {/* ========= CHARTS ========== */}
 
         {/* ECOSYSTEMS */}
-        <Row gutter={25} style={{ marginTop: "2rem" }}>
-          <Col xs={24}>
-            <Cards
-              loading={isEcosystemLoading}
-              title="Explore by ecosystem segments"
-              size="large"
-            >
-              {
-                <Row gutter={[16, 16]}>
-                  {ecosystems.map(segment => (
-                    <Col
-                      className="gutter-row"
-                      xs={24}
-                      sm={12}
-                      md={8}
-                      lg={6}
-                      key={segment.id}
-                      style={{ minHeight: "122px" }}
-                    >
-                      <Link
-                        to={`/d/segments/${segment.name
-                          .split(" ")
-                          .join("_")
-                          .toLowerCase()}`}
-                      >
-                        <CardSegmentStyled>
-                          {generateIcons(segment.name.toLowerCase())}
-
-                          <div>
-                            <strong>{segment.name}</strong>
-                            <br />
-                            <span>
-                              {segment.sub_ecosystem.length} Sub-Ecosystem
-                            </span>
-                          </div>
-                        </CardSegmentStyled>
-                      </Link>
-                    </Col>
-                  ))}
-                </Row>
-              }
-            </Cards>
-          </Col>
-        </Row>
+        <EcosystemList />
 
         {/* STATES */}
         <Row gutter={24} style={{ marginTop: "2rem" }}>
@@ -119,7 +75,7 @@ const Dashboard: FC<RouteComponentProps> = () => {
                 title="Explore by States"
                 size="large"
               >
-                <RowStyled>
+                {/* <RowStyled>
                   {statesData.map((state, i) => (
                     <Link
                       className={`cell cell--${i + 1}`}
@@ -132,7 +88,9 @@ const Dashboard: FC<RouteComponentProps> = () => {
                       </div>
                     </Link>
                   ))}
-                </RowStyled>
+                </RowStyled> */}
+
+                <MapOfNigeria statesData={statesData} />
               </Cards>
             }
           </Col>

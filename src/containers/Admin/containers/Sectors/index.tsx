@@ -37,7 +37,7 @@ const Sectors = () => {
 
       if (res.status === 204) {
         Modal.success({
-          title: "Organization deleted successfully",
+          title: "Sector deleted successfully",
           onOk: () => refetchSectors(),
         });
       }
@@ -101,9 +101,6 @@ const Sectors = () => {
             </Button>
           </div>,
         ]}
-        style={{
-          background: "none",
-        }}
       />
 
       <Main>

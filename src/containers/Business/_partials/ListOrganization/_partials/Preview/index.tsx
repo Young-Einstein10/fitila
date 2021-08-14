@@ -3,6 +3,7 @@ import { ButtonStyled } from "../../../../../Styles";
 import { capitalize, numberWithCommas } from "../../../../../../utils/helpers";
 import {
   useApiContext,
+  useAuthContext,
   useEcosystemContext,
   useSectorContext,
 } from "../../../../../../context";
@@ -60,6 +61,9 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
     is_startup,
   } = state;
 
+  const {
+    auth: { user },
+  } = useAuthContext();
   const { data: ecosystemData } = useEcosystemContext();
   const { data: sectors } = useSectorContext();
 
@@ -99,7 +103,7 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
       sector => sector.name.toLowerCase() === state.sector
     );
 
-    const data = { ...state, sector: selectedSector.id, user: "" };
+    const data = { ...state, sector: selectedSector.id, user: user.id };
     console.log(data);
 
     const formData = new FormData();

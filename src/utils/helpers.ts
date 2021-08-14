@@ -156,3 +156,29 @@ export const business_subclass = [
   "Legal",
   "Mentoring",
 ];
+
+export const breadcrumbNameMap = (name = "", profileId = "") => ({
+  "/d": "Dashboard",
+  "/d/organizations": "Organizations",
+  "/d/states": "States",
+  "/d/listings": "Listings",
+  "/d/account": "Account",
+  "/d/contact": "Contact",
+  "/d/about": "About Us",
+  "/d/help": "Help",
+  "/d/sectors": "Sectors",
+  "/d/administrators": "Administrators",
+  "/business": "List Organization",
+  "/business/listorg": "List Organization",
+  "/business/uploads": "List Organization",
+  "/business/preview": "Preview Form",
+  "/d/segments": "Ecosystem Segments",
+  "/d/profile": "Company",
+  [`/d/profile/${profileId}`]: "Profile",
+  [`/d/segments/${name}`]: capitalize(
+    `${name
+      .split("_")
+      .join(" ")
+      .toString()}`
+  ),
+});

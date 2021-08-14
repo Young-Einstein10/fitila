@@ -2,6 +2,7 @@ import React, { useState, createContext, FC, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useApiContext } from "../Api";
 import { AuthProps, ContextProps } from "./types";
+import { IUserData } from "../Api/auth";
 
 const AuthContext = createContext<ContextProps | undefined>(undefined);
 
@@ -56,6 +57,15 @@ const AuthProvider: FC = ({ children }) => {
     }
   };
 
+  const signup = async (userData: IUserData) => {
+    try {
+      const res = await api.signup(userData);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const signOut = () => {
     localStorage.removeItem("userData");
     setAuth({
@@ -65,7 +75,7 @@ const AuthProvider: FC = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, login, signOut }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, signup, signOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -561,14 +561,86 @@ const CurrentUserButton = Styled(Button)`
         border: 0;
     }
 
+    
 
-    span:first-child {
-        height: 30px;
-        width: 30px;
-        border-radius: 50px;
-        margin-right: 10px;
-        background: #e6e6e6;
+    span {
+        color: #000;
+
+        :first-child {
+            height: 30px;
+            width: 30px;
+            border-radius: 50px;
+            margin-right: 10px;
+            background: #e6e6e6;
+        }
+    }
+    
+    svg {
+        margin-left: 10px;
+
+        path {
+            fill: #000;
+        }
     }
 `;
 
-export { Div, SidebarFooterStyled, CurrentUserButton };
+const UserDropdown = Styled.div`
+    .user-dropdwon{
+        width: 130px;
+
+        
+        .user-dropdwon__links{
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+
+            a{             
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px 12px;
+                font-size: 14px;
+                transition: .3s;
+                color: ${({ theme }) => theme["light-color"]};
+               
+                &:hover{
+                    background: ${({ theme }) => theme["primary-color"]}05;
+                    color: ${({ theme }) => theme["primary-color"]};
+                    ${({ theme }) =>
+                      theme.rtl ? "padding-right" : "padding-left"}: 22px;
+                }
+                
+                svg{
+                    width: 16px;
+                    transform: ${({ theme }) =>
+                      theme.rtl ? "rotateY(180deg)" : "rotateY(0deg)"};
+                    ${({ theme }) =>
+                      theme.rtl ? "margin-left" : "margin-right"}: 14px;
+                }
+            }
+        }
+
+        .user-dropdwon__bottomAction{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            width: 100%;
+            border-radius: 0 0 6px 6px;
+            padding: 15px 0;
+            background: #e5e5e5;
+            color: #000;
+
+            svg{
+                width: 15px;
+                height: 15px;
+                ${({ theme }) =>
+                  theme.rtl ? "margin-left" : "margin-right"}: 8px;
+            }
+        }
+    }
+`;
+
+export { Div, SidebarFooterStyled, CurrentUserButton, UserDropdown };

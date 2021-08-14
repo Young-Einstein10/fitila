@@ -207,7 +207,7 @@ const Organization: FC<RouteComponentProps> = () => {
             >
               <Table
                 className="table-responsive"
-                rowSelection={auth.isAuthenticated ? rowSelection : null}
+                rowSelection={auth.user.is_admin ? rowSelection : null}
                 dataSource={createDataSource(filteredOrganizations)}
                 columns={createTableColumns(
                   handleEdit,

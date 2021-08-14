@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Modal, Form, Button, Select } from "antd";
 import { InputStyled } from "../../../../../Styles";
 import { useApiContext } from "../../../../../../context";
-import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -10,8 +9,6 @@ const CreateAdminModal = ({ visible, closeModal }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [form] = Form.useForm();
-
-  const history = useHistory();
 
   const { auth: api } = useApiContext();
 
@@ -25,11 +22,10 @@ const CreateAdminModal = ({ visible, closeModal }) => {
 
       if (res.status === 201) {
         Modal.success({
-          title: "Admin has been created successfully",
-          content: "Click on `Ok` button below to login",
+          title: "Admin has been added successfully",
           onOk: () => {
             closeModal();
-            history.push("/login");
+            // history.push("/login");
           },
         });
       }
@@ -87,6 +83,18 @@ const CreateAdminModal = ({ visible, closeModal }) => {
           ]}
         >
           <InputStyled placeholder="Email Address" />
+        </Form.Item>
+
+        <Form.Item
+          name="phone"
+          rules={[
+            {
+              message: "Please input phone number !",
+              required: true,
+            },
+          ]}
+        >
+          <InputStyled placeholder="Phone Number" />
         </Form.Item>
 
         <Form.Item

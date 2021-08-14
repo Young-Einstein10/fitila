@@ -4,7 +4,7 @@ import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import { Child, TabBasic } from "../../../../components/tabs/style";
-import { Profile, Deactivate, ModifyAccount, Security } from "./_partials/Main";
+import { Profile, Security } from "./_partials/Main";
 import Activity from "./_partials/Activity";
 import Favorites from "./_partials/Favorites";
 import { NavLink, RouteComponentProps } from "react-router-dom";
@@ -28,9 +28,8 @@ const Account: FC<RouteComponentProps> = () => {
             <Profile user={user} />
 
             <Security />
-            <Deactivate />
 
-            <ModifyAccount />
+            {/* <ModifyAccount /> */}
           </Col>
         </Row>
       ),
@@ -43,8 +42,8 @@ const Account: FC<RouteComponentProps> = () => {
     },
     {
       id: 3,
-      title: "Favorites",
-      tabTitle: "Favorites",
+      title: "Settings",
+      tabTitle: "Settings",
       content: <Favorites />,
     },
   ];

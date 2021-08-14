@@ -3,21 +3,24 @@ import { Layout, Button, Row, Col, Breadcrumb } from "antd";
 import { NavLink, Link, withRouter } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
 import MenueItems from "./MenueItems";
-import { CurrentUserButton, Div } from "./style";
 import logo from "../../static/img/logo.png";
 import { ReactComponent as ArrowRight } from "../../static/svg/arrowright.svg";
+import { ReactComponent as ArrowDown } from "../../static/svg/arrowDown.svg";
 import burgermenu from "../../static/svg/burgermenu.svg";
-import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
-import { capitalize } from "../Admin/containers/Dashboard/functions";
 import { useAuthContext } from "../../context";
+import FeatherIcon from "feather-icons-react";
+import { Popover } from "../../components/popup/popup";
+import { CurrentUserButton, Div, UserDropdown } from "./style";
+import { breadcrumbNameMap } from "../../utils/helpers";
 
 const { Header, Footer, Sider, Content } = Layout;
+const BreadcrumbItem = Breadcrumb.Item;
 
 const ThemeLayout = WrappedComponent => {
   const LayoutComponent = props => {
     const [collapsed, setCollapsed] = useState(false);
 
-    const { auth } = useAuthContext();
+    const { auth, signOut } = useAuthContext();
 
     useEffect(() => {
       window.addEventListener("resize", updateDimensions);
@@ -44,32 +47,6 @@ const ThemeLayout = WrappedComponent => {
         toggleCollapsed();
       }
     };
-
-    const breadcrumbNameMap = (name = "", profileId = "") => ({
-      "/d": "Dashboard",
-      "/d/organizations": "Organizations",
-      "/d/states": "States",
-      "/d/listings": "Listings",
-      "/d/account": "Account",
-      "/d/contact": "Contact",
-      "/d/about": "About Us",
-      "/d/help": "Help",
-      "/d/sectors": "Sectors",
-      "/d/administrators": "Administrators",
-      "/business": "List Organization",
-      "/business/listorg": "List Organization",
-      "/business/uploads": "List Organization",
-      "/business/preview": "Preview Form",
-      "/d/segments": "Ecosystem Segments",
-      "/d/profile": "Company",
-      [`/d/profile/${profileId}`]: "Profile",
-      [`/d/segments/${name}`]: capitalize(
-        `${name
-          .split("_")
-          .join(" ")
-          .toString()}`
-      ),
-    });
 
     const pathSnippets = location.pathname.split("/").filter(i => i);
 
@@ -153,6 +130,32 @@ const ThemeLayout = WrappedComponent => {
 
     const YEAR = new Date().getFullYear();
 
+    const userContent = (
+      <UserDropdown>
+        <div className="user-dropdwon">
+          <ul className="user-dropdwon__links">
+            <li>
+              <Link to="/d/account">
+                <FeatherIcon icon="user" /> Account
+              </Link>
+            </li>
+            <li>
+              <Link to="#">
+                <FeatherIcon icon="settings" /> Settings
+              </Link>
+            </li>
+          </ul>
+          <Link
+            className="user-dropdwon__bottomAction"
+            onClick={() => signOut()}
+            to="#"
+          >
+            <FeatherIcon icon="log-out" /> Log Out
+          </Link>
+        </div>
+      </UserDropdown>
+    );
+
     return (
       <Div>
         <Layout className="layout">
@@ -181,12 +184,17 @@ const ThemeLayout = WrappedComponent => {
                 </Breadcrumb>
               </div>
 
-              {auth.isAuthenticated && (
+              <Popover
+                placement="bottomRight"
+                action="click"
+                content={userContent}
+              >
                 <CurrentUserButton className="user-info" size="large">
                   <span></span>
                   {auth.user.first_name} {auth.user.last_name}
+                  <ArrowDown />
                 </CurrentUserButton>
-              )}
+              </Popover>
             </Row>
           </Header>
 

@@ -9,8 +9,8 @@ import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
 import { AuthWrapper } from "../Styles";
 import Heading from "../../components/heading/heading";
 import { InputStyled } from "../Styles";
-import { connect } from "react-redux";
-
+import { useAuthContext } from "../../context";
+import { IUserData } from "../../context/Api/auth";
 
 const { Option } = Select;
 
@@ -19,32 +19,28 @@ const Signup = ({ signupUser, history, auth }) => {
 
   const [form] = Form.useForm();
 
-  // useEffect(() => {
-  //   if (!auth.isAuthhenticated) {
-  //     history.push("/d");
-  //   }
-  // }, [auth, history]);
+  const { signup } = useAuthContext();
 
-  const handleSubmit = values => {
-    form
-      .validateFields()
-      .then(values => {
-        setIsLoading(true);
-        signupUser(values)
-          .then(res => {
-            notification.success({
-              message: "Your Account Has Been Created Successfully",
-            });
-            setIsLoading(false);
-            history.push("/d");
-          })
-          .catch((err: any) => {
-            console.log(err);
-            setIsLoading(false);
-          });
-      })
-      .catch(err => console.log(err));
-    // console.log(values);
+  const handleSubmit = async values => {
+    try {
+      const values = (await form.validateFields()) as IUserData;
+      setIsLoading(true);
+
+      const res = await signup(values);
+
+      if (res.status >= 200) {
+        notification.success({
+          message:
+            "Your Account Has Been Created Successfully. Please login to access the Dashboard.",
+        });
+        setIsLoading(false);
+        history.push("/login");
+      }
+    } catch (error) {
+      setIsLoading(false);
+
+      console.log(error);
+    }
   };
 
   return (
@@ -56,9 +52,7 @@ const Signup = ({ signupUser, history, auth }) => {
           onFinish={handleSubmit}
           layout="vertical"
         >
-          <Heading style={{ fontSize: "40px" }} className="text-center" as="h3">
-            Sign Up
-          </Heading>
+          <Heading className="text-center">Sign Up</Heading>
 
           <Form.Item
             name="first_name"
@@ -90,6 +84,18 @@ const Signup = ({ signupUser, history, auth }) => {
           </Form.Item>
 
           <Form.Item
+            name="phone"
+            rules={[
+              {
+                message: "Please input phone number !",
+                required: true,
+              },
+            ]}
+          >
+            <InputStyled placeholder="Phone Number" />
+          </Form.Item>
+
+          <Form.Item
             name="role"
             rules={[{ message: "Please Select a role", required: true }]}
           >
@@ -106,13 +112,6 @@ const Signup = ({ signupUser, history, auth }) => {
           >
             <InputStyled.Password placeholder="Password" />
           </Form.Item>
-
-          {/* <div className="auth-form-action">
-            <Checkbox onChange={() => {}}>Remember Me</Checkbox>
-            <NavLink className="forgot-pass-link" to="#">
-              Forgot password?
-            </NavLink>
-          </div> */}
 
           <Form.Item>
             <Button
@@ -158,8 +157,4 @@ const Signup = ({ signupUser, history, auth }) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, null)(Signup);
+export default Signup;

@@ -98,6 +98,11 @@ const EcosystemProvider: FC = ({ children }) => {
     getEcosystems();
   }, [api, isMounted]);
 
+  const getSubClasses = async (): Promise<AxiosResponse<ISubclassResponse>> => {
+    const res = await api.getSubClass();
+    return res;
+  };
+
   const refetchEcosystems = async () => {
     setEcosystem(prevEcosystems => ({
       ...prevEcosystems,
@@ -107,12 +112,18 @@ const EcosystemProvider: FC = ({ children }) => {
     try {
       const res = await api.getEcosystem();
 
-      const { data } = res.data;
+      const { data: ecosystemData } = res.data;
+
+      const {
+        data: { data: subClassData },
+      } = await getSubClasses();
+
+      const result = restructureData(ecosystemData, subClassData);
 
       setEcosystem(prevEcosystems => ({
         ...prevEcosystems,
         isLoading: false,
-        data,
+        data: result,
       }));
     } catch (error) {
       setEcosystem(prevEcosystems => ({

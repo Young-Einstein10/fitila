@@ -155,11 +155,19 @@ const ButtonStyled = Styled(Button)`
   font-weight: 700;
   border: 0;
 
-  &:hover, &:active {
-   background: #F7F9FA;
-   color: ${({ theme }) => theme["primary-color"]}
-  font-weight: 700;
-  border: 0;
+  strong {
+    margin: 0 12px;
+  }
+
+  svg:first-child {
+    margin-bottom: -3px;
+  }
+
+  &:hover, &:active, &:focus {
+    background: #F7F9FA;
+    color: ${({ theme }) => theme["primary-color"]}
+    font-weight: 700;
+    border: 0;
   }
 `;
 

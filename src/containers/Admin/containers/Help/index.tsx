@@ -39,7 +39,7 @@ const Help: FC = props => {
   const [currentFAQ, setCurrentFAQ] = useState(null);
 
   const {
-    auth: { isAuthenticated },
+    auth: { user },
   } = useAuthContext();
   const { isLoading, data } = useFAQContext();
   const [form] = Form.useForm();
@@ -59,7 +59,7 @@ const Help: FC = props => {
             </Heading>
           }
           buttons={
-            isAuthenticated
+            user.is_admin
               ? [
                   <div key="1" className="page-header-actions">
                     <Button
@@ -114,7 +114,7 @@ const Help: FC = props => {
                         >
                           {d.answer}
 
-                          {isAuthenticated && (
+                          {user.is_admin && (
                             <div className="edit-content-btn">
                               <Button
                                 onClick={() => {

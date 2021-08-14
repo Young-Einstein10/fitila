@@ -7,7 +7,7 @@ import { ReactComponent as OrganizationNavIcon } from "../../static/svg/orgNavIc
 import { ReactComponent as HelpNavIcon } from "../../static/svg/helpNavIcon.svg";
 // import { ReactComponent as AccountsNavIcon } from "../../static/svg/accountsNavIcon.svg";
 import { ReactComponent as ContactNavIcon } from "../../static/svg/contactNavIcon.svg";
-import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.svg";
+// import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.svg";
 import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.svg";
 import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
 
@@ -22,7 +22,7 @@ const MenuItems = props => {
 
   // console.log(props);
   const location = useLocation();
-  const { auth, signOut } = useAuthContext();
+  const { auth } = useAuthContext();
 
   const { data: ecosystemData } = useEcosystemContext();
 
@@ -81,7 +81,7 @@ const MenuItems = props => {
         </NavLink>
       </Menu.Item>
 
-      {auth.isAuthenticated && (
+      {auth.user.is_admin && (
         <Menu.Item
           icon={<LinkedIcon children={<ContactNavIcon />} to={`/d/listings`} />}
           key="/d/listings"
@@ -112,7 +112,7 @@ const MenuItems = props => {
         </Menu.Item>
       )} */}
 
-      {auth.isAuthenticated && (
+      {auth.user.is_admin && (
         <Menu.Item
           icon={<LinkedIcon children={<AboutNavIcon />} to="/d/sectors" />}
           key="/d/sectors"
@@ -150,7 +150,7 @@ const MenuItems = props => {
         </NavLink>
       </Menu.Item>
 
-      {auth.isAuthenticated && (
+      {auth.user.is_admin && (
         <Menu.Item
           icon={<LinkedIcon children={<UserPlus />} to="/d/administrators" />}
           key="/d/administrators"
@@ -161,23 +161,21 @@ const MenuItems = props => {
         </Menu.Item>
       )}
 
-      {auth.isAuthenticated && (
-        <Menu.Item
-          icon={<LinkedIcon children={<LogOutNavIcon />} to="#" />}
-          key="log_out"
-        >
-          <NavLink
-            onClick={() => {
-              toggleCollapsed();
+      {/* <Menu.Item
+        icon={<LinkedIcon children={<LogOutNavIcon />} to="#" />}
+        key="log_out"
+      >
+        <NavLink
+          onClick={() => {
+            toggleCollapsed();
 
-              signOut();
-            }}
-            to="#"
-          >
-            Log Out
-          </NavLink>
-        </Menu.Item>
-      )}
+            signOut();
+          }}
+          to="#"
+        >
+          Log Out
+        </NavLink>
+      </Menu.Item> */}
     </Menu>
   );
 };

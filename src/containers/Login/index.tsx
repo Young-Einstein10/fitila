@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "antd";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Heading from "../../components/heading/heading";
 import { AuthWrapper } from "../Styles";
 import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
@@ -9,6 +9,7 @@ import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
 import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
 import { InputStyled } from "../Styles";
 import { useApiContext, useAuthContext } from "../../context";
+import { Checkbox } from "../../components/checkbox/checkbox";
 
 const Login = ({ history, location }) => {
   const [form] = Form.useForm();
@@ -36,7 +37,7 @@ const Login = ({ history, location }) => {
     try {
       const res = await login(values);
 
-      if (res.status && res.status === 200) {
+      if (res && res.status && res.status === 200) {
         const {
           data: { data },
         } = res;
@@ -66,9 +67,7 @@ const Login = ({ history, location }) => {
           onFinish={handleSubmit}
           layout="vertical"
         >
-          <Heading style={{ fontSize: "4opx" }} className="text-center" as="h3">
-            Sign In
-          </Heading>
+          <Heading className="text-center">Sign In</Heading>
           <Form.Item
             name="email"
             rules={[
@@ -91,12 +90,12 @@ const Login = ({ history, location }) => {
             <InputStyled.Password placeholder="Password" />
           </Form.Item>
 
-          {/* <div className="auth-form-action">
+          <div className="auth-form-action">
             <Checkbox>Remember Me</Checkbox>
             <NavLink className="forgot-pass-link" to="#">
               Forgot password?
             </NavLink>
-          </div> */}
+          </div>
           <Form.Item>
             <Button
               className="btn-signin"
@@ -109,10 +108,10 @@ const Login = ({ history, location }) => {
               Sign In
             </Button>
           </Form.Item>
-          {/* <p className="auth-notice">
+          <p className="auth-notice">
             Don&rsquo;t have an account?{" "}
             <NavLink to="/signup">Sign up here</NavLink>
-          </p> */}
+          </p>
           <ul className="social-login">
             <li>
               <Link className="facebook-sign" to="#">
