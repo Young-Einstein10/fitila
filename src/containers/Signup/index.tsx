@@ -83,7 +83,7 @@ const Signup = ({ signupUser, history, auth }) => {
             <InputStyled placeholder="Email Address" />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             name="phone"
             rules={[
               {
@@ -93,7 +93,7 @@ const Signup = ({ signupUser, history, auth }) => {
             ]}
           >
             <InputStyled placeholder="Phone Number" />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
             name="role"

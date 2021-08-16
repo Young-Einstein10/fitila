@@ -85,7 +85,7 @@ const CreateAdminModal = ({ visible, closeModal }) => {
           <InputStyled placeholder="Email Address" />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           name="phone"
           rules={[
             {
@@ -95,7 +95,7 @@ const CreateAdminModal = ({ visible, closeModal }) => {
           ]}
         >
           <InputStyled placeholder="Phone Number" />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           name="role"

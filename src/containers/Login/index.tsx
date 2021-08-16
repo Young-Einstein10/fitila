@@ -44,7 +44,7 @@ const Login = ({ history, location }) => {
 
         localStorage.setItem("userData", JSON.stringify(data));
 
-        setApiHeaders(data.token);
+        setApiHeaders(data.access);
 
         setAuth({
           isAuthenticated: true,

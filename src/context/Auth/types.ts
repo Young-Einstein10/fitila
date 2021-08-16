@@ -11,7 +11,6 @@ interface ContextProps {
 
 
 interface IUserProps {
-
   id?: number;
   name?: string;
   first_name?: string;
@@ -19,7 +18,8 @@ interface IUserProps {
   is_admin?: boolean;
   email?: string;
   phone?: string;
-  token?: string;
+  access: string;
+  refresh: string;
 }
 
 interface AuthProps {

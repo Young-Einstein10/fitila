@@ -1,7 +1,7 @@
 import React, { useState, createContext, FC, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useApiContext } from "../Api";
-import { AuthProps, ContextProps } from "./types";
+import { AuthProps, ContextProps, IUserProps } from "./types";
 import { IUserData } from "../Api/auth";
 
 const AuthContext = createContext<ContextProps | undefined>(undefined);
@@ -9,44 +9,73 @@ const AuthContext = createContext<ContextProps | undefined>(undefined);
 const AuthProvider: FC = ({ children }) => {
   const [auth, setAuth] = useState<AuthProps>({
     isAuthenticated: false,
-    user: {},
+    user: {
+      access: "",
+      refresh: "",
+    },
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const { setApiHeaders, auth: api } = useApiContext();
 
   const userData = localStorage.getItem("userData");
 
   useEffect(() => {
-    const checkAuth = () => {
-      if (userData) {
-        const { token } = JSON.parse(userData);
+    const checkAuthState = async () => {
+      const isSignedIn = async () => {
+        if (userData) {
+          const authData = JSON.parse(userData) as IUserProps;
+          const { access, refresh } = authData;
 
-        try {
-          const jwtToken = jwt_decode(token) as any;
+          try {
+            const accessToken = jwt_decode(access) as any;
+            const refreshToken = jwt_decode(refresh) as any;
 
-          if (jwtToken.exp < new Date().getTime() / 1000) {
+            // console.log({ access: accessToken, refresh: jwt_decode(refresh) });
+
+            if (accessToken.exp < new Date().getTime() / 1000) {
+              setIsLoading(true);
+
+              // Get New access token using refresh token and save update value in local storage
+              const { data } = await api.refreshToken(refresh);
+
+              localStorage.setItem(
+                "userData",
+                JSON.stringify({ ...authData, access: data.access })
+              );
+
+              setIsLoading(false);
+              return true;
+            }
+
+            if (refreshToken.exp < new Date().getTime() / 1000) {
+              return false;
+            }
+          } catch (error) {
             return false;
           }
-        } catch (error) {
-          return false;
-        }
 
-        return true;
+          return true;
+        }
+        return false;
+      };
+
+      const isLoggedIn = await isSignedIn();
+
+      if (isLoggedIn) {
+        const userDetails = JSON.parse(userData!) as IUserProps;
+
+        setApiHeaders(userDetails.access);
+
+        setAuth({
+          isAuthenticated: true,
+          user: userDetails,
+        });
       }
-      return false;
     };
 
-    if (checkAuth()) {
-      const userDetails = JSON.parse(userData!);
-
-      setApiHeaders(userDetails.token);
-
-      setAuth({
-        isAuthenticated: true,
-        user: userDetails,
-      });
-    }
-  }, [userData, setApiHeaders]);
+    checkAuthState();
+  }, [userData, api, setApiHeaders]);
 
   const login = async (userData: { email: string; password: string }) => {
     try {
@@ -70,9 +99,13 @@ const AuthProvider: FC = ({ children }) => {
     localStorage.removeItem("userData");
     setAuth({
       isAuthenticated: false,
-      user: {},
+      user: { access: "", refresh: "" },
     });
   };
+
+  if (isLoading) {
+    return <h3>Loading...</h3>;
+  }
 
   return (
     <AuthContext.Provider value={{ auth, setAuth, login, signup, signOut }}>

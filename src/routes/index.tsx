@@ -26,7 +26,7 @@ import Landing from "../containers/Landing";
 import Login from "../containers/Login";
 import NonAuthLayout from "../containers/NonAuthLayout";
 import Signup from "../containers/Signup";
-import { useAuthContext } from "../context";
+// import { useAuthContext } from "../context";
 import { AuthRoute } from "../utils";
 
 const NotFound = () => {
@@ -34,9 +34,9 @@ const NotFound = () => {
 };
 
 const Routes = () => {
-  const {
-    auth: { user },
-  } = useAuthContext();
+  // const {
+  //   auth: { user },
+  // } = useAuthContext();
 
   return (
     <Switch>
@@ -60,14 +60,10 @@ const Routes = () => {
       <AuthRoute path={`/business/listorg`} component={ListOrganization} />
       <AuthRoute path={`/business/success`} component={Success} />
 
-      {user.is_admin && (
-        <>
-          <AuthRoute path="/d/sectors" component={Sectors} />
-          <AuthRoute path="/d/listings" component={PendingApplication} />
-          <AuthRoute path="/d/ecosystem" component={Ecosystem} />
-          <AuthRoute path="/d/administrators" component={Administrators} />
-        </>
-      )}
+      <AuthRoute path="/d/sectors" component={Sectors} />
+      <AuthRoute path="/d/listings" component={PendingApplication} />
+      <AuthRoute path="/d/ecosystem" component={Ecosystem} />
+      <AuthRoute path="/d/administrators" component={Administrators} />
 
       <NonAuthLayout>
         <Switch>
