@@ -126,6 +126,7 @@ const ListOrganizationForm = ({ next }) => {
         const userData = {
           ...state,
           ...values,
+          funding: values.funding ? values.funding : 0,
           company_valuation: `${values.currency}${values.currency_value}`,
           ecosystem: selectedEcosystem[0].id,
           ecosystem_name: selectedEcosystem[0].name,

@@ -6,7 +6,7 @@ import { ViewProfileBtnStyled } from "./Dashboard/styled";
 import { Link, NavLink } from "react-router-dom";
 import { ActionButtonStyled } from "../../Styles";
 import styled from "styled-components";
-import numberWithCommas from "../../../utils/numberFormatter";
+// import numberWithCommas from "../../../utils/numberFormatter";
 import { IOrganizationProps } from "../../../context/Organization/types";
 
 const DeleteButton = props => (
@@ -111,10 +111,11 @@ const createTableColumns = (
       key: "funding",
 
       render: (record, key) => {
-        let result = record ? record.split("₦") : [];
+        // let result = record ? record.split("₦") : [];
 
         return (
-          <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
+          // <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
+          <span>{record}</span>
         );
       },
     },

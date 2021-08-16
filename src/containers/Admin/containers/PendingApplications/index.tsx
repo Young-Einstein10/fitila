@@ -6,7 +6,7 @@ import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { useApiContext } from "../../../../context";
 import { IOrganizationProps } from "../../../../context/Organization/types";
 import { useMountedState } from "../../../../utils/hooks";
-import numberWithCommas from "../../../../utils/numberFormatter";
+// import numberWithCommas from "../../../../utils/numberFormatter";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import { ImgPlaceholderStyled } from "../helpers";
@@ -194,10 +194,11 @@ const PendingApplications = () => {
 
       render: (record, key) => {
         // console.log(key);
-        let result = record ? record.split("₦") : [];
+        // let result = record ? record.split("₦") : [];
 
         return (
-          <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
+          // <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
+          <span>{record}</span>
         );
       },
     },
