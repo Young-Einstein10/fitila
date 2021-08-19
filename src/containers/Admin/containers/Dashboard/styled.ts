@@ -17,6 +17,16 @@ const CardSegmentStyled = Styled(Card)`
     span {
       color: #5C6066;
     }
+
+    .plus-wrapper {
+      margin: 0 auto;
+
+      svg {
+        path {
+          fill: gray;
+        }
+      }
+    }
   }
 `;
 

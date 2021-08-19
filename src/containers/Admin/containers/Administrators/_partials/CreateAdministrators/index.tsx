@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { Modal, Form, Button, Select } from "antd";
 import { InputStyled } from "../../../../../Styles";
 import { useApiContext } from "../../../../../../context";
 
 const { Option } = Select;
 
-const CreateAdminModal = ({ visible, closeModal }) => {
+interface ICreateAdminProps {
+  visible: boolean;
+  closeModal: () => void;
+  refetchAdminUsers: () => void;
+}
+
+const CreateAdminModal: FC<ICreateAdminProps> = ({
+  visible,
+  closeModal,
+  refetchAdminUsers,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [form] = Form.useForm();
@@ -21,16 +31,13 @@ const CreateAdminModal = ({ visible, closeModal }) => {
       const res = await api.createAdmin(values);
 
       if (res.status === 201) {
+        refetchAdminUsers();
+
         Modal.success({
           title: "Admin has been added successfully",
-          onOk: () => {
-            closeModal();
-            // history.push("/login");
-          },
+          onOk: () => closeModal(),
         });
       }
-
-      console.log(res.data);
 
       setIsLoading(false);
     } catch (error) {

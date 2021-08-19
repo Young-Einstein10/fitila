@@ -145,7 +145,7 @@ const AuthWrapper = Styled.div`
       width: 420px;
 
       h1{
-        font-size: 48px;
+        /* font-size: 48px; */
         font-weight: bold;
         margin: 2rem 0;
 
@@ -156,6 +156,14 @@ const AuthWrapper = Styled.div`
           color: ${({ theme }) => theme["extra-light-color"]};
         }
       }
+
+      .ant-form-item {
+
+        :nth-child(3) {
+          margin-bottom: 10px;
+        }
+      }
+      
 
       .auth-form-action{
         margin-bottom: 10px;
@@ -169,7 +177,12 @@ const AuthWrapper = Styled.div`
           }
         }
       }
+
+      .btn-signin-wrapper {
+        margin-top: 25px;
+      }
     }
+
     #forgotPass{
       .forgot-text{
         margin-bottom: 25px;
@@ -184,6 +197,7 @@ const AuthWrapper = Styled.div`
       text-align: center;
       position: relative;
       margin-bottom: 25px;
+
       &:before{
         content: '';
         position: absolute;
@@ -195,6 +209,7 @@ const AuthWrapper = Styled.div`
         height: 1px;
         background: ${({ theme }) => theme["border-color-light"]};
       }
+
       span{
         background: #fff;
         padding: 0 15px;
@@ -203,6 +218,7 @@ const AuthWrapper = Styled.div`
         z-index: 2;
       }
     }
+
     .social-login{
       display: flex;
       align-items: center;

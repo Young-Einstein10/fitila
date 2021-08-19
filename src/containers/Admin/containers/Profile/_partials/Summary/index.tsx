@@ -24,7 +24,6 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
           {
             <Cards
               className="card-exception"
-              bgcolor="rgba(100, 141, 236, 0.37)"
               loading={isLoading}
               headless
               bodypadding="15px"
@@ -62,7 +61,6 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
           {
             <Cards
               className="card-exception"
-              bgcolor="rgba(192, 233, 255, 0.52)"
               loading={isLoading}
               title={
                 <div

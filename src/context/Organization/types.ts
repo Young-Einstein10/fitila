@@ -2,7 +2,8 @@ interface IOrganizationProps {
   ceo_image_url: string;
   company_logo_url: string;
   employee: string;
-  funding: string;
+  funding?: number;
+  funding_disbursed_for_support?: number;
   id: number;
   name: string;
   sector: string;
@@ -13,6 +14,7 @@ interface IOrganizationProps {
   ecosystem_name?: string;
   sub_ecosystem_name?: string;
   sub_ecosystem_sub_class?: string,
+  sub_ecosystem_sub_class_name?: string,
   user?: any;
   ceo_gender?: string;
   address?: string;
@@ -31,12 +33,14 @@ interface IOrganizationProps {
   instagram?: string;
   linkedIn?: string;
   twitter?; string;
+  cac_doc?: string,
   phone?: string;
   website?: string;
   is_entrepreneur?: boolean;
   is_ecosystem?: boolean;
   is_active?: boolean;
-  is_approve?: boolean;
+  is_approved?: boolean;
+  is_declined?: boolean;
   date_created?: string;
   date_updated?: string
 }

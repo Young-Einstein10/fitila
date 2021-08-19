@@ -1,12 +1,13 @@
-import React, { FC } from "react";
-import { Row, Col, Select, Button, Form, Upload } from "antd";
+import React, { FC, useState } from "react";
+import { Row, Col, Select, Button, Form, Upload, notification } from "antd";
 import { ReactComponent as UnknownAvatar } from "../../../../../../static/svg/unknownAvatar.svg";
-
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { InputStyled } from "../../../../../Styles";
 import { NavLink } from "react-router-dom";
 import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
 import { IUserProps } from "../../../../../../context/Auth/types";
+import { useApiContext } from "../../../../../../context";
+import { IPasswordProps } from "../../../../../../context/Api/auth";
 
 const { Option } = Select;
 
@@ -94,14 +95,30 @@ export const Deactivate = () => (
 );
 
 const Security = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [form] = Form.useForm();
+  const { auth } = useApiContext();
 
   const handleSubmit = async values => {
     try {
-      const values = await form.validateFields();
-      console.log(values);
+      const values = (await form.validateFields()) as IPasswordProps;
+      setIsLoading(true);
+
+      const { status, data } = await auth.resetPassword(values);
+
+      console.log({ status, data });
+
+      if (status >= 200 && status < 300) {
+        setIsLoading(false);
+
+        notification.success({
+          message: "Your password has been changed successfully!",
+        });
+      }
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -114,6 +131,7 @@ const Security = () => {
             onFinish={handleSubmit}
             name="security"
             layout="vertical"
+            scrollToFirstError
           >
             <Row gutter={[16, 16]}>
               <Col xs={24} sm={24} md={12} lg={8}>
@@ -150,11 +168,24 @@ const Security = () => {
                 <Form.Item
                   name="confirm_password"
                   label="Confirm Password"
+                  dependencies={["new_password"]}
                   rules={[
                     {
-                      message: "Please Confirm your new password",
+                      message: "Please confirm your new password",
                       required: true,
                     },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue("new_password") === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(
+                          new Error(
+                            "The two passwords that you entered do not match!"
+                          )
+                        );
+                      },
+                    }),
                   ]}
                 >
                   <InputStyled.Password placeholder="Password" />
@@ -164,6 +195,7 @@ const Security = () => {
 
             <Form.Item>
               <Button
+                loading={isLoading}
                 className="btn-signin"
                 htmlType="submit"
                 type="primary"

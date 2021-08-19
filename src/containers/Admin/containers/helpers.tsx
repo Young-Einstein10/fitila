@@ -6,8 +6,8 @@ import { ViewProfileBtnStyled } from "./Dashboard/styled";
 import { Link, NavLink } from "react-router-dom";
 import { ActionButtonStyled } from "../../Styles";
 import styled from "styled-components";
-// import numberWithCommas from "../../../utils/numberFormatter";
 import { IOrganizationProps } from "../../../context/Organization/types";
+import numberWithCommas from "../../../utils/numberFormatter";
 
 const DeleteButton = props => (
   <Tooltip title="Delete">
@@ -115,7 +115,7 @@ const createTableColumns = (
 
         return (
           // <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
-          <span>{record}</span>
+          <span>{numberWithCommas(record)}</span>
         );
       },
     },

@@ -1,16 +1,11 @@
 import React, { FC } from "react";
 import { Col, Row } from "antd";
-import { AdminSectionWrapper } from "../../styled";
+import { RouteComponentProps } from "react-router-dom";
 import SimilarCompanies from "./_partials/SimilarCompanies";
-// import Revenue from "./_partials/Revenue";
-// import Ratings from "./_partials/Ratings";
-// import PressReleases from "./_partials/PressReleases";
-// import Funding from "./_partials/Funding";
-// import SocialMedia from "./_partials/SocialMedia";
 import Contact from "./_partials/Contact";
 import Summary from "./_partials/Summary";
 import { useOrganizationContext } from "../../../../context";
-import { RouteComponentProps } from "react-router-dom";
+import { AdminSectionWrapper } from "../../styled";
 
 const Profile: FC<RouteComponentProps> = ({ match }) => {
   const { id: organizationId } = match.params as { id: number };

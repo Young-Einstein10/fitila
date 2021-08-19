@@ -92,7 +92,7 @@ const Landing: FC<RouteComponentProps> = ({ history }) => {
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
-            loading={isOrganizationLoading}
+            disabled={isOrganizationLoading}
           >
             {organizations.map((org, key) => (
               <Option

@@ -9,7 +9,6 @@ import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
 import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
 import { InputStyled } from "../Styles";
 import { useApiContext, useAuthContext } from "../../context";
-import { Checkbox } from "../../components/checkbox/checkbox";
 
 const Login = ({ history, location }) => {
   const [form] = Form.useForm();
@@ -62,7 +61,7 @@ const Login = ({ history, location }) => {
     <AuthWrapper>
       <div className="auth-contents">
         <Form
-          name="login"
+          name="signin"
           form={form}
           onFinish={handleSubmit}
           layout="vertical"
@@ -83,6 +82,7 @@ const Login = ({ history, location }) => {
           >
             <InputStyled placeholder="Email Address" />
           </Form.Item>
+
           <Form.Item
             name="password"
             rules={[{ message: "Please input your password", required: true }]}
@@ -91,27 +91,29 @@ const Login = ({ history, location }) => {
           </Form.Item>
 
           <div className="auth-form-action">
-            <Checkbox>Remember Me</Checkbox>
-            <NavLink className="forgot-pass-link" to="#">
+            {/* <Checkbox>Remember Me</Checkbox> */}
+            <NavLink className="forgot-pass-link" to="/forgot-password">
               Forgot password?
             </NavLink>
           </div>
-          <Form.Item>
+
+          <Form.Item className="btn-signin-wrapper">
             <Button
               className="btn-signin"
               htmlType="submit"
               type="primary"
               size="large"
               loading={isLoading}
-              // onClick={() => history.push("/d")}
             >
               Sign In
             </Button>
           </Form.Item>
+
           <p className="auth-notice">
             Don&rsquo;t have an account?{" "}
             <NavLink to="/signup">Sign up here</NavLink>
           </p>
+
           <ul className="social-login">
             <li>
               <Link className="facebook-sign" to="#">

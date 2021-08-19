@@ -1,29 +1,21 @@
-import React, { FC, useState } from "react";
 import { Modal, Button } from "antd";
-import { IOrganizationProps } from "../../../../../../context/Organization/types";
-import { useApiContext } from "../../../../../../context";
-import { capitalize } from "../../../../../../utils/helpers";
+import React, { FC } from "react";
+import { IOrganizationProps } from "../../../../../../../../context/Organization/types";
+import { capitalize } from "../../../../../../../../utils/helpers";
+import { IEditEcosystemProps } from "../../../../../Dashboard/_partials/Ecosystem/_partials/EditEcosystemModal";
 
-interface IViewDetailsProps {
-  visible: boolean;
-  closeModal: () => void;
-  currentListing?: IOrganizationProps;
-  refetchPendingApplications: () => Promise<void>;
-}
+export type IViewProps = Pick<IEditEcosystemProps, "visible" | "closeModal"> & {
+  currentOrganization: IOrganizationProps;
+  toggleEditOrganizationModal: () => void;
+};
 
-const ViewDetails: FC<IViewDetailsProps> = ({
+const ViewOrganizationModal: FC<IViewProps> = ({
   visible,
   closeModal,
-  currentListing,
-  refetchPendingApplications,
+  currentOrganization,
+  toggleEditOrganizationModal,
 }) => {
-  const [isApprovalLoading, setIsApprovalLoading] = useState(false);
-  const [isDeclineLoading, setIsDeclineLoading] = useState(false);
-
-  const { organization: api } = useApiContext();
-
   const {
-    id,
     name,
     ceo_name,
     state,
@@ -41,75 +33,27 @@ const ViewDetails: FC<IViewDetailsProps> = ({
     is_startup,
     ecosystem_name,
     sub_ecosystem_name,
-    sub_ecosystem_sub_class,
+    sub_ecosystem_sub_class_name,
     cac_doc,
     linkedIn,
     twitter,
     facebook,
     website,
     date_created,
-  } = currentListing;
-
-  const handleDecline = async () => {
-    setIsDeclineLoading(true);
-
-    try {
-      const res = await api.declineOrganization(id);
-
-      if (res.status === 200) {
-        Modal.success({
-          title: "Organization has been declined.",
-        });
-        refetchPendingApplications();
-      }
-
-      setIsDeclineLoading(false);
-    } catch (error) {
-      console.log(error.message);
-      setIsDeclineLoading(false);
-    }
-  };
-
-  const handleApproval = async () => {
-    setIsApprovalLoading(true);
-
-    try {
-      const res = await api.approveOrganization(id);
-
-      setIsApprovalLoading(false);
-
-      if (res.status === 202) {
-        Modal.success({
-          title: "Organization has been approved.",
-        });
-        refetchPendingApplications();
-      }
-    } catch (error) {
-      console.log(error);
-      setIsApprovalLoading(false);
-    }
-  };
+  } = currentOrganization;
 
   return (
     <Modal
-      title={<strong>View Company Details</strong>}
+      title={<strong>Organization Details</strong>}
       visible={visible}
       onCancel={closeModal}
       footer={[
         <Button
-          key="declne"
-          loading={isDeclineLoading}
-          onClick={() => handleDecline()}
-        >
-          Decline
-        </Button>,
-        <Button
           type="primary"
-          loading={isApprovalLoading}
-          key="approve"
-          onClick={() => handleApproval()}
+          key="edit"
+          onClick={() => toggleEditOrganizationModal()}
         >
-          Approve
+          Edit
         </Button>,
       ]}
     >
@@ -149,7 +93,7 @@ const ViewDetails: FC<IViewDetailsProps> = ({
 
         <p>
           <strong>Sub-Ecosystem Sub-Class </strong>:{" "}
-          {sub_ecosystem_sub_class || "--"}
+          {sub_ecosystem_sub_class_name || "--"}
         </p>
 
         <p>
@@ -217,4 +161,4 @@ const ViewDetails: FC<IViewDetailsProps> = ({
   );
 };
 
-export default ViewDetails;
+export default ViewOrganizationModal;

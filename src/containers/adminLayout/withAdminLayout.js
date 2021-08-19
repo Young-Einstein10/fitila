@@ -139,11 +139,6 @@ const ThemeLayout = WrappedComponent => {
                 <FeatherIcon icon="user" /> Account
               </Link>
             </li>
-            <li>
-              <Link to="#">
-                <FeatherIcon icon="settings" /> Settings
-              </Link>
-            </li>
           </ul>
           <Link
             className="user-dropdwon__bottomAction"
@@ -248,7 +243,7 @@ const ThemeLayout = WrappedComponent => {
                     </Col>
                     <Col md={12} xs={24}>
                       <div className="admin-footer__links">
-                        <NavLink to="/login">Admin</NavLink>
+                        <NavLink to="/d/signin">Admin</NavLink>
                         <NavLink to="/d/privacy">Privacy Policy</NavLink>
                         <NavLink to="/d/terms">Terms and Condition</NavLink>
                       </div>

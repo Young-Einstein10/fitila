@@ -1,7 +1,7 @@
 import Styled from "styled-components";
 
 const AdminSectionWrapper = Styled.section<{ background?: string }>`
-  background: ${({ background }) => (background ? background : "#FAFAFA")};
+  background: ${({ background }) => (background ? background : "#F2F2F2")};
   /* padding: 0 1.3rem 1.3rem; */
     min-height: calc(100vh - 64px) !important;
 

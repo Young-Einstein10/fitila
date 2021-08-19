@@ -41,20 +41,16 @@ const Dashboard: FC<RouteComponentProps> = () => {
 
   return (
     <AdminSectionWrapper className="dashboard">
-      <div style={{ background: "#F4F4F4" }}>
-        <PageHeader
-          title="Gain credible insights into Nigeria’s most thriving Organizations"
-          buttons={[
-            <div key="1" className="page-header-actions">
-              <Button className="btn-main" size="large" type="primary">
-                <NavLink to="/business">List Your Business</NavLink>
-              </Button>
-            </div>,
-          ]}
-        />
-
-        {/* <FilterOption /> */}
-      </div>
+      <PageHeader
+        title="Gain credible insights into Nigeria’s most thriving Organizations"
+        buttons={[
+          <div key="1" className="page-header-actions">
+            <Button className="btn-main" size="large" type="primary">
+              <NavLink to="/business">List Your Business</NavLink>
+            </Button>
+          </div>,
+        ]}
+      />
 
       <Main style={{ padding: "1.3rem" }}>
         <Summary />
@@ -75,21 +71,6 @@ const Dashboard: FC<RouteComponentProps> = () => {
                 title="Explore by States"
                 size="large"
               >
-                {/* <RowStyled>
-                  {statesData.map((state, i) => (
-                    <Link
-                      className={`cell cell--${i + 1}`}
-                      key={state.id}
-                      to={`/d/organizations/${state.name.toLowerCase()}`}
-                    >
-                      <div>
-                        <p>{state.name}</p>
-                        <span>{state.organizations} Organizations</span>
-                      </div>
-                    </Link>
-                  ))}
-                </RowStyled> */}
-
                 <MapOfNigeria statesData={statesData} />
               </Cards>
             }

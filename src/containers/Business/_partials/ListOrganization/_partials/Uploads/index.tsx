@@ -113,6 +113,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
       initialValues={{
         ...state,
         funding_currency: state.funding_currency || "₦",
+        funding_currency_value: state.funding,
         num_of_employees: num_of_employees_custom
           ? "Above 1000"
           : state.num_of_employees,

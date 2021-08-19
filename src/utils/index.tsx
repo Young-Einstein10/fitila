@@ -13,7 +13,9 @@ const AuthRoute: FC<RouteProps> = ({ component, path, ...rest }: any) => {
       <Route component={component} path={path} {...rest} />
     </AuthLayout>
   ) : (
-    <Redirect to={{ pathname: "/login", state: { next: location.pathname } }} />
+    <Redirect
+      to={{ pathname: "/signin", state: { next: location.pathname } }}
+    />
   );
 };
 

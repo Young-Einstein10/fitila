@@ -23,11 +23,12 @@ import ListOrganization from "../containers/Business/_partials/ListOrganization"
 import Success from "../containers/Business/_partials/Success";
 // import Uploads from "../containers/Business/_partials/ListOrganization/_partials/Uploads";
 import Landing from "../containers/Landing";
-import Login from "../containers/Login";
+import Signin from "../containers/Signin";
 import NonAuthLayout from "../containers/NonAuthLayout";
 import Signup from "../containers/Signup";
 // import { useAuthContext } from "../context";
-import { AuthRoute } from "../utils";
+import { AuthRoute, CustomRoute } from "../utils";
+import ForgotPassword from "../containers/ForgotPassword";
 
 const NotFound = () => {
   return <Redirect to="/" />;
@@ -40,22 +41,22 @@ const Routes = () => {
 
   return (
     <Switch>
-      <AuthRoute exact path="/d" component={Dashboard} />
-      <AuthRoute exact path="/d/organizations" component={Organizations} />
-      <AuthRoute
+      <CustomRoute exact path="/d" component={Dashboard} />
+      <CustomRoute exact path="/d/organizations" component={Organizations} />
+      <CustomRoute
         exact
         path="/d/organizations/:state"
         component={Organizations}
       />
-      <AuthRoute path="/d/states" component={States} />
+      <CustomRoute path="/d/states" component={States} />
+      <CustomRoute path="/d/contact" component={Contact} />
+      <CustomRoute path="/d/about" component={About} />
+      <CustomRoute path="/d/help" component={Help} />
+      <CustomRoute path="/d/privacy" component={PrivacyPolicy} />
+      <CustomRoute path="/d/terms" component={TermsConditions} />
+      <CustomRoute exact path="/d/profile/:id" component={Profile} />
+      <CustomRoute path="/d/segments/:name" component={Segment} />
       <AuthRoute path="/d/account" component={Account} />
-      <AuthRoute path="/d/contact" component={Contact} />
-      <AuthRoute path="/d/about" component={About} />
-      <AuthRoute path="/d/help" component={Help} />
-      <AuthRoute path="/d/privacy" component={PrivacyPolicy} />
-      <AuthRoute path="/d/terms" component={TermsConditions} />
-      <AuthRoute exact path="/d/profile/:id" component={Profile} />
-      <AuthRoute path="/d/segments/:name" component={Segment} />
       <AuthRoute exact path="/business" component={AddCompany} />
       <AuthRoute path={`/business/listorg`} component={ListOrganization} />
       <AuthRoute path={`/business/success`} component={Success} />
@@ -69,8 +70,9 @@ const Routes = () => {
         <Switch>
           <Route exact path="/" component={Landing} />
 
-          <Route path="/login" component={Login} />
+          <Route path="/signin" component={Signin} />
           <Route path="/signup" component={Signup} />
+          <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="*" component={NotFound} />
         </Switch>
       </NonAuthLayout>

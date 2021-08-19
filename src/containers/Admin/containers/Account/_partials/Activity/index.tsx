@@ -1,93 +1,120 @@
+import React, { FC, useState } from "react";
 import { Col, Row, Table } from "antd";
-import React from "react";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
+import { IUserProfileProps } from "../../../../../../context/Api/auth";
+import columns from "./functions";
+import ViewOrganizationModal from "./_partials/ViewOrganizationModal";
+import EditListedOrganization from "./_partials/EditListedOrganization";
+import { useOrganizationContext } from "../../../../../../context";
 
-const Activity = () => {
-  const columns = [
-    {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
-    },
-    {
-      title: "Time",
-      dataIndex: "time",
-      key: "time",
-    },
+interface IActivityProps {
+  isLoading: boolean;
+  userData: IUserProfileProps;
+}
 
-    {
-      title: "Action",
-      dataIndex: "action",
-      key: "action",
-    },
-    {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
-    },
+const Activity: FC<IActivityProps> = ({ isLoading, userData }) => {
+  const [
+    isViewOrganizationModalOpen,
+    setIsViewOrganizationModalOpen,
+  ] = useState(false);
+  const [
+    isEditOrganizationModalOpen,
+    setIsEditOrganizationModalOpen,
+  ] = useState(false);
+  const [currentOrganization, setCurrentOrganization] = useState(null);
 
-    {
-      title: "Location",
-      dataIndex: "location",
-      key: "location",
-    },
-  ];
+  const {
+    data: organizations,
+    isLoading: isOrganizationLoading,
+  } = useOrganizationContext();
 
-  const dataSource = [
-    {
-      key: "1",
-      date: new Date().toDateString(),
-      time: "02:04 PM WAT",
-      action: "You changed your password",
-      type: "12, Avennue Rd, lagos",
-      location: "12, Avennue Rd, lagos",
-    },
-    {
-      key: "2",
-      date: new Date().toDateString(),
-      time: "02:04 PM WAT",
-      action: "You Logged into",
-      type: "12, Avennue Rd, lagos",
-      location: "12, Avennue Rd, lagos",
-    },
-    {
-      key: "3",
-      date: new Date().toDateString(),
-      time: "02:04 PM WAT",
-      action: "You changed your password",
-      type: "12, Avennue Rd, lagos",
-      location: "--",
-    },
-    {
-      key: "4",
-      date: new Date().toDateString(),
-      time: "02:04 PM WAT",
-      action: "You Logged into",
-      type: "12, Avennue Rd, lagos",
-      location: "12, Avennue Rd, lagos",
-    },
-    {
-      key: "5",
-      date: new Date().toDateString(),
-      time: "02:04 PM WAT",
-      action: "You Logged into",
-      type: "12, Avennue Rd, lagos",
-      location: "12, Avennue Rd, lagos",
-    },
-  ];
+  const toggleViewOrganizationModal = () =>
+    setIsViewOrganizationModalOpen(open => !open);
+
+  const toggleEditOrganizationModal = () =>
+    setIsEditOrganizationModalOpen(open => !open);
+
+  const dataSource = userData
+    ? userData.user_organization.map((org, key) => {
+        const filteredOrg = organizations.find(({ id }) => org.id === id);
+
+        if (filteredOrg) {
+          return {
+            ...filteredOrg,
+            ...org,
+            key: filteredOrg.id,
+            rank: key + 1,
+            status: org.is_approved ? "Approved" : "Declined",
+            company: filteredOrg.name,
+            ceo_name: {
+              name: filteredOrg.ceo_name,
+              avatar: filteredOrg.ceo_image_url,
+            },
+            state: filteredOrg.state,
+            sectors: filteredOrg.sector_name || filteredOrg.sector,
+            market_cap: filteredOrg.market_cap,
+            employees: filteredOrg.num_of_employees,
+            funding: filteredOrg.funding,
+            id: filteredOrg.id,
+          };
+        }
+
+        return {
+          ...org,
+          key: org.id,
+          rank: key + 1,
+          status: org.is_approved ? "Approved" : "Declined",
+          company: org.name,
+          ceo_name: {
+            name: org.ceo_name,
+            avatar: org.ceo_image_url,
+          },
+          state: org.state,
+          sectors: org.sector_name || org.sector,
+          market_cap: org.market_cap,
+          employees: org.num_of_employees,
+          funding: org.funding,
+          id: org.id,
+        };
+      })
+    : [];
 
   return (
     <Row gutter={15}>
       <Col xs={24}>
-        <Cards title="Activities">
+        <Cards
+          loading={isLoading || isOrganizationLoading}
+          title="Organizations listed so far"
+        >
           <Table
+            loading={isLoading || isOrganizationLoading}
             className="table-responsive"
             pagination={false}
             dataSource={dataSource}
-            columns={columns}
+            columns={columns({
+              toggleViewOrganizationModal,
+              setCurrentOrganization,
+            })}
           />
         </Cards>
       </Col>
+
+      {isViewOrganizationModalOpen ? (
+        <ViewOrganizationModal
+          visible={isViewOrganizationModalOpen}
+          closeModal={toggleViewOrganizationModal}
+          currentOrganization={currentOrganization}
+          toggleEditOrganizationModal={toggleEditOrganizationModal}
+        />
+      ) : null}
+
+      {isEditOrganizationModalOpen ? (
+        <EditListedOrganization
+          visible={isEditOrganizationModalOpen}
+          closeModal={toggleEditOrganizationModal}
+          currentOrganization={currentOrganization}
+        />
+      ) : null}
     </Row>
   );
 };

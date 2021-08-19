@@ -38,7 +38,6 @@ const Cards = props => {
           bordered={border}
           loading={loading}
           bodypadding={bodypadding && bodypadding}
-          bgcolor={bgcolor}
           extra={
             <>
               {more && (
@@ -66,7 +65,6 @@ const Cards = props => {
           style={{ ...style }}
           bordered={border}
           loading={loading}
-          bgcolor={bgcolor}
           {...rest}
         >
           {title && <Heading as="h4">{title}</Heading>}

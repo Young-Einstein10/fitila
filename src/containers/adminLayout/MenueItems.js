@@ -61,7 +61,9 @@ const MenuItems = props => {
 
           return (
             <Menu.Item key={routePath}>
-              <NavLink to={routePath}>{ecosystem.name}</NavLink>
+              <NavLink onClick={toggleCollapsed} to={routePath}>
+                {ecosystem.name}
+              </NavLink>
             </Menu.Item>
           );
         })}

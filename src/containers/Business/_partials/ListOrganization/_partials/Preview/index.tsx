@@ -3,7 +3,6 @@ import { ButtonStyled } from "../../../../../Styles";
 import { capitalize, numberWithCommas } from "../../../../../../utils/helpers";
 import {
   useApiContext,
-  useAuthContext,
   useEcosystemContext,
   useSectorContext,
 } from "../../../../../../context";
@@ -30,7 +29,7 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
     state: organization_state,
     ecosystem: ecosystemId,
     // sub_ecosystem,
-    sub_ecosystem_sub_class,
+    sub_ecosystem_sub_class_name,
     sub_segment: subSegmentId,
     business_type,
     name,
@@ -61,9 +60,6 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
     is_startup,
   } = state;
 
-  const {
-    auth: { user },
-  } = useAuthContext();
   const { data: ecosystemData } = useEcosystemContext();
   const { data: sectors } = useSectorContext();
 
@@ -103,7 +99,7 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
       sector => sector.name.toLowerCase() === state.sector
     );
 
-    const data = { ...state, sector: selectedSector.id, user: user.id };
+    const data = { ...state, sector: selectedSector.id };
     console.log(data);
 
     const formData = new FormData();
@@ -183,7 +179,7 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
 
         {business_type === "Ecosystem Enabler" && (
           <p>
-            <strong>Sub-Segement of Ecosystem:</strong>
+            <strong>Sub-Segment of Ecosystem:</strong>
             <br />
             {selectedSubEcosystem.length && selectedSubEcosystem[0].name}
           </p>
@@ -191,9 +187,9 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
 
         {business_type === "Ecosystem Enabler" && (
           <p>
-            <strong>Sub-Segement SubClass:</strong>
+            <strong>Sub-Segment SubClass:</strong>
             <br />
-            {sub_ecosystem_sub_class || "--"}
+            {sub_ecosystem_sub_class_name || "--"}
           </p>
         )}
 

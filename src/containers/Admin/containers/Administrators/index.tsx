@@ -47,6 +47,33 @@ const Administrators = () => {
     fetchAdminUsers();
   }, [api, isMounted]);
 
+  const refetchAdminUsers = async () => {
+    setIsLoading(true);
+    try {
+      const res = await api.getUsers();
+
+      if (res.status === 200) {
+        const { data } = res.data;
+
+        const adminUsers = data.filter(user => user.is_admin);
+
+        if (isMounted()) {
+          setIsLoading(false);
+
+          setUsers(adminUsers);
+        }
+      }
+
+      // console.log(res.data);
+    } catch (error) {
+      if (isMounted()) {
+        setIsLoading(false);
+
+        console.log(error);
+      }
+    }
+  };
+
   const toggleCreateAdminModal = () => setIsCreateAdminModalOpen(open => !open);
 
   const columns: any = [
@@ -95,7 +122,7 @@ const Administrators = () => {
               size="large"
               type="primary"
             >
-              Add Administrators
+              Create Administrators
             </Button>
           </div>,
         ]}
@@ -131,6 +158,7 @@ const Administrators = () => {
         <CreateAdminModal
           visible={isCreateAdminModalOpen}
           closeModal={toggleCreateAdminModal}
+          refetchAdminUsers={refetchAdminUsers}
         />
       ) : null}
     </AdminSectionWrapper>

@@ -13,7 +13,7 @@ import {
 import numberWithCommas from "../../../../../../utils/numberFormatter";
 
 const CardStyled = styled(Card)`
-  box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
+  /* box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04); */
   border-radius: 4px;
 
   .title {
@@ -44,6 +44,13 @@ const Summary = () => {
   const numOfFemaleFounders = organizations.filter(
     org => org.ceo_gender.toLowerCase() === "female"
   ).length;
+
+  const totalFundingDisbursedForSupport = organizations.reduce(
+    (total, { funding_disbursed_for_support }) =>
+      total +
+      Number(funding_disbursed_for_support ? funding_disbursed_for_support : 0),
+    0
+  );
 
   return (
     <Row gutter={[16, 16]}>
@@ -107,7 +114,7 @@ const Summary = () => {
           <p className="title">Funding disbursed for Support Organizations</p>
 
           <div className="content">
-            <p>${numberWithCommas(500000)}</p>
+            <p>₦{numberWithCommas(totalFundingDisbursedForSupport) || 0}</p>
             <HandbagIcon />
           </div>
         </CardStyled>

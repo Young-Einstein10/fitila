@@ -184,7 +184,7 @@ const Div = Styled.div`
 
     /* Sidebar styles */
     .ant-layout-sider{
-        box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.08);
+        /* box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.08); */
         margin: 76px 0 0 0;
         padding: 15px 15px 55px 0;
         overflowY: auto;
@@ -195,7 +195,7 @@ const Div = Styled.div`
         background: #fff;
 
         @media (max-width: 991px){
-            box-shadow: 0 0 10px #00000020;
+            /* box-shadow: 0 0 10px #00000020; */
         }
         &.ant-layout-sider-dark{
             background: ${({ theme }) => theme["dark-color"]};
@@ -486,7 +486,7 @@ const Div = Styled.div`
         color: rgba(0, 0, 0, .65);
         font-size: 16px;
         background: #F2F2F2;
-        box-shadow: 0 -5px 10px rgba(146,153,184, 0.05);
+        /* box-shadow: 0 -5px 10px rgba(146,153,184, 0.05); */
 
         .admin-footer__copyright{
             display: inline-block;

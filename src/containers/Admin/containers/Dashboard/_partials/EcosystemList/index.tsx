@@ -5,6 +5,7 @@ import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { useAuthContext, useEcosystemContext } from "../../../../../../context";
 import { generateIcons } from "../../functions";
 import { CardSegmentStyled } from "../../styled";
+import { ReactComponent as AddIcon } from "../../../../../../static/svg/add.svg";
 
 const EcosystemList: FC = () => {
   const {
@@ -67,7 +68,9 @@ const EcosystemList: FC = () => {
                 >
                   <Link to={`/d/ecosystem`}>
                     <CardSegmentStyled>
-                      <div>Add New</div>
+                      <span className="plus-wrapper">
+                        <AddIcon />
+                      </span>
                     </CardSegmentStyled>
                   </Link>
                 </Col>

@@ -1,7 +1,8 @@
-import Styled from 'styled-components';
+import Styled from "styled-components";
 
 const H1 = Styled.h1`
-  font-size: 30px;
+  /* font-size: 30px; */
+  font-size: 48px;
   font-weight: 600;
   line-height: 38px;
 `;

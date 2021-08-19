@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Button, Row, Col } from "antd";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
@@ -8,12 +8,39 @@ import { Profile, Security } from "./_partials/Main";
 import Activity from "./_partials/Activity";
 import Favorites from "./_partials/Favorites";
 import { NavLink, RouteComponentProps } from "react-router-dom";
-import { useAuthContext } from "../../../../context";
+import { useApiContext, useAuthContext } from "../../../../context";
+import { IUserProfileProps } from "../../../../context/Api/auth";
 
 const Account: FC<RouteComponentProps> = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [userData, setUserData] = useState<IUserProfileProps>(null);
+
   const {
     auth: { user },
   } = useAuthContext();
+
+  const { auth: api } = useApiContext();
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        setIsLoading(true);
+        const {
+          status,
+          data: { data },
+        } = await api.getUserProfile();
+
+        if (status === 200) {
+          setIsLoading(false);
+          setUserData(data);
+        }
+      } catch (error) {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserProfile();
+  }, [api]);
 
   let counter = 0;
 
@@ -38,7 +65,7 @@ const Account: FC<RouteComponentProps> = () => {
       id: 2,
       title: "Activity",
       tabTitle: "Activity",
-      content: <Activity />,
+      content: <Activity isLoading={isLoading} userData={userData} />,
     },
     {
       id: 3,

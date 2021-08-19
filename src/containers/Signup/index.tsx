@@ -126,7 +126,7 @@ const Signup = ({ signupUser, history, auth }) => {
           </Form.Item>
 
           <p className="auth-notice">
-            Signed Up Already? <NavLink to="/login">Login In here</NavLink>
+            Signed Up Already? <NavLink to="/signin">Signin in here</NavLink>
           </p>
 
           <ul className="social-login">

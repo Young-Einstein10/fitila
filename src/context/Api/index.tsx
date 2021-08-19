@@ -1,4 +1,4 @@
-import React, { createContext, FC, useEffect, useState } from "react";
+import React, { createContext, FC, useEffect } from "react";
 import { useErrorDispatch } from "../Error";
 import axios, { AxiosInstance } from "axios";
 import Auth from "./auth";
@@ -27,16 +27,16 @@ const axiosInstance = axios.create({
   baseURL: "https://fitilla.pythonanywhere.com/api/v1",
 });
 
-const ApiProvider: FC = ({ children }) => {
-  const [api] = useState<ApiProps>({
-    auth: new Auth(axiosInstance),
-    organization: new Organization(axiosInstance),
-    ecosystem: new Ecosystem(axiosInstance),
-    sector: new Sector(axiosInstance),
-    faq: new FAQ(axiosInstance),
-    HttpClient: axiosInstance,
-  });
+const api: ApiProps = {
+  HttpClient: axiosInstance,
+  auth: new Auth(axiosInstance),
+  ecosystem: new Ecosystem(axiosInstance),
+  sector: new Sector(axiosInstance),
+  faq: new FAQ(axiosInstance),
+  organization: new Organization(axiosInstance),
+};
 
+const ApiProvider: FC = ({ children }) => {
   const dispatch = useErrorDispatch();
 
   useEffect(() => {
@@ -81,7 +81,10 @@ const ApiProvider: FC = ({ children }) => {
                   : typeof errorResponse.data.error === "object"
                   ? Object.entries(errorResponse.data.error)[0][1]
                   : errorResponse.data.message,
-              detail: errorResponse && errorResponse.data.detail,
+              detail:
+                errorResponse && errorResponse.data.detail
+                  ? errorResponse.data.detail
+                  : errorResponse.detail,
               statusText: errorResponse && errorResponse.statusText,
             },
           });

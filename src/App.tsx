@@ -3,18 +3,15 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./routes";
 import { ThemeProvider } from "styled-components";
 import config from "./config/config";
-import "./App.less";
 import BusinessProvider from "./containers/Business/context";
 import {
-  ApiProvider,
-  AuthProvider,
   EcosystemProvider,
-  ErrorProvider,
   FAQProvider,
   OrganizationProvider,
   SectorProvider,
 } from "./context";
 import ScrollToTop from "./components/scrollToTop";
+import "./App.less";
 
 const { theme } = config;
 
@@ -25,27 +22,21 @@ const { theme } = config;
 function App() {
   return (
     <ThemeProvider theme={{ ...theme }}>
-      <ErrorProvider>
-        <ApiProvider>
-          <AuthProvider>
-            <OrganizationProvider>
-              <EcosystemProvider>
-                <SectorProvider>
-                  <Router>
-                    <BusinessProvider>
-                      <FAQProvider>
-                        <ScrollToTop>
-                          <Routes />
-                        </ScrollToTop>
-                      </FAQProvider>
-                    </BusinessProvider>
-                  </Router>
-                </SectorProvider>
-              </EcosystemProvider>
-            </OrganizationProvider>
-          </AuthProvider>
-        </ApiProvider>
-      </ErrorProvider>
+      <OrganizationProvider>
+        <EcosystemProvider>
+          <SectorProvider>
+            <Router>
+              <BusinessProvider>
+                <FAQProvider>
+                  <ScrollToTop>
+                    <Routes />
+                  </ScrollToTop>
+                </FAQProvider>
+              </BusinessProvider>
+            </Router>
+          </SectorProvider>
+        </EcosystemProvider>
+      </OrganizationProvider>
     </ThemeProvider>
   );
 }

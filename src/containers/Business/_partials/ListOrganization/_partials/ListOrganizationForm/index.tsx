@@ -126,7 +126,9 @@ const ListOrganizationForm = ({ next }) => {
         const userData = {
           ...state,
           ...values,
-          funding: values.funding ? values.funding : 0,
+          funding_disbursed_for_support: values.funding_disbursed_support
+            ? values.funding_disbursed_support
+            : 0,
           company_valuation: `${values.currency}${values.currency_value}`,
           ecosystem: selectedEcosystem[0].id,
           ecosystem_name: selectedEcosystem[0].name,
@@ -139,7 +141,7 @@ const ListOrganizationForm = ({ next }) => {
             : values.sub_ecosystem_sub_class,
           is_ecosystem:
             state.business_type === "Ecosystem Enabler" ? true : false,
-          is_enterpreneur:
+          is_entrepreneur:
             state.business_type === "Enterpreneur" ? true : false,
         };
 
@@ -153,7 +155,7 @@ const ListOrganizationForm = ({ next }) => {
           company_valuation: `${values.currency}${values.currency_value}`,
           is_ecosystem:
             state.business_type === "Ecosystem Enabler" ? true : false,
-          is_enterpreneur:
+          is_entrepreneur:
             state.business_type === "Enterpreneur" ? true : false,
         };
 
@@ -192,6 +194,7 @@ const ListOrganizationForm = ({ next }) => {
         is_startUp: is_startUp ? "Yes" : "No",
         currency: state.currency || "₦",
         currency_value: state.currency_value,
+        funding_disbursed_currency: "₦",
         num_supported_business_custom: state.num_supported_business,
         ecosystem: state.ecosystem_name,
         sub_ecosystem: state.sub_ecosystem_name,
@@ -211,6 +214,7 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder="Business Name" />
       </Form.Item>
       {/* BUSINESS NAME */}
+
       {/* CEO/FOUNDER"S NAME */}
       <Form.Item
         name="ceo_name"
@@ -224,6 +228,7 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder={ceo_name_label} />
       </Form.Item>
       {/* CEO/FOUNDER's NAME */}
+
       {/* CEO/FOUNDER"S NAME */}
       <Form.Item
         name="ceo_gender"
@@ -240,6 +245,7 @@ const ListOrganizationForm = ({ next }) => {
         </Select>
       </Form.Item>
       {/* CEO/FOUNDER's NAME */}
+
       {/* HEADQUARTERS */}
       {/* <Form.Item
         name="head_quarters"
@@ -253,6 +259,7 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder="CEO/Founder's Name" />
       </Form.Item> */}
       {/* HEADQUARTERS */}
+
       {/* ADDRESS */}
       <Form.Item
         name="address"
@@ -266,6 +273,7 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder="Address" />
       </Form.Item>
       {/* ADDRESS */}
+
       {/* STATE */}
       <Form.Item
         name="state"
@@ -285,6 +293,7 @@ const ListOrganizationForm = ({ next }) => {
         </Select>
       </Form.Item>
       {/* STATE */}
+
       <Divider />
       {/* ECOSYTEM SEGMENT */}
       {state.business_type === "Ecosystem Enabler" && (
@@ -378,7 +387,7 @@ const ListOrganizationForm = ({ next }) => {
               </Form.Item>
 
               <Form.Item
-                name="funding_disbursed_support"
+                name="funding_disbursed_for_support"
                 style={{ width: "100%" }}
                 rules={[
                   { type: "number", message: "Only numbers are allowed" },
@@ -555,11 +564,13 @@ const ListOrganizationForm = ({ next }) => {
           </Form.Item>
         )}
       {/* NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000 */}
+
       {/* WEBSITE */}
       <Form.Item name="website">
         <InputStyled placeholder="Website Address" />
       </Form.Item>
       {/* WEBSITE */}
+
       {/* ORGANIZATION EMAIL */}
       <Form.Item
         name="email"
@@ -591,6 +602,7 @@ const ListOrganizationForm = ({ next }) => {
         <InputStyled placeholder="Phone Number" />
       </Form.Item>
       {/* ORGANIZATION PHONE */}
+
       {[
         { name: "Facebook Url", key: "facebook" },
         { name: "Instagram Url", key: "instagram" },

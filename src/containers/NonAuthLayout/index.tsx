@@ -45,10 +45,10 @@ const NonAuthLayout: FC = ({ children }) => {
       ) : (
         <>
           <li style={{ marginBottom: "1.5rem" }}>
-            <NavLink to="/login">
+            <NavLink to="/signin">
               <BusinessButton size="large">
                 <UserIcon style={{ marginRight: "10px" }} />
-                Log In
+                Sign In
               </BusinessButton>
             </NavLink>
           </li>
@@ -71,8 +71,8 @@ const NonAuthLayout: FC = ({ children }) => {
       <div className="user-dropdwon">
         <ul className="user-dropdwon__links">
           <li>
-            <Link to="/login">
-              <FeatherIcon icon="user" /> <strong>Log In</strong>
+            <Link to="/signin">
+              <FeatherIcon icon="user" /> <strong>Sign In</strong>
             </Link>
           </li>
           <li>
@@ -157,7 +157,7 @@ const NonAuthLayout: FC = ({ children }) => {
 
             <Col md={12} xs={24}>
               <div className="admin-footer__links">
-                <NavLink to="/login">Admin</NavLink>
+                <NavLink to="/signin">Admin</NavLink>
                 <NavLink to="/d/privacy">Privacy Policy</NavLink>
                 <NavLink to="/d/terms">Terms and Condition</NavLink>
                 {/* <NavLink to="#">Cookie Policy</NavLink> */}

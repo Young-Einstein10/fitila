@@ -7,7 +7,7 @@ export const numberWithCommas = num => {
 
 export const getTotalFunding = (arr: IOrganizationProps[]) => {
   return arr.reduce(
-    (total, org) => Number(org.funding ? org.funding : 20000) + total,
+    (total, org) => Number(org.funding ? org.funding : 0) + total,
     0
   );
 };

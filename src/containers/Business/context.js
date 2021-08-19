@@ -35,11 +35,10 @@ const initialState = {
   linkedin: null,
   twitter: null,
   cac_doc: null,
-  is_enterpreneur: null,
+  is_entrepreneur: null,
   is_ecosystem: null,
   is_active: true,
   is_startup: null,
-  user: null,
 };
 
 const BusinessProvider = ({ children }) => {

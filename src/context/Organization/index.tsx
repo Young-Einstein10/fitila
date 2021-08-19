@@ -1,5 +1,4 @@
 import React, { useState, useEffect, createContext, FC } from "react";
-import Axios from "axios";
 import { useApiContext } from "../Api";
 import { IOrganizationStateProps } from "./types";
 import { useMountedState } from "../../utils/hooks";
@@ -31,9 +30,6 @@ const OrganizationProvider: FC = ({ children }) => {
   const isMounted = useMountedState();
 
   useEffect(() => {
-    const cancelTokenSource = Axios.CancelToken;
-    const source = cancelTokenSource.source();
-
     const getAllOrganizations = async () => {
       setOrganization(prevOrganizations => ({
         ...prevOrganizations,
@@ -41,9 +37,7 @@ const OrganizationProvider: FC = ({ children }) => {
       }));
 
       try {
-        const res = await api.getOrganization({
-          cancelToken: source.token,
-        });
+        const res = await api.getOrganization();
 
         const { data } = res.data;
 
@@ -60,27 +54,17 @@ const OrganizationProvider: FC = ({ children }) => {
           }));
         }
       } catch (error) {
-        if (Axios.isCancel(error)) {
-          console.log("Request canceled", error.message);
-        }
-        // handle error
         if (isMounted()) {
           setOrganization(prevOrganizations => ({
             ...prevOrganizations,
             isLoading: false,
           }));
-
-          console.log(error);
         }
+        console.log(error);
       }
     };
 
     getAllOrganizations();
-
-    return () => {
-      // cancel the request (the message parameter is optional)
-      source.cancel("Operation canceled by the user.");
-    };
   }, [api, isMounted]);
 
   const refetchOrganizations = async () => {

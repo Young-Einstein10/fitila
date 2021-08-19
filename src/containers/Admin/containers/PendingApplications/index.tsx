@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Col, Row, Space, Table } from "antd";
+import { Button, Col, Row, Space, Table } from "antd";
 import Axios from "axios";
 import { Cards } from "../../../../components/cards/frame/cards-frame";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
@@ -12,6 +12,7 @@ import { AdminSectionWrapper } from "../../styled";
 import { ImgPlaceholderStyled } from "../helpers";
 import ViewDetails from "./_partials/ViewDetails";
 import styled from "styled-components";
+import numberWithCommas from "../../../../utils/numberFormatter";
 
 interface IPendingAppProps {
   isLoading: boolean;
@@ -34,8 +35,7 @@ const PendingApplications = () => {
     isLoading: false,
     data: [],
   });
-  const [isApprovalLoading, setIsApprovalLoading] = useState(false);
-  const [isDeclineLoading, setIsDeclineLoading] = useState(false);
+
   const [currentListing, setCurrentListing] = useState(null);
   const [isViewDetailsModalOpen, setIsViewDetailsModalOpen] = useState(false);
 
@@ -198,7 +198,7 @@ const PendingApplications = () => {
 
         return (
           // <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
-          <span>{record}</span>
+          <span>{numberWithCommas(record)}</span>
         );
       },
     },
@@ -210,69 +210,19 @@ const PendingApplications = () => {
       render: (record, key) => {
         return (
           <Space size="middle">
-            <Button
-              onClick={() => handleDecline(record.id)}
-              loading={isDeclineLoading}
-              danger
-            >
-              Decline
-            </Button>
-
             <ButtonApproveStyled
-              onClick={() => handleApproval(record.id)}
-              loading={isApprovalLoading}
+              onClick={() => {
+                setCurrentListing(record);
+                toggleViewDetailsModal();
+              }}
             >
-              Approve
+              View Details
             </ButtonApproveStyled>
           </Space>
         );
       },
     },
   ];
-
-  const handleDecline = async (id: number) => {
-    setIsDeclineLoading(true);
-
-    try {
-      const res = await api.declineOrganization(id);
-
-      console.log(res.data);
-
-      if (res.status === 200) {
-        Modal.success({
-          title: "Organization has been declined.",
-        });
-        refetchPendingApplications();
-      }
-
-      setIsDeclineLoading(false);
-    } catch (error) {
-      console.log(error.message);
-      setIsDeclineLoading(false);
-    }
-  };
-
-  const handleApproval = async (id: number) => {
-    setIsApprovalLoading(true);
-
-    try {
-      const res = await api.approveOrganization(id);
-
-      console.log(res.data);
-
-      setIsApprovalLoading(false);
-
-      if (res.status === 200) {
-        Modal.success({
-          title: "Organization has been approved.",
-        });
-        refetchPendingApplications();
-      }
-    } catch (error) {
-      console.log(error);
-      setIsApprovalLoading(false);
-    }
-  };
 
   const dataSource = organizations.data.map((org, key) => {
     return {
@@ -313,17 +263,17 @@ const PendingApplications = () => {
                 dataSource={dataSource}
                 columns={columns}
                 loading={organizations.isLoading}
-                onRow={(record, rowIndex) => {
-                  return {
-                    onClick: e => {
-                      setCurrentListing(record);
-                      toggleViewDetailsModal();
-                    },
-                    onMouseOver: (e: any) => {
-                      e.target.style.cursor = "pointer";
-                    },
-                  };
-                }}
+                // onRow={(record, rowIndex) => {
+                //   return {
+                //     onClick: e => {
+                //       setCurrentListing(record);
+                //       toggleViewDetailsModal();
+                //     },
+                //     onMouseOver: (e: any) => {
+                //       e.target.style.cursor = "pointer";
+                //     },
+                //   };
+                // }}
               />
             </Cards>
           </Col>
@@ -334,8 +284,7 @@ const PendingApplications = () => {
             visible={isViewDetailsModalOpen}
             closeModal={toggleViewDetailsModal}
             currentListing={currentListing}
-            handleDecline={handleDecline}
-            handleApproval={handleApproval}
+            refetchPendingApplications={refetchPendingApplications}
           />
         ) : null}
       </Main>

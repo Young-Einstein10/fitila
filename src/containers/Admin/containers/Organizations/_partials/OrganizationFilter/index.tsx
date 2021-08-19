@@ -7,6 +7,7 @@ import { SelectStyled } from "../../../../../Styles";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
 import { ISectorProps } from "../../../../../../context/Sector/types";
 import { capitalize } from "../../../Dashboard/functions";
+import states from "../../../../../../states.json";
 
 const { Option } = SelectStyled;
 const FormItem = Form.Item;
@@ -31,7 +32,6 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
   setFilteredOrganizations,
   state,
   sectors,
-  states,
   sector,
 }) => {
   const [filter, setFilter] = useState<IFilterOption | null>(null);
@@ -220,8 +220,8 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                     disabled={isOrganizationLoading}
                   >
                     {states.map((state, key) => (
-                      <Option key={key} value={state}>
-                        {state}
+                      <Option key={key} value={state.name}>
+                        {state.name}
                       </Option>
                     ))}
                   </SelectStyled>
