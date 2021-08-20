@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { PageHeaderStyle } from "./style";
-import "./style.less"
+import "./style.less";
 
 const PageHeader = props => {
   const {
@@ -18,16 +18,13 @@ const PageHeader = props => {
     <>
       <div
         style={{
-          // backgroundColor: bgColor || "#F4F5F7",
           ...style,
         }}
       >
         <PageHeaderStyle
           style={{
-            // backgroundColor: "rgb(244, 245, 247)",
             ...style,
           }}
-          // onBack={() => window.history.back()}
           title={title}
           subTitle={subTitle}
           breadcrumb={routes && { routes }}

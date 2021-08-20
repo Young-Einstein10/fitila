@@ -4,8 +4,13 @@ import { PageHeader } from "antd";
 const PageHeaderStyle = Styled(PageHeader)`
   margin-bottom: 15px;
 
+  .ant-page-header-heading-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
   & .ant-page-header {
-      background-color: none !important;
+    background-color: none !important;
   }
 
   .page-header-actions button.ant-btn-white svg {

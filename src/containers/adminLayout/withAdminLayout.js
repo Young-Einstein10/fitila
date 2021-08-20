@@ -140,13 +140,14 @@ const ThemeLayout = WrappedComponent => {
               </Link>
             </li>
           </ul>
-          <Link
+          <Button
             className="user-dropdwon__bottomAction"
-            onClick={() => signOut()}
-            to="#"
+            onClick={() => {
+              signOut();
+            }}
           >
             <FeatherIcon icon="log-out" /> Log Out
-          </Link>
+          </Button>
         </div>
       </UserDropdown>
     );

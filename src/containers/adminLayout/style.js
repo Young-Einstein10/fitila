@@ -628,8 +628,8 @@ const UserDropdown = Styled.div`
             font-weight: 500;
             text-align: center;
             width: 100%;
-            border-radius: 0 0 6px 6px;
-            padding: 15px 0;
+            border-radius: 0 0 2px 2px;
+            padding: 1.3rem 0;
             background: #e5e5e5;
             color: #000;
 

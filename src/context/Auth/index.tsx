@@ -101,6 +101,8 @@ const AuthProvider: FC = ({ children }) => {
       isAuthenticated: false,
       user: { access: "", refresh: "" },
     });
+
+    window.location.href = "/signin";
   };
 
   if (isLoading) {

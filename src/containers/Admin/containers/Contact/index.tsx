@@ -16,15 +16,15 @@ const Contact = () => {
         <Row style={{ justifyContent: "center", padding: "5rem 0" }}>
           <Col xs={24} md={12} lg={10}>
             <div>
-              <div>
-                <Heading
-                  className="text-center font-weight-700"
-                  as="h3"
-                  style={{ fontSize: "36px", marginBottom: "2.5rem" }}
-                >
-                  Send Us A Message
-                </Heading>
-              </div>
+              <Heading
+                className="text-center font-weight-700"
+                as="h3"
+                fontSize="36px"
+                fontWeight="bold"
+                margin="0 0 2.5rem 0"
+              >
+                Send Us A Message
+              </Heading>
 
               <Form
                 form={form}

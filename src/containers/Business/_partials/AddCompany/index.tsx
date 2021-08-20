@@ -1,5 +1,4 @@
 import React, { FC, useContext, useState } from "react";
-import Heading from "../../../../components/heading/heading";
 import { ReactComponent as Enterpreneur } from "../../../../static/svg/enterpreneur.svg";
 import { ReactComponent as Ecosystem } from "../../../../static/svg/ecosystem.svg";
 // import { ReactComponent as EcosystemColored } from "../../../../static/svg/ecosystemcolored.svg";
@@ -12,6 +11,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { BusinessContext } from "../../context";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
+import Heading from "../../../../components/heading/heading";
 
 const AddCompany: FC<RouteComponentProps> = ({ history }) => {
   const [isEnterpreneurActive, setIsEnterpreneurActive] = useState("");
@@ -29,9 +29,16 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
           <Col className="text-center" style={{ maxWidth: "400px" }}>
             <div style={{ marginBottom: "1.5rem" }}>
               <div className="text-center" style={{ marginBottom: "2rem" }}>
-                <Heading className="text-center" as="h3">
+                <Heading
+                  as="h3"
+                  fontWeight="bold"
+                  fontSize="24px"
+                  margin="0 0 2rem 0"
+                  className="text-center"
+                >
                   List your Organization
                 </Heading>
+
                 <p>
                   Thanks for choosing to list your Business on Enterprise Data
                   Map, Please select a role to get started
