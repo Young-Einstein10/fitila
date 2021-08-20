@@ -42,6 +42,23 @@ const Account: FC<RouteComponentProps> = () => {
     fetchUserProfile();
   }, [api]);
 
+  const refetchUserProfile = async () => {
+    try {
+      setIsLoading(true);
+      const {
+        status,
+        data: { data },
+      } = await api.getUserProfile();
+
+      if (status === 200) {
+        setIsLoading(false);
+        setUserData(data);
+      }
+    } catch (error) {
+      setIsLoading(false);
+    }
+  };
+
   let counter = 0;
 
   const data = [
@@ -65,7 +82,13 @@ const Account: FC<RouteComponentProps> = () => {
       id: 2,
       title: "Activity",
       tabTitle: "Activity",
-      content: <Activity isLoading={isLoading} userData={userData} />,
+      content: (
+        <Activity
+          isLoading={isLoading}
+          userData={userData}
+          refetchUserProfile={refetchUserProfile}
+        />
+      ),
     },
     {
       id: 3,

@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import { Modal, Button, Form, Select, Tooltip } from "antd";
+import { Modal, Button, Form, Select, Tooltip, Upload } from "antd";
 import { IViewProps } from "../ViewOrganizationModal";
 import { InputNumberStyled, InputStyled } from "../../../../../../../Styles";
 import {
@@ -7,22 +7,47 @@ import {
   ISubEcosystem,
 } from "../../../../../../../../context/Ecosystem/types";
 import {
+  useApiContext,
   useEcosystemContext,
   useSectorContext,
 } from "../../../../../../../../context";
 import states from "../../../../../../../../states.json";
 import { businessLevels } from "../../../../../../../../utils/helpers";
+import { UploadButtonStyled } from "../../../../../../../Business/_partials/ListOrganization/_partials/Uploads/styled";
+import { ReactComponent as UploadIcon } from "../../../../../../../../static/svg/upload.svg";
+import { StyledImage } from "../../../../../../../../components/styledImage";
+import styled from "styled-components";
 
-type IEditListedOrgProps = Omit<IViewProps, "toggleEditOrganizationModal">;
+type IEditListedOrgProps = Omit<IViewProps, "toggleEditOrganizationModal"> & {
+  refetchUserProfile: () => Promise<void>;
+};
 
 const Option = Select.Option;
 const InputGroup = InputStyled.Group;
+const FormItem = Form.Item;
+
+const StyledFormItem = styled(FormItem)`
+  .ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
+
+    .styled-img {
+      margin-right: 10px;
+    }
+
+    .upload-wrapper {
+      flex: 1;
+    }
+  }
+`;
 
 const EditListedOrganization: FC<IEditListedOrgProps> = ({
   visible,
   closeModal,
   currentOrganization,
+  refetchUserProfile,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [subSegment, setSubSegment] = useState<ISubEcosystem[]>([]);
   const [currEcosystem, setCurrEcosystem] = useState("");
   const [num_supported_business] = useState();
@@ -33,11 +58,16 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
   const [num_of_employees_custom, setNum_of_employees_custom] = useState();
   const [currSubClass, setCurrSubClass] = useState<ISubclassProps>(null);
   const [is_startUp, setIs_Startup] = useState(false);
-
   const { data: ecosystem } = useEcosystemContext();
   const { data: sectors } = useSectorContext();
+  const [file, setFile] = useState({
+    ceo_image: [],
+    compnay_logo: [],
+  });
 
   const [form] = Form.useForm();
+
+  const { organization: api } = useApiContext();
 
   useEffect(() => {
     if (currentOrganization.ecosystem_name) {
@@ -64,7 +94,7 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
         subSegment => subSegment.name === currentOrganization.sub_ecosystem_name
       );
 
-      console.log({ selectedSubEcosystem });
+      //   console.log({ selectedSubEcosystem });
 
       if (selectedSubEcosystem.length > 0) {
         setSubEcosystemSubClass(selectedSubEcosystem[0].sub_class);
@@ -76,7 +106,7 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
     try {
       const values = await form.validateFields();
 
-      console.log({ values });
+      setIsLoading(true);
 
       if (values.num_supported_business === "Above 1000") {
         values.num_supported_business = values.num_supported_business_custom;
@@ -96,18 +126,30 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
 
       let selectedSubEcosystem = [];
 
+      if (file.compnay_logo.length) {
+        delete currentOrganization.company_logo_url;
+      }
+
+      if (file.ceo_image.length) {
+        delete currentOrganization.ceo_image_url;
+      }
+
+      let userData = {};
+
       if (currentOrganization.is_ecosystem) {
         selectedSubEcosystem = selectedEcosystem[0].sub_ecosystem.filter(
           sub_eco => sub_eco.name === values.sub_ecosystem
         );
 
-        const userData = {
+        userData = {
           ...currentOrganization,
           ...values,
           sector: selectedSector.id,
           funding: values.funding_currency_value
             ? `${values.funding_currency_value}`
             : 0,
+          company_logo: file.compnay_logo.length ? file.compnay_logo[0] : "",
+          ceo_image: file.ceo_image[0],
           company_valuation: `${values.currency}${values.currency_value}`,
           ecosystem: selectedEcosystem[0].id,
           ecosystem_name: selectedEcosystem[0].name,
@@ -121,22 +163,41 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
           is_ecosystem: currentOrganization.is_ecosystem ? true : false,
           is_entrepreneur: currentOrganization.is_entrepreneur ? true : false,
         };
-
-        console.log({ userData });
       } else {
-        const userData = {
+        userData = {
           ...currentOrganization,
           ...values,
+          company_logo: file.compnay_logo.length ? file.compnay_logo[0] : "",
+          ceo_image: file.ceo_image[0],
           sector: selectedSector.id,
           company_valuation: `${values.currency}${values.currency_value}`,
           is_ecosystem: currentOrganization.is_ecosystem ? true : false,
           is_enterpreneur: currentOrganization.is_entrepreneur ? true : false,
         };
+      }
 
-        console.log({ userData });
+      const formData = new FormData();
+
+      for (const key in userData) {
+        if (userData[key]) {
+          formData.append(key, userData[key]);
+        }
+      }
+
+      const res = await api.editOrganization(currentOrganization.id, formData);
+
+      if (res.status >= 200 && res.status < 300) {
+        setIsLoading(false);
+
+        refetchUserProfile();
+
+        Modal.success({
+          title: "Organization edited successfully!",
+          onOk: () => closeModal(),
+        });
       }
     } catch (error) {
-      console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -177,13 +238,62 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
     ? "CEO/Founder's Name"
     : "CEO/DG/Head/Founder's Name";
 
+  const ceoImageProps = {
+    onRemove: file => {
+      setFile(state => {
+        const index = state.ceo_image.indexOf(file);
+        const newFileList = state.ceo_image.slice();
+        newFileList.splice(index, 1);
+        return {
+          ...state,
+          ceo_image: newFileList,
+        };
+      });
+    },
+    beforeUpload: file => {
+      setFile(state => ({
+        ...state,
+        ceo_image: [...state.ceo_image, file],
+      }));
+      return false;
+    },
+    fileList: file.ceo_image,
+  };
+
+  const companyLogoProps = {
+    onRemove: file => {
+      setFile(state => {
+        const index = state.compnay_logo.indexOf(file);
+        const newFileList = state.compnay_logo.slice();
+        newFileList.splice(index, 1);
+        return {
+          ...state,
+          compnay_logo: newFileList,
+        };
+      });
+    },
+    beforeUpload: file => {
+      setFile(state => ({
+        ...state,
+        compnay_logo: [...state.compnay_logo, file],
+      }));
+      return false;
+    },
+    fileList: file.compnay_logo,
+  };
+
   return (
     <Modal
       title={<strong>Edit Organization Details</strong>}
       visible={visible}
       onCancel={closeModal}
       footer={[
-        <Button type="primary" key="edit" onClick={handleSubmit}>
+        <Button
+          loading={isLoading}
+          type="primary"
+          key="edit"
+          onClick={handleSubmit}
+        >
           Edit
         </Button>,
       ]}
@@ -706,6 +816,50 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
             </InputGroup>
           </Form.Item>
         )}
+
+        <StyledFormItem name="company_logo">
+          {file.compnay_logo.length === 0 ? (
+            <StyledImage
+              className="styled-img"
+              width={50}
+              height={50}
+              src={currentOrganization.company_logo_url}
+              alt={currentOrganization.name}
+              rounded
+            />
+          ) : null}
+          <Upload
+            className="upload-wrapper"
+            {...companyLogoProps}
+            listType="picture"
+          >
+            <UploadButtonStyled size="large">
+              Upload Company Logo <UploadIcon />
+            </UploadButtonStyled>
+          </Upload>
+        </StyledFormItem>
+
+        <StyledFormItem name="company_logo">
+          {file.ceo_image.length === 0 ? (
+            <StyledImage
+              className="styled-img"
+              width={50}
+              height={50}
+              src={currentOrganization.ceo_image_url}
+              alt={currentOrganization.ceo_name.name}
+              rounded
+            />
+          ) : null}
+          <Upload
+            className="upload-wrapper"
+            {...ceoImageProps}
+            listType="picture"
+          >
+            <UploadButtonStyled size="large">
+              Upload CEO/Founder Image <UploadIcon />
+            </UploadButtonStyled>
+          </Upload>
+        </StyledFormItem>
 
         <Form.Item name="description">
           <InputStyled.TextArea placeholder="Organization Description" />

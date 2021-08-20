@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Space } from "antd";
 import { ImgPlaceholderStyled } from "../../../helpers";
 import numberWithCommas from "../../../../../../utils/numberFormatter";
+import { StyledImage } from "../../../../../../components/styledImage";
 
 const columns: any = ({
   toggleViewOrganizationModal,
@@ -26,22 +27,13 @@ const columns: any = ({
       render: (record, text) => (
         <Space size="middle" style={{ display: "flex", alignItems: "center" }}>
           {record && record.avatar ? (
-            <div
-              style={{
-                width: "30px",
-                height: "30px",
-              }}
-            >
-              <img
-                src={record.avatar}
-                alt="Profile"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "50px",
-                }}
-              />
-            </div>
+            <StyledImage
+              width={30}
+              height={30}
+              src={record.avatar}
+              alt="Profile"
+              rounded
+            />
           ) : (
             <ImgPlaceholderStyled className="img_placeholder" />
           )}

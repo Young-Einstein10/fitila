@@ -10,9 +10,14 @@ import { useOrganizationContext } from "../../../../../../context";
 interface IActivityProps {
   isLoading: boolean;
   userData: IUserProfileProps;
+  refetchUserProfile: () => Promise<void>;
 }
 
-const Activity: FC<IActivityProps> = ({ isLoading, userData }) => {
+const Activity: FC<IActivityProps> = ({
+  isLoading,
+  userData,
+  refetchUserProfile,
+}) => {
   const [
     isViewOrganizationModalOpen,
     setIsViewOrganizationModalOpen,
@@ -113,6 +118,7 @@ const Activity: FC<IActivityProps> = ({ isLoading, userData }) => {
           visible={isEditOrganizationModalOpen}
           closeModal={toggleEditOrganizationModal}
           currentOrganization={currentOrganization}
+          refetchUserProfile={refetchUserProfile}
         />
       ) : null}
     </Row>

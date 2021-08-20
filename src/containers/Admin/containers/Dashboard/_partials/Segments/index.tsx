@@ -62,14 +62,24 @@ const Segment: FC<RouteComponentProps> = () => {
       .map(subEco => {
         const subClassList = [
           ...new Set(
-            subEco.organizations.map(org => org.sub_ecosystem_sub_class)
+            subEco.organizations.map(
+              ({ sub_ecosystem_sub_class_name }) =>
+                sub_ecosystem_sub_class_name && sub_ecosystem_sub_class_name
+            )
           ),
         ].filter(a => a);
+
+        // console.log({
+        //   subClassList,
+        //   subEco: subEco.organizations.filter(
+        //     ({ sub_ecosystem_sub_class_name }) => sub_ecosystem_sub_class_name
+        //   ),
+        // });
 
         const sub_class: ISubclassProps[] = subClassList.map(subClass => {
           let organizations = subEco.organizations.filter(
             org =>
-              org.sub_ecosystem_sub_class.toLowerCase() ===
+              org.sub_ecosystem_sub_class_name.toLowerCase() ===
               subClass.toLowerCase()
           );
 

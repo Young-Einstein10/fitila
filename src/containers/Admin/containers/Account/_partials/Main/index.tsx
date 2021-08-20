@@ -313,7 +313,7 @@ const Profile: FC<{ user: IUserProps }> = ({
                   </Form.Item>
                 </Col>
 
-                <Col xs={24} sm={24} md={12} lg={8}>
+                {/* <Col xs={24} sm={24} md={12} lg={8}>
                   <Form.Item
                     name="phone"
                     label="Phone Number"
@@ -325,21 +325,6 @@ const Profile: FC<{ user: IUserProps }> = ({
                     ]}
                   >
                     <InputStyled placeholder="Phone Number" />
-                  </Form.Item>
-                </Col>
-
-                {/* <Col xs={24} sm={24} md={12} lg={8}>
-                  <Form.Item
-                    name="email"
-                    label="Email Address"
-                    rules={[
-                      {
-                        message: "Please input your Email!",
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <InputStyled placeholder="Email Address" />
                   </Form.Item>
                 </Col> */}
               </Row>

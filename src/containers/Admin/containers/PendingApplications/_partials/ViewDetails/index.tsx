@@ -35,13 +35,14 @@ const ViewDetails: FC<IViewDetailsProps> = ({
     ceo_gender,
     company_valuation,
     description,
+    funding_disbursed_for_support,
     phone,
     num_supported_business,
     is_ecosystem,
     is_startup,
     ecosystem_name,
     sub_ecosystem_name,
-    sub_ecosystem_sub_class,
+    sub_ecosystem_sub_class_name,
     cac_doc,
     linkedIn,
     twitter,
@@ -139,18 +140,21 @@ const ViewDetails: FC<IViewDetailsProps> = ({
           <strong>Startup</strong>: {is_startup ? "Yes" : "No"}
         </p>
 
-        <p>
-          <strong>Ecosystem</strong>: {ecosystem_name || "--"}
-        </p>
-
-        <p>
-          <strong>Sub-Ecosystem</strong>: {sub_ecosystem_name || "--"}
-        </p>
-
-        <p>
-          <strong>Sub-Ecosystem Sub-Class </strong>:{" "}
-          {sub_ecosystem_sub_class || "--"}
-        </p>
+        {currentListing.is_ecosystem && (
+          <>
+            {" "}
+            <p>
+              <strong>Ecosystem</strong>: {ecosystem_name || "--"}
+            </p>
+            <p>
+              <strong>Sub-Ecosystem</strong>: {sub_ecosystem_name || "--"}
+            </p>
+            <p>
+              <strong>Sub-Ecosystem Sub-Class </strong>:{" "}
+              {sub_ecosystem_sub_class_name || "--"}
+            </p>{" "}
+          </>
+        )}
 
         <p>
           <strong>CEO Gender</strong>: {capitalize(ceo_gender) || "--"}
@@ -163,9 +167,11 @@ const ViewDetails: FC<IViewDetailsProps> = ({
           <strong>State</strong>: {state || "--"}
         </p>
 
-        <p>
-          <strong>Business Level</strong>: {business_level || "--"}
-        </p>
+        {currentListing.is_entrepreneur && (
+          <p>
+            <strong>Business Level</strong>: {business_level || "--"}
+          </p>
+        )}
 
         <p>
           <strong>Company Valuation</strong>: {company_valuation || "--"}
@@ -187,6 +193,13 @@ const ViewDetails: FC<IViewDetailsProps> = ({
         <p>
           <strong>Funding (₦)</strong>: {funding || "--"}
         </p>
+
+        {currentListing.is_ecosystem && (
+          <p>
+            <strong>Funding Disbursed for Support Businesses</strong>:{" "}
+            {funding_disbursed_for_support || "--"}
+          </p>
+        )}
 
         <p>
           <strong>Business RC Number</strong>: {cac_doc || "--"}

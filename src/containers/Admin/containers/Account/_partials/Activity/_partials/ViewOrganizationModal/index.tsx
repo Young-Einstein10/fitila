@@ -22,6 +22,7 @@ const ViewOrganizationModal: FC<IViewProps> = ({
     sector_name,
     num_of_employees,
     funding,
+    funding_disbursed_for_support,
     address,
     business_level,
     ceo_gender,
@@ -83,18 +84,21 @@ const ViewOrganizationModal: FC<IViewProps> = ({
           <strong>Startup</strong>: {is_startup ? "Yes" : "No"}
         </p>
 
-        <p>
-          <strong>Ecosystem</strong>: {ecosystem_name || "--"}
-        </p>
-
-        <p>
-          <strong>Sub-Ecosystem</strong>: {sub_ecosystem_name || "--"}
-        </p>
-
-        <p>
-          <strong>Sub-Ecosystem Sub-Class </strong>:{" "}
-          {sub_ecosystem_sub_class_name || "--"}
-        </p>
+        {currentOrganization.is_ecosystem && (
+          <>
+            {" "}
+            <p>
+              <strong>Ecosystem</strong>: {ecosystem_name || "--"}
+            </p>
+            <p>
+              <strong>Sub-Ecosystem</strong>: {sub_ecosystem_name || "--"}
+            </p>
+            <p>
+              <strong>Sub-Ecosystem Sub-Class </strong>:{" "}
+              {sub_ecosystem_sub_class_name || "--"}
+            </p>{" "}
+          </>
+        )}
 
         <p>
           <strong>CEO Gender</strong>: {capitalize(ceo_gender) || "--"}
@@ -107,9 +111,11 @@ const ViewOrganizationModal: FC<IViewProps> = ({
           <strong>State</strong>: {state || "--"}
         </p>
 
-        <p>
-          <strong>Business Level</strong>: {business_level || "--"}
-        </p>
+        {currentOrganization.is_entrepreneur && (
+          <p>
+            <strong>Business Level</strong>: {business_level || "--"}
+          </p>
+        )}
 
         <p>
           <strong>Company Valuation</strong>: {company_valuation || "--"}
@@ -131,6 +137,13 @@ const ViewOrganizationModal: FC<IViewProps> = ({
         <p>
           <strong>Funding (₦)</strong>: {funding || "--"}
         </p>
+
+        {currentOrganization.is_ecosystem && (
+          <p>
+            <strong>Funding Disbursed for Support Businesses</strong>:{" "}
+            {funding_disbursed_for_support || "--"}
+          </p>
+        )}
 
         <p>
           <strong>Business RC Number</strong>: {cac_doc || "--"}
