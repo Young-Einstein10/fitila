@@ -1,10 +1,11 @@
 import React, { FC, useContext, useState } from "react";
-import { Form, Select, Upload, Row, Col } from "antd";
+import { Select, Upload, Row, Col } from "antd";
 import {
   ButtonStyled,
   InputNumberStyled,
   InputStyled,
 } from "../../../../../Styles";
+import { FormStyled as Form } from "../../styled";
 import { BusinessContext } from "../../../../context";
 import { ReactComponent as UploadIcon } from "../../../../../../static/svg/upload.svg";
 import { UploadButtonStyled } from "./styled";
@@ -110,6 +111,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
       onFinish={handleSubmit}
       className="uploads"
       layout="vertical"
+      scrollToFirstError
       initialValues={{
         ...state,
         funding_currency: state.funding_currency || "₦",

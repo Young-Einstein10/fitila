@@ -4,6 +4,7 @@ import { ReactComponent as UnknownAvatar } from "../../../../../../static/svg/un
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
 import { RowStyled, StyledCompanyLogo } from "./styled";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
+import Heading from "../../../../../../components/heading/heading";
 
 interface ISummaryProps {
   selectedOrganization: IOrganizationProps[];
@@ -42,9 +43,9 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                 </div>
 
                 <div>
-                  <h2 className="font-weight-700">
+                  <Heading as="h1" fontSize="32px" className="font-weight-700">
                     {selectedOrganization[0] && selectedOrganization[0].name}
-                  </h2>
+                  </Heading>
                   <p style={{ marginBottom: 0 }}>
                     {selectedOrganization[0] &&
                       selectedOrganization[0].description}
@@ -94,11 +95,11 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     className="founder-name-wrapper"
                     style={{ marginLeft: "2rem" }}
                   >
-                    <p style={{ marginBottom: 0 }}>
+                    <p style={{ marginBottom: 0, fontSize: "24px" }}>
                       {selectedOrganization[0] &&
                         selectedOrganization[0].ceo_name}
                     </p>
-                    <span>{ceo_name_label}</span>
+                    <span style={{ fontSize: "12px" }}>{ceo_name_label}</span>
                   </div>
                 </div>
               }

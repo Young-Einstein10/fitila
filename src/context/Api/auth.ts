@@ -57,6 +57,24 @@ export default class Auth {
     return this.client.post("/account/user/reset_password/", data);
   }
 
+  forgotPassword(data: { email: string }) {
+    return this.client.post("/account/user/forget_password/", data);
+  }
+
+  confirmPassword(data: { password: string; token: string }) {
+    return this.client.post(
+      "​/account​/user​/forget_password​/confirm​/",
+      data
+    );
+  }
+
+  validateToken(data: { token: string }) {
+    return this.client.post(
+      "​/account​/user​/forget_password​/validate_token​/",
+      data
+    );
+  }
+
   getUsers() {
     return this.client.get("/account/user/all_users/");
   }

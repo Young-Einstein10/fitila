@@ -60,7 +60,16 @@ const ColStyled = Styled(Col)`
 `;
 
 const MainColStyled = Styled(Col)`
-  max-width: 400px;
+  max-width: 460px;
+
+  .wrapper {
+    /* margin-bottom: 1.5rem; */
+
+    &&.continue-btn {
+      margin-top: 3rem;
+      width: 90%:
+    }
+  }
 
   @media screen and (max-width: 576px) {
     width: 100%

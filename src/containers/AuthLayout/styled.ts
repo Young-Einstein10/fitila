@@ -257,10 +257,12 @@ const Main = Styled.div<{ background?: string }>`
                   !theme.rtl ? "padding-left" : "padding-right"}: 8px;
             }
         }
-        .ant-select-selection-item{
+
+        /* .ant-select-selection-item{
             ${({ theme }) =>
               !theme.rtl ? "padding-left" : "padding-right"}: 10px !important;
-        }
+        } */
+
         &.ant-select-lg{
             height: 50px;
             line-height: 48px;

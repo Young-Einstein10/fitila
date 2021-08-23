@@ -13,7 +13,7 @@ const initialState = {
   company_logo: null,
   sub_ecosystem: null,
   sub_ecosystem_sub_class: null,
-  address: null,
+  address: undefined,
   state: null,
   ecosystem: null,
   sub_segment: null,

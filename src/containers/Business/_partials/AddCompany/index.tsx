@@ -1,17 +1,16 @@
 import React, { FC, useContext, useState } from "react";
 import { ReactComponent as Enterpreneur } from "../../../../static/svg/enterpreneur.svg";
 import { ReactComponent as Ecosystem } from "../../../../static/svg/ecosystem.svg";
-// import { ReactComponent as EcosystemColored } from "../../../../static/svg/ecosystemcolored.svg";
 import { EcosystemColored } from "../../../../components/svgs";
-
-import { Col, Row, Tooltip } from "antd";
-import { ColStyled, SpanStyled, SpanFooter } from "./styled";
+import { Row, Tooltip } from "antd";
+import { ColStyled, SpanStyled, SpanFooter, MainColStyled } from "./styled";
 import { ButtonStyled } from "../../../Styles";
 import { RouteComponentProps } from "react-router-dom";
 import { BusinessContext } from "../../context";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import Heading from "../../../../components/heading/heading";
+import { StyledCard } from "../ListOrganization/styled";
 
 const AddCompany: FC<RouteComponentProps> = ({ history }) => {
   const [isEnterpreneurActive, setIsEnterpreneurActive] = useState("");
@@ -26,13 +25,13 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
           className="add_company_container"
           style={{ justifyContent: "center", paddingTop: "3rem" }}
         >
-          <Col className="text-center" style={{ maxWidth: "400px" }}>
-            <div style={{ marginBottom: "1.5rem" }}>
+          <MainColStyled className="text-center">
+            <StyledCard headless className="wrapper">
               <div className="text-center" style={{ marginBottom: "2rem" }}>
                 <Heading
-                  as="h3"
+                  as="h1"
                   fontWeight="bold"
-                  fontSize="24px"
+                  fontSize="33px"
                   margin="0 0 2rem 0"
                   className="text-center"
                 >
@@ -105,21 +104,21 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
               </Row>
 
               <ButtonStyled
+                className="continue-btn"
                 onClick={() => history.push("/business/listorg")}
                 size="large"
                 type="primary"
-                style={{ marginTop: "3rem" }}
                 disabled={!isEnterpreneurActive && !isEcosystemActive && true}
               >
                 Continue
               </ButtonStyled>
-            </div>
+            </StyledCard>
 
             <SpanFooter>
               By Clicking “continue” you agree to our Terms and Conditions an
               Privacy policy.
             </SpanFooter>
-          </Col>
+          </MainColStyled>
         </Row>
       </Main>
     </AdminSectionWrapper>

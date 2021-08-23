@@ -158,10 +158,10 @@ const CardFrame = Styled(Card)`
   }
  
 
-  &.card-exception {
+  /* &.card-exception {
     .ant-card-body {
       /* Loading Skeleton */
-      .ant-card-loading-content {
+      /* .ant-card-loading-content {
         .ant-row {
           .ant-col {
             .ant-card-loading-block {
@@ -169,9 +169,9 @@ const CardFrame = Styled(Card)`
             }
           }
         }
-      }  
+      }   */
     }
-  }
+  } */
 `;
 
 export { CardFrame };

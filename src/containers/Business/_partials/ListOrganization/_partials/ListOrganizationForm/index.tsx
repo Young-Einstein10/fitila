@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Form, Select, Divider, Tooltip } from "antd";
+import { Select, Divider, Tooltip } from "antd";
+import { useHistory } from "react-router-dom";
 import {
   ButtonStyled,
   InputNumberStyled,
   InputStyled,
 } from "../../../../../Styles";
-import { useHistory } from "react-router-dom";
+import { FormStyled as Form, StyledDivider } from "../../styled";
 import { BusinessContext } from "../../../../context";
 import {
   useEcosystemContext,
@@ -17,6 +18,9 @@ import {
 } from "../../../../../../context/Ecosystem/types";
 import states from "../../../../../../states.json";
 import { businessLevels } from "../../../../../../utils/helpers";
+import usePlacesAutocomplete from "use-places-autocomplete";
+import useGooglePlacesHook from "../../../../../../utils/useGooglePlacesHook";
+import { AutoCompleteStyled } from "../../../../../../components/autoComplete/style";
 
 const { Option } = Select;
 const InputGroup = InputStyled.Group;
@@ -40,6 +44,31 @@ const ListOrganizationForm = ({ next }) => {
   const history = useHistory();
 
   const { state, setState } = useContext(BusinessContext);
+
+  const [loaded, error] = useGooglePlacesHook();
+
+  const {
+    init,
+    ready,
+    value,
+    suggestions: { status, data },
+    setValue,
+    clearSuggestions,
+  } = usePlacesAutocomplete({
+    requestOptions: {
+      /* Define search scope here */
+      componentRestrictions: { country: "ng" },
+      //   types: ["(regions)"],
+    },
+    debounce: 300,
+    initOnMount: false, // Disable initializing when the component mounts, default is true
+  });
+
+  useEffect(() => {
+    if (loaded && !error) {
+      init();
+    }
+  }, [loaded, error, init]);
 
   useEffect(() => {
     if (state.ecosystem_name) {
@@ -189,6 +218,7 @@ const ListOrganizationForm = ({ next }) => {
       onFinish={handleSubmit}
       layout="vertical"
       className="list-organization"
+      scrollToFirstError
       initialValues={{
         ...state,
         is_startUp: is_startUp ? "Yes" : "No",
@@ -265,13 +295,38 @@ const ListOrganizationForm = ({ next }) => {
         name="address"
         rules={[
           {
-            message: "Please input your address!",
+            message: "please input your address!",
             required: true,
           },
         ]}
       >
-        <InputStyled placeholder="Address" />
+        {/* <InputStyled placeholder="Address" /> */}
+
+        <AutoCompleteStyled
+          size="large"
+          placeholder="Enter an Address"
+          value={value}
+          onSelect={address => {
+            setValue(address, false);
+            clearSuggestions();
+          }}
+          onChange={e => setValue(e)}
+          disabled={!ready}
+          allowClear
+        >
+          {status === "OK" &&
+            data.map((suggestion, i) => (
+              <AutoCompleteStyled.Option
+                key={i}
+                value={suggestion.description}
+                data={suggestion}
+              >
+                {suggestion.description}
+              </AutoCompleteStyled.Option>
+            ))}
+        </AutoCompleteStyled>
       </Form.Item>
+
       {/* ADDRESS */}
 
       {/* STATE */}
@@ -279,7 +334,7 @@ const ListOrganizationForm = ({ next }) => {
         name="state"
         rules={[
           {
-            message: "Please select state organization is located in",
+            message: "state is required!",
             required: true,
           },
         ]}
@@ -294,7 +349,8 @@ const ListOrganizationForm = ({ next }) => {
       </Form.Item>
       {/* STATE */}
 
-      <Divider />
+      <StyledDivider />
+
       {/* ECOSYTEM SEGMENT */}
       {state.business_type === "Ecosystem Enabler" && (
         <Form.Item

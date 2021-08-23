@@ -180,17 +180,19 @@ const ThemeLayout = WrappedComponent => {
                 </Breadcrumb>
               </div>
 
-              <Popover
-                placement="bottomRight"
-                action="click"
-                content={userContent}
-              >
-                <CurrentUserButton className="user-info" size="large">
-                  <span></span>
-                  {auth.user.first_name} {auth.user.last_name}
-                  <ArrowDown />
-                </CurrentUserButton>
-              </Popover>
+              {auth.isAuthenticated && (
+                <Popover
+                  placement="bottomRight"
+                  action="click"
+                  content={userContent}
+                >
+                  <CurrentUserButton className="user-info" size="large">
+                    <span></span>
+                    {auth.user.first_name} {auth.user.last_name}
+                    <ArrowDown />
+                  </CurrentUserButton>
+                </Popover>
+              )}
             </Row>
           </Header>
 

@@ -1,32 +1,34 @@
-import { Button, Form } from "antd";
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import { Button, Form } from "antd";
+import { NavLink, useRouteMatch } from "react-router-dom";
 import Heading from "../../components/heading/heading";
 import { useApiContext } from "../../context";
 import { AuthWrapper, InputStyled } from "../Styles";
+import styled from "styled-components";
 
-const ForgotPassword = () => {
+const ConfirmPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [msg, setMsg] = useState("");
 
   const [form] = Form.useForm();
   const { auth: api } = useApiContext();
 
+  const {
+    params: { token },
+  } = useRouteMatch<{ token: string }>();
+
   const handleSubmit = async () => {
     try {
-      const values = (await form.validateFields()) as { email: string };
-
+      const values = (await form.validateFields()) as { password: string };
       setIsLoading(true);
 
-      const { status, data } = await api.forgotPassword(values);
+      const { status, data } = await api.confirmPassword({ ...values, token });
 
       console.log(data);
 
       if (status >= 200 && status < 300) {
         setIsLoading(false);
-
-        setMsg("A reset link has to been sent to your email.");
+        setMsg("Your password has been changed successfully.");
       }
     } catch (error) {
       setIsLoading(false);
@@ -43,23 +45,14 @@ const ForgotPassword = () => {
           layout="vertical"
         >
           <Heading as="h2" className="text-center">
-            Forgot Password
+            Enter New Password
           </Heading>
 
           <Form.Item
-            name="email"
-            rules={[
-              {
-                type: "email",
-                message: "The input is not a valid E-mail!",
-              },
-              {
-                message: "Please input your Email!",
-                required: true,
-              },
-            ]}
+            name="password"
+            rules={[{ message: "Please input your password", required: true }]}
           >
-            <InputStyled placeholder="Email Address" />
+            <InputStyled.Password placeholder="Password" />
           </Form.Item>
 
           <Form.Item>
@@ -90,7 +83,7 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ConfirmPassword;
 
 const StyledAlert = styled.div`
   margin-top: 3rem;
