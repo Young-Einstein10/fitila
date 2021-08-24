@@ -80,9 +80,9 @@ const ListOrganizationForm = ({ next }) => {
       setSubSegment(selectedEcosystem[0].sub_ecosystem);
     }
 
-    if (!state.business_type) {
-      history.push("/business");
-    }
+    // if (!state.business_type) {
+    //   history.push("/business");
+    // }
 
     if (state.is_startup) {
       setIs_Startup(state.is_startup);
@@ -147,18 +147,19 @@ const ListOrganizationForm = ({ next }) => {
 
       let selectedSubEcosystem = [];
 
+      let userData: any = {};
+
       if (state.business_type === "Ecosystem Enabler") {
         selectedSubEcosystem = selectedEcosystem[0].sub_ecosystem.filter(
           sub_eco => sub_eco.name === values.sub_ecosystem
         );
 
-        const userData = {
+        userData = {
           ...state,
           ...values,
           funding_disbursed_for_support: values.funding_disbursed_support
             ? values.funding_disbursed_support
             : 0,
-          company_valuation: `${values.currency}${values.currency_value}`,
           ecosystem: selectedEcosystem[0].id,
           ecosystem_name: selectedEcosystem[0].name,
           sub_ecosystem: selectedSubEcosystem[0].id,
@@ -173,26 +174,24 @@ const ListOrganizationForm = ({ next }) => {
           is_entrepreneur:
             state.business_type === "Enterpreneur" ? true : false,
         };
-
-        console.log({ userData });
-
-        setState(userData);
       } else {
-        const userData = {
+        userData = {
           ...state,
           ...values,
-          company_valuation: `${values.currency}${values.currency_value}`,
           is_ecosystem:
             state.business_type === "Ecosystem Enabler" ? true : false,
           is_entrepreneur:
             state.business_type === "Enterpreneur" ? true : false,
         };
-
-        console.log({ userData });
-
-        setState(userData);
       }
 
+      if (values.currency_vaue) {
+        userData.company_valuation = values.currency_value;
+      }
+
+      console.log(userData);
+
+      setState(userData);
       // Move to Next Step
       next();
     } catch (error) {

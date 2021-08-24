@@ -35,8 +35,8 @@ const initialState = {
   linkedin: null,
   twitter: null,
   cac_doc: null,
-  is_entrepreneur: null,
-  is_ecosystem: null,
+  is_entrepreneur: false,
+  is_ecosystem: false,
   is_active: true,
   is_startup: null,
 };
@@ -54,7 +54,10 @@ const BusinessProvider = ({ children }) => {
     }
   };
 
-  const clearBusinessData = () => setState(initialState);
+  const clearBusinessData = () => {
+    console.log("Cleared Business Data");
+    setState(initialState);
+  };
 
   return (
     <BusinessContext.Provider

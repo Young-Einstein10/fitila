@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from "react";
+import React, { FC, useContext } from "react";
 import { ReactComponent as Enterpreneur } from "../../../../static/svg/enterpreneur.svg";
 import { ReactComponent as Ecosystem } from "../../../../static/svg/ecosystem.svg";
 import { EcosystemColored } from "../../../../components/svgs";
@@ -11,10 +11,11 @@ import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import Heading from "../../../../components/heading/heading";
 import { StyledCard } from "../ListOrganization/styled";
+import { WithBusinessProvider } from "../..";
 
 const AddCompany: FC<RouteComponentProps> = ({ history }) => {
-  const [isEnterpreneurActive, setIsEnterpreneurActive] = useState("");
-  const [isEcosystemActive, setIsEcosystemActive] = useState("");
+  // const [isEnterpreneurActive, setIsEnterpreneurActive] = useState("");
+  // const [isEcosystemActive, setIsEcosystemActive] = useState("");
 
   const { state, setState } = useContext(BusinessContext);
 
@@ -52,23 +53,23 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
                   >
                     <SpanStyled
                       onClick={() => {
-                        setIsEcosystemActive("");
-                        setIsEnterpreneurActive("enterpreneur");
+                        // setIsEcosystemActive("");
+                        // setIsEnterpreneurActive("enterpreneur");
                         setState({
                           ...state,
                           business_type: "Enterpreneur",
-                          is_entrepreneur: true,
+                          is_entrepreneur: !state.is_entrepreneur,
                           is_ecosystem: false,
                         });
                       }}
-                      className={`enterpreneur ${isEnterpreneurActive ===
-                        "enterpreneur" && "active"}`}
+                      className={`enterpreneur ${state.is_entrepreneur &&
+                        "active"}`}
                     >
                       <Enterpreneur />
                     </SpanStyled>
                   </Tooltip>
                   <span style={{ marginTop: "15px" }}>
-                    I am an Enterpreneur
+                    I am an Entrepreneur
                   </span>
                 </ColStyled>
 
@@ -78,23 +79,25 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
                     placement="right"
                   >
                     <SpanStyled
-                      className={`ecosystem ${isEcosystemActive ===
-                        "ecosystem" && "active"}`}
+                      className={`ecosystem ${state.is_ecosystem && "active"}`}
                       // onMouseOver={() => setIsEcosystemActive(true)}
                       // onMouseOut={() => setIsEcosystemActive(false)}
                       onClick={() => {
-                        setIsEnterpreneurActive("");
-
-                        setIsEcosystemActive("ecosystem");
+                        // setIsEnterpreneurActive("");
+                        // setIsEcosystemActive("ecosystem");
                         setState({
                           ...state,
                           business_type: "Ecosystem Enabler",
-                          is_ecosytem: true,
+                          is_ecosystem: !state.is_ecosystem,
                           is_entrepreneur: false,
                         });
                       }}
                     >
-                      {isEcosystemActive ? <EcosystemColored /> : <Ecosystem />}
+                      {state.is_ecosystem ? (
+                        <EcosystemColored />
+                      ) : (
+                        <Ecosystem />
+                      )}
                     </SpanStyled>
                   </Tooltip>
                   <span style={{ marginTop: "15px" }}>
@@ -105,10 +108,10 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
 
               <ButtonStyled
                 className="continue-btn"
-                onClick={() => history.push("/business/listorg")}
+                onClick={() => history.push("/business/listorg", { ...state })}
                 size="large"
                 type="primary"
-                disabled={!isEnterpreneurActive && !isEcosystemActive && true}
+                disabled={!state.is_entrepreneur && !state.is_ecosystem}
               >
                 Continue
               </ButtonStyled>
@@ -125,4 +128,4 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
   );
 };
 
-export default AddCompany;
+export default WithBusinessProvider(AddCompany);

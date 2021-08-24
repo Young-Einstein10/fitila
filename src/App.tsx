@@ -3,7 +3,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./routes";
 import { ThemeProvider } from "styled-components";
 import config from "./config/config";
-import BusinessProvider from "./containers/Business/context";
 import {
   EcosystemProvider,
   FAQProvider,
@@ -26,13 +25,11 @@ function App() {
         <EcosystemProvider>
           <SectorProvider>
             <Router>
-              <BusinessProvider>
-                <FAQProvider>
-                  <ScrollToTop>
-                    <Routes />
-                  </ScrollToTop>
-                </FAQProvider>
-              </BusinessProvider>
+              <FAQProvider>
+                <ScrollToTop>
+                  <Routes />
+                </ScrollToTop>
+              </FAQProvider>
             </Router>
           </SectorProvider>
         </EcosystemProvider>

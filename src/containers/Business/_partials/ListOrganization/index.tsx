@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { Row } from "antd";
 import Heading from "../../../../components/heading/heading";
 import ListOrganizationForm from "./_partials/ListOrganizationForm";
@@ -10,8 +11,7 @@ import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import { StepsStyled, StyledCard } from "./styled";
 import useGooglePlacesHook from "../../../../utils/useGooglePlacesHook";
-// import PlacesAutocomplete from "./test";
-import { useHistory } from "react-router-dom";
+import { WithBusinessProvider } from "../..";
 
 const { Step } = StepsStyled;
 
@@ -20,15 +20,24 @@ const ListOrganization = () => {
 
   const customDot = (dot: any) => dot;
 
-  const { state } = useContext(BusinessContext);
+  const { state, setState } = useContext(BusinessContext);
+
+  const { state: businessData } = useLocation<any>();
 
   const history = useHistory();
 
   useEffect(() => {
-    if (!state.business_type) {
+    if (businessData) {
+      setState(businessData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!businessData) {
       history.push("/business");
     }
-  }, [history, state]);
+  }, [history, businessData]);
 
   const [loaded, error] = useGooglePlacesHook();
 
@@ -101,4 +110,4 @@ const ListOrganization = () => {
   );
 };
 
-export default ListOrganization;
+export default WithBusinessProvider(ListOrganization);

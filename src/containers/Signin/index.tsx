@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "antd";
+import { GoogleLogin } from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 import { Link, NavLink } from "react-router-dom";
 import Heading from "../../components/heading/heading";
-import { AuthWrapper } from "../Styles";
 import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
 import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
 import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
 import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
-import { InputStyled } from "../Styles";
 import { useApiContext, useAuthContext } from "../../context";
 import { useMountedState } from "../../utils/hooks";
+import { InputStyled, AuthWrapper } from "../Styles";
 
 const Login = ({ history, location }) => {
   const [form] = Form.useForm();
@@ -59,6 +60,18 @@ const Login = ({ history, location }) => {
       console.log(error);
       setIsLoading(false);
     }
+  };
+
+  const googleResponse = response => {
+    console.log({ response });
+  };
+
+  const facebookResponse = response => {
+    console.log({ response });
+  };
+
+  const onFailure = error => {
+    alert(error);
   };
 
   return (
@@ -111,6 +124,20 @@ const Login = ({ history, location }) => {
             >
               Sign In
             </Button>
+
+            <GoogleLogin
+              clientId="118035885210-mgnqcnmncu3f1ubrk53joeiifaehvu8a.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={googleResponse}
+              onFailure={onFailure}
+            />
+
+            <FacebookLogin
+              appId={198683348960352}
+              autoLoad={false}
+              fields="name,email,picture"
+              callback={facebookResponse}
+            />
           </Form.Item>
 
           <p className="auth-notice">
