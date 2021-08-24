@@ -9,6 +9,7 @@ import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
 import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
 import { InputStyled } from "../Styles";
 import { useApiContext, useAuthContext } from "../../context";
+import { useMountedState } from "../../utils/hooks";
 
 const Login = ({ history, location }) => {
   const [form] = Form.useForm();
@@ -17,18 +18,21 @@ const Login = ({ history, location }) => {
   const { state } = location;
 
   const { setApiHeaders } = useApiContext();
+  const isMounted = useMountedState();
 
   const { setAuth, login, auth } = useAuthContext();
 
   useEffect(() => {
-    if (auth.isAuthenticated) {
-      if (state && state.next) {
-        history.push(state.next);
-      } else {
-        history.push("/d");
+    if (isMounted()) {
+      if (auth.isAuthenticated) {
+        if (state && state.next) {
+          history.push(state.next);
+        } else {
+          history.push("/d");
+        }
       }
     }
-  }, [auth, state, history]);
+  }, [auth, state, history, isMounted]);
 
   const handleSubmit = async values => {
     setIsLoading(true);

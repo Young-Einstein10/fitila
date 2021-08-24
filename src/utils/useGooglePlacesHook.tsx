@@ -8,10 +8,10 @@ interface IScriptResult {
 }
 
 const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-const proxy_url = process.env.REACT_APP_PROXY_URL;
+// const proxy_url = process.env.REACT_APP_PROXY_URL;
 
 export default function useGooglePlacesHook(): boolean[] {
-  const src = `${proxy_url}/googleapi/maps/api/js?key=${API_KEY}&libraries=places`;
+  const src = `/googleapi/maps/api/js?key=${API_KEY}&libraries=places`;
 
   const [state, setState] = useState<IScriptResult>({
     loaded: false,
