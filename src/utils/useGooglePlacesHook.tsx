@@ -9,9 +9,12 @@ interface IScriptResult {
 
 const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 // const proxy_url = process.env.REACT_APP_PROXY_URL;
+const isProd = process.env.NODE_ENV === "production";
 
 export default function useGooglePlacesHook(): boolean[] {
-  const src = `/googleapi/maps/api/js?key=${API_KEY}&libraries=places`;
+  const src = isProd
+    ? `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places`
+    : `/googleapi/maps/api/js?key=${API_KEY}&libraries=places`;
 
   const [state, setState] = useState<IScriptResult>({
     loaded: false,
