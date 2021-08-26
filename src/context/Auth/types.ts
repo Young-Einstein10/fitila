@@ -18,8 +18,8 @@ interface IUserProps {
   is_admin?: boolean;
   email?: string;
   phone?: string;
-  access: string;
-  refresh: string;
+  // access: string;
+  // refresh: string;
 }
 
 interface AuthProps {

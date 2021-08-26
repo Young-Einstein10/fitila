@@ -12,3 +12,4 @@ export * from "./LocationIcon";
 export * from "./HandbagIcon";
 export * from "./EcosystemColored";
 export * from "./EnterpreneurIcon";
+export * from "./Logo";

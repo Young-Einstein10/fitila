@@ -1,88 +1,88 @@
 import { Layout, Button } from "antd";
 import { Link } from "react-router-dom";
-import Styled from "styled-components";
+import styled from "styled-components";
 const { Header, Footer } = Layout;
 
-const Div = Styled.div`
-    background: #fff
+const Div = styled.div`
+  background: #fff;
 `;
 
-const LayoutStyled = Styled(Layout)`
-    & header.ant-layout-header {
-        box-shadow: 0px 2px 8px rgba(53,55,81,0.04);
-        padding: 0 40px;
-        display: flex;
-        align-items: center;
-        height: 76px;
-        
-        .ant-row {
-          flex: 1;       
-        }
+const LayoutStyled = styled(Layout)`
+  & header.ant-layout-header {
+    box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    height: 76px;
 
-        @media screen and (max-width: 768px) {
-          padding: 0 1rem;
-        }
+    .ant-row {
+      flex: 1;
     }
 
-    & .ant-layout-content {
-      
-      background: #fff;
-      min-height: calc(100vh - 140px);
-      margin-top: 4rem;
-
-      @media screen and (min-width: 768px) {
-        padding: 0 3.125rem;
-      }
+    @media screen and (max-width: 768px) {
+      padding: 0 1rem;
     }
+  }
+
+  & .ant-layout-content {
+    background: #fff;
+    min-height: calc(100vh - 140px);
+    margin-top: 4rem;
+
+    @media screen and (min-width: 768px) {
+      padding: 0 3.125rem;
+    }
+  }
 `;
 
-const HeaderStyled = Styled(Header)`  
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    background: #fff
+const HeaderStyled = styled(Header)`
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: #fff;
 
-    .ant-layout-header {      
-        min-height: 76px;
-        /* box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04) !important; */
-        padding: 0.2rem 3rem;
+  .ant-layout-header {
+    min-height: 76px;
+    /* box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04) !important; */
+    padding: 0.2rem 3rem;
+  }
+
+  .navItem-left,
+  .navItem-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .navItem-left {
+    /* width: 7rem; */
+
+    img {
+      width: 100%;
     }
 
-    .navItem-left,
-    .navItem-right {
-        display: flex;
-        align-items: center;
+    svg {
+      margin-top: 10px;
     }
+  }
 
-    .navItem-left {
-      width: 7rem;
+  .ant-breadcrumb {
+    margin-left: 5rem;
+    color: #000000;
+    font-weight: 700;
+  }
 
-      img {
-        width: 100%;
-      }
-    }
-    
-    .ant-breadcrumb {
-        margin-left: 5rem;
-        color: #000000;
-        font-weight: 700;
-    }
-
-    .account-btn {
-        margin-top: 0;
-    }
-
-   
+  .account-btn {
+    margin-top: 0;
+  }
 `;
 
-const FooterStyled = Styled(Footer)`
-
+const FooterStyled = styled(Footer)`
   &.ant-layout-footer {
     min-height: 76px;
-    background: #F2F2F2;
-    color: #5F6368;
+    background: #f2f2f2;
+    color: #5f6368;
     font-size: 16px;
     padding: 0 40px;
     display: flex;
@@ -92,66 +92,65 @@ const FooterStyled = Styled(Footer)`
   .ant-row {
     flex: 1;
   }
- 
-          span.admin-footer__copyright{
-            display: inline-block;
-            width: 100%;
-            color: ${({ theme }) => theme["light-color"]};
-            @media only screen and (max-width: 767px){
-                text-align: center;
-                margin-bottom: 2rem;
-                margin-top: 25px;
-            }
+
+  span.admin-footer__copyright {
+    display: inline-block;
+    width: 100%;
+    color: ${({ theme }) => theme["light-color"]};
+    @media only screen and (max-width: 767px) {
+      text-align: center;
+      margin-bottom: 2rem;
+      margin-top: 25px;
+    }
+  }
+  div.admin-footer__links {
+    text-align: right;
+
+    @media only screen and (max-width: 767px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    a {
+      color: ${({ theme }) => theme["light-color"]};
+
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
+
+      @media only screen and (max-width: 767px) {
+        &:not(:last-child),
+        &:last-child {
+          margin: 0.6rem 0;
         }
-          div.admin-footer__links{
-            text-align: right;
-            
-            @media only screen and (max-width: 767px){
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            a{
-                color: ${({ theme }) => theme["light-color"]};
+      }
 
-                &:not(:last-child){
-                  margin-right: 15px;                      
-                }
-
-                @media only screen and (max-width: 767px){
-                  &:not(:last-child), &:last-child {
-                      margin: 0.6rem 0
-                  }
-                }
-
-                &:hover{
-                    color: ${({ theme }) => theme["primary-color"]};
-                }
-
-            }
-        }
-      
+      &:hover {
+        color: ${({ theme }) => theme["primary-color"]};
+      }
+    }
+  }
 `;
 
-const BusinessButton = Styled(Button)`
-  border: ${({ theme }) => `solid 1px ${theme["secondary-color"]}`}
-  color: ${({ theme }) => theme["text-primary"]}
+const BusinessButton = styled(Button)`
+  border: ${({ theme }) => `solid 1px ${theme["secondary-color"]}`};
+  color: ${({ theme }) => theme["text-primary"]};
   margin-right: 2rem;
   width: 100%;
 
   a {
-    color: ${({ theme }) => theme["text-primary"]}
+    color: ${({ theme }) => theme["text-primary"]};
   }
 
   &:hover {
-    border: ${({ theme }) => `solid 1px ${theme["secondary-color"]}`}
-    color: ${({ theme }) => theme["text-primary"]}
+    border: ${({ theme }) => `solid 1px ${theme["secondary-color"]}`};
+    color: ${({ theme }) => theme["text-primary"]};
   }
 `;
 
-const ButtonStyled = Styled(Button)`
-  background: #F7F9FA
-   color: ${({ theme }) => theme["primary-color"]}
+const ButtonStyled = styled(Button)`
+  background: #f7f9fa;
+  color: ${({ theme }) => theme["primary-color"]};
   font-weight: 700;
   border: 0;
 
@@ -163,32 +162,34 @@ const ButtonStyled = Styled(Button)`
     margin-bottom: -3px;
   }
 
-  &:hover, &:active, &:focus {
-    background: #F7F9FA;
-    color: ${({ theme }) => theme["primary-color"]}
+  &:hover,
+  &:active,
+  &:focus {
+    background: #f7f9fa;
+    color: ${({ theme }) => theme["primary-color"]};
     font-weight: 700;
     border: 0;
   }
 `;
 
-const LinkStyled = Styled(Link)`
-  background: #F7F9FA; 
-   color: ${({ theme }) => theme["primary-color"]}
-  
+const LinkStyled = styled(Link)`
+  background: #f7f9fa;
+  color: ${({ theme }) => theme["primary-color"]};
+
   &:first-child {
-    margin-bottom: 0.625rem
+    margin-bottom: 0.625rem;
   }
-  
+
   &:hover {
-    background:  #F7F9FA;
+    background: #f7f9fa;
   }
 
   span {
     display: flex;
     align-items: center;
-     color: ${({ theme }) => theme["primary-color"]}
+    color: ${({ theme }) => theme["primary-color"]};
     font-weight: bold;
-    font-size: 1rem
+    font-size: 1rem;
   }
 `;
 

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Layout, Col, Row, Dropdown, Button } from "antd";
 import { Link, NavLink } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
-import Logo from "../../static/img/logo.png";
+// import { ReactComponent as Logo } from "../../static/svg/logo.svg";
 import burgermenu from "../../static/svg/burgermenu.svg";
 import { ReactComponent as UserIcon } from "../../static/svg/usericon.svg";
 import { ReactComponent as ArrowDown } from "../../static/svg/arrowDown.svg";
@@ -20,6 +20,7 @@ import { useAuthContext } from "../../context";
 // import { DownOutlined } from "@ant-design/icons";
 import { Popover } from "../../components/popup/popup";
 import { UserDropdown } from "../adminLayout/style";
+import { Logo } from "../../components/svgs";
 
 const { Content } = Layout;
 
@@ -96,7 +97,8 @@ const NonAuthLayout: FC = ({ children }) => {
           >
             <div className="navItem-left">
               <Link className={`striking-logo top-menu' `} to="/">
-                <img src={Logo} alt="Logo" />
+                {/* <img src={Logo} alt="Logo" /> */}
+                <Logo />
               </Link>
             </div>
 

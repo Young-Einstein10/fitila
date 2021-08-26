@@ -14,7 +14,7 @@ export type IUserData = {
 export type IUserResponseProps = IUserData & {
   is_admin: boolean;
   access: string;
-  refresh: string;
+  // refresh: string;
 };
 
 export type IUserProfileProps = IUserData & {
@@ -45,8 +45,8 @@ export default class Auth {
     return this.client.post("/account/user/add_user/", userDetails);
   }
 
-  refreshToken(token: string) {
-    return this.client.post("/account/auth/token/refresh/", { refresh: token });
+  refreshToken(): Promise<AxiosResponse<{ access: string }>> {
+    return this.client.post("/account/auth/token/refresh/");
   }
 
   createAdmin(userData) {

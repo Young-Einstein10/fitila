@@ -25,6 +25,7 @@ const ApiContext = createContext<ContextProps | undefined>(undefined);
 //Staging endpoint
 const axiosInstance = axios.create({
   baseURL: "https://fitilla.pythonanywhere.com/api/v1",
+  withCredentials: true,
 });
 
 const api: ApiProps = {
@@ -97,6 +98,7 @@ const ApiProvider: FC = ({ children }) => {
   const setApiHeaders = (token: string) => {
     api.HttpClient.defaults.headers.common["authorization"] = `Bearer ${token}`;
     api.HttpClient.defaults.headers.common["Content-Type"] = "application/json";
+    // api.HttpClient.defaults.withCredentials = true;
   };
 
   return (

@@ -3,7 +3,7 @@ import { Layout, Button, Row, Col, Breadcrumb } from "antd";
 import { NavLink, Link, withRouter } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
 import MenueItems from "./MenueItems";
-import logo from "../../static/img/logo.png";
+// import logo from "../../static/img/logo.png";
 import { ReactComponent as ArrowRight } from "../../static/svg/arrowright.svg";
 import { ReactComponent as ArrowDown } from "../../static/svg/arrowDown.svg";
 import burgermenu from "../../static/svg/burgermenu.svg";
@@ -12,6 +12,7 @@ import FeatherIcon from "feather-icons-react";
 import { Popover } from "../../components/popup/popup";
 import { CurrentUserButton, Div, UserDropdown } from "./style";
 import { breadcrumbNameMap } from "../../utils/helpers";
+import { Logo } from "../../components/svgs";
 
 const { Header, Footer, Sider, Content } = Layout;
 const BreadcrumbItem = Breadcrumb.Item;
@@ -172,7 +173,8 @@ const ThemeLayout = WrappedComponent => {
                   }
                   to="/"
                 >
-                  <img src={logo} alt="Logo" />
+                  {/* <img src={logo} alt="Logo" /> */}
+                  <Logo />
                 </Link>
 
                 <Breadcrumb separator={<ArrowRight />}>

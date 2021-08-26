@@ -127,7 +127,7 @@ const Div = Styled.div`
     }
 
     .striking-logo{
-        width: 7rem;
+        /* width: 7rem; */
 
         @media only screen and (max-width: 875px){
             ${({ theme }) => (theme.rtl ? "margin-left" : "margin-right")}: 4px;
@@ -135,9 +135,24 @@ const Div = Styled.div`
         @media only screen and (max-width: 767px){
             ${({ theme }) => (theme.rtl ? "margin-left" : "margin-right")}: 0;
         }
+
         img{            
             width: 100%;
         }
+
+        svg {
+            margin-top: 10px;
+            margin-left: -15px;
+
+            @media screen and (max-width: 992px) {
+                top: -9px;
+                position: absolute;
+                left: 40px;
+                margin-top: 0;
+                margin-left: 0;
+            }
+        }
+
         &.top-menu{
             ${({ theme }) =>
               theme.rtl ? "margin-right" : "margin-left"}: 15px;
