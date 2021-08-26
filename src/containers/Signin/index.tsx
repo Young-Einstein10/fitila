@@ -12,6 +12,9 @@ import { useApiContext, useAuthContext } from "../../context";
 import { useMountedState } from "../../utils/hooks";
 import { InputStyled, AuthWrapper } from "../Styles";
 
+const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
 const Login = ({ history, location }) => {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +74,7 @@ const Login = ({ history, location }) => {
   };
 
   const onFailure = error => {
-    alert(error);
+    console.log(error);
   };
 
   return (
@@ -126,14 +129,14 @@ const Login = ({ history, location }) => {
             </Button>
 
             <GoogleLogin
-              clientId="118035885210-mgnqcnmncu3f1ubrk53joeiifaehvu8a.apps.googleusercontent.com"
+              clientId={GOOGLE_CLIENT_ID}
               buttonText="Login"
               onSuccess={googleResponse}
               onFailure={onFailure}
             />
 
             <FacebookLogin
-              appId={198683348960352}
+              appId={FACEBOOK_APP_ID}
               autoLoad={false}
               fields="name,email,picture"
               callback={facebookResponse}

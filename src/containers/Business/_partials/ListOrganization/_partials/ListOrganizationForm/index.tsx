@@ -157,6 +157,7 @@ const ListOrganizationForm = ({ next }) => {
         userData = {
           ...state,
           ...values,
+          is_startup: is_startUp,
           funding_disbursed_for_support: values.funding_disbursed_support
             ? values.funding_disbursed_support
             : 0,
@@ -178,6 +179,7 @@ const ListOrganizationForm = ({ next }) => {
         userData = {
           ...state,
           ...values,
+          is_startup: is_startUp,
           is_ecosystem:
             state.business_type === "Ecosystem Enabler" ? true : false,
           is_entrepreneur:
