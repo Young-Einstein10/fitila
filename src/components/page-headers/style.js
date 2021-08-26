@@ -1,8 +1,8 @@
-import Styled from "styled-components";
 import { PageHeader } from "antd";
+import styled from "styled-components";
 
-const PageHeaderStyle = Styled(PageHeader)`
-  margin-bottom: 15px;
+const PageHeaderStyle = styled(PageHeader)`
+  margin: 15px 0 !important;
 
   .ant-page-header-heading-title {
     font-size: 24px;
@@ -18,9 +18,12 @@ const PageHeaderStyle = Styled(PageHeader)`
     height: 12px;
     ${({ theme }) => (theme.rtl ? "margin-left" : "margin-right")}: 2px;
     color: #5f63f2;
-  }D
-  i +span, svg +span, img +span {
-      ${({ theme }) => (!theme.rtl ? "margin-left" : "margin-right")}: 6px;
+  }
+
+  i + span,
+  svg + span,
+  img + span {
+    ${({ theme }) => (!theme.rtl ? "margin-left" : "margin-right")}: 6px;
   }
 `;
 
