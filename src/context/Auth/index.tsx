@@ -1,5 +1,5 @@
 import React, { useState, createContext, FC, useEffect } from "react";
-// import jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 import { useApiContext } from "../Api";
 import { AuthProps, ContextProps, IUserProps } from "./types";
 import { IUserData } from "../Api/auth";
@@ -67,7 +67,7 @@ const AuthProvider: FC = ({ children }) => {
     isAuthenticated: false,
     user: {},
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { setApiHeaders, auth: api } = useApiContext();
 
@@ -75,10 +75,13 @@ const AuthProvider: FC = ({ children }) => {
 
   const refreshToken = async () => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       const { data } = await api.refreshToken();
 
       const userDetails = JSON.parse(userData!) as IUserProps;
+      const accessToken = jwt_decode(data.access) as any;
+
+      console.log({ userDetails, accessToken });
 
       setApiHeaders(data.access);
 
@@ -119,14 +122,34 @@ const AuthProvider: FC = ({ children }) => {
     }
   };
 
-  const signOut = () => {
-    localStorage.removeItem("userData");
-    setAuth({
-      isAuthenticated: false,
-      user: {},
-    });
+  const signOut = async history => {
+    try {
+      const res = await api.logout();
 
-    window.location.href = "/signin";
+      console.log(res);
+
+      if (res.status >= 200) {
+        localStorage.removeItem("userData");
+        setAuth({
+          isAuthenticated: false,
+          user: {},
+        });
+
+        // window.location.href = "/signin";
+        history.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+
+      localStorage.removeItem("userData");
+      setAuth({
+        isAuthenticated: false,
+        user: {},
+      });
+
+      // window.location.href = "/signin";
+      history.push("/");
+    }
   };
 
   if (isLoading) {

@@ -5,6 +5,8 @@ import { IOrganizationProps } from "../../../../../../context/Organization/types
 import { RowStyled, StyledCompanyLogo } from "./styled";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import Heading from "../../../../../../components/heading/heading";
+import { capitalize } from "../../../../../../utils/helpers";
+import numberWithCommas from "../../../../../../utils/numberFormatter";
 
 interface ISummaryProps {
   selectedOrganization: IOrganizationProps[];
@@ -16,6 +18,35 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
     selectedOrganization.length && selectedOrganization[0].is_entrepreneur
       ? "CEO/Founder's Name"
       : "CEO/DG/Head/Founder's Name";
+
+  const {
+    name,
+    ceo_name,
+    state,
+    sector_name,
+    num_of_employees,
+    funding,
+    funding_disbursed_for_support,
+    address,
+    business_level,
+    ceo_gender,
+    company_valuation,
+    description,
+    phone,
+    num_supported_business,
+    is_ecosystem,
+    is_entrepreneur,
+    is_startup,
+    ecosystem_name,
+    sub_ecosystem_name,
+    sub_ecosystem_sub_class_name,
+    cac_doc,
+    linkedIn,
+    twitter,
+    facebook,
+    website,
+    date_created,
+  } = selectedOrganization.length && selectedOrganization[0];
 
   return (
     <Fragment>
@@ -105,8 +136,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
               }
             >
               <RowStyled>
-                <div className="profile-summary-data">
-                  <div>
+                {/* <div>
                     <span>Business Level</span>
                     <span>
                       {(selectedOrganization[0] &&
@@ -172,8 +202,126 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                   <div>
                     <span>Headquarters</span>
                     <span>Nigeria</span>
-                  </div>
-                </div>
+                  </div> */}
+                <Col className="profile-summary-data" span={12}>
+                  <p>
+                    <strong>Company</strong>: {name || "--"}
+                  </p>
+
+                  <p>
+                    <strong>Business Type</strong>:{" "}
+                    {is_ecosystem ? "Ecosystem Player" : "Enterpreneur"}
+                  </p>
+
+                  <p>
+                    <strong>Description</strong>: {description || "--"}
+                  </p>
+
+                  <p>
+                    <strong>CEO/Founder</strong>:{" "}
+                    {(ceo_name && ceo_name.name) || "--"}
+                  </p>
+
+                  <p>
+                    <strong>Phone</strong> {phone || "--"}
+                  </p>
+
+                  <p>
+                    <strong>Startup</strong>: {is_startup ? "Yes" : "No"}
+                  </p>
+
+                  {is_ecosystem && (
+                    <>
+                      {" "}
+                      <p>
+                        <strong>Ecosystem</strong>: {ecosystem_name || "--"}
+                      </p>
+                      <p>
+                        <strong>Sub-Ecosystem</strong>:{" "}
+                        {sub_ecosystem_name || "--"}
+                      </p>
+                      <p>
+                        <strong>Sub-Ecosystem Sub-Class </strong>:{" "}
+                        {sub_ecosystem_sub_class_name || "--"}
+                      </p>{" "}
+                    </>
+                  )}
+
+                  <p>
+                    <strong>CEO Gender</strong>:{" "}
+                    {capitalize(ceo_gender) || "--"}
+                  </p>
+                  <p>
+                    <strong>Address</strong>: {address || "--"}
+                  </p>
+
+                  <p>
+                    <strong>State</strong>: {state || "--"}
+                  </p>
+
+                  {is_entrepreneur && (
+                    <p>
+                      <strong>Business Level</strong>: {business_level || "--"}
+                    </p>
+                  )}
+
+                  <p>
+                    <strong>Company Valuation</strong>:{" "}
+                    {company_valuation || "--"}
+                  </p>
+                </Col>
+
+                <Col className="profile-summary-data" span={12}>
+                  <p>
+                    <strong>Sector</strong>: {sector_name || "--"}
+                  </p>
+
+                  <p>
+                    <strong>Employees</strong>: {num_of_employees || "--"}
+                  </p>
+
+                  <p>
+                    <strong>Number of Supported Businesses</strong>:{" "}
+                    {num_supported_business || "--"}
+                  </p>
+
+                  <p>
+                    <strong>Funding (₦)</strong>:{" "}
+                    {numberWithCommas(funding) || "--"}
+                  </p>
+
+                  {is_ecosystem && (
+                    <p>
+                      <strong>Funding Disbursed for Support Businesses</strong>:{" "}
+                      {funding_disbursed_for_support || "--"}
+                    </p>
+                  )}
+
+                  <p>
+                    <strong>Business RC Number</strong>: {cac_doc || "--"}
+                  </p>
+
+                  <p>
+                    <strong>LinkedIn</strong>: {linkedIn || "--"}
+                  </p>
+
+                  <p>
+                    <strong>Twitter</strong>: {twitter || "--"}
+                  </p>
+
+                  <p>
+                    <strong>Facebook</strong>: {facebook || "--"}
+                  </p>
+
+                  <p>
+                    <strong>Website</strong>: {website || "--"}
+                  </p>
+
+                  <p>
+                    <strong>Date Listed</strong>:{" "}
+                    {new Date(date_created).toLocaleString() || "--"}
+                  </p>
+                </Col>
               </RowStyled>
             </Cards>
           }

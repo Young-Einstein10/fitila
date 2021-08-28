@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Layout, Button, Row, Col, Breadcrumb } from "antd";
-import { NavLink, Link, withRouter } from "react-router-dom";
+import { NavLink, Link, withRouter, useHistory } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
 import MenueItems from "./MenueItems";
 // import logo from "../../static/img/logo.png";
@@ -20,6 +20,7 @@ const BreadcrumbItem = Breadcrumb.Item;
 const ThemeLayout = WrappedComponent => {
   const LayoutComponent = props => {
     const [collapsed, setCollapsed] = useState(false);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     const { auth, signOut } = useAuthContext();
 
@@ -37,9 +38,18 @@ const ThemeLayout = WrappedComponent => {
 
     const { location } = props;
 
+    const history = useHistory();
+
     const topMenu = false;
     const rtl = false;
     const ChangeLayoutMode = true;
+
+    const handleLogout = () => {
+      setIsLoggingOut(true);
+      signOut(history)
+        .then(() => setIsLoggingOut(false))
+        .catch(err => setIsLoggingOut(false));
+    };
 
     const toggleCollapsed = () => setCollapsed(open => !open);
 
@@ -143,9 +153,8 @@ const ThemeLayout = WrappedComponent => {
           </ul>
           <Button
             className="user-dropdwon__bottomAction"
-            onClick={() => {
-              signOut();
-            }}
+            onClick={handleLogout}
+            loading={isLoggingOut}
           >
             <FeatherIcon icon="log-out" /> Log Out
           </Button>

@@ -1,8 +1,8 @@
 import { Input, InputNumber, Button, Select } from "antd";
-import Styled from "styled-components";
+import styled from "styled-components";
 
-const InputStyled = Styled(Input)`
-  background-color: #F9F9F9;
+const InputStyled = styled(Input)`
+  background-color: #f9f9f9;
   border-radius: 6px;
 
   &.ant-input::placeholder,
@@ -13,15 +13,16 @@ const InputStyled = Styled(Input)`
   & span.ant-select-selection-placeholder {
     color: ${({ theme }) => theme["extra-light-color"]};
   }
-  
-  &.ant-input, #login_password, &.ant-input-affix-wrapper > input.ant-input {
-    
-    background-color: #F9F9F9;  
+
+  &.ant-input,
+  #login_password,
+  &.ant-input-affix-wrapper > input.ant-input {
+    background-color: #f9f9f9;
   }
 `;
 
-const InputNumberStyled = Styled(InputNumber)`
-  background-color: #F9F9F9;
+const InputNumberStyled = styled(InputNumber)`
+  background-color: #f9f9f9;
   border-radius: 6px;
   width: 100% !important;
 
@@ -42,30 +43,31 @@ const InputNumberStyled = Styled(InputNumber)`
   & span.ant-select-selection-placeholder {
     color: ${({ theme }) => theme["extra-light-color"]};
   }
-  
-  &.ant-input-number, #login_password, &.ant-input-affix-wrapper > input.ant-input-number {    
-    background-color: #F9F9F9;  
+
+  &.ant-input-number,
+  #login_password,
+  &.ant-input-affix-wrapper > input.ant-input-number {
+    background-color: #f9f9f9;
   }
 `;
 
-const ButtonStyled = Styled(Button)`
-  width: 100%
-  margin-top: 1.5rem
+const ButtonStyled = styled(Button)`
+  width: 100%;
+  margin-top: 1.5rem;
 `;
 
-const SectionWrapper = Styled.div`
+const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%
+  height: 100%;
   /* padding-top: 60px; */
-
   .text-center {
     text-align: center;
   }
 
   button {
-    &.ant-btn-lg{
+    &.ant-btn-lg {
       font-size: 16px;
       font-weight: 500;
       border-radius: 4px;
@@ -73,26 +75,24 @@ const SectionWrapper = Styled.div`
     }
   }
 
-  &.ant-input::placeholder{
+  &.ant-input::placeholder {
     color: ${({ theme }) => theme["extra-light-color"]};
   }
 
   .preview-section {
-
     .preview-info {
-
       p {
-        color: ${({ theme }) => theme["extra-light-color"]}
+        color: ${({ theme }) => theme["extra-light-color"]};
       }
 
       strong {
         color: ${({ theme }) => theme["dark-color"]};
-      }      
+      }
     }
   }
 `;
 
-const AuthWrapper = Styled.div`
+const AuthWrapper = styled.div`
   height: 100%;
   /* height: calc(100vh - (64px + 64px)); */
   padding: 40px;
@@ -292,26 +292,25 @@ const AuthWrapper = Styled.div`
   }
 `;
 
-const SelectStyled = Styled(Select)<{ width?: string }>`
+const SelectStyled = styled(Select)<{ width?: string }>`
   width: ${({ width }) => (width ? `${width} !important` : "100% !important")};
   font-size: 16px;
-  border-color: ${({ theme }) => theme["secondary-color"]}
-
-  
+  border-color: ${({ theme }) => theme["secondary-color"]};
 
   &.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
-    border-color: ${({ theme }) => theme["secondary-color"]}
+    border-color: ${({ theme }) => theme["secondary-color"]};
   }
 
-  &.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    border-color: ${({ theme }) => theme["secondary-color"]}
+  &.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
+    .ant-select-selector {
+    border-color: ${({ theme }) => theme["secondary-color"]};
     border-right-width: 1px !important;
     outline: 0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 
   &.ant-select:focus-visible {
-    border-color: ${({ theme }) => theme["secondary-color"]}
+    border-color: ${({ theme }) => theme["secondary-color"]};
   }
 
   @media screen and (max-width: 768px) {
@@ -327,22 +326,16 @@ const SelectStyled = Styled(Select)<{ width?: string }>`
   }
 `;
 
-const SpinnerStyled = Styled.div`
-  background: #fff;
+const SpinnerStyled = styled.div`
+  background: inherit;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 400px;
 `;
 
-const ActionButtonStyled = Styled(Button)`
+const ActionButtonStyled = styled(Button)`
   padding: 4px 10px;
-  /* background: none;
-  border: none; */
-/* 
-  &:hover {
-    background: red;
-  } */
 `;
 
 export {

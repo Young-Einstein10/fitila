@@ -128,7 +128,7 @@ const createTableColumns = (
         return (
           <Space size="middle">
             {/* Render a anchor link if user is viewing a company profile currently, so when View Profile button in SimilarCompanies is clicked, it'll route to the compnay page */}
-            {isViewingProfile ? (
+            {/* {isViewingProfile ? (
               <ViewProfileBtnStyled>
                 <a href={`/d/profile/${record.id}`}>View Profile</a>
               </ViewProfileBtnStyled>
@@ -136,7 +136,11 @@ const createTableColumns = (
               <ViewProfileBtnStyled>
                 <Link to={`/d/profile/${record.id}`}>View Profile</Link>
               </ViewProfileBtnStyled>
-            )}
+            )} */}
+
+            <ViewProfileBtnStyled>
+              <Link to={`/d/profile/${record.id}`}>View Profile</Link>
+            </ViewProfileBtnStyled>
 
             {isAdmin && isOrganizationRoute ? (
               <Fragment>

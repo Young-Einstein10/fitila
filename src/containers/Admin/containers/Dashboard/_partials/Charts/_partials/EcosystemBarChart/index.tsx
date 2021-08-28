@@ -125,7 +125,7 @@ EcosystemBarChart.defaultProps = {
             fontSize: 13,
             fontColor: "#182b49",
             max: 50000000,
-            stepSize: 5000000,
+            stepSize: 10000000,
             callback(value, index, values) {
               return `${abbreviateNumberShort(Number(value))}`;
             },

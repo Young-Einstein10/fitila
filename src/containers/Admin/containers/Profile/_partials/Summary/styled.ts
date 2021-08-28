@@ -80,6 +80,15 @@ const RowStyled = styled(Row)`
         }
       }
     }
+
+    p {
+      margin-bottom: 10px;
+
+      strong {
+        flex: 0 0 30%;
+        color: #5b5b5b;
+      }
+    }
   }
 `;
 

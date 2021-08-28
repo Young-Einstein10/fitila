@@ -5,6 +5,7 @@ import {
   useOrganizationContext,
   useSectorContext,
 } from "../../../../../../../../context";
+import { abbreviateNumberShort } from "../../../../../../../../utils/numberAbbreviator";
 import { ChartContainer } from "../FemaleBarChart/styled";
 
 interface ILineChartProps {
@@ -29,18 +30,20 @@ const LineChart: FC<ILineChartProps> = props => {
   let isChartLoading = true;
 
   // Find Total Funding for each sector
-  const sectorFundings = sectors.map(sector => {
-    const organizationList = organizations.filter(
-      org => org.sector_name.toLowerCase() === sector.name.toLowerCase()
-    );
+  const sectorFundings = sectors
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map(sector => {
+      const organizationList = organizations.filter(
+        org => org.sector_name.toLowerCase() === sector.name.toLowerCase()
+      );
 
-    const totalFunding = organizationList.reduce(
-      (total, org) => Number(org.funding ? org.funding : 0) + total,
-      0
-    );
+      const totalFunding = organizationList.reduce(
+        (total, org) => Number(org.funding ? org.funding : 0) + total,
+        0
+      );
 
-    return { name: sector.name, funding: totalFunding };
-  });
+      return { name: sector.name, funding: totalFunding };
+    });
 
   // console.log({
   //   sectorFundings,
@@ -136,7 +139,8 @@ LineChart.defaultProps = {
         {
           ticks: {
             callback(value, index, values) {
-              return `${value}k`;
+              // return `${value}k`;
+              return `${abbreviateNumberShort(value)}`;
             },
           },
         },

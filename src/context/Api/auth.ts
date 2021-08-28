@@ -45,6 +45,10 @@ export default class Auth {
     return this.client.post("/account/user/add_user/", userDetails);
   }
 
+  logout() {
+    return this.client.get("/account/auth/logout");
+  }
+
   refreshToken(): Promise<AxiosResponse<{ access: string }>> {
     return this.client.post("/account/auth/token/refresh/");
   }

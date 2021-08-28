@@ -2,6 +2,7 @@ import React, { FC, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import { IOrganizationProps } from "../../../context/Organization/types";
+import numberWithCommas from "../../../utils/numberFormatter";
 
 import { SVGWrapper } from "./styled";
 
@@ -415,7 +416,7 @@ export const MapOfNigeria: FC<IMapProps> = ({ statesData }) => {
               </p>
 
               <p>
-                <b>Funding:</b> {state ? state.funding : 0}
+                <b>Funding:</b> {state ? numberWithCommas(state.funding) : 0}
               </p>
 
               <p>

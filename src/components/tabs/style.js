@@ -1,5 +1,5 @@
-import Styled from "styled-components";
 import { Tabs } from "antd";
+import styled from "styled-components";
 
 const { TabPane } = Tabs;
 
@@ -66,38 +66,33 @@ const TabChildColor = color => `
   
 `;
 
-const TabBasic = Styled(Tabs)`
+const TabBasic = styled(Tabs)`
   margin-bottom: 30px !important;
-  ${({ color }) => color && TabColor(color)}
+  ${({ color }) => color && TabColor(color)};
 
   & > .ant-tabs-nav {
     background: #fff;
     padding-right: 1.3rem;
     margin-bottom: 0;
 
-
     .ant-tabs-tab {
       margin: 15px 0;
-      padding: 5px 15px
-      border-right: solid 1px #D0D4D9;
+      padding: 5px 15px;
+      border-right: solid 1px #d0d4d9;
     }
 
     .ant-tabs-tab:first-child {
       margin-left: 1.3rem;
     }
-
-    /* .ant-tabs-tab-active {
-      border-bottom: solid 2px red;
-    } */
   }
-
-
-  /* padding: 0 1.3rem !important; */
 `;
 
-const Child = Styled(TabPane)`
-  padding: 1.3rem
-    ${({ color }) => color && TabChildColor(color)}
+const Child = styled(TabPane)`
+  padding: 1.3rem ${({ color }) => color && TabChildColor(color)};
+
+  .ant-page-header {
+    margin-top: 0 !important;
+  }
 `;
 
 export { TabBasic, Child };

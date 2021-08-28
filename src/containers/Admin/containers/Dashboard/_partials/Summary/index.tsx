@@ -11,6 +11,7 @@ import {
   HandbagIcon,
 } from "../../../../../../components/svgs";
 import numberWithCommas from "../../../../../../utils/numberFormatter";
+import states from "../../../../../../states.json";
 
 const CardStyled = styled(Card)`
   /* box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04); */
@@ -35,7 +36,7 @@ const CardStyled = styled(Card)`
 `;
 
 const Summary = () => {
-  const { states, data: organizations } = useOrganizationContext();
+  const { data: organizations } = useOrganizationContext();
   const { data: sectors } = useSectorContext();
 
   const numOfStartUps = organizations.filter(org => org.is_startup === true)

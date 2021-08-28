@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Col, Row, Spin } from "antd";
-import { Cards } from "../../../../../../components/cards/frame/cards-frame";
+import { Link } from "react-router-dom";
+import { Geocode } from "./Geocode";
 import {
   useLoadScript,
   GoogleMap,
@@ -8,9 +9,14 @@ import {
   Marker,
 } from "@react-google-maps/api";
 import { Libraries } from "@react-google-maps/api/dist/utils/make-load-script-url";
-import { Geocode } from "./Geocode";
-import ErrorMsg from "../../../../../../components/messages/error";
+import { ReactComponent as Facebook } from "../../../../../../static/svg/facebook.svg";
+import { ReactComponent as Twitter } from "../../../../../../static/svg/twitter.svg";
+import { ReactComponent as LinkedIn } from "../../../../../../static/svg/linkedIn.svg";
+import { ReactComponent as Instagram } from "../../../../../../static/svg/instagram.svg";
+import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
+import ErrorMsg from "../../../../../../components/messages/error";
+import { SocialWrapper } from "./styled";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const sampleAddress = `
@@ -56,6 +62,8 @@ const Contact: FC<ContactProps> = props => {
   });
 
   useEffect(() => {
+    setError(null);
+
     const { address } = props?.selectedOrganization;
 
     setIsGeocodingAddress(true);
@@ -88,8 +96,16 @@ const Contact: FC<ContactProps> = props => {
     // do something with map Instance
   }, []);
 
-  const { name, address, phone, website } =
-    props?.selectedOrganization && props.selectedOrganization;
+  const {
+    name,
+    address,
+    phone,
+    website,
+    facebook,
+    linkedIn,
+    twitter,
+    instagram,
+  } = props?.selectedOrganization && props.selectedOrganization;
 
   return (
     <Row gutter={15}>
@@ -129,6 +145,7 @@ const Contact: FC<ContactProps> = props => {
             >
               <Col xs={24} sm={24} md={24} lg={16}>
                 {error && <ErrorMsg content={error} />}
+
                 <div style={{ height: "400px" }} className="contact-chart">
                   {isLoaded && !isGeocodingAddress ? (
                     <GoogleMap
@@ -199,7 +216,39 @@ const Contact: FC<ContactProps> = props => {
                     <span>{phone}</span>
                   </p>
 
-                  {/* <ViewProfileBtnStyled>Add to Favorites</ViewProfileBtnStyled> */}
+                  <SocialWrapper>
+                    {twitter && (
+                      <li>
+                        <Link className="facebook-sign" to="#">
+                          <Twitter />
+                        </Link>
+                      </li>
+                    )}
+
+                    {facebook && (
+                      <li>
+                        <Link className="facebook-sign" to="#">
+                          <Facebook />
+                        </Link>
+                      </li>
+                    )}
+
+                    {instagram && (
+                      <li>
+                        <Link className="twitter-sign" to="#">
+                          <Instagram />
+                        </Link>
+                      </li>
+                    )}
+
+                    {linkedIn && (
+                      <li>
+                        <Link className="facebook-sign" to="#">
+                          <LinkedIn />
+                        </Link>
+                      </li>
+                    )}
+                  </SocialWrapper>
                 </div>
               </Col>
             </Row>

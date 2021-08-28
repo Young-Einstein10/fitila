@@ -22,7 +22,7 @@ const EcosystemList: FC = () => {
       <Col xs={24}>
         <Cards
           loading={isEcosystemLoading}
-          title="Explore by ecosystem segments"
+          title="Explore by Ecosystem Segments"
           size="large"
         >
           {

@@ -28,7 +28,7 @@ const Login = ({ history, location }) => {
 
   useEffect(() => {
     if (isMounted()) {
-      if (auth.isAuthenticated) {
+      if (auth.isAuthenticated && auth.user) {
         if (state && state.next) {
           history.push(state.next);
         } else {

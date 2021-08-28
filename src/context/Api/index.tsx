@@ -22,9 +22,11 @@ interface ContextProps extends ApiProps {
 
 const ApiContext = createContext<ContextProps | undefined>(undefined);
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 //Staging endpoint
 const axiosInstance = axios.create({
-  baseURL: "https://fitilla.pythonanywhere.com/api/v1",
+  baseURL: `${BASE_URL}/api/v1`,
   withCredentials: true,
 });
 
