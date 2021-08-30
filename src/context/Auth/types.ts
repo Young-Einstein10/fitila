@@ -6,7 +6,7 @@ interface ContextProps {
   setAuth: React.Dispatch<React.SetStateAction<AuthProps>>;
   login: (userData: UserSigninProps) => Promise<AxiosResponse<{ data: IUserResponseProps}>>;
   signup: (userData: IUserData) => Promise<AxiosResponse<IUserResponseProps>>;
-  signOut: (history) => Promise<void>;
+  signOut: (history: any) => void;
 }
 
 
@@ -18,8 +18,8 @@ interface IUserProps {
   is_admin?: boolean;
   email?: string;
   phone?: string;
-  // access: string;
-  // refresh: string;
+  access: string;
+  refresh: string;
 }
 
 interface AuthProps {

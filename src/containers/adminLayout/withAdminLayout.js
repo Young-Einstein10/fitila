@@ -20,7 +20,7 @@ const BreadcrumbItem = Breadcrumb.Item;
 const ThemeLayout = WrappedComponent => {
   const LayoutComponent = props => {
     const [collapsed, setCollapsed] = useState(false);
-    const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const [isLoggingOut] = useState(false);
 
     const { auth, signOut } = useAuthContext();
 
@@ -45,10 +45,7 @@ const ThemeLayout = WrappedComponent => {
     const ChangeLayoutMode = true;
 
     const handleLogout = () => {
-      setIsLoggingOut(true);
-      signOut(history)
-        .then(() => setIsLoggingOut(false))
-        .catch(err => setIsLoggingOut(false));
+      signOut(history);
     };
 
     const toggleCollapsed = () => setCollapsed(open => !open);

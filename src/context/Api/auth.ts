@@ -14,7 +14,7 @@ export type IUserData = {
 export type IUserResponseProps = IUserData & {
   is_admin: boolean;
   access: string;
-  // refresh: string;
+  refresh: string;
 };
 
 export type IUserProfileProps = IUserData & {
@@ -49,7 +49,9 @@ export default class Auth {
     return this.client.get("/account/auth/logout");
   }
 
-  refreshToken(): Promise<AxiosResponse<{ access: string }>> {
+  refreshToken(
+    refresh: string
+  ): Promise<AxiosResponse<{ refresh: string; access: string }>> {
     return this.client.post("/account/auth/token/refresh/");
   }
 

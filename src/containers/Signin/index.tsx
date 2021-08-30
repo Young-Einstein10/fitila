@@ -49,15 +49,15 @@ const Login = ({ history, location }) => {
           data: { data },
         } = res;
 
-        const { access, ...userData } = data;
+        const { access } = data;
 
-        localStorage.setItem("userData", JSON.stringify(userData));
+        localStorage.setItem("userData", JSON.stringify(data));
 
         setApiHeaders(access);
 
         setAuth({
           isAuthenticated: true,
-          user: userData,
+          user: data,
         });
       }
       setIsLoading(false);
