@@ -1,7 +1,10 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Cards } from "../../../../../../../../components/cards/frame/cards-frame";
-import { useSectorContext } from "../../../../../../../../context";
+import {
+  useEcosystemContext,
+  useSectorContext,
+} from "../../../../../../../../context";
 import useChartData from "../../hooks";
 import "./index.less";
 
@@ -9,10 +12,37 @@ const MSMEsChart = props => {
   const { labels, datasets, options, width, height } = props;
 
   const { isLoading: isSectorLoading } = useSectorContext();
+  const { isLoading, data: ecosystem } = useEcosystemContext();
+
+  const msmesAndStartupsOrg = ecosystem.find(
+    ecosystem => ecosystem.name === "MSMEs and Startups"
+  );
+
+  const msmesOrg = msmesAndStartupsOrg
+    ? msmesAndStartupsOrg.sub_ecosystem.find(
+        subEco => subEco.name.toLowerCase() === "msmes"
+      )
+    : null;
+
+  const startupOrg = msmesAndStartupsOrg
+    ? msmesAndStartupsOrg.sub_ecosystem.find(
+        subEco => subEco.name.toLowerCase() === "startups"
+      )
+    : null;
+
+  const msmesFunding = msmesOrg?.organizations.reduce(
+    (total, org) => (org.funding ? Number(org.funding) : 0) + total,
+    0
+  );
+
+  const startupFunding = startupOrg?.organizations.reduce(
+    (total, org) => (org.funding ? Number(org.funding) : 0) + total,
+    0
+  );
 
   const funding = [
-    { name: "MSMEs", funding: 300 },
-    { name: "Startups", funding: 200 },
+    { name: "MSMEs", funding: msmesFunding },
+    { name: "Startups", funding: startupFunding },
   ];
 
   const chartLabels = funding.map(sector => sector.name);
@@ -37,7 +67,7 @@ const MSMEsChart = props => {
 
   return (
     <Cards
-      loading={isSectorLoading}
+      loading={isSectorLoading || isLoading}
       title="Funding by MSMEs and Startups"
       size="large"
     >

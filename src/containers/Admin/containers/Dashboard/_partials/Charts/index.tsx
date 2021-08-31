@@ -3,7 +3,7 @@ import { Row, Col } from "antd";
 import LineChart from "./_partials/LineChart";
 import MSMEsChart from "./_partials/MSMEsChart";
 import FemaleBarChart from "./_partials/FemaleBarChart";
-import StateChart from "./_partials/StateChart";
+// import StateChart from "./_partials/StateChart";
 import EcosystemBarChart from "./_partials/EcosystemBarChart";
 
 const Charts = () => {
@@ -11,9 +11,9 @@ const Charts = () => {
     <Fragment>
       <Row gutter={[16, 16]} style={{ marginTop: "2rem" }}>
         {/* ============= Startups Ranking by State ============= */}
-        <Col xs={24} sm={24} md={12} lg={8}>
+        {/* <Col xs={24} sm={24} md={12} lg={8}>
           <StateChart />
-        </Col>
+        </Col> */}
 
         {/* ============= Female and Male Led Startups ============= */}
         <Col xs={24} sm={24} md={12} lg={8}>
