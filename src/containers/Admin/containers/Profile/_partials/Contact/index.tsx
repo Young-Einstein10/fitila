@@ -9,7 +9,6 @@ import {
   Marker,
 } from "@react-google-maps/api";
 import { Libraries } from "@react-google-maps/api/dist/utils/make-load-script-url";
-import { ReactComponent as Facebook } from "../../../../../../static/svg/facebook.svg";
 import { ReactComponent as Twitter } from "../../../../../../static/svg/twitter.svg";
 import { ReactComponent as LinkedIn } from "../../../../../../static/svg/linkedIn.svg";
 import { ReactComponent as Instagram } from "../../../../../../static/svg/instagram.svg";
@@ -17,6 +16,7 @@ import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
 import ErrorMsg from "../../../../../../components/messages/error";
 import { SocialWrapper } from "./styled";
+import { FacebookIcon } from "../../../../../../components/svgs";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const sampleAddress = `
@@ -228,7 +228,7 @@ const Contact: FC<ContactProps> = props => {
                     {facebook && (
                       <li>
                         <Link className="facebook-sign" to="#">
-                          <Facebook />
+                          <FacebookIcon />
                         </Link>
                       </li>
                     )}

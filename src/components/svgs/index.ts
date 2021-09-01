@@ -15,3 +15,4 @@ export * from "./EnterpreneurIcon";
 export * from "./Logo";
 export * from "./EcosystemIcon";
 export * from "./GoogleIcon";
+export * from "./FacebookIcon";

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "antd";
 import { GoogleLogin } from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { NavLink } from "react-router-dom";
 import Heading from "../../components/heading/heading";
-import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
+// import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
 // import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
 // import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
 // import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
@@ -14,7 +14,7 @@ import { InputStyled, AuthWrapper } from "../Styles";
 import { GoogleIcon } from "../../components/svgs";
 import styled from "styled-components";
 
-const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
+// const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const Login = ({ history, location }) => {
@@ -23,7 +23,7 @@ const Login = ({ history, location }) => {
 
   const { state } = location;
 
-  const { setApiHeaders } = useApiContext();
+  const { setApiHeaders, auth: api } = useApiContext();
   const isMounted = useMountedState();
 
   const { setAuth, login, auth } = useAuthContext();
@@ -69,13 +69,40 @@ const Login = ({ history, location }) => {
     }
   };
 
-  const googleResponse = response => {
-    console.log({ response });
+  const googleResponse = async response => {
+    try {
+      console.log(response);
+      setIsLoading(true);
+
+      const {
+        tokenObj: { id_token },
+      } = response;
+
+      const { status, data } = await api.googleSignin(id_token);
+
+      if (status >= 200 && status < 300) {
+        const { access } = data;
+
+        localStorage.setItem("userData", JSON.stringify(data));
+
+        setApiHeaders(access);
+
+        setAuth({
+          isAuthenticated: true,
+          user: data,
+        });
+
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   };
 
-  const facebookResponse = response => {
-    console.log({ response });
-  };
+  // const facebookResponse = response => {
+  //   console.log({ response });
+  // };
 
   const onFailure = error => {
     console.log(error);
@@ -179,7 +206,7 @@ const Login = ({ history, location }) => {
               )}
             />
 
-            <FacebookLogin
+            {/* <FacebookLogin
               appId={FACEBOOK_APP_ID}
               autoLoad={false}
               fields="name,email,picture"
@@ -194,7 +221,7 @@ const Login = ({ history, location }) => {
                   <Facebook /> <span>Signin with Facebook</span>
                 </button>
               )}
-            />
+            /> */}
           </SocialSigninWrapper>
         </Form>
       </div>

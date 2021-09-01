@@ -1,11 +1,6 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Form, Button, Select, notification } from "antd";
-import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
-import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
-import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
-import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
-
+import { Form, Select, notification, Button } from "antd";
+import { NavLink } from "react-router-dom";
 import { AuthWrapper } from "../Styles";
 import Heading from "../../components/heading/heading";
 import { InputStyled } from "../Styles";
@@ -128,29 +123,6 @@ const Signup = ({ signupUser, history, auth }) => {
           <p className="auth-notice">
             Signed Up Already? <NavLink to="/signin">Signin in here</NavLink>
           </p>
-
-          <ul className="social-login">
-            <li>
-              <Link className="facebook-sign" to="#">
-                <Twitter />
-              </Link>
-            </li>
-            <li>
-              <Link className="facebook-sign" to="#">
-                <Facebook />
-              </Link>
-            </li>
-            <li>
-              <Link className="twitter-sign" to="#">
-                <Instagram />
-              </Link>
-            </li>
-            <li>
-              <Link className="facebook-sign" to="#">
-                <LinkedIn />
-              </Link>
-            </li>
-          </ul>
         </Form>
       </div>
     </AuthWrapper>

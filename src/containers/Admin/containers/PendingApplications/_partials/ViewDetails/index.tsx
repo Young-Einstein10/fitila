@@ -3,6 +3,7 @@ import { Modal, Button } from "antd";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
 import { useApiContext } from "../../../../../../context";
 import { capitalize } from "../../../../../../utils/helpers";
+import numberWithCommas from "../../../../../../utils/numberFormatter";
 
 interface IViewDetailsProps {
   visible: boolean;
@@ -82,6 +83,7 @@ const ViewDetails: FC<IViewDetailsProps> = ({
       if (res.status === 202) {
         Modal.success({
           title: "Organization has been approved.",
+          onOk: () => closeModal(),
         });
         refetchPendingApplications();
       }
@@ -191,7 +193,8 @@ const ViewDetails: FC<IViewDetailsProps> = ({
         </p>
 
         <p>
-          <strong>Funding (₦)</strong>: {is_ecosystem ? "N/A" : funding}
+          <strong>Funding (₦)</strong>:{" "}
+          {is_ecosystem ? "N/A" : numberWithCommas(funding)}
         </p>
 
         {currentListing.is_ecosystem && (

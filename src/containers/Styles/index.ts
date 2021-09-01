@@ -157,12 +157,6 @@ const AuthWrapper = styled.div`
         }
       }
 
-      .ant-form-item {
-
-        :nth-child(3) {
-          margin-bottom: 10px;
-        }
-      }
       
 
       .auth-form-action{
