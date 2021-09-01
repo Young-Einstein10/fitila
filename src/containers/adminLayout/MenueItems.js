@@ -10,7 +10,7 @@ import { ReactComponent as ContactNavIcon } from "../../static/svg/contactNavIco
 // import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.svg";
 import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.svg";
 import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
-
+import { EcosystemIcon } from "../../components/svgs";
 import { useAuthContext, useEcosystemContext } from "../../context";
 
 const { SubMenu } = Menu;
@@ -46,10 +46,7 @@ const MenuItems = props => {
       <SubMenu
         key="sub4"
         icon={
-          <LinkedIcon
-            to={`/d/organizations`}
-            children={<OrganizationNavIcon />}
-          />
+          <LinkedIcon to={`/d/organizations`} children={<EcosystemIcon />} />
         }
         title="Ecosystem Segments"
       >

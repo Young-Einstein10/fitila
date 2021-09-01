@@ -1,6 +1,6 @@
-import Styled from "styled-components";
+import styled from "styled-components";
 
-const H1 = Styled.h1`  
+const H1 = styled.h1`
   font-size: ${props => props.fontSize || "48px"};
   font-weight: ${props => props.fontWeight || "600"};
   line-height: 38px;
@@ -12,62 +12,62 @@ const H1 = Styled.h1`
   `}
 `;
 
-const H2 = Styled.h1`
-    font-size: ${props => props.fontSize || "24px"};
+const H2 = styled.h1`
+  font-size: ${props => props.fontSize || "24px"};
   font-weight: ${props => props.fontWeight || "600"};
   line-height: 30px;
 
-    ${props =>
-      props.margin &&
-      `
+  ${props =>
+    props.margin &&
+    `
     margin: ${props.margin}
   `}
 `;
 
-const H3 = Styled.h1`
+const H3 = styled.h1`
   font-size: ${props => props.fontSize || "22px"};
   font-weight: ${props => props.fontWeight || "600"};
   line-height: 27px;
 
-    ${props =>
-      props.margin &&
-      `
+  ${props =>
+    props.margin &&
+    `
     margin: ${props.margin}
   `}
 `;
 
-const H4 = Styled.h1`
-   font-size: ${props => props.fontSize || "20px"};
+const H4 = styled.h1`
+  font-size: ${props => props.fontSize || "20px"};
   font-weight: ${props => props.fontWeight || "600"};
   line-height: 24px;
 
-    ${props =>
-      props.margin &&
-      `
+  ${props =>
+    props.margin &&
+    `
     margin: ${props.margin}
   `}
 `;
 
-const H5 = Styled.h1`
+const H5 = styled.h1`
   font-size: ${props => props.fontSize || "18px"};
   font-weight: ${props => props.fontWeight || "600"};
   line-height: 22px;
 
-    ${props =>
-      props.margin &&
-      `
+  ${props =>
+    props.margin &&
+    `
     margin: ${props.margin}
   `}
 `;
 
-const H6 = Styled.h1`
-   font-size: ${props => props.fontSize || "16px"};
+const H6 = styled.h1`
+  font-size: ${props => props.fontSize || "16px"};
   font-weight: ${props => props.fontWeight || "600"};
   line-height: 20px;
 
-    ${props =>
-      props.margin &&
-      `
+  ${props =>
+    props.margin &&
+    `
     margin: ${props.margin}
   `}
 `;

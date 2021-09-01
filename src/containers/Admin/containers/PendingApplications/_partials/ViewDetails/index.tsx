@@ -191,7 +191,7 @@ const ViewDetails: FC<IViewDetailsProps> = ({
         </p>
 
         <p>
-          <strong>Funding (₦)</strong>: {funding || "--"}
+          <strong>Funding (₦)</strong>: {is_ecosystem ? "N/A" : funding}
         </p>
 
         {currentListing.is_ecosystem && (
@@ -206,19 +206,43 @@ const ViewDetails: FC<IViewDetailsProps> = ({
         </p>
 
         <p>
-          <strong>LinkedIn</strong>: {linkedIn || "--"}
+          <strong>LinkedIn</strong>:{" "}
+          {(linkedIn && (
+            <a href={linkedIn} target="_blank" rel="noreferrer noopener">
+              {linkedIn}
+            </a>
+          )) ||
+            "--"}
         </p>
 
         <p>
-          <strong>Twitter</strong>: {twitter || "--"}
+          <strong>Twitter</strong>:{" "}
+          {(twitter && (
+            <a href={twitter} target="_blank" rel="noreferrer noopener">
+              {twitter}
+            </a>
+          )) ||
+            "--"}
         </p>
 
         <p>
-          <strong>Facebook</strong>: {facebook || "--"}
+          <strong>Facebook</strong>:{" "}
+          {(facebook && (
+            <a href={facebook} target="_blank" rel="noreferrer noopener">
+              {facebook}
+            </a>
+          )) ||
+            "--"}
         </p>
 
         <p>
-          <strong>Website</strong>: {website || "--"}
+          <strong>Website</strong>:{" "}
+          {(website && (
+            <a href={website} target="_blank" rel="noreferrer noopener">
+              {website}
+            </a>
+          )) ||
+            "--"}
         </p>
 
         <p>

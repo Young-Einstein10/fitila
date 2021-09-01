@@ -340,7 +340,15 @@ const ListOrganizationForm = ({ next }) => {
           },
         ]}
       >
-        <Select placeholder="State" allowClear>
+        <Select
+          placeholder="State"
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+          allowClear
+        >
           {states.map(({ name, code }) => (
             <Option key={code} value={name}>
               {name}
@@ -366,6 +374,11 @@ const ListOrganizationForm = ({ next }) => {
           <Select
             onChange={e => updateSubSegment(e)}
             placeholder="Ecosystem Segment"
+            showSearch
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
             allowClear
           >
             {ecosystem.map((eco, key) => (
@@ -392,6 +405,11 @@ const ListOrganizationForm = ({ next }) => {
           <Select
             onChange={e => handleSubEcosystemChange(e)}
             placeholder="Sub-Segment"
+            showSearch
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
             allowClear
           >
             {subSegment.map(segment => (
@@ -419,6 +437,11 @@ const ListOrganizationForm = ({ next }) => {
           <Select
             onChange={e => handleSubClassChange(e)}
             placeholder="Sub-Class"
+            showSearch
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
             allowClear
           >
             {subEcosystemSubClass.map((subClass, key) => (
@@ -477,7 +500,15 @@ const ListOrganizationForm = ({ next }) => {
           },
         ]}
       >
-        <Select placeholder="Sector" allowClear>
+        <Select
+          placeholder="Sector"
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+          allowClear
+        >
           {sectors.map((sector, i) => (
             <Option key={i} value={sector.name.toLowerCase()}>
               {sector.name}
@@ -498,7 +529,15 @@ const ListOrganizationForm = ({ next }) => {
             },
           ]}
         >
-          <Select placeholder="Business Level" allowClear>
+          <Select
+            placeholder="Business Level"
+            showSearch
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+            allowClear
+          >
             {businessLevels.map((level, key) => (
               <Option key={key} value={level.name}>
                 <Tooltip title={level.description}>

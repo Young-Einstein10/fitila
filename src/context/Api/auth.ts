@@ -49,10 +49,22 @@ export default class Auth {
     return this.client.get("/account/auth/logout");
   }
 
+  googleSignin(token: string) {
+    return this.client.post("/account/auth/social/google/", {
+      auth_token: token,
+    });
+  }
+
+  facebookSignin(token: string) {
+    return this.client.post("/account/auth/social/facebook/", {
+      auth_token: token,
+    });
+  }
+
   refreshToken(
     refresh: string
   ): Promise<AxiosResponse<{ refresh: string; access: string }>> {
-    return this.client.post("/account/auth/token/refresh/");
+    return this.client.post("/account/auth/token/refresh/", { refresh });
   }
 
   createAdmin(userData) {

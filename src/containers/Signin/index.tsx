@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "antd";
 import { GoogleLogin } from "react-google-login";
-import FacebookLogin from "react-facebook-login";
-import { Link, NavLink } from "react-router-dom";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import { NavLink } from "react-router-dom";
 import Heading from "../../components/heading/heading";
 import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
-import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
-import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
-import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
+// import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
+// import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
+// import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
 import { useApiContext, useAuthContext } from "../../context";
 import { useMountedState } from "../../utils/hooks";
 import { InputStyled, AuthWrapper } from "../Styles";
+import { GoogleIcon } from "../../components/svgs";
+import styled from "styled-components";
 
 const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -129,20 +131,6 @@ const Login = ({ history, location }) => {
             >
               Sign In
             </Button>
-
-            <GoogleLogin
-              clientId={GOOGLE_CLIENT_ID}
-              buttonText="Login"
-              onSuccess={googleResponse}
-              onFailure={onFailure}
-            />
-
-            <FacebookLogin
-              appId={FACEBOOK_APP_ID}
-              autoLoad={false}
-              fields="name,email,picture"
-              callback={facebookResponse}
-            />
           </Form.Item>
 
           <p className="auth-notice">
@@ -150,7 +138,7 @@ const Login = ({ history, location }) => {
             <NavLink to="/signup">Sign up here</NavLink>
           </p>
 
-          <ul className="social-login">
+          {/* <ul className="social-login">
             <li>
               <Link className="facebook-sign" to="#">
                 <Twitter />
@@ -171,7 +159,43 @@ const Login = ({ history, location }) => {
                 <LinkedIn />
               </Link>
             </li>
-          </ul>
+          </ul> */}
+
+          <SocialSigninWrapper>
+            <GoogleLogin
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Login"
+              onSuccess={googleResponse}
+              onFailure={onFailure}
+              render={renderProps => (
+                <button
+                  className="google-signin-btn"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  {...renderProps}
+                >
+                  <GoogleIcon /> <span>Signin with Google</span>
+                </button>
+              )}
+            />
+
+            <FacebookLogin
+              appId={FACEBOOK_APP_ID}
+              autoLoad={false}
+              fields="name,email,picture"
+              callback={facebookResponse}
+              render={renderProps => (
+                <button
+                  className="facebook-signin-btn"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  {...renderProps}
+                >
+                  <Facebook /> <span>Signin with Facebook</span>
+                </button>
+              )}
+            />
+          </SocialSigninWrapper>
         </Form>
       </div>
     </AuthWrapper>
@@ -179,3 +203,36 @@ const Login = ({ history, location }) => {
 };
 
 export default Login;
+
+const SocialSigninWrapper = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .google-signin-btn,
+  .facebook-signin-btn {
+    height: 40px;
+    border: 1px solid #e3e6ef;
+    border-radius: 4px;
+    background: none;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    :hover {
+      border: ${({ theme }) => `1px solid ${theme["primary-color"]}`};
+    }
+
+    svg {
+      margin-right: 10px;
+    }
+  }
+
+  button:last-child {
+    margin-top: 1rem;
+  }
+`;

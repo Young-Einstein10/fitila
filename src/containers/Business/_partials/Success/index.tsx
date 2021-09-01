@@ -5,6 +5,8 @@ import Styled from "styled-components";
 import { AdminSectionWrapper } from "../../../Admin/styled";
 import { Main } from "../../../AuthLayout/styled";
 import { BusinessContext } from "../../context";
+import { WithBusinessProvider } from "../..";
+import { Link } from "react-router-dom";
 
 const FooterStyled = Styled(Button)`
   color: ${({ theme }) => theme["dark-color"]};
@@ -36,8 +38,8 @@ const Success = () => {
               </p>
             </div>
 
-            <FooterStyled className="font-weight-700" type="link" href="/">
-              Go Back Home
+            <FooterStyled className="font-weight-700" type="link">
+              <Link to="/">Go Back Home</Link>
             </FooterStyled>
           </Col>
         </Row>
@@ -46,4 +48,4 @@ const Success = () => {
   );
 };
 
-export default Success;
+export default WithBusinessProvider(Success);

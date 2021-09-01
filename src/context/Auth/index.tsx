@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 import { useApiContext } from "../Api";
 import { AuthProps, ContextProps, IUserProps } from "./types";
 import { IUserData } from "../Api/auth";
+import { PageSpinner } from "../../components/pageSpinner";
 
 const AuthContext = createContext<ContextProps | undefined>(undefined);
 
@@ -107,7 +108,7 @@ const AuthProvider: FC = ({ children }) => {
   };
 
   if (isLoading) {
-    return <h3>Loading...</h3>;
+    return <PageSpinner />;
   }
 
   return (

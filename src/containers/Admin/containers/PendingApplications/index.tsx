@@ -191,14 +191,13 @@ const PendingApplications = () => {
       title: "Funding (₦)",
       dataIndex: "funding",
       key: "funding",
-
+      align: "center",
       render: (record, key) => {
-        // console.log(key);
         // let result = record ? record.split("₦") : [];
 
         return (
           // <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
-          <span>{numberWithCommas(record)}</span>
+          <span>{key.is_ecosystem ? "N/A" : numberWithCommas(record)}</span>
         );
       },
     },
@@ -206,7 +205,6 @@ const PendingApplications = () => {
       title: "Actions",
       key: "action",
       align: "center",
-
       render: (record, key) => {
         return (
           <Space size="middle">

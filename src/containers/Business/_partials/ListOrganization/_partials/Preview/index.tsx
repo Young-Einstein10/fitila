@@ -244,12 +244,15 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           </p>
         )}
 
-        <p>
-          <strong>Website Address:</strong>
-          <br />
-          {website}
-        </p>
-
+        {website && (
+          <p>
+            <strong>Website Address:</strong>
+            <br />
+            <a href={website} target="_blank" rel="noreferrer noopener">
+              {website}
+            </a>
+          </p>
+        )}
         <p>
           <strong>Email Address:</strong>
           <br />
@@ -274,7 +277,9 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           <p>
             <strong>LinkedIn Url:</strong>
             <br />
-            {linkedin}
+            <a href={linkedin} target="_blank" rel="noreferrer noopener">
+              {linkedin}
+            </a>
           </p>
         )}
 
@@ -282,7 +287,9 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           <p>
             <strong>Instagram Url:</strong>
             <br />
-            {instagram}
+            <a href={instagram} target="_blank" rel="noreferrer noopener">
+              {instagram}
+            </a>
           </p>
         )}
 
@@ -290,7 +297,9 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           <p>
             <strong>Twitter Url:</strong>
             <br />
-            {twitter}
+            <a href={twitter} target="_blank" rel="noreferrer noopener">
+              {twitter}
+            </a>
           </p>
         )}
 
