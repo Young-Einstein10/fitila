@@ -229,7 +229,15 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
         </Form.Item>
       )}
 
-      <Form.Item name="description">
+      <Form.Item
+        name="description"
+        rules={[
+          {
+            message: "please enter company description!",
+            required: true,
+          },
+        ]}
+      >
         <InputStyled.TextArea placeholder="Organization Description" />
       </Form.Item>
 

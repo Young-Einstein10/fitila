@@ -31,7 +31,6 @@ const ViewOrganizationModal: FC<IViewProps> = ({
     phone,
     num_supported_business,
     is_ecosystem,
-    is_startup,
     ecosystem_name,
     sub_ecosystem_name,
     sub_ecosystem_sub_class_name,
@@ -78,10 +77,6 @@ const ViewOrganizationModal: FC<IViewProps> = ({
 
         <p>
           <strong>Phone</strong> {phone || "--"}
-        </p>
-
-        <p>
-          <strong>Startup</strong>: {is_startup ? "Yes" : "No"}
         </p>
 
         {currentOrganization.is_ecosystem && (

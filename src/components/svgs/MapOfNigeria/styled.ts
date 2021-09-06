@@ -13,17 +13,53 @@ export const SVGWrapper = styled.div`
   }
 
   path {
-    fill: #034839;
+    fill: #e0e3e5; //#c2c7cc
     outline: none;
-    stroke: rgb(1, 29, 24);
-    transition: all 0.5s ease-in-out;
+    stroke: #5f6772;
+    stroke-width: 0.5;
+    transition: all 0.2s ease-in-out;
     cursor: pointer;
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    animation: dash 5s linear alternate infinite;
+    /* stroke-dasharray: 1000;
+    stroke-dashoffset: 1000; */
+    /* animation: dash 5s linear alternate infinite; */
 
-    :hover {
+    /* :hover {
       fill: #012d27;
+    } */
+
+    &.lowest {
+      :hover {
+        fill: #cb7676;
+        stroke: #df2020;
+      }
+    }
+
+    &.low {
+      :hover {
+        fill: #edcaa6;
+        stroke: #d07e2a;
+      }
+    }
+
+    &.average {
+      :hover {
+        fill: #eee7b0;
+        stroke: #938620;
+      }
+    }
+
+    &.high {
+      :hover {
+        fill: #c8e9e3;
+        stroke: #369494;
+      }
+    }
+
+    &.highest {
+      :hover {
+        fill: #65b6a6;
+        stroke: #458c7e;
+      }
     }
   }
 
@@ -36,7 +72,7 @@ export const SVGWrapper = styled.div`
     }
   }
 
-  .NG-RI {
+  /* .NG-RI {
     fill: #ffcc5c;
   }
 
@@ -57,7 +93,7 @@ export const SVGWrapper = styled.div`
 
   .NG-ED {
     fill: #ffeead;
-  }
+  } */
 
   #tooltip {
     position: absolute;

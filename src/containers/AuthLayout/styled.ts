@@ -1,8 +1,8 @@
 import Styled from "styled-components";
 
-const Main = Styled.div<{ background?: string }>`
+const Main = Styled.div<{ background?: string; padding?: string }>`
     /* padding: 0px 30px 20px; */
-    padding: 1.3rem;
+    padding: ${({ padding }) => (padding ? padding : "1.3rem")};
     min-height: 600px;
     /* background-color: ${({ background }) =>
       background ? background : "#FAFAFA"}; */

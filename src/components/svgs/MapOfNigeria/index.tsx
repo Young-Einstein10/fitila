@@ -1,9 +1,8 @@
-import React, { FC, useRef } from "react";
+import React, { FC, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import { IOrganizationProps } from "../../../context/Organization/types";
 import numberWithCommas from "../../../utils/numberFormatter";
-
 import { SVGWrapper } from "./styled";
 
 type IMapProps = {
@@ -16,10 +15,59 @@ type IMapProps = {
   }[];
 };
 
+const ranges = {
+  lowest: [0, 20],
+  low: [21, 50],
+  average: [51, 120],
+  high: [121, 250],
+  highest: [251, "*"],
+};
+
+function getClassName(numOfOrganizations?: number) {
+  let className = "";
+  for (const key in ranges) {
+    let [min, max] = ranges[key];
+
+    if (typeof max === "string") {
+      if (numOfOrganizations >= min) {
+        return (className = key);
+      }
+    }
+
+    if (numOfOrganizations >= min && numOfOrganizations <= max) {
+      return (className = key);
+    }
+  }
+
+  return className;
+}
+
 export const MapOfNigeria: FC<IMapProps> = ({ statesData }) => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<SVGSVGElement>();
 
   const history = useHistory();
+
+  useEffect(() => {
+    const svgCanvas = ref.current;
+
+    svgCanvas.childNodes.forEach((path: SVGPathElement) => {
+      const state = path.dataset["tip"];
+
+      const currentState = statesData.find(
+        ({ name }) => name.toLowerCase() === state.toLowerCase()
+      );
+
+      console.log({ currentState });
+
+      if (currentState) {
+        const c_name = getClassName(Number(currentState.numOfOrganizations));
+
+        path.classList.add(c_name);
+      } else {
+        path.classList.add("lowest");
+      }
+    });
+  }, [statesData]);
 
   const handleMouseOver = (e: React.MouseEvent<SVGPathElement, MouseEvent>) => {
     // const state = e.target["id"].toLowerCase();
@@ -49,7 +97,12 @@ export const MapOfNigeria: FC<IMapProps> = ({ statesData }) => {
   return (
     <SVGWrapper>
       {/* 0 0 1034 918 */}
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 0 1034 618 ">
+      <svg
+        id="svg-canvas"
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="-150 0 1034 618 "
+      >
         <path
           // onMouseOut={handleMouseOut}
           // onMouseOver={handleMouseOver}
@@ -390,8 +443,6 @@ export const MapOfNigeria: FC<IMapProps> = ({ statesData }) => {
           className="NG-ZA"
         />
       </svg>
-
-      <div ref={ref} id="tooltip"></div>
 
       <ReactTooltip
         id="tooltip-data"

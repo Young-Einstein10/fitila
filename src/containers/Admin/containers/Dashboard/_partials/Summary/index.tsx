@@ -33,6 +33,17 @@ const CardStyled = styled(Card)`
       margin-bottom: 0;
     }
   }
+
+  &.long {
+    .title {
+      margin-bottom: 0;
+    }
+    .content {
+      p {
+        font-size: 43px;
+      }
+    }
+  }
 `;
 
 const Summary = () => {
@@ -100,8 +111,11 @@ const Summary = () => {
       </Col>
 
       <Col xs={24} sm={12} md={8} lg={8}>
-        <CardStyled>
-          <p className="title">Number of Female Founders</p>
+        <CardStyled className="long">
+          <p className="title long-title">
+            Businesses Supported Over The Last 5 Years By Enterprise Support
+            Organizations
+          </p>
 
           <div className="content">
             <p>{numOfFemaleFounders}</p>
@@ -111,8 +125,10 @@ const Summary = () => {
       </Col>
 
       <Col xs={24} sm={12} md={8} lg={8}>
-        <CardStyled>
-          <p className="title">Funding disbursed for Support Organizations</p>
+        <CardStyled className="long">
+          <p className="title">
+            Funding disbursed by Enterpreneurship Support Organizations
+          </p>
 
           <div className="content">
             <p>₦{numberWithCommas(totalFundingDisbursedForSupport) || 0}</p>

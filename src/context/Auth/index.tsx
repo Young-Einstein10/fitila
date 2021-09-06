@@ -21,62 +21,63 @@ const AuthProvider: FC = ({ children }) => {
 
   const userData = localStorage.getItem("userData");
 
-  useEffect(() => {
-    const checkAuthState = async () => {
-      const isSignedIn = async () => {
-        if (userData) {
-          const authData = JSON.parse(userData) as IUserProps;
-          const { access, refresh } = authData;
+  const checkAuthState = async () => {
+    const isSignedIn = async () => {
+      if (userData) {
+        const authData = JSON.parse(userData) as IUserProps;
+        const { access, refresh } = authData;
 
-          try {
-            const accessToken = jwt_decode(access) as any;
-            const refreshToken = jwt_decode(refresh) as any;
+        try {
+          const accessToken = jwt_decode(access) as any;
+          const refreshToken = jwt_decode(refresh) as any;
 
-            // console.log({ access: accessToken, refresh: jwt_decode(refresh) });
+          // console.log({ access: accessToken, refresh: jwt_decode(refresh) });
 
-            if (accessToken.exp < new Date().getTime() / 1000) {
-              setIsLoading(true);
+          if (accessToken.exp < new Date().getTime() / 1000) {
+            setIsLoading(true);
 
-              // Get New access token using refresh token and save update value in local storage
-              const { data } = await api.refreshToken(refresh);
+            // Get New access token using refresh token and save update value in local storage
+            const { data } = await api.refreshToken(refresh);
 
-              localStorage.setItem(
-                "userData",
-                JSON.stringify({ ...authData, access: data.access })
-              );
+            localStorage.setItem(
+              "userData",
+              JSON.stringify({ ...authData, access: data.access })
+            );
 
-              setIsLoading(false);
-              return true;
-            }
-
-            if (refreshToken.exp < new Date().getTime() / 1000) {
-              return false;
-            }
-          } catch (error) {
-            return false;
+            setIsLoading(false);
+            return true;
           }
 
-          return true;
+          if (refreshToken.exp < new Date().getTime() / 1000) {
+            return false;
+          }
+        } catch (error) {
+          return false;
         }
-        return false;
-      };
 
-      const isLoggedIn = await isSignedIn();
-
-      if (isLoggedIn) {
-        const userDetails = JSON.parse(userData!) as IUserProps;
-
-        setApiHeaders(userDetails.access);
-
-        setAuth({
-          isAuthenticated: true,
-          user: userDetails,
-        });
+        return true;
       }
+      return false;
     };
 
-    checkAuthState();
-  }, [userData, api, setApiHeaders]);
+    const isLoggedIn = await isSignedIn();
+
+    if (isLoggedIn) {
+      const userDetails = JSON.parse(userData!) as IUserProps;
+
+      setApiHeaders(userDetails.access);
+
+      setAuth({
+        isAuthenticated: true,
+        user: userDetails,
+      });
+    }
+  };
+
+  useEffect(() => {
+    // checkAuthState();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const login = async (userData: { email: string; password: string }) => {
     try {

@@ -41,8 +41,8 @@ const MSMEsChart = props => {
   );
 
   const funding = [
-    { name: "MSMEs", funding: msmesFunding },
-    { name: "Startups", funding: startupFunding },
+    { name: "MSMEs", funding: 300 },
+    { name: "Startups", funding: 200 },
   ];
 
   const chartLabels = funding.map(sector => sector.name);
@@ -68,7 +68,7 @@ const MSMEsChart = props => {
   return (
     <Cards
       loading={isSectorLoading || isLoading}
-      title="Funding by MSMEs and Startups"
+      title="Funding raised by MSMEs and Startups"
       size="large"
     >
       <div className="sector-funding-chart">

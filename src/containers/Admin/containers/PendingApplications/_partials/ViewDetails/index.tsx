@@ -40,7 +40,6 @@ const ViewDetails: FC<IViewDetailsProps> = ({
     phone,
     num_supported_business,
     is_ecosystem,
-    is_startup,
     ecosystem_name,
     sub_ecosystem_name,
     sub_ecosystem_sub_class_name,
@@ -138,10 +137,6 @@ const ViewDetails: FC<IViewDetailsProps> = ({
           <strong>Phone</strong> {phone || "--"}
         </p>
 
-        <p>
-          <strong>Startup</strong>: {is_startup ? "Yes" : "No"}
-        </p>
-
         {currentListing.is_ecosystem && (
           <>
             {" "}
@@ -176,7 +171,8 @@ const ViewDetails: FC<IViewDetailsProps> = ({
         )}
 
         <p>
-          <strong>Company Valuation</strong>: {company_valuation || "--"}
+          <strong>Company Valuation</strong>:{" "}
+          {numberWithCommas(company_valuation) || "--"}
         </p>
 
         <p>
@@ -194,13 +190,15 @@ const ViewDetails: FC<IViewDetailsProps> = ({
 
         <p>
           <strong>Funding (₦)</strong>:{" "}
-          {is_ecosystem ? "N/A" : numberWithCommas(funding)}
+          {is_ecosystem ? "N/A" : funding && numberWithCommas(funding)}
         </p>
 
         {currentListing.is_ecosystem && (
           <p>
             <strong>Funding Disbursed for Support Businesses</strong>:{" "}
-            {funding_disbursed_for_support || "--"}
+            {(funding_disbursed_for_support &&
+              numberWithCommas(funding_disbursed_for_support)) ||
+              "--"}
           </p>
         )}
 

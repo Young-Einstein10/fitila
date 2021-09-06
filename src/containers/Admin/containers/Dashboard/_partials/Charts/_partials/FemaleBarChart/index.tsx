@@ -112,30 +112,30 @@ FemaleBarChart.defaultProps = {
       },
     },
     scales: {
-      yAxes: [
-        {
-          stacked: true,
-          // gridLines: {
-          //   display: false,
-          // },
-          // ticks: {
-          //   display: false,
-          // },
-          gridLines: {
-            color: "#e5e9f2",
-          },
-          ticks: {
-            beginAtZero: true,
-            fontSize: 13,
-            fontColor: "#182b49",
-            max: 400,
-            stepSize: 50,
-            callback(value, index, values) {
-              return `${value}`;
-            },
-          },
-        },
-      ],
+      // yAxes: [
+      //   {
+      //     stacked: true,
+      //     // gridLines: {
+      //     //   display: false,
+      //     // },
+      //     // ticks: {
+      //     //   display: false,
+      //     // },
+      //     gridLines: {
+      //       color: "#e5e9f2",
+      //     },
+      //     ticks: {
+      //       beginAtZero: true,
+      //       fontSize: 13,
+      //       fontColor: "#182b49",
+      //       max: 400,
+      //       stepSize: 50,
+      //       callback(value, index, values) {
+      //         return `${value}`;
+      //       },
+      //     },
+      //   },
+      // ],
       xAxes: [
         {
           stacked: true,

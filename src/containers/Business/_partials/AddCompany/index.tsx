@@ -20,8 +20,8 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
   const { state, setState } = useContext(BusinessContext);
 
   return (
-    <AdminSectionWrapper className="section-add-business" background="#fff">
-      <Main background="#fff">
+    <AdminSectionWrapper className="section-add-business">
+      <Main padding="4rem 1.3rem">
         <Row
           className="add_company_container"
           style={{ justifyContent: "center", paddingTop: "3rem" }}
@@ -45,7 +45,7 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
                 </p>
               </div>
 
-              <Row>
+              <Row style={{ margin: "3rem 0 1rem" }}>
                 <ColStyled span={12} className="text-center">
                   <Tooltip
                     title="You are currently running a registered business"
@@ -100,6 +100,7 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
                       )}
                     </SpanStyled>
                   </Tooltip>
+
                   <span style={{ marginTop: "15px" }}>
                     I am an Ecosystem Player
                   </span>
@@ -107,6 +108,7 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
               </Row>
 
               <ButtonStyled
+                marginBottom="2rem"
                 className="continue-btn"
                 onClick={() => history.push("/business/listorg", { ...state })}
                 size="large"
@@ -115,12 +117,12 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
               >
                 Continue
               </ButtonStyled>
-            </StyledCard>
 
-            <SpanFooter>
-              By Clicking “continue” you agree to our Terms and Conditions an
-              Privacy policy.
-            </SpanFooter>
+              <SpanFooter>
+                By Clicking “continue” you agree to our Terms and Conditions an
+                Privacy policy.
+              </SpanFooter>
+            </StyledCard>
           </MainColStyled>
         </Row>
       </Main>

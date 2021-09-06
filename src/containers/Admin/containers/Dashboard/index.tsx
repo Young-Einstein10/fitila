@@ -39,10 +39,6 @@ const Dashboard: FC<RouteComponentProps> = () => {
     };
   });
 
-  console.log({
-    startupOrganizations: organizations.filter(org => org.is_startup),
-  });
-
   return (
     <AdminSectionWrapper className="dashboard">
       <PageHeader

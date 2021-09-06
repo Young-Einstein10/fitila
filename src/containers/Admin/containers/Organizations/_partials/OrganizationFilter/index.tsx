@@ -169,8 +169,12 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
         </p>
       </div>
 
-      <Row gutter={[16, 8]} style={{ padding: "0 1.3rem 1.3rem" }}>
-        <Col style={{ marginBottom: "0" }} span={24}>
+      <Row
+        gutter={[16, 8]}
+        className="m-0"
+        style={{ padding: "0 1.3rem 1.3rem", margin: 0 }}
+      >
+        <Col span={24} className="p-0">
           <Form
             layout="vertical"
             initialValues={{
@@ -227,47 +231,6 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                   </SelectStyled>
                 </FormItem>
               </Col>
-
-              {/* {state && (
-                <Col
-                  style={{ marginBottom: "0" }}
-                  xs={24}
-                  sm={24}
-                  md={12}
-                  lg={6}
-                >
-                  <FormItem style={{ marginBottom: 0 }} name="segment_filter">
-                    <SelectStyled
-                      suffixIcon={<ArrowDown />}
-                      showSearch
-                      placeholder={
-                        <span>
-                          <FilterOutlined style={{ marginRight: "1.5rem" }} />
-                          Filter By Segments
-                        </span>
-                      }
-                      optionFilterProp="children"
-                      onSelect={(val: string) => {
-                        setFilter("state");
-
-                        filterOrganizations(val, "state");
-                      }}
-                      filterOption={(input, option) =>
-                        option.value
-                          .toLowerCase()
-                          .indexOf(input.toLowerCase()) >= 0
-                      }
-                      disabled={isOrganizationLoading}
-                    >
-                      {states.map((state, key) => (
-                        <Option key={key} value={state}>
-                          {state}
-                        </Option>
-                      ))}
-                    </SelectStyled>
-                  </FormItem>
-                </Col>
-              )} */}
 
               <Col style={{ marginBottom: 0 }} xs={24} sm={24} md={12} lg={6}>
                 <FormItem style={{ marginBottom: 0 }} name="sector_filter">

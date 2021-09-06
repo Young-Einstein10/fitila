@@ -57,11 +57,13 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
     linkedin,
     twitter,
     cac_doc,
-    is_startup,
   } = state;
 
   const { data: ecosystemData } = useEcosystemContext();
   const { data: sectors } = useSectorContext();
+
+  const is_startup =
+    business_level && business_level.toLowerCase() === "startup";
 
   useEffect(() => {
     const getEcosystem = () => {
@@ -209,14 +211,6 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           </p>
         )}
 
-        {business_type === "Enterpreneur" && (
-          <p>
-            <strong>Are You A Startup:</strong>
-            <br />
-            {is_startup ? "Yes" : "No"}
-          </p>
-        )}
-
         {business_type === "Enterpreneur" && is_startup && company_valuation && (
           <p>
             <strong>Company Valuation:</strong>
@@ -269,7 +263,9 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           <p>
             <strong>Facebook Url:</strong>
             <br />
-            {facebook}
+            <a href={facebook} target="_blank" rel="noreferrer noopener">
+              {facebook}
+            </a>
           </p>
         )}
 

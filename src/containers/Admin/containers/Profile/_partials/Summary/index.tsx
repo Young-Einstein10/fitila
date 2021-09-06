@@ -136,73 +136,6 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
               }
             >
               <RowStyled>
-                {/* <div>
-                    <span>Business Level</span>
-                    <span>
-                      {(selectedOrganization[0] &&
-                        selectedOrganization[0].business_level) ||
-                        "--"}
-                    </span>
-                  </div>
-
-                  <div>
-                    <span>Funding</span>
-                    <span>
-                      {(selectedOrganization[0] &&
-                        selectedOrganization[0].funding) ||
-                        "--"}
-                    </span>
-                  </div>
-
-                  <div>
-                    <span>Startup</span>
-                    <span>
-                      {(selectedOrganization[0] &&
-                        selectedOrganization[0].is_startup) ||
-                        "--"}
-                    </span>
-                  </div>
-
-                  <div>
-                    <span>Number of Supported Businesses</span>
-                    <span>
-                      {(selectedOrganization[0] &&
-                        selectedOrganization[0].num_supported_business) ||
-                        "--"}
-                    </span>
-                  </div>
-
-                  <div>
-                    <span>Sector</span>
-                    <span>
-                      {(selectedOrganization[0] &&
-                        selectedOrganization[0].sector_name) ||
-                        "--"}
-                    </span>
-                  </div>
-
-                  <div>
-                    <span>Employees</span>
-                    <span>
-                      {(selectedOrganization[0] &&
-                        selectedOrganization[0].num_of_employees) ||
-                        "--"}
-                    </span>
-                  </div>
-
-                  <div>
-                    <span>State</span>
-                    <span>
-                      {(selectedOrganization[0] &&
-                        selectedOrganization[0].state) ||
-                        "--"}
-                    </span>
-                  </div>
-
-                  <div>
-                    <span>Headquarters</span>
-                    <span>Nigeria</span>
-                  </div> */}
                 <Col className="profile-summary-data" span={12}>
                   <p>
                     <strong>Company</strong>: {name || "--"}
@@ -224,10 +157,6 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
 
                   <p>
                     <strong>Phone</strong> {phone || "--"}
-                  </p>
-
-                  <p>
-                    <strong>Startup</strong>: {is_startup ? "Yes" : "No"}
                   </p>
 
                   {is_ecosystem && (
@@ -267,7 +196,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
 
                   <p>
                     <strong>Company Valuation</strong>:{" "}
-                    {company_valuation || "--"}
+                    {numberWithCommas(company_valuation) || "--"}
                   </p>
                 </Col>
 

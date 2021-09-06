@@ -51,9 +51,10 @@ const InputNumberStyled = styled(InputNumber)`
   }
 `;
 
-const ButtonStyled = styled(Button)`
+const ButtonStyled = styled(Button)<{ marginBottom?: string }>`
   width: 100%;
   margin-top: 1.5rem;
+  margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : 0)};
 `;
 
 const SectionWrapper = styled.div`

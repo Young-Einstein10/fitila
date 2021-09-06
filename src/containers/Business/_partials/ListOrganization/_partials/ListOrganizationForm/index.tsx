@@ -84,13 +84,16 @@ const ListOrganizationForm = ({ next }) => {
     //   history.push("/business");
     // }
 
-    if (state.is_startup) {
-      setIs_Startup(state.is_startup);
+    if (
+      state.business_level &&
+      state.business_level.toLowerCase() === "startup"
+    ) {
+      setIs_Startup(true);
     }
   }, [
     state.business_type,
     state.ecosystem_name,
-    state.is_startup,
+    state.business_level,
     ecosystem,
     history,
   ]);
@@ -157,7 +160,7 @@ const ListOrganizationForm = ({ next }) => {
         userData = {
           ...state,
           ...values,
-          is_startup: is_startUp,
+          // is_startup: is_startUp,
           funding_disbursed_for_support: values.funding_disbursed_support
             ? values.funding_disbursed_support
             : 0,
@@ -179,7 +182,7 @@ const ListOrganizationForm = ({ next }) => {
         userData = {
           ...state,
           ...values,
-          is_startup: is_startUp,
+          // is_startup: is_startUp,
           is_ecosystem:
             state.business_type === "Ecosystem Enabler" ? true : false,
           is_entrepreneur:
@@ -222,7 +225,6 @@ const ListOrganizationForm = ({ next }) => {
       scrollToFirstError
       initialValues={{
         ...state,
-        is_startUp: is_startUp ? "Yes" : "No",
         currency: state.currency || "₦",
         currency_value: state.currency_value,
         funding_disbursed_currency: "₦",
@@ -532,6 +534,13 @@ const ListOrganizationForm = ({ next }) => {
           <Select
             placeholder="Business Level"
             showSearch
+            onChange={value => {
+              if (value.toString().toLowerCase() === "startup") {
+                setIs_Startup(true);
+              } else {
+                setIs_Startup(false);
+              }
+            }}
             optionFilterProp="children"
             filterOption={(input, option) =>
               option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -550,38 +559,20 @@ const ListOrganizationForm = ({ next }) => {
       )}
       {/* BUSINESS LEVEL */}
 
-      {/* ARE YOU A STARTUP */}
-      {state.business_type === "Enterpreneur" && (
-        <Form.Item
-          name="is_startup"
-          rules={[
-            {
-              message: "Please select an option!",
-              required: true,
-            },
-          ]}
-        >
-          <Select
-            onChange={e => {
-              if (e === "Yes") {
-                setIs_Startup(true);
-              } else {
-                setIs_Startup(false);
-              }
-            }}
-            placeholder={
-              <Tooltip title="High-growth young business typically 0 - 5 years old">
-                <span>Are You A StartUp</span>
-              </Tooltip>
-            }
-            allowClear
-          >
-            <Option value="Yes">Yes</Option>
-            <Option value="No">No</Option>
-          </Select>
-        </Form.Item>
-      )}
-      {/* ARE YOU A STARTUP */}
+      {/* NUMBER OF JOBS CREATED */}
+      <Form.Item
+        name="num_of_jobs_created"
+        rules={[
+          { type: "number", message: "Only numbers are allowed" },
+          {
+            message: "Please input the number of jobs created so far!",
+            required: true,
+          },
+        ]}
+      >
+        <InputNumberStyled placeholder="Number of jobs created" size="large" />
+      </Form.Item>
+      {/* NUMBER OF JOBS CREATED */}
 
       {/* COMPANY VALUATION */}
       {state.business_type === "Enterpreneur" && is_startUp && (

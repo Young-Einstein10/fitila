@@ -87,7 +87,7 @@ const LineChart: FC<ILineChartProps> = props => {
   return (
     <Cards
       loading={isLoading || isOrgLoading || isChartLoading}
-      title="Funding by Sector"
+      title="Funding raised by Entrepreneurs in various sectors"
       size="large"
     >
       <ChartContainer className="parentContainer">
