@@ -229,6 +229,7 @@ const Div = styled.div`
       .ant-menu {
         overflow-x: hidden;
         border-right: 0 none;
+        background-color: none;
 
         .ant-menu-submenu,
         .ant-menu-item {
@@ -311,7 +312,7 @@ const Div = styled.div`
             }
           }
           .ant-menu-item {
-            padding-left: 50px !important;
+            padding-left: 30px !important;
             padding-right: 0 !important;
             transition: all 0.2s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
           }

@@ -3,7 +3,7 @@ import styled from "styled-components";
 const H1 = styled.h1`
   font-size: ${props => props.fontSize || "48px"};
   font-weight: ${props => props.fontWeight || "600"};
-  line-height: 38px;
+  line-height: ${props => props.lineHeight || "38px"};
 
   ${props =>
     props.margin &&
@@ -15,7 +15,7 @@ const H1 = styled.h1`
 const H2 = styled.h1`
   font-size: ${props => props.fontSize || "24px"};
   font-weight: ${props => props.fontWeight || "600"};
-  line-height: 30px;
+  line-height: ${props => props.lineHeight || "30px"};
 
   ${props =>
     props.margin &&
@@ -27,7 +27,7 @@ const H2 = styled.h1`
 const H3 = styled.h1`
   font-size: ${props => props.fontSize || "22px"};
   font-weight: ${props => props.fontWeight || "600"};
-  line-height: 27px;
+  line-height: ${props => props.lineHeight || "27px"};
 
   ${props =>
     props.margin &&
@@ -39,7 +39,7 @@ const H3 = styled.h1`
 const H4 = styled.h1`
   font-size: ${props => props.fontSize || "20px"};
   font-weight: ${props => props.fontWeight || "600"};
-  line-height: 24px;
+  line-height: ${props => props.lineHeight || "24px"};
 
   ${props =>
     props.margin &&
@@ -51,7 +51,7 @@ const H4 = styled.h1`
 const H5 = styled.h1`
   font-size: ${props => props.fontSize || "18px"};
   font-weight: ${props => props.fontWeight || "600"};
-  line-height: 22px;
+  line-height: ${props => props.lineHeight || "22px"};
 
   ${props =>
     props.margin &&
@@ -63,7 +63,7 @@ const H5 = styled.h1`
 const H6 = styled.h1`
   font-size: ${props => props.fontSize || "16px"};
   font-weight: ${props => props.fontWeight || "600"};
-  line-height: 20px;
+  line-height: ${props => props.lineHeight || "20px"};
 
   ${props =>
     props.margin &&

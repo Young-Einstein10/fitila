@@ -37,8 +37,8 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
     // headquarters,
     ceo_name,
     ceo_gender,
-    // ceo_image,
-    // company_logo,
+    ceo_image,
+    company_logo,
     address,
     sector,
     business_level,
@@ -128,7 +128,7 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
   };
 
   const ceo_name_label =
-    state.business_type === "Enterpreneur"
+    state.business_type === "Entrepreneur"
       ? "CEO/Founder's Name"
       : "CEO/DG/Head/Founder's Name";
 
@@ -203,7 +203,7 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           </p>
         }
 
-        {business_type === "Enterpreneur" && (
+        {business_type === "Entrepreneur" && (
           <p>
             <strong>Business Level:</strong>
             <br />
@@ -211,12 +211,12 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           </p>
         )}
 
-        {business_type === "Enterpreneur" && is_startup && company_valuation && (
+        {business_type === "Entrepreneur" && is_startup && company_valuation && (
           <p>
             <strong>Company Valuation:</strong>
             <br />
             {currency}
-            {numberWithCommas(currency_value)}
+            {numberWithCommas(company_valuation)}
           </p>
         )}
 
@@ -300,6 +300,21 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
         )}
 
         {/* Add Image Upload Previews Here */}
+        {company_logo && (
+          <p>
+            <strong>Company Logo:</strong>
+            <br />
+            {company_logo.name}
+          </p>
+        )}
+
+        {ceo_image && (
+          <p>
+            <strong>CEO/Founder Image:</strong>
+            <br />
+            {ceo_image.name}
+          </p>
+        )}
 
         <p>
           <strong>Business RC Number:</strong>

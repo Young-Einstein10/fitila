@@ -176,7 +176,7 @@ const ListOrganizationForm = ({ next }) => {
           is_ecosystem:
             state.business_type === "Ecosystem Enabler" ? true : false,
           is_entrepreneur:
-            state.business_type === "Enterpreneur" ? true : false,
+            state.business_type === "Entrepreneur" ? true : false,
         };
       } else {
         userData = {
@@ -186,15 +186,15 @@ const ListOrganizationForm = ({ next }) => {
           is_ecosystem:
             state.business_type === "Ecosystem Enabler" ? true : false,
           is_entrepreneur:
-            state.business_type === "Enterpreneur" ? true : false,
+            state.business_type === "Entrepreneur" ? true : false,
         };
       }
 
-      if (values.currency_vaue) {
-        userData.company_valuation = values.currency_value;
-      }
+      // if (values.currency_vaue) {
+      //   userData.company_valuation = values.currency_value;
+      // }
 
-      console.log(userData);
+      console.log({ userData });
 
       setState(userData);
       // Move to Next Step
@@ -212,7 +212,7 @@ const ListOrganizationForm = ({ next }) => {
   };
 
   const ceo_name_label =
-    state.business_type === "Enterpreneur"
+    state.business_type === "Entrepreneur"
       ? "CEO/Founder's Name"
       : "CEO/DG/Head/Founder's Name";
 
@@ -226,7 +226,7 @@ const ListOrganizationForm = ({ next }) => {
       initialValues={{
         ...state,
         currency: state.currency || "₦",
-        currency_value: state.currency_value,
+        // currency_value: state.currency_value,
         funding_disbursed_currency: "₦",
         num_supported_business_custom: state.num_supported_business,
         ecosystem: state.ecosystem_name,
@@ -279,32 +279,16 @@ const ListOrganizationForm = ({ next }) => {
       </Form.Item>
       {/* CEO/FOUNDER's NAME */}
 
-      {/* HEADQUARTERS */}
-      {/* <Form.Item
-        name="head_quarters"
-        rules={[
-          {
-            message: "Please input your headquarters",
-            required: true,
-          },
-        ]}
-      >
-        <InputStyled placeholder="CEO/Founder's Name" />
-      </Form.Item> */}
-      {/* HEADQUARTERS */}
-
       {/* ADDRESS */}
       <Form.Item
         name="address"
         rules={[
           {
-            message: "please input your address!",
+            message: "please input orrganization address!",
             required: true,
           },
         ]}
       >
-        {/* <InputStyled placeholder="Address" /> */}
-
         <AutoCompleteStyled
           size="large"
           placeholder="Enter an Address"
@@ -521,7 +505,7 @@ const ListOrganizationForm = ({ next }) => {
       {/* BUSINESS SECTOR */}
 
       {/* BUSINESS LEVEL */}
-      {state.business_type === "Enterpreneur" && (
+      {state.business_type === "Entrepreneur" && (
         <Form.Item
           name="business_level"
           rules={[
@@ -559,25 +543,10 @@ const ListOrganizationForm = ({ next }) => {
       )}
       {/* BUSINESS LEVEL */}
 
-      {/* NUMBER OF JOBS CREATED */}
-      <Form.Item
-        name="num_of_jobs_created"
-        rules={[
-          { type: "number", message: "Only numbers are allowed" },
-          {
-            message: "Please input the number of jobs created so far!",
-            required: true,
-          },
-        ]}
-      >
-        <InputNumberStyled placeholder="Number of jobs created" size="large" />
-      </Form.Item>
-      {/* NUMBER OF JOBS CREATED */}
-
       {/* COMPANY VALUATION */}
-      {state.business_type === "Enterpreneur" && is_startUp && (
-        <Form.Item name="company_valuation">
-          <InputGroup compact style={{ display: "flex" }}>
+      {state.business_type === "Entrepreneur" && is_startUp && (
+        <Form.Item>
+          <InputGroup className="d-flex" compact>
             <Form.Item name="currency">
               <Select>
                 <Option value="₦">₦</Option>
@@ -586,7 +555,7 @@ const ListOrganizationForm = ({ next }) => {
             </Form.Item>
 
             <Form.Item
-              name="currency_value"
+              name="company_valuation"
               style={{ width: "100%" }}
               rules={[
                 {
@@ -612,6 +581,26 @@ const ListOrganizationForm = ({ next }) => {
         </Form.Item>
       )}
       {/* COMPANY VALUATION */}
+
+      {/* NUMBER OF JOBS CREATED */}
+      {state.is_entrepreneur && (
+        <Form.Item
+          name="no_of_jobs"
+          rules={[
+            { type: "number", message: "Only numbers are allowed" },
+            {
+              message: "Please input the number of jobs created so far!",
+              required: true,
+            },
+          ]}
+        >
+          <InputNumberStyled
+            placeholder="Number of jobs created"
+            size="large"
+          />
+        </Form.Item>
+      )}
+      {/* NUMBER OF JOBS CREATED */}
 
       {/* NUMBER OF SUPPORTED BUSINESSES */}
       {state.business_type === "Ecosystem Enabler" && (

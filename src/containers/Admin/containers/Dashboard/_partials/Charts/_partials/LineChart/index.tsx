@@ -5,6 +5,7 @@ import {
   useOrganizationContext,
   useSectorContext,
 } from "../../../../../../../../context";
+import { capitalize } from "../../../../../../../../utils/helpers";
 import { abbreviateNumberShort } from "../../../../../../../../utils/numberAbbreviator";
 import { ChartContainer } from "../FemaleBarChart/styled";
 
@@ -17,6 +18,8 @@ interface ILineChartProps {
   options?: any;
   id?: string;
 }
+
+let chartDatasets = [];
 
 const LineChart: FC<ILineChartProps> = props => {
   const { datasets, options, height, layout, width } = props;
@@ -38,7 +41,7 @@ const LineChart: FC<ILineChartProps> = props => {
       );
 
       const totalFunding = organizationList.reduce(
-        (total, org) => Number(org.funding ? org.funding : 0) + total,
+        (total, org) => Number(org.funding ? org.funding : 10000) + total,
         0
       );
 
@@ -64,7 +67,7 @@ const LineChart: FC<ILineChartProps> = props => {
 
   const bgColor = new Array(sectorFundings.length).fill("#ddf4ff");
 
-  let chartDatasets = [
+  chartDatasets = [
     {
       data: [],
       backgroundColor: bgColor,
@@ -84,24 +87,65 @@ const LineChart: FC<ILineChartProps> = props => {
     datasets: chartDatasets || datasets,
   };
 
+  const scales = {
+    yAxes: [
+      {
+        gridLines: {
+          color: "#e5e9f2",
+          borderDash: [3, 3],
+          zeroLineColor: "#e5e9f2",
+          zeroLineWidth: 1,
+          zeroLineBorderDash: [3, 3],
+        },
+        ticks: {
+          beginAtZero: true,
+          max: Math.max(...chartDatasets[0].data),
+          stepSize: Math.max(...chartDatasets[0].data) / 5,
+          callback(value, index, values) {
+            const maxValue = Math.max(...values);
+
+            if (maxValue === value) {
+              return `₦${abbreviateNumberShort(value)}+`;
+            }
+
+            return `₦${abbreviateNumberShort(value)}`;
+          },
+        },
+      },
+    ],
+    xAxes: [
+      {
+        gridLines: {
+          display: false,
+        },
+      },
+    ],
+  };
+
+  console.log(data);
+
   return (
     <Cards
       loading={isLoading || isOrgLoading || isChartLoading}
-      title="Funding raised by Entrepreneurs in various sectors"
+      title={capitalize("Funding raised by Entrepreneurs in various sectors")}
       size="large"
     >
       <ChartContainer className="parentContainer">
         <Line
-          // id={id}
           width={width}
           data={data}
           height={height}
           options={{
             ...options,
             ...layout,
+            scales,
           }}
         />
       </ChartContainer>
+      {/* 
+      <div>
+        <p>This is the Legend Container</p>
+      </div> */}
     </Cards>
   );
 };
@@ -111,7 +155,6 @@ LineChart.defaultProps = {
   width: null,
   datasets: [
     {
-      // backgroundColor: bgColor,
       borderColor: "rgba(54, 162, 235, 1)", // 001737
       borderWidth: 1,
     },
@@ -122,10 +165,10 @@ LineChart.defaultProps = {
     maintainAspectRatio: false,
     layout: {
       padding: {
-        left: "10",
+        left: 0,
         right: 0,
         top: 0,
-        bottom: "10",
+        bottom: 0,
       },
     },
     legend: {
@@ -134,17 +177,43 @@ LineChart.defaultProps = {
         display: false,
       },
     },
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            callback(value, index, values) {
-              // return `${value}k`;
-              return `${abbreviateNumberShort(value)}`;
-            },
-          },
+    tooltips: {
+      mode: "label",
+      intersect: false,
+      backgroundColor: "#000",
+      position: "average",
+      // titleFontColor: "#5A5F7D",
+      titleFontSize: 13,
+      titleSpacing: 15,
+      // bodyFontColor: "#868EAE",
+      bodyFontSize: 12,
+      borderColor: "#050505",
+      borderWidth: 2,
+      bodySpacing: 15,
+      xPadding: 15,
+      yPadding: 15,
+      z: 999999,
+      custom(tooltip) {
+        if (!tooltip) return;
+        // disable displaying the color box;
+        tooltip.displayColors = false;
+      },
+      callbacks: {
+        title(ctx) {
+          const { label } = ctx[0];
+          return label;
         },
-      ],
+        label(t, d) {
+          const { value } = t;
+          return `₦${abbreviateNumberShort(Number(value))}`;
+        },
+        labelColor(tooltipItem, chart) {
+          return {
+            backgroundColor: "#000",
+            borderColor: "transparent",
+          };
+        },
+      },
     },
   },
 };

@@ -41,6 +41,7 @@ interface IOrganizationProps {
   is_active?: boolean;
   is_approved?: boolean;
   is_declined?: boolean;
+  responded?: boolean;
   date_created?: string;
   date_updated?: string
 }

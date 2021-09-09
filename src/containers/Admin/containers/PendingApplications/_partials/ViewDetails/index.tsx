@@ -8,7 +8,8 @@ import numberWithCommas from "../../../../../../utils/numberFormatter";
 interface IViewDetailsProps {
   visible: boolean;
   closeModal: () => void;
-  currentListing?: IOrganizationProps;
+  currentListing: IOrganizationProps;
+  toggleReasonModal: () => void;
   refetchPendingApplications: () => Promise<void>;
 }
 
@@ -16,10 +17,10 @@ const ViewDetails: FC<IViewDetailsProps> = ({
   visible,
   closeModal,
   currentListing,
+  toggleReasonModal,
   refetchPendingApplications,
 }) => {
   const [isApprovalLoading, setIsApprovalLoading] = useState(false);
-  const [isDeclineLoading, setIsDeclineLoading] = useState(false);
 
   const { organization: api } = useApiContext();
 
@@ -51,26 +52,6 @@ const ViewDetails: FC<IViewDetailsProps> = ({
     date_created,
   } = currentListing;
 
-  const handleDecline = async () => {
-    setIsDeclineLoading(true);
-
-    try {
-      const res = await api.declineOrganization(id);
-
-      if (res.status === 200) {
-        Modal.success({
-          title: "Organization has been declined.",
-        });
-        refetchPendingApplications();
-      }
-
-      setIsDeclineLoading(false);
-    } catch (error) {
-      console.log(error.message);
-      setIsDeclineLoading(false);
-    }
-  };
-
   const handleApproval = async () => {
     setIsApprovalLoading(true);
 
@@ -98,11 +79,7 @@ const ViewDetails: FC<IViewDetailsProps> = ({
       visible={visible}
       onCancel={closeModal}
       footer={[
-        <Button
-          key="declne"
-          loading={isDeclineLoading}
-          onClick={() => handleDecline()}
-        >
+        <Button key="decline" onClick={() => toggleReasonModal()}>
           Decline
         </Button>,
         <Button
@@ -248,7 +225,7 @@ const ViewDetails: FC<IViewDetailsProps> = ({
 
         <p>
           <strong>Date Listed</strong>:{" "}
-          {new Date(date_created).toLocaleString() || "--"}
+          {new Date(date_created).toJSON().split("T")[0] || "--"}
         </p>
       </div>
     </Modal>

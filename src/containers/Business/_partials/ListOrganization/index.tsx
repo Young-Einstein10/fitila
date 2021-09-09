@@ -82,13 +82,11 @@ const ListOrganization = () => {
                   as="h1"
                   fontWeight="bold"
                   fontSize="33px"
+                  lineHeight="45px"
                   margin="0 0 2rem 0"
                   className="text-center"
                 >
-                  List your{" "}
-                  {state.business_type === "Enterpreneur"
-                    ? "Business"
-                    : "Organization"}{" "}
+                  List your {state.business_type}
                   <br /> ({state.business_type})
                 </Heading>
 
@@ -100,8 +98,6 @@ const ListOrganization = () => {
               </div>
 
               {steps[current].content}
-
-              {/* <PlacesAutocomplete /> */}
             </StyledCard>
           </MainColStyled>
         </Row>

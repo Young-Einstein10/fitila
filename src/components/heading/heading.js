@@ -10,6 +10,7 @@ const Heading = props => {
     id,
     fontSize,
     fontWeight,
+    lineHeight,
     margin,
     style,
     ...rest
@@ -18,6 +19,7 @@ const Heading = props => {
 
   return (
     <StyledHeading
+      lineHeight={lineHeight}
       fontWeight={fontWeight}
       fontSize={fontSize}
       margin={margin}
@@ -47,6 +49,7 @@ Heading.propTypes = {
   style: PropTypes.object,
   fontSize: PropTypes.string,
   fontWeight: PropTypes.string,
+  lineHeight: PropTypes.string,
   margin: PropTypes.string,
 };
 

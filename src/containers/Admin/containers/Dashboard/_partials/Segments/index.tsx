@@ -133,7 +133,7 @@ const Segment: FC<RouteComponentProps> = () => {
 
   return (
     <AdminSectionWrapper className="ecosystem-segments">
-      <Row gutter={25}>
+      <Row>
         <Col span={24}>
           {isEcosystemLoading ? (
             <SpinnerStyled>

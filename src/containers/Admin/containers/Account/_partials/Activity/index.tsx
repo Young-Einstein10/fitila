@@ -6,12 +6,31 @@ import columns from "./functions";
 import ViewOrganizationModal from "./_partials/ViewOrganizationModal";
 import EditListedOrganization from "./_partials/EditListedOrganization";
 import { useOrganizationContext } from "../../../../../../context";
+import { IOrganizationProps } from "../../../../../../context/Organization/types";
 
 interface IActivityProps {
   isLoading: boolean;
   userData: IUserProfileProps;
   refetchUserProfile: () => Promise<void>;
 }
+
+const getOrganizationStatus = ({
+  is_approved,
+  is_declined,
+  responded,
+}: IOrganizationProps) => {
+  if (is_approved) {
+    return "Approved";
+  }
+
+  if (is_declined) {
+    return "Declined";
+  }
+
+  if (!responded) {
+    return "Pending";
+  }
+};
 
 const Activity: FC<IActivityProps> = ({
   isLoading,
@@ -49,7 +68,7 @@ const Activity: FC<IActivityProps> = ({
             ...org,
             key: filteredOrg.id,
             rank: key + 1,
-            status: org.is_approved ? "Approved" : "Declined",
+            status: getOrganizationStatus(org),
             company: filteredOrg.name,
             ceo_name: {
               name: filteredOrg.ceo_name,

@@ -160,7 +160,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
         <InputNumberStyled placeholder="Business RC Number" />
       </Form.Item>
 
-      <Form.Item
+      {/* <Form.Item
         name="num_of_employees"
         rules={[
           {
@@ -179,8 +179,8 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
           <Option value="201-300">50-100</Option>
           <Option value="301-400">100+</Option>
         </Select>
-      </Form.Item>
-
+      </Form.Item> */}
+      {/* 
       {num_of_employees_custom === "Above 1000" && (
         <Form.Item
           name="num_of_employees_custom"
@@ -193,9 +193,9 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
         >
           <InputStyled placeholder="Number of Employees" type="number" />
         </Form.Item>
-      )}
+      )} */}
 
-      {state.business_type === "Enterpreneur" && (
+      {state.business_type === "Entrepreneur" && (
         <Form.Item name="funding" style={{ marginBottom: 0 }}>
           <InputGroup compact style={{ display: "flex" }}>
             <Form.Item name="funding_currency">

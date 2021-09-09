@@ -14,11 +14,6 @@ interface ISummaryProps {
 }
 
 const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
-  const ceo_name_label =
-    selectedOrganization.length && selectedOrganization[0].is_entrepreneur
-      ? "CEO/Founder's Name"
-      : "CEO/DG/Head/Founder's Name";
-
   const {
     name,
     ceo_name,
@@ -36,7 +31,6 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
     num_supported_business,
     is_ecosystem,
     is_entrepreneur,
-    is_startup,
     ecosystem_name,
     sub_ecosystem_name,
     sub_ecosystem_sub_class_name,
@@ -47,6 +41,11 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
     website,
     date_created,
   } = selectedOrganization.length && selectedOrganization[0];
+
+  const ceo_name_label =
+    selectedOrganization.length && (is_entrepreneur || !is_ecosystem)
+      ? "CEO/Founder's Name"
+      : "CEO/DG/Head/Founder's Name";
 
   return (
     <Fragment>
@@ -288,7 +287,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
 
                   <p>
                     <strong>Date Listed</strong>:{" "}
-                    {new Date(date_created).toLocaleString() || "--"}
+                    {new Date(date_created).toJSON().split("T")[0] || "--"}
                   </p>
                 </Col>
               </RowStyled>

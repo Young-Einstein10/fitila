@@ -1,5 +1,14 @@
 import React, { FC, useState } from "react";
-import { Row, Col, Select, Button, Form, Upload, notification } from "antd";
+import {
+  Row,
+  Col,
+  Select,
+  Button,
+  Form,
+  Upload,
+  notification,
+  Modal,
+} from "antd";
 import { ReactComponent as UnknownAvatar } from "../../../../../../static/svg/unknownAvatar.svg";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { InputStyled } from "../../../../../Styles";
@@ -212,17 +221,68 @@ const Security = () => {
 };
 
 const Profile: FC<{ user: IUserProps }> = ({
-  user: { phone, email, first_name, last_name },
+  user: { phone, email, first_name, last_name, profile_pics_url },
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [file, setFile] = useState({
+    profile_pics: [],
+  });
   const [form] = Form.useForm();
+
+  const { auth } = useApiContext();
 
   const handleSubmit = async values => {
     try {
       const values = await form.validateFields();
-      console.log(values);
+
+      setIsLoading(true);
+
+      const payload = { ...values, profile_pics: file.profile_pics[0] };
+
+      const formData = new FormData();
+
+      for (const key in payload) {
+        if (payload[key]) {
+          formData.append(key, payload[key]);
+        }
+      }
+
+      const { status, data } = await auth.editUserProfile(formData);
+
+      console.log(data);
+
+      if (status >= 200 && status < 300) {
+        setIsLoading(false);
+        Modal.success({
+          title: "You have successfully edited your profile.",
+        });
+      }
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
+  };
+
+  const userImageProps = {
+    onRemove: file => {
+      setFile(state => {
+        const index = state.profile_pics.indexOf(file);
+        const newFileList = state.profile_pics.slice();
+        newFileList.splice(index, 1);
+        return {
+          ...state,
+          profile_pics: newFileList,
+        };
+      });
+    },
+    beforeUpload: file => {
+      setFile(state => ({
+        ...state,
+        profile_pics: [...state.profile_pics, file],
+      }));
+      return false;
+    },
+    fileList: file.profile_pics,
   };
 
   return (
@@ -243,15 +303,20 @@ const Profile: FC<{ user: IUserProps }> = ({
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                // marginLeft: "15px",
               }}
             >
-              <UnknownAvatar />
+              {profile_pics_url ? (
+                <div style={{ width: "135px", height: "135px" }}>
+                  <img src={profile_pics_url} alt="Avatar" />
+                </div>
+              ) : (
+                <UnknownAvatar />
+              )}
               <span style={{ marginTop: "10px" }}>Change Avatar</span>
             </div>
 
             <div style={{ marginLeft: "4rem" }} className="uplosd-btn-wrapper">
-              <Upload>
+              <Upload {...userImageProps}>
                 <ViewProfileBtnStyled size="large">
                   Upload Image
                 </ViewProfileBtnStyled>
@@ -335,6 +400,7 @@ const Profile: FC<{ user: IUserProps }> = ({
                   htmlType="submit"
                   type="primary"
                   size="large"
+                  loading={isLoading}
                 >
                   Save Changes
                 </Button>

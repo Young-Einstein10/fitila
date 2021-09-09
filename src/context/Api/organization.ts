@@ -43,8 +43,8 @@ export default class Organization {
     return this.client.get(`/organizations/approve/${id}`);
   }
 
-  declineOrganization(id) {
-    return this.client.get(`/organizations/decline/${id}`);
+  declineOrganization(id, reason) {
+    return this.client.post(`/organizations/decline/${id}`, { reason });
   }
 
   deleteOrganization(id) {

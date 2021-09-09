@@ -42,7 +42,7 @@ const Dashboard: FC<RouteComponentProps> = () => {
   return (
     <AdminSectionWrapper className="dashboard">
       <PageHeader
-        title="Gain credible insights into Nigeria’s most thriving Organizations"
+        title="Gain credible insights into Nigeria’s Entrepreneurship Ecosystem"
         buttons={[
           <div key="1" className="page-header-actions">
             <Button className="btn-main" size="large" type="primary">

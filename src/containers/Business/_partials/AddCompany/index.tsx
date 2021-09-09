@@ -57,7 +57,7 @@ const AddCompany: FC<RouteComponentProps> = ({ history }) => {
                         // setIsEnterpreneurActive("enterpreneur");
                         setState({
                           ...state,
-                          business_type: "Enterpreneur",
+                          business_type: "Entrepreneur",
                           is_entrepreneur: !state.is_entrepreneur,
                           is_ecosystem: false,
                         });

@@ -17,17 +17,12 @@ const EcosystemBarChart = props => {
   const ecosystemOrg = organizationData.filter(org => org.is_ecosystem);
   const enterpreneurOrg = organizationData.filter(org => org.is_entrepreneur);
 
-  const ecosystemFunding = ecosystemOrg.length
-    ? getTotalFunding(ecosystemOrg)
-    : getTotalFunding(organizationData);
-
-  const enterpreneurFunding = enterpreneurOrg.length
-    ? getTotalFunding(enterpreneurOrg)
-    : getTotalFunding(organizationData);
+  const numOfJobsEntrep = 200;
+  const numOfJobsEco = 400;
 
   const datasets = [
     {
-      data: [enterpreneurFunding, ecosystemFunding],
+      data: [numOfJobsEntrep, numOfJobsEco],
       backgroundColor: [
         "rgba(245, 71, 109, 0.645)",
         "rgba(39, 149, 221, 0.686)",
@@ -38,7 +33,7 @@ const EcosystemBarChart = props => {
       borderWidth: 1,
       hoverBackgroundColor: ["rgb(255, 0, 55)", "rgb(10, 134, 216)"],
       label: "",
-      barPercentage: 0.6,
+      barPercentage: 1,
     },
   ];
 
@@ -48,7 +43,10 @@ const EcosystemBarChart = props => {
   };
 
   return (
-    <Cards loading={isLoading} title="Funding by Ecosystem and Enterpreneurs">
+    <Cards
+      loading={isLoading}
+      title="Jobs created by Ecosystem and Enterpreneurs"
+    >
       <ChartContainer className="parentContainer">
         <Bar
           data={data}
@@ -118,19 +116,28 @@ EcosystemBarChart.defaultProps = {
         {
           stacked: true,
           gridLines: {
-            color: "#e5e9f2",
+            display: false,
           },
           ticks: {
-            beginAtZero: true,
-            fontSize: 13,
-            fontColor: "#182b49",
-            max: 50000000,
-            stepSize: 10000000,
-            callback(value, index, values) {
-              return `${abbreviateNumberShort(Number(value))}`;
-            },
+            display: false,
           },
         },
+        // {
+        //   stacked: true,
+        //   gridLines: {
+        //     color: "#e5e9f2",
+        //   },
+        //   ticks: {
+        //     beginAtZero: true,
+        //     fontSize: 13,
+        //     fontColor: "#182b49",
+        //     max: 50000000,
+        //     stepSize: 10000000,
+        //     callback(value, index, values) {
+        //       return `${abbreviateNumberShort(Number(value))}`;
+        //     },
+        //   },
+        // },
       ],
       xAxes: [
         {

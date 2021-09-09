@@ -102,7 +102,11 @@ export default class Auth {
   }
 
   editUserProfile(data?: any) {
-    return this.client.put(`/account/user/profile`, data);
+    return this.client.put(`/account/user/profile`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 
   deleteUser() {

@@ -13,6 +13,7 @@ import { ImgPlaceholderStyled } from "../helpers";
 import ViewDetails from "./_partials/ViewDetails";
 import styled from "styled-components";
 import numberWithCommas from "../../../../utils/numberFormatter";
+import ReasonModal from "./_partials/ReasonModal";
 
 interface IPendingAppProps {
   isLoading: boolean;
@@ -38,6 +39,7 @@ const PendingApplications = () => {
 
   const [currentListing, setCurrentListing] = useState(null);
   const [isViewDetailsModalOpen, setIsViewDetailsModalOpen] = useState(false);
+  const [isReasonModalOpen, setIsReasonModalOpen] = useState(false);
 
   const { organization: api } = useApiContext();
 
@@ -126,6 +128,7 @@ const PendingApplications = () => {
   };
 
   const toggleViewDetailsModal = () => setIsViewDetailsModalOpen(open => !open);
+  const toggleReasonModal = () => setIsReasonModalOpen(open => !open);
 
   const columns: any = [
     {
@@ -261,17 +264,6 @@ const PendingApplications = () => {
                 dataSource={dataSource}
                 columns={columns}
                 loading={organizations.isLoading}
-                // onRow={(record, rowIndex) => {
-                //   return {
-                //     onClick: e => {
-                //       setCurrentListing(record);
-                //       toggleViewDetailsModal();
-                //     },
-                //     onMouseOver: (e: any) => {
-                //       e.target.style.cursor = "pointer";
-                //     },
-                //   };
-                // }}
               />
             </Cards>
           </Col>
@@ -281,6 +273,16 @@ const PendingApplications = () => {
           <ViewDetails
             visible={isViewDetailsModalOpen}
             closeModal={toggleViewDetailsModal}
+            currentListing={currentListing}
+            toggleReasonModal={toggleReasonModal}
+            refetchPendingApplications={refetchPendingApplications}
+          />
+        ) : null}
+
+        {isReasonModalOpen ? (
+          <ReasonModal
+            visible={isReasonModalOpen}
+            closeModal={toggleReasonModal}
             currentListing={currentListing}
             refetchPendingApplications={refetchPendingApplications}
           />

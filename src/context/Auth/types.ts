@@ -17,6 +17,7 @@ interface IUserProps {
   last_name?: string;
   is_admin?: boolean;
   email?: string;
+  profile_pics_url?: string;
   phone?: string;
   access: string;
   refresh: string;

@@ -100,7 +100,7 @@ const Account: FC<RouteComponentProps> = () => {
 
   return (
     <AdminSectionWrapper>
-      <Row gutter={25}>
+      <Row>
         <Col span={24}>
           <TabBasic defaultActiveKey="1" tabPosition={"top"}>
             {data.map(item => {

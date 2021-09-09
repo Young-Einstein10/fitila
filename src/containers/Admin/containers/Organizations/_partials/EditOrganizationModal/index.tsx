@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Modal, Form, Select, Tooltip, Upload, Button } from "antd";
 import { InputNumberStyled, InputStyled } from "../../../../../Styles";
 import {
@@ -58,6 +58,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
   const [num_supported_business, setNum_supported_business] = useState();
   const [num_of_employees_custom, setNum_of_employees_custom] = useState();
   const [loading, setLoading] = useState(false);
+  const [is_startUp, setIs_Startup] = useState(false);
 
   const [file, setFile] = useState({
     ceo_image: [],
@@ -70,6 +71,15 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
   const { data: sectors } = useSectorContext();
 
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (
+      currentOrganization.business_level &&
+      currentOrganization.business_level.toLowerCase() === "startup"
+    ) {
+      setIs_Startup(true);
+    }
+  }, [currentOrganization.business_level]);
 
   const updateSubSegment = value => {
     const selectedEcosystem = ecosystems.find(eco => eco.name === value);
@@ -174,7 +184,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
     <Modal
       visible={visible}
       onCancel={closeModal}
-      title="Edit Organization"
+      title={<strong>Edit Organization</strong>}
       footer={[
         <Button key="cancel" onClick={() => closeModal()}>
           Cancel
@@ -194,54 +204,23 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         form={form}
         initialValues={{
           ...currentOrganization,
-          // name,
           ceo_name: currentOrganization.ceo_name.name,
-          // state,
-          // address,
-          // sub_ecosystem,
         }}
       >
         {/* BUSINESS NAME */}
-        <FormItem
-          label="Name of Organization"
-          name="name"
-          rules={[
-            {
-              message: "Please input your business name",
-              required: true,
-            },
-          ]}
-        >
+        <FormItem label="Name of Organization" name="name">
           <InputStyled size="large" placeholder="Business Name" />
         </FormItem>
         {/* BUSINESS NAME */}
 
         {/* CEO/FOUNDER"S NAME */}
-        <FormItem
-          label="CEO Name"
-          name="ceo_name"
-          rules={[
-            {
-              message: "Please input your ceo/founder's name",
-              required: true,
-            },
-          ]}
-        >
+        <FormItem label="CEO Name" name="ceo_name">
           <InputStyled size="large" placeholder="CEO/Founder's Name" />
         </FormItem>
         {/* CEO/FOUNDER's ANME */}
 
         {/* STATE */}
-        <Form.Item
-          label="State"
-          name="state"
-          rules={[
-            {
-              message: "Please select state organization is located in",
-              required: true,
-            },
-          ]}
-        >
+        <Form.Item label="State" name="state">
           <Select placeholder="State" allowClear>
             {states.map((state, i) => (
               <Option key={i} value={state}>
@@ -253,32 +232,14 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* STATE */}
 
         {/* ADDRESS */}
-        <Form.Item
-          label="Address"
-          name="address"
-          rules={[
-            {
-              message: "Please input your address!",
-              required: true,
-            },
-          ]}
-        >
+        <Form.Item label="Address" name="address">
           <InputStyled size="large" placeholder="Address" />
         </Form.Item>
         {/* ADDRESS */}
 
         {/* Ecosystem Segment */}
         {currentOrganization.is_ecosystem && (
-          <Form.Item
-            label="Ecosystem Segment"
-            name="ecosystem"
-            rules={[
-              {
-                message: "Please select an ecosystem segment!",
-                required: true,
-              },
-            ]}
-          >
+          <Form.Item label="Ecosystem Segment" name="ecosystem">
             <Select
               onChange={e => updateSubSegment(e)}
               placeholder="Ecosystem Segment"
@@ -296,16 +257,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* SUB-ECOSYTEM SEGMENT */}
         {currentOrganization.is_ecosystem && (
-          <Form.Item
-            label="Sub-Ecosystem Segment"
-            name="sub_ecosystem"
-            rules={[
-              {
-                message: "Please select an ecosystem sub-segment!",
-                required: true,
-              },
-            ]}
-          >
+          <Form.Item label="Sub-Ecosystem Segment" name="sub_ecosystem">
             <Select placeholder="Sub-Segment" allowClear>
               {subSegment.map(segment => (
                 <Option key={segment.id} value={segment.name}>
@@ -318,16 +270,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* SUB-ECOSYTEM SEGMENT */}
 
         {/* BUSINESS SECTOR */}
-        <Form.Item
-          label="Sector"
-          name="sector"
-          rules={[
-            {
-              message: "Please select your sector!",
-              required: true,
-            },
-          ]}
-        >
+        <Form.Item label="Sector" name="sector">
           <Select placeholder="Sector" allowClear>
             {sectors.map((sector, i) => (
               <Option key={i} value={sector.id}>
@@ -340,17 +283,19 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* BUSINESS LEVEL */}
         {currentOrganization.is_entrepreneur && (
-          <Form.Item
-            label="Business Level"
-            name="business_level"
-            rules={[
-              {
-                message: "Please select your business level!",
-                required: true,
-              },
-            ]}
-          >
-            <Select size="large" placeholder="Business Level" allowClear>
+          <Form.Item label="Business Level" name="business_level">
+            <Select
+              size="large"
+              placeholder="Business Level"
+              onChange={value => {
+                if (value.toString().toLowerCase() === "startup") {
+                  setIs_Startup(true);
+                } else {
+                  setIs_Startup(false);
+                }
+              }}
+              allowClear
+            >
               {businessLevels.map((level, key) => (
                 <Option key={key} value={level.name}>
                   <Tooltip title={level.description}>
@@ -363,43 +308,8 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         )}
         {/* BUSINESS LEVEL */}
 
-        {/* ARE YOU A STARTUP */}
-        {currentOrganization.is_startup && (
-          <Form.Item
-            label="Are You a Startup"
-            name="is_startup"
-            rules={[
-              {
-                message: "Please select an option!",
-                required: true,
-              },
-            ]}
-          >
-            <Select
-              // onChange={e => {
-              //   if (e === "Yes") {
-              //     setIs_Startup(true);
-              //   } else {
-              //     setIs_Startup(false);
-              //   }
-              // }}
-              size="large"
-              placeholder={
-                <Tooltip title="High-growth young business typically 0 - 5 years old">
-                  <span>Are You A StartUp</span>
-                </Tooltip>
-              }
-              allowClear
-            >
-              <Option value={`${true}`}>Yes</Option>
-              <Option value={`${false}`}>No</Option>
-            </Select>
-          </Form.Item>
-        )}
-        {/* ARE YOU A STARTUP */}
-
         {/* COMPANY VALUATION */}
-        {currentOrganization.is_ecosystem && currentOrganization.is_startup && (
+        {currentOrganization.is_ecosystem && is_startUp && (
           <Form.Item label="Company Valuation" name="company_valuation">
             <InputGroup size="large" compact style={{ display: "flex" }}>
               <Form.Item initialValue="₦" name="currency">
@@ -486,50 +396,19 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000 */}
 
         {/* WEBSITE */}
-        <Form.Item
-          label="Website"
-          name="website"
-          rules={[
-            {
-              message: "Please input your organization website !",
-              required: true,
-            },
-          ]}
-        >
+        <Form.Item label="Website" name="website">
           <InputStyled size="large" placeholder="Website Address" />
         </Form.Item>
         {/* WEBSITE */}
 
         {/* ORGANIZATION EMAIL */}
-        <Form.Item
-          label="Organization Email"
-          name="email"
-          rules={[
-            {
-              type: "email",
-              message: "The input is not a valid E-mail!",
-            },
-            {
-              message: "Please input your organization email!",
-              required: true,
-            },
-          ]}
-        >
+        <Form.Item label="Organization Email" name="email">
           <InputStyled size="large" placeholder="Email Address" />
         </Form.Item>
         {/* ORGANIZATION EMAIL */}
 
         {/* ORGANIZATION PHONE */}
-        <Form.Item
-          label="Phone"
-          name="phone"
-          rules={[
-            {
-              message: "Please input your organization phone number !",
-              required: true,
-            },
-          ]}
-        >
+        <Form.Item label="Phone" name="phone">
           <InputStyled size="large" placeholder="Phone Number" />
         </Form.Item>
         {/* ORGANIZATION PHONE */}
@@ -564,7 +443,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           rules={[
             {
               message: "Please upload your company logo!",
-              required: true,
+              required: false,
             },
           ]}
         >
@@ -582,7 +461,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           rules={[
             {
               message: "Please upload your ceo/founder image!",
-              required: true,
+              required: false,
             },
           ]}
         >
@@ -601,7 +480,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           rules={[
             {
               message: "Please input your Business RC Number!",
-              required: true,
+              required: false,
             },
           ]}
         >
@@ -620,7 +499,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           rules={[
             {
               message: "Please select an option!",
-              required: true,
+              required: false,
             },
           ]}
         >
@@ -629,33 +508,13 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
             onChange={e => onNumberOfEmployeesChange(e)}
             allowClear
           >
-            <Option value="1-100">1-100</Option>
-            <Option value="101-200">101-200</Option>
-            <Option value="201-300">201-300</Option>
-            <Option value="301-400">301-400</Option>
-            <Option value="401-500">401-500</Option>
-            <Option value="501-600">501-1000</Option>
-            <Option value="Above 1000">Above 1000</Option>
+            <Option value="1-100">0-9</Option>
+            <Option value="101-200">10-49</Option>
+            <Option value="201-300">50-100</Option>
+            <Option value="301-400">100+</Option>
           </Select>
         </Form.Item>
         {/* NUMBER OF EMPLOYEES */}
-
-        {/* NUMBER OF EMPLOYEES: ABOVE 1000 */}
-        {num_of_employees_custom === "Above 1000" && (
-          <Form.Item
-            label="Number of Employees"
-            name="num_of_employees_custom"
-            rules={[
-              {
-                message: "Please input the number of employees!",
-                required: true,
-              },
-            ]}
-          >
-            <InputStyled placeholder="Number of Employees" type="number" />
-          </Form.Item>
-        )}
-        {/* NUMBER OF EMPLOYEES: ABOVE 1000 */}
 
         {/* FUNDING */}
         <Form.Item label="Funding" name="funding" style={{ marginBottom: 0 }}>
@@ -674,7 +533,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
                 { type: "number", message: "Only Numbers are allowed" },
                 {
                   message: "Please input this field!",
-                  required: true,
+                  required: false,
                 },
               ]}
             >
@@ -692,13 +551,22 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* FUNDING */}
 
         {/* DESCRIPTION */}
-        <Form.Item label="Description" name="description">
+        <Form.Item
+          label="Description"
+          name="description"
+          rules={[
+            {
+              message: "please enter company description!",
+              required: false,
+            },
+          ]}
+        >
           <InputStyled.TextArea
             size="large"
             placeholder="Organization Description"
           />
         </Form.Item>
-        {/* FUNDING */}
+        {/* DESCRIPTION */}
       </Form>
     </Modal>
   );

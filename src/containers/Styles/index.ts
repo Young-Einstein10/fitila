@@ -5,6 +5,10 @@ const InputStyled = styled(Input)`
   background-color: #f9f9f9;
   border-radius: 6px;
 
+  textarea.ant-input {
+    height: 150px;
+  }
+
   &.ant-input::placeholder,
   &.ant-select-selection-placeholder {
     color: ${({ theme }) => theme["extra-light-color"]};

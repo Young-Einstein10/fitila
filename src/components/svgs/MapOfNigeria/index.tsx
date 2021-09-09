@@ -2,6 +2,7 @@ import React, { FC, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import { IOrganizationProps } from "../../../context/Organization/types";
+import { abbreviateNumberShort } from "../../../utils/numberAbbreviator";
 import numberWithCommas from "../../../utils/numberFormatter";
 import { SVGWrapper } from "./styled";
 
@@ -57,7 +58,7 @@ export const MapOfNigeria: FC<IMapProps> = ({ statesData }) => {
         ({ name }) => name.toLowerCase() === state.toLowerCase()
       );
 
-      console.log({ currentState });
+      // console.log({ currentState });
 
       if (currentState) {
         const c_name = getClassName(Number(currentState.numOfOrganizations));
@@ -467,7 +468,10 @@ export const MapOfNigeria: FC<IMapProps> = ({ statesData }) => {
               </p>
 
               <p>
-                <b>Funding:</b> {state ? numberWithCommas(state.funding) : 0}
+                <b>Funding:</b>{" "}
+                {state && state.funding
+                  ? `₦${abbreviateNumberShort(Number(state.funding))}`
+                  : 0}
               </p>
 
               <p>
