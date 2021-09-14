@@ -3,7 +3,6 @@ import { Bar } from "react-chartjs-2";
 import { Cards } from "../../../../../../../../components/cards/frame/cards-frame";
 import { useOrganizationContext } from "../../../../../../../../context";
 import { customTooltips } from "../../../../../../../../utils/helpers";
-import { data as dataset } from "../../../../../../../../data.json";
 import { ChartContainer } from "./styled";
 import { IOrganizationProps } from "../../../../../../../../context/Organization/types";
 
@@ -23,10 +22,10 @@ function filterOrgByGender(
 const FemaleBarChart = props => {
   const { labels, options, width, height, layout } = props;
 
-  const { isLoading } = useOrganizationContext();
+  const { isLoading, data: organizationData } = useOrganizationContext();
 
   // Filter Entrepreneur Organizations
-  const entrepreneurOrg = dataset
+  const entrepreneurOrg = organizationData
     .filter(org => org.is_entrepreneur || !org.is_ecosystem)
     .filter(org => org.business_level);
 
