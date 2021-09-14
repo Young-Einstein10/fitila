@@ -30,16 +30,16 @@ const ReasonModal: FC<IComponentProps> = ({
 
     try {
       const values = await form.validateFields();
-      console.log(values);
-      //   const res = await api.declineOrganization(id, values.reason);
 
-      //   if (res.status === 200) {
-      //     Modal.success({
-      //       title: "Organization has been declined.",
-      //   onOk: () => closeModal()
-      //     });
-      //     refetchPendingApplications();
-      //   }
+      const res = await api.declineOrganization(id, values.reason);
+
+      if (res.status >= 200 && res.status < 300) {
+        Modal.success({
+          title: "Organization has been declined.",
+          onOk: () => closeModal(),
+        });
+        refetchPendingApplications();
+      }
 
       setIsDeclineLoading(false);
     } catch (error) {
@@ -70,7 +70,7 @@ const ReasonModal: FC<IComponentProps> = ({
       <Form form={form} layout="vertical">
         <Form.Item
           name="reason"
-          label="Reason"
+          label={<strong>Reason</strong>}
           rules={[
             {
               message: "please enter a reason!",

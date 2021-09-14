@@ -49,7 +49,6 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
     funding_currency_value,
     company_valuation,
     currency,
-    currency_value,
     email,
     phone,
     facebook,

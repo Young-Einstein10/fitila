@@ -55,7 +55,6 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
   const [subEcosystemSubClass, setSubEcosystemSubClass] = useState<
     ISubclassProps[]
   >([]);
-  const [num_of_employees_custom, setNum_of_employees_custom] = useState();
   const [currSubClass, setCurrSubClass] = useState<ISubclassProps>(null);
   const [is_startUp, setIs_Startup] = useState(false);
   const { data: ecosystem } = useEcosystemContext();
@@ -172,7 +171,7 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
           sector: selectedSector.id,
           company_valuation: `${values.currency}${values.currency_value}`,
           is_ecosystem: currentOrganization.is_ecosystem ? true : false,
-          is_enterpreneur: currentOrganization.is_entrepreneur ? true : false,
+          is_entrepreneur: currentOrganization.is_entrepreneur ? true : false,
         };
       }
 
@@ -192,7 +191,8 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
         refetchUserProfile();
 
         Modal.success({
-          title: "Organization edited successfully!",
+          title:
+            "Organization Edited Successfully. You will get an email once its been approved.",
           onOk: () => closeModal(),
         });
       }
@@ -228,10 +228,6 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
     const selectedEcosystem = ecosystem.filter(eco => eco.name === value);
 
     setSubSegment(selectedEcosystem[0].sub_ecosystem);
-  };
-
-  const onNumberOfEmployeesChange = value => {
-    setNum_of_employees_custom(value);
   };
 
   const ceo_name_label = currentOrganization.is_entrepreneur
@@ -315,10 +311,10 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
           sub_ecosystem: currentOrganization.sub_ecosystem_name,
           funding_currency: "₦",
           funding_currency_value: currentOrganization.funding,
-          num_of_employees: num_of_employees_custom
-            ? "Above 1000"
-            : currentOrganization.num_of_employees,
-          num_of_employees_custom: currentOrganization.num_of_employees,
+          // num_of_employees: num_of_employees_custom
+          //   ? "Above 1000"
+          //   : currentOrganization.num_of_employees,
+          // num_of_employees_custom: currentOrganization.num_of_employees,
           sub_ecosystem_sub_class:
             currentOrganization.sub_ecosystem_sub_class_name,
         }}
@@ -560,39 +556,6 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
         )}
         {/* BUSINESS LEVEL */}
 
-        {/* ARE YOU A STARTUP */}
-        {currentOrganization.is_entrepreneur && (
-          <Form.Item
-            name="is_startup"
-            rules={[
-              {
-                message: "Please select an option!",
-                required: true,
-              },
-            ]}
-          >
-            <Select
-              onChange={e => {
-                if (e === "Yes") {
-                  setIs_Startup(true);
-                } else {
-                  setIs_Startup(false);
-                }
-              }}
-              placeholder={
-                <Tooltip title="High-growth young business typically 0 - 5 years old">
-                  <span>Are You A StartUp</span>
-                </Tooltip>
-              }
-              allowClear
-            >
-              <Option value="Yes">Yes</Option>
-              <Option value="No">No</Option>
-            </Select>
-          </Form.Item>
-        )}
-        {/* ARE YOU A STARTUP */}
-
         {/* COMPANY VALUATION */}
         {currentOrganization.is_entrepreneur && is_startUp && (
           <Form.Item name="company_valuation">
@@ -632,7 +595,27 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
         )}
         {/* COMPANY VALUATION */}
 
-        {/* NUMBER OF SUPPObusiness_levelRTED BUSINESSES */}
+        {/* NUMBER OF JOBS CREATED */}
+        {currentOrganization.is_entrepreneur && (
+          <Form.Item
+            name="no_of_jobs"
+            rules={[
+              { type: "number", message: "Only numbers are allowed" },
+              {
+                message: "Please input the number of jobs created so far!",
+                required: true,
+              },
+            ]}
+          >
+            <InputNumberStyled
+              placeholder="Number of jobs created"
+              size="large"
+            />
+          </Form.Item>
+        )}
+        {/* NUMBER OF JOBS CREATED */}
+
+        {/* NUMBER OF SUPPORTED BUSINESSES */}
         {currentOrganization.is_ecosystem && (
           <Form.Item
             name="num_supported_business"
@@ -747,41 +730,6 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
         >
           <InputNumberStyled placeholder="Business RC Number" />
         </Form.Item>
-
-        <Form.Item
-          name="num_of_employees"
-          rules={[
-            {
-              message: "Please select an option!",
-              required: true,
-            },
-          ]}
-        >
-          <Select
-            placeholder="Number of Employees"
-            onChange={e => onNumberOfEmployeesChange(e)}
-            allowClear
-          >
-            <Option value="1-100">0-9</Option>
-            <Option value="101-200">10-49</Option>
-            <Option value="201-300">50-100</Option>
-            <Option value="301-400">100+</Option>
-          </Select>
-        </Form.Item>
-
-        {num_of_employees_custom === "Above 1000" && (
-          <Form.Item
-            name="num_of_employees_custom"
-            rules={[
-              {
-                message: "Please input the number of employees!",
-                required: true,
-              },
-            ]}
-          >
-            <InputStyled placeholder="Number of Employees" type="number" />
-          </Form.Item>
-        )}
 
         {currentOrganization.is_entrepreneur && (
           <Form.Item name="funding" style={{ marginBottom: 0 }}>

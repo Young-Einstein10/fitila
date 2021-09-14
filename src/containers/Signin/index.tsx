@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "antd";
 import { GoogleLogin } from "react-google-login";
-// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { NavLink } from "react-router-dom";
 import Heading from "../../components/heading/heading";
-// import { ReactComponent as Facebook } from "../../static/svg/facebook.svg";
-// import { ReactComponent as Twitter } from "../../static/svg/twitter.svg";
-// import { ReactComponent as LinkedIn } from "../../static/svg/linkedIn.svg";
-// import { ReactComponent as Instagram } from "../../static/svg/instagram.svg";
+import { ReactComponent as FacebookIcon } from "../../static/svg/facebook.svg";
 import { useApiContext, useAuthContext } from "../../context";
 import { useMountedState } from "../../utils/hooks";
 import { InputStyled, AuthWrapper } from "../Styles";
 import { GoogleIcon } from "../../components/svgs";
 import styled from "styled-components";
 
-// const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
+const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const Login = ({ history, location }) => {
@@ -100,9 +97,9 @@ const Login = ({ history, location }) => {
     }
   };
 
-  // const facebookResponse = response => {
-  //   console.log({ response });
-  // };
+  const facebookResponse = response => {
+    console.log({ response });
+  };
 
   const onFailure = error => {
     console.log(error);
@@ -165,29 +162,6 @@ const Login = ({ history, location }) => {
             <NavLink to="/signup">Sign up here</NavLink>
           </p>
 
-          {/* <ul className="social-login">
-            <li>
-              <Link className="facebook-sign" to="#">
-                <Twitter />
-              </Link>
-            </li>
-            <li>
-              <Link className="facebook-sign" to="#">
-                <Facebook />
-              </Link>
-            </li>
-            <li>
-              <Link className="twitter-sign" to="#">
-                <Instagram />
-              </Link>
-            </li>
-            <li>
-              <Link className="facebook-sign" to="#">
-                <LinkedIn />
-              </Link>
-            </li>
-          </ul> */}
-
           <SocialSigninWrapper>
             <GoogleLogin
               clientId={GOOGLE_CLIENT_ID}
@@ -206,7 +180,7 @@ const Login = ({ history, location }) => {
               )}
             />
 
-            {/* <FacebookLogin
+            <FacebookLogin
               appId={FACEBOOK_APP_ID}
               autoLoad={false}
               fields="name,email,picture"
@@ -218,10 +192,10 @@ const Login = ({ history, location }) => {
                   disabled={renderProps.disabled}
                   {...renderProps}
                 >
-                  <Facebook /> <span>Signin with Facebook</span>
+                  <FacebookIcon /> <span>Signin with Facebook</span>
                 </button>
               )}
-            /> */}
+            />
           </SocialSigninWrapper>
         </Form>
       </div>

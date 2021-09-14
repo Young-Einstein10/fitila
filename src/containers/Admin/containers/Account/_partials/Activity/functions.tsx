@@ -62,11 +62,12 @@ const columns: any = ({
       key: "funding",
 
       render: (record, key) => {
-        // let result = record ? record.split("₦") : [];
-
         return (
-          // <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
-          <span>{numberWithCommas(record)}</span>
+          <span>
+            {key.is_ecosystem || !key.is_entrepreneur
+              ? "N/A"
+              : numberWithCommas(record)}
+          </span>
         );
       },
     },

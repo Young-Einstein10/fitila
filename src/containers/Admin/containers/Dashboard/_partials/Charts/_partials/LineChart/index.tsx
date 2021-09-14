@@ -5,7 +5,10 @@ import {
   useOrganizationContext,
   useSectorContext,
 } from "../../../../../../../../context";
-import { capitalize } from "../../../../../../../../utils/helpers";
+import {
+  capitalize,
+  getRandomColor,
+} from "../../../../../../../../utils/helpers";
 import { abbreviateNumberShort } from "../../../../../../../../utils/numberAbbreviator";
 import { ChartContainer } from "../FemaleBarChart/styled";
 
@@ -65,6 +68,21 @@ const LineChart: FC<ILineChartProps> = props => {
     sectorFundings[lastIndex],
   ].map(sector => (sector ? sector.name : ""));
 
+  let sectorColors = {
+    Agribusiness: "#AAAD37",
+    Creatives: "#72F4AF",
+    "Development Sector": "#F51AD2",
+    Education: "#E4813C",
+    Health: "#F488AA",
+    Manufacturing: "#A171FD",
+    Others: "#DA1A40",
+    "Private Sector": "#BE8BE6",
+    "Public Sector": "#9303E6",
+    Technology: "#1f1f86",
+  };
+
+  chartLabels.forEach(sector => (sectorColors[sector] = getRandomColor()));
+
   const bgColor = new Array(sectorFundings.length).fill("#ddf4ff");
 
   chartDatasets = [
@@ -118,11 +136,15 @@ const LineChart: FC<ILineChartProps> = props => {
         gridLines: {
           display: false,
         },
+        ticks: {
+          fontSize: 12,
+          callback(value, index, values) {
+            return `${value}`;
+          },
+        },
       },
     ],
   };
-
-  console.log(data);
 
   return (
     <Cards

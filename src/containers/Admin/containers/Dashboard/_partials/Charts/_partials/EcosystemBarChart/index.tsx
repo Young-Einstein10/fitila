@@ -2,11 +2,8 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import { Cards } from "../../../../../../../../components/cards/frame/cards-frame";
 import { useOrganizationContext } from "../../../../../../../../context";
-import {
-  customTooltips,
-  getTotalFunding,
-} from "../../../../../../../../utils/helpers";
-import { abbreviateNumberShort } from "../../../../../../../../utils/numberAbbreviator";
+import { customTooltips } from "../../../../../../../../utils/helpers";
+// import { data as dataset } from "../../../../../../../../data.json";
 import { ChartContainer } from "../FemaleBarChart/styled";
 
 const EcosystemBarChart = props => {
@@ -14,20 +11,34 @@ const EcosystemBarChart = props => {
 
   const { data: organizationData, isLoading } = useOrganizationContext();
 
-  const ecosystemOrg = organizationData.filter(org => org.is_ecosystem);
-  const enterpreneurOrg = organizationData.filter(org => org.is_entrepreneur);
+  // Filter Entrepreneur Organizations
+  const entrepreneurOrg = organizationData
+    .filter(org => org.is_entrepreneur || !org.is_ecosystem)
+    .filter(org => org.business_level);
 
-  const numOfJobsEntrep = 200;
-  const numOfJobsEco = 400;
+  // Filter Startup and MSMEs Organizations
+  const startupOrg = entrepreneurOrg.filter(
+    org => org.business_level.toLowerCase() === "startup"
+  );
+  const msmesorg = entrepreneurOrg.filter(
+    org => org.business_level.toLowerCase() !== "startup"
+  );
+
+  const totalNumOfJobsByStartup = startupOrg.reduce(
+    (acc, org) => acc + Number(org.no_of_jobs),
+    0
+  );
+  const totalNumOfJobsByMSMEs = msmesorg.reduce(
+    (acc, org) => acc + Number(org.no_of_jobs),
+    0
+  );
 
   const datasets = [
     {
-      data: [numOfJobsEntrep, numOfJobsEco],
+      data: [totalNumOfJobsByStartup, totalNumOfJobsByMSMEs],
       backgroundColor: [
         "rgba(245, 71, 109, 0.645)",
         "rgba(39, 149, 221, 0.686)",
-        // "rgba(255, 99, 132, 0.2)",
-        // "rgba(54, 162, 235, 0.2)",
       ],
       borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
       borderWidth: 1,
@@ -88,7 +99,7 @@ const EcosystemBarChart = props => {
 EcosystemBarChart.defaultProps = {
   height: 200,
   width: 200,
-  labels: ["Enterpreneurs", "Ecosystem Players"],
+  labels: ["Startups", "MSMEs"],
 
   options: {
     maintainAspectRatio: true,
@@ -122,22 +133,6 @@ EcosystemBarChart.defaultProps = {
             display: false,
           },
         },
-        // {
-        //   stacked: true,
-        //   gridLines: {
-        //     color: "#e5e9f2",
-        //   },
-        //   ticks: {
-        //     beginAtZero: true,
-        //     fontSize: 13,
-        //     fontColor: "#182b49",
-        //     max: 50000000,
-        //     stepSize: 10000000,
-        //     callback(value, index, values) {
-        //       return `${abbreviateNumberShort(Number(value))}`;
-        //     },
-        //   },
-        // },
       ],
       xAxes: [
         {

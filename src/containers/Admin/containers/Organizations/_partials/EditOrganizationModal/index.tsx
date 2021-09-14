@@ -4,44 +4,38 @@ import { InputNumberStyled, InputStyled } from "../../../../../Styles";
 import {
   useApiContext,
   useEcosystemContext,
-  useOrganizationContext,
   useSectorContext,
 } from "../../../../../../context";
+import states from "../../../../../../states.json";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
 import { UploadButtonStyled } from "../../../../../Business/_partials/ListOrganization/_partials/Uploads/styled";
 import { ReactComponent as UploadIcon } from "../../../../../../static/svg/upload.svg";
+import styled from "styled-components";
+import { businessLevels } from "../../../../../../utils/helpers";
+import { StyledImage } from "../../../../../../components/styledImage";
+import {
+  ISubclassProps,
+  ISubEcosystem,
+} from "../../../../../../context/Ecosystem/types";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 const InputGroup = InputStyled.Group;
 
-const businessLevels = [
-  {
-    name: "Micro",
-    description:
-      "businesses with 0 - 9 employees and  total assets (excluding land and building) of less than 10 million naira",
-  },
-  {
-    name: "Small",
-    description: `businesses with 10 - 49 employees and total assets (excluding
-land and building) of 10million to 99million naira`,
-  },
-  {
-    name: "Medium",
-    description: `businesses with 50 - 199 employees and total assets (excluding
-land and building) of 100million to 1billion naira`,
-  },
-];
+const StyledFormItem = styled(FormItem)`
+  .ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
 
-const numOfBusinessessSupported = [
-  "1-100",
-  "101-200",
-  "201-300",
-  "301-400",
-  "401-500",
-  "501-1000",
-  "Above 1000",
-];
+    .styled-img {
+      margin-right: 10px;
+    }
+
+    .upload-wrapper {
+      flex: 1;
+    }
+  }
+`;
 
 interface IEditOrganizationProps {
   visible: boolean;
@@ -54,48 +48,191 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
   visible,
   closeModal,
 }) => {
-  const [subSegment, setSubSegment] = useState([]);
-  const [num_supported_business, setNum_supported_business] = useState();
-  const [num_of_employees_custom, setNum_of_employees_custom] = useState();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [subSegment, setSubSegment] = useState<ISubEcosystem[]>([]);
+  const [currEcosystem, setCurrEcosystem] = useState("");
+  const [num_supported_business] = useState();
+  // const [selectedSubEcosystem, setSelectedSubEcosystem] = useState(null);
+  const [subEcosystemSubClass, setSubEcosystemSubClass] = useState<
+    ISubclassProps[]
+  >([]);
+  const [currSubClass, setCurrSubClass] = useState<ISubclassProps>(null);
   const [is_startUp, setIs_Startup] = useState(false);
-
+  const { data: ecosystem } = useEcosystemContext();
+  const { data: sectors } = useSectorContext();
   const [file, setFile] = useState({
     ceo_image: [],
     compnay_logo: [],
   });
 
-  const { organization: api } = useApiContext();
-  const { states, refetchOrganizations } = useOrganizationContext();
-  const { data: ecosystems } = useEcosystemContext();
-  const { data: sectors } = useSectorContext();
-
   const [form] = Form.useForm();
 
+  const { organization: api } = useApiContext();
+
   useEffect(() => {
-    if (
-      currentOrganization.business_level &&
-      currentOrganization.business_level.toLowerCase() === "startup"
-    ) {
-      setIs_Startup(true);
+    if (currentOrganization.ecosystem_name) {
+      setCurrEcosystem(currentOrganization.ecosystem_name);
+      const selectedEcosystem = ecosystem.filter(
+        eco => eco.name === currentOrganization.ecosystem_name
+      );
+
+      setSubSegment(selectedEcosystem[0].sub_ecosystem);
     }
-  }, [currentOrganization.business_level]);
+
+    if (currentOrganization.is_startup) {
+      setIs_Startup(currentOrganization.is_startup);
+    }
+  }, [
+    currentOrganization.ecosystem_name,
+    currentOrganization.is_startup,
+    ecosystem,
+  ]);
+
+  useEffect(() => {
+    if (currentOrganization.sub_ecosystem_name) {
+      const selectedSubEcosystem = subSegment.filter(
+        subSegment => subSegment.name === currentOrganization.sub_ecosystem_name
+      );
+
+      //   console.log({ selectedSubEcosystem });
+
+      if (selectedSubEcosystem.length > 0) {
+        setSubEcosystemSubClass(selectedSubEcosystem[0].sub_class);
+      }
+    }
+  }, [currentOrganization.sub_ecosystem_name, subSegment]);
+
+  const handleSubmit = async () => {
+    try {
+      const values = await form.validateFields();
+
+      setIsLoading(true);
+
+      if (values.num_supported_business === "Above 1000") {
+        values.num_supported_business = values.num_supported_business_custom;
+      }
+
+      if (values.num_of_employees === "Above 1000") {
+        values.num_of_employees = values.num_of_employees_custom;
+      }
+
+      const selectedEcosystem = ecosystem.filter(
+        eco => eco.name === values.ecosystem
+      );
+
+      const selectedSector = sectors.find(
+        sector => sector.name.toLowerCase() === values.sector.toLowerCase()
+      );
+
+      let selectedSubEcosystem = [];
+
+      if (file.compnay_logo.length) {
+        delete currentOrganization.company_logo_url;
+      }
+
+      if (file.ceo_image.length) {
+        delete currentOrganization.ceo_image_url;
+      }
+
+      let userData = {};
+
+      if (currentOrganization.is_ecosystem) {
+        selectedSubEcosystem = selectedEcosystem[0].sub_ecosystem.filter(
+          sub_eco => sub_eco.name === values.sub_ecosystem
+        );
+
+        userData = {
+          ...currentOrganization,
+          ...values,
+          sector: selectedSector.id,
+          funding: values.funding_currency_value
+            ? `${values.funding_currency_value}`
+            : 0,
+          company_logo: file.compnay_logo.length ? file.compnay_logo[0] : "",
+          ceo_image: file.ceo_image[0],
+          company_valuation: `${values.currency}${values.currency_value}`,
+          ecosystem: selectedEcosystem[0].id,
+          ecosystem_name: selectedEcosystem[0].name,
+          sub_ecosystem: selectedSubEcosystem[0].id,
+          sub_ecosystem_name: selectedSubEcosystem[0].name,
+          sub_segment: selectedSubEcosystem[0].id,
+          sub_ecosystem_sub_class: currSubClass ? currSubClass.id : null,
+          sub_ecosystem_sub_class_name: currSubClass
+            ? currSubClass.name
+            : values.sub_ecosystem_sub_class,
+          is_ecosystem: currentOrganization.is_ecosystem ? true : false,
+          is_entrepreneur: currentOrganization.is_entrepreneur ? true : false,
+        };
+      } else {
+        userData = {
+          ...currentOrganization,
+          ...values,
+          company_logo: file.compnay_logo.length ? file.compnay_logo[0] : "",
+          ceo_image: file.ceo_image[0],
+          sector: selectedSector.id,
+          company_valuation: `${values.currency}${values.currency_value}`,
+          is_ecosystem: currentOrganization.is_ecosystem ? true : false,
+          is_entrepreneur: currentOrganization.is_entrepreneur ? true : false,
+        };
+      }
+
+      const formData = new FormData();
+
+      for (const key in userData) {
+        if (userData[key]) {
+          formData.append(key, userData[key]);
+        }
+      }
+
+      const res = await api.editOrganization(currentOrganization.id, formData);
+
+      if (res.status >= 200 && res.status < 300) {
+        setIsLoading(false);
+
+        // refetchUserProfile();
+
+        Modal.success({
+          title: "Organization edited successfully!",
+          onOk: () => closeModal(),
+        });
+      }
+    } catch (error) {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubEcosystemChange = value => {
+    const selectedSubEcosystem = subSegment.filter(
+      subSegment => subSegment.name === value
+    );
+
+    // console.log({ selectedSubEcosystem });
+
+    // setSelectedSubEcosystem(selectedSubEcosystem[0]);
+
+    if (selectedSubEcosystem.length > 0) {
+      setSubEcosystemSubClass(selectedSubEcosystem[0].sub_class);
+    }
+  };
+
+  const handleSubClassChange = value => {
+    const currSubClass = subEcosystemSubClass.find(
+      subclass => subclass.name.toLowerCase() === value
+    );
+
+    setCurrSubClass(currSubClass);
+  };
 
   const updateSubSegment = value => {
-    const selectedEcosystem = ecosystems.find(eco => eco.name === value);
+    setCurrEcosystem(value);
+    const selectedEcosystem = ecosystem.filter(eco => eco.name === value);
 
-    setSubSegment(selectedEcosystem.sub_ecosystem);
+    setSubSegment(selectedEcosystem[0].sub_ecosystem);
   };
 
-  const onNumberOfBusinessChange = value => {
-    if (value === "Above 1000") {
-      setNum_supported_business(value);
-    }
-  };
-
-  const onNumberOfEmployeesChange = value => {
-    setNum_of_employees_custom(value);
-  };
+  const ceo_name_label = currentOrganization.is_entrepreneur
+    ? "CEO/Founder's Name"
+    : "CEO/DG/Head/Founder's Name";
 
   const ceoImageProps = {
     onRemove: file => {
@@ -141,45 +278,6 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
     fileList: file.compnay_logo,
   };
 
-  const handleEdit = async () => {
-    setLoading(true);
-    try {
-      const values = await form.validateFields();
-      console.log(values);
-
-      const data = {
-        ...values,
-        company_logo: file.compnay_logo[0],
-        ceo_image: file.ceo_image[0],
-      };
-
-      const formData = new FormData();
-
-      for (const key in data) {
-        formData.append(key, data[key]);
-      }
-
-      const res = await api.editOrganization(currentOrganization.id, formData);
-
-      console.log(res.data);
-
-      setLoading(false);
-
-      if (res.status === 201) {
-        Modal.success({
-          title: "Organization has been edited successfully.",
-          onOk: () => {
-            refetchOrganizations();
-            closeModal();
-          },
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
-
   return (
     <Modal
       visible={visible}
@@ -190,75 +288,156 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           Cancel
         </Button>,
         <Button
-          loading={loading}
+          loading={isLoading}
           type="primary"
           key="edit"
-          onClick={() => handleEdit()}
+          onClick={() => handleSubmit()}
         >
           Edit
         </Button>,
       ]}
     >
       <Form
-        layout="vertical"
         form={form}
+        layout="vertical"
+        className="list-organization"
         initialValues={{
           ...currentOrganization,
+          cac_doc: Number(currentOrganization.cac_doc),
+          sector: currentOrganization.sector_name,
           ceo_name: currentOrganization.ceo_name.name,
+          is_startUp: is_startUp ? "Yes" : "No",
+          currency: "₦",
+          num_supported_business: +currentOrganization.num_supported_business,
+          ecosystem: currentOrganization.ecosystem_name,
+          sub_ecosystem: currentOrganization.sub_ecosystem_name,
+          funding_currency: "₦",
+          funding_currency_value: currentOrganization.funding,
+          sub_ecosystem_sub_class:
+            currentOrganization.sub_ecosystem_sub_class_name,
         }}
       >
         {/* BUSINESS NAME */}
-        <FormItem label="Name of Organization" name="name">
-          <InputStyled size="large" placeholder="Business Name" />
-        </FormItem>
+        <Form.Item
+          name="name"
+          rules={[
+            {
+              message: "Please input your business name",
+              required: false,
+            },
+          ]}
+        >
+          <InputStyled placeholder="Business Name" />
+        </Form.Item>
         {/* BUSINESS NAME */}
 
         {/* CEO/FOUNDER"S NAME */}
-        <FormItem label="CEO Name" name="ceo_name">
-          <InputStyled size="large" placeholder="CEO/Founder's Name" />
-        </FormItem>
-        {/* CEO/FOUNDER's ANME */}
+        <Form.Item
+          name="ceo_name"
+          rules={[
+            {
+              message: `Please input your ${ceo_name_label}`,
+              required: false,
+            },
+          ]}
+        >
+          <InputStyled placeholder={ceo_name_label} />
+        </Form.Item>
+        {/* CEO/FOUNDER's NAME */}
+
+        {/* CEO/FOUNDER"S NAME */}
+        <Form.Item
+          name="ceo_gender"
+          rules={[
+            {
+              message: "Please select CEO/DG/Founder's gender",
+              required: false,
+            },
+          ]}
+        >
+          <Select placeholder="Gender">
+            <Option value="male">Male</Option>
+            <Option value="female">Female</Option>
+          </Select>
+        </Form.Item>
+        {/* CEO/FOUNDER's NAME */}
+
+        {/* ADDRESS */}
+        <Form.Item
+          name="address"
+          rules={[
+            {
+              message: "Please input your address!",
+              required: false,
+            },
+          ]}
+        >
+          <InputStyled placeholder="Address" />
+        </Form.Item>
+        {/* ADDRESS */}
 
         {/* STATE */}
-        <Form.Item label="State" name="state">
+        <Form.Item
+          name="state"
+          rules={[
+            {
+              message: "Please select state organization is located in",
+              required: false,
+            },
+          ]}
+        >
           <Select placeholder="State" allowClear>
-            {states.map((state, i) => (
-              <Option key={i} value={state}>
-                {state}
+            {states.map(({ name, code }) => (
+              <Option key={code} value={name}>
+                {name}
               </Option>
             ))}
           </Select>
         </Form.Item>
         {/* STATE */}
 
-        {/* ADDRESS */}
-        <Form.Item label="Address" name="address">
-          <InputStyled size="large" placeholder="Address" />
-        </Form.Item>
-        {/* ADDRESS */}
-
-        {/* Ecosystem Segment */}
+        {/* ECOSYTEM SEGMENT */}
         {currentOrganization.is_ecosystem && (
-          <Form.Item label="Ecosystem Segment" name="ecosystem">
+          <Form.Item
+            name="ecosystem"
+            rules={[
+              {
+                message: "Please select an ecosystem segment!",
+                required: false,
+              },
+            ]}
+          >
             <Select
               onChange={e => updateSubSegment(e)}
               placeholder="Ecosystem Segment"
               allowClear
             >
-              {ecosystems.map((eco, key) => (
-                <Option key={eco.id} value={eco.id}>
+              {ecosystem.map((eco, key) => (
+                <Option key={eco.id} value={eco.name}>
                   {eco.name}
                 </Option>
               ))}
             </Select>
           </Form.Item>
         )}
-        {/* Ecosystem Segment */}
+        {/* ECOSYTEM SEGMENT */}
 
         {/* SUB-ECOSYTEM SEGMENT */}
-        {currentOrganization.is_ecosystem && (
-          <Form.Item label="Sub-Ecosystem Segment" name="sub_ecosystem">
-            <Select placeholder="Sub-Segment" allowClear>
+        {currentOrganization.is_ecosystem && subSegment.length > 0 ? (
+          <Form.Item
+            name="sub_ecosystem"
+            rules={[
+              {
+                message: "Please select an ecosystem sub-segment!",
+                required: false,
+              },
+            ]}
+          >
+            <Select
+              onChange={e => handleSubEcosystemChange(e)}
+              placeholder="Sub-Segment"
+              allowClear
+            >
               {subSegment.map(segment => (
                 <Option key={segment.id} value={segment.name}>
                   {segment.name}
@@ -266,14 +445,84 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
               ))}
             </Select>
           </Form.Item>
-        )}
+        ) : null}
         {/* SUB-ECOSYTEM SEGMENT */}
 
+        {/* SUB-CLASS */}
+        {currentOrganization.is_ecosystem && subEcosystemSubClass.length > 0 ? (
+          <Form.Item
+            name="sub_ecosystem_sub_class"
+            rules={[
+              {
+                message: "Please select a sub-segment class!",
+                required: false,
+              },
+            ]}
+          >
+            <Select
+              onChange={e => handleSubClassChange(e)}
+              placeholder="Sub-Class"
+              allowClear
+            >
+              {subEcosystemSubClass.map((subClass, key) => (
+                <Option key={key} value={subClass.name.toLowerCase()}>
+                  {subClass.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        ) : null}
+        {/* SUB-CLASS */}
+
+        {currentOrganization.is_ecosystem &&
+          currEcosystem === "Funding" &&
+          subSegment.length > 0 && (
+            <Form.Item name="funding" style={{ marginBottom: 0 }}>
+              <InputGroup compact style={{ display: "flex" }}>
+                <Form.Item name="funding_disbursed_currency">
+                  <Select>
+                    <Option value="₦">₦</Option>
+                    {/* <Option value="$">$</Option> */}
+                  </Select>
+                </Form.Item>
+
+                <Form.Item
+                  name="funding_disbursed_for_support"
+                  style={{ width: "100%" }}
+                  rules={[
+                    { type: "number", message: "Only numbers are allowed" },
+                    {
+                      message: "Please enter funding disbursed to businesses!",
+                      required: false,
+                    },
+                  ]}
+                >
+                  <InputNumberStyled
+                    placeholder="Funding disbursed to businesses so far"
+                    size="large"
+                    formatter={value =>
+                      `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    }
+                    parser={value => value.replace(/\bNGN\s?|(,*)/g, "")}
+                  />
+                </Form.Item>
+              </InputGroup>
+            </Form.Item>
+          )}
+
         {/* BUSINESS SECTOR */}
-        <Form.Item label="Sector" name="sector">
+        <Form.Item
+          name="sector"
+          rules={[
+            {
+              message: "Please select your sector!",
+              required: false,
+            },
+          ]}
+        >
           <Select placeholder="Sector" allowClear>
             {sectors.map((sector, i) => (
-              <Option key={i} value={sector.id}>
+              <Option key={i} value={sector.name.toLowerCase()}>
                 {sector.name}
               </Option>
             ))}
@@ -283,19 +532,16 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
         {/* BUSINESS LEVEL */}
         {currentOrganization.is_entrepreneur && (
-          <Form.Item label="Business Level" name="business_level">
-            <Select
-              size="large"
-              placeholder="Business Level"
-              onChange={value => {
-                if (value.toString().toLowerCase() === "startup") {
-                  setIs_Startup(true);
-                } else {
-                  setIs_Startup(false);
-                }
-              }}
-              allowClear
-            >
+          <Form.Item
+            name="business_level"
+            rules={[
+              {
+                message: "Please select your business level!",
+                required: false,
+              },
+            ]}
+          >
+            <Select placeholder="Business Level" allowClear>
               {businessLevels.map((level, key) => (
                 <Option key={key} value={level.name}>
                   <Tooltip title={level.description}>
@@ -309,10 +555,10 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* BUSINESS LEVEL */}
 
         {/* COMPANY VALUATION */}
-        {currentOrganization.is_ecosystem && is_startUp && (
-          <Form.Item label="Company Valuation" name="company_valuation">
-            <InputGroup size="large" compact style={{ display: "flex" }}>
-              <Form.Item initialValue="₦" name="currency">
+        {currentOrganization.is_entrepreneur && is_startUp && (
+          <Form.Item name="company_valuation">
+            <InputGroup compact style={{ display: "flex" }}>
+              <Form.Item name="currency">
                 <Select>
                   <Option value="₦">₦</Option>
                   <Option value="$">$</Option>
@@ -329,7 +575,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
                   },
                   {
                     message: "Please input your company valuation!",
-                    required: true,
+                    required: false,
                   },
                 ]}
               >
@@ -347,31 +593,44 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         )}
         {/* COMPANY VALUATION */}
 
-        {/* NUMBER OF SUPPORTED BUSINESSES */}
-        {currentOrganization.is_ecosystem && (
+        {/* NUMBER OF JOBS CREATED */}
+        {currentOrganization.is_entrepreneur && (
           <Form.Item
-            label="Number of Supported Businesses"
-            name="num_supported_business"
+            name="no_of_jobs"
             rules={[
+              { type: "number", message: "Only numbers are allowed" },
               {
-                message:
-                  "Please input the number of businesses you've supported!",
-                required: true,
+                message: "Please input the number of jobs created so far!",
+                required: false,
               },
             ]}
           >
-            <Select
+            <InputNumberStyled
+              placeholder="Number of jobs created"
               size="large"
-              placeholder=" Number of businesses supported over the last 5 years"
-              onChange={e => onNumberOfBusinessChange(e)}
-              allowClear
-            >
-              {numOfBusinessessSupported.map((value, i) => (
-                <Option value={value} key={i}>
-                  {value}
-                </Option>
-              ))}
-            </Select>
+            />
+          </Form.Item>
+        )}
+        {/* NUMBER OF JOBS CREATED */}
+
+        {/* NUMBER OF SUPPORTED BUSINESSES */}
+        {currentOrganization.is_ecosystem && (
+          <Form.Item
+            name="num_supported_business"
+            rules={[
+              { type: "number", message: "Only numbers are allowed" },
+              {
+                message:
+                  "Please input the number of businesses you've supported!",
+                required: false,
+              },
+            ]}
+          >
+            <InputNumberStyled
+              placeholder="Number of businesses supported over the last 5 years"
+              size="large"
+              type="number"
+            />
           </Form.Item>
         )}
         {/* NUMBER OF SUPPORTED BUSINESSES */}
@@ -380,193 +639,177 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {currentOrganization.is_ecosystem &&
           num_supported_business === "Above 1000" && (
             <Form.Item
-              label="Number of Supported Businesses"
               name="num_supported_business_custom"
               rules={[
                 {
                   message:
                     "Please input the number of businesses you've supported!",
-                  required: true,
+                  required: false,
                 },
               ]}
             >
-              <InputStyled size="large" type="number" />
+              <InputNumberStyled type="number" />
             </Form.Item>
           )}
         {/* NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000 */}
 
         {/* WEBSITE */}
-        <Form.Item label="Website" name="website">
-          <InputStyled size="large" placeholder="Website Address" />
+        <Form.Item name="website">
+          <InputStyled placeholder="Website Address" />
         </Form.Item>
         {/* WEBSITE */}
 
         {/* ORGANIZATION EMAIL */}
-        <Form.Item label="Organization Email" name="email">
-          <InputStyled size="large" placeholder="Email Address" />
+        <Form.Item
+          name="email"
+          rules={[
+            {
+              type: "email",
+              message: "The input is not a valid E-mail!",
+            },
+            {
+              message: "Please input your organization email!",
+              required: false,
+            },
+          ]}
+        >
+          <InputStyled placeholder="Email Address" />
         </Form.Item>
         {/* ORGANIZATION EMAIL */}
 
         {/* ORGANIZATION PHONE */}
-        <Form.Item label="Phone" name="phone">
-          <InputStyled size="large" placeholder="Phone Number" />
+        <Form.Item
+          name="phone"
+          rules={[
+            {
+              message: "Please input your organization phone number !",
+              required: false,
+            },
+          ]}
+        >
+          <InputStyled placeholder="Phone Number" />
         </Form.Item>
         {/* ORGANIZATION PHONE */}
 
-        {/* SOCIAL MEDIA */}
         {[
           { name: "Facebook Url", key: "facebook" },
           { name: "Instagram Url", key: "instagram" },
           { name: "Twitter Url", key: "twitter" },
           { name: "LinkedIn Url", key: "linkedin" },
         ].map((inputField, key) => (
-          <Form.Item key={key} label={inputField.key} name={inputField.key}>
-            <InputStyled size="large" placeholder={inputField.name} />
+          <Form.Item key={key} name={inputField.key}>
+            <InputStyled placeholder={inputField.name} />
           </Form.Item>
         ))}
-        {/* SOCIAL MEDIA */}
 
         <p style={{ fontWeight: "bold" }}>Press Realeases, Web mentions</p>
-
-        {/* WEB MENTIONS */}
         {["Url 1", "Url 2", "Url 3"].map((url, key) => (
-          <Form.Item key={key} label={url} name={url}>
-            <InputStyled size="large" placeholder={url} />
+          <Form.Item
+            key={key}
+            name={url
+              .toLowerCase()
+              .split(" ")
+              .join("_")}
+          >
+            <InputStyled placeholder={url} />
           </Form.Item>
         ))}
-        {/* WEB MENTIONS */}
 
-        {/* COMPANY LOGO */}
         <Form.Item
-          label="Company Logo"
-          name="company_logo"
-          rules={[
-            {
-              message: "Please upload your company logo!",
-              required: false,
-            },
-          ]}
-        >
-          <Upload {...companyLogoProps} listType="picture">
-            <UploadButtonStyled size="large">
-              Upload Company Logo <UploadIcon />
-            </UploadButtonStyled>
-          </Upload>
-        </Form.Item>
-        {/* COMPANY LOGO */}
-
-        {/* CEO IMAGE */}
-        <Form.Item
-          name="ceo_image"
-          rules={[
-            {
-              message: "Please upload your ceo/founder image!",
-              required: false,
-            },
-          ]}
-        >
-          <Upload {...ceoImageProps} listType="picture">
-            <UploadButtonStyled size="large">
-              Upload CEO/Founder Image <UploadIcon />
-            </UploadButtonStyled>
-          </Upload>
-        </Form.Item>
-        {/* CEO IMAGE */}
-
-        {/* BUSINESS RC NUMBER */}
-        <Form.Item
-          label="Business RC Number"
           name="cac_doc"
+          style={{ width: "100%" }}
           rules={[
+            { type: "number", message: "Only numbers are allowed" },
             {
               message: "Please input your Business RC Number!",
               required: false,
             },
           ]}
         >
-          <InputStyled
-            size="large"
-            type="number"
-            placeholder="Business RC Number"
-          />
+          <InputNumberStyled placeholder="Business RC Number" />
         </Form.Item>
-        {/* BUSINESS RC NUMBER */}
 
-        {/* NUMBER OF EMPLOYEES */}
-        <Form.Item
-          label="Number of Employees"
-          name="num_of_employees"
-          rules={[
-            {
-              message: "Please select an option!",
-              required: false,
-            },
-          ]}
-        >
-          <Select
-            placeholder="Number of Employees"
-            onChange={e => onNumberOfEmployeesChange(e)}
-            allowClear
-          >
-            <Option value="1-100">0-9</Option>
-            <Option value="101-200">10-49</Option>
-            <Option value="201-300">50-100</Option>
-            <Option value="301-400">100+</Option>
-          </Select>
-        </Form.Item>
-        {/* NUMBER OF EMPLOYEES */}
+        {currentOrganization.is_entrepreneur && (
+          <Form.Item name="funding" style={{ marginBottom: 0 }}>
+            <InputGroup compact style={{ display: "flex" }}>
+              <Form.Item name="funding_currency">
+                <Select>
+                  <Option value="₦">₦</Option>
+                  {/* <Option value="$">$</Option> */}
+                </Select>
+              </Form.Item>
 
-        {/* FUNDING */}
-        <Form.Item label="Funding" name="funding" style={{ marginBottom: 0 }}>
-          <InputGroup compact style={{ display: "flex" }}>
-            <Form.Item initialValue="₦" name="currency">
-              <Select>
-                <Option value="₦">₦</Option>
-                <Option value="$">$</Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              name="currency_value"
-              style={{ width: "100%" }}
-              rules={[
-                { type: "number", message: "Only Numbers are allowed" },
-                {
-                  message: "Please input this field!",
-                  required: false,
-                },
-              ]}
-            >
-              <InputNumberStyled
-                formatter={value =>
-                  `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
-                parser={value => value.replace(/\bNGN\s?|(,*)/g, "")}
-                placeholder="Funding"
+              <Form.Item
+                name="funding_currency_value"
                 style={{ width: "100%" }}
-              />
-            </Form.Item>
-          </InputGroup>
-        </Form.Item>
-        {/* FUNDING */}
+                rules={[
+                  { type: "number", message: "Only numbers are allowed" },
+                  {
+                    message: "Please enter funding!",
+                    required: false,
+                  },
+                ]}
+              >
+                <InputNumberStyled
+                  size="large"
+                  formatter={value =>
+                    `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  }
+                  parser={value => value.replace(/\bNGN\s?|(,*)/g, "")}
+                  placeholder="Total Funding raised so far"
+                />
+              </Form.Item>
+            </InputGroup>
+          </Form.Item>
+        )}
 
-        {/* DESCRIPTION */}
-        <Form.Item
-          label="Description"
-          name="description"
-          rules={[
-            {
-              message: "please enter company description!",
-              required: false,
-            },
-          ]}
-        >
-          <InputStyled.TextArea
-            size="large"
-            placeholder="Organization Description"
-          />
+        <StyledFormItem name="company_logo">
+          {file.compnay_logo.length === 0 ? (
+            <StyledImage
+              className="styled-img"
+              width={50}
+              height={50}
+              src={currentOrganization.company_logo_url}
+              alt={currentOrganization.name}
+              rounded
+            />
+          ) : null}
+          <Upload
+            className="upload-wrapper"
+            {...companyLogoProps}
+            listType="picture"
+          >
+            <UploadButtonStyled size="large">
+              Upload Company Logo <UploadIcon />
+            </UploadButtonStyled>
+          </Upload>
+        </StyledFormItem>
+
+        <StyledFormItem name="company_logo">
+          {file.ceo_image.length === 0 ? (
+            <StyledImage
+              className="styled-img"
+              width={50}
+              height={50}
+              src={currentOrganization.ceo_image_url}
+              alt={currentOrganization.ceo_name.name}
+              rounded
+            />
+          ) : null}
+          <Upload
+            className="upload-wrapper"
+            {...ceoImageProps}
+            listType="picture"
+          >
+            <UploadButtonStyled size="large">
+              Upload CEO/Founder Image <UploadIcon />
+            </UploadButtonStyled>
+          </Upload>
+        </StyledFormItem>
+
+        <Form.Item name="description">
+          <InputStyled.TextArea placeholder="Organization Description" />
         </Form.Item>
-        {/* DESCRIPTION */}
       </Form>
     </Modal>
   );

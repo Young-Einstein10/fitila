@@ -57,7 +57,7 @@ const EcosystemList: FC = () => {
                   </Link>
                 </Col>
               ))}
-              {user.is_admin && (
+              {user?.is_admin && (
                 <Col
                   className="gutter-row"
                   xs={24}

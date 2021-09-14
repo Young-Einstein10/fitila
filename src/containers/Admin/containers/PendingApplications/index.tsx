@@ -11,7 +11,6 @@ import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import { ImgPlaceholderStyled } from "../helpers";
 import ViewDetails from "./_partials/ViewDetails";
-import styled from "styled-components";
 import numberWithCommas from "../../../../utils/numberFormatter";
 import ReasonModal from "./_partials/ReasonModal";
 
@@ -19,17 +18,6 @@ interface IPendingAppProps {
   isLoading: boolean;
   data: IOrganizationProps[];
 }
-
-const ButtonApproveStyled = styled(Button)`
-  background-color: ${({ theme }) => theme["text-primary"]};
-  color: #fff;
-
-  &:hover {
-    background-color: ${({ theme }) => theme["text-primary"]};
-    border: solid 1px ${({ theme }) => theme["text-primary"]};
-    color: #fff;
-  }
-`;
 
 const PendingApplications = () => {
   const [organizations, setOrganizations] = useState<IPendingAppProps>({
@@ -132,7 +120,7 @@ const PendingApplications = () => {
 
   const columns: any = [
     {
-      title: "Rank",
+      title: "S/N",
       dataIndex: "rank",
       key: "rank",
     },
@@ -211,14 +199,15 @@ const PendingApplications = () => {
       render: (record, key) => {
         return (
           <Space size="middle">
-            <ButtonApproveStyled
+            <Button
+              type="primary"
               onClick={() => {
                 setCurrentListing(record);
                 toggleViewDetailsModal();
               }}
             >
               View Details
-            </ButtonApproveStyled>
+            </Button>
           </Space>
         );
       },

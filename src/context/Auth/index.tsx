@@ -20,6 +20,7 @@ const AuthProvider: FC = ({ children }) => {
   const { setApiHeaders, auth: api } = useApiContext();
 
   const userData = localStorage.getItem("userData");
+  const authData = JSON.parse(userData) as IUserProps;
 
   const refreshToken = async token => {
     try {
@@ -30,17 +31,18 @@ const AuthProvider: FC = ({ children }) => {
 
       const { access, refresh } = data;
 
-      // localStorage.setItem(
-      //   "userData",
-      //   JSON.stringify({ ...authData, access: data.access })
-      // );
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({ ...authData, access, refresh })
+      );
 
-      // setApiHeaders(data.access);
+      setApiHeaders(data.access);
 
       setIsLoading(false);
 
       return { access, refresh, success: true };
     } catch (error) {
+      setIsLoading(false);
       return { access: "", refresh: "", success: false };
     }
   };
@@ -53,17 +55,17 @@ const AuthProvider: FC = ({ children }) => {
 
         try {
           const accessToken = jwt_decode(access) as any;
-          const refreshToken = jwt_decode(refresh) as any;
+          const rToken = jwt_decode(refresh) as any;
 
-          console.log({ access: accessToken, refresh: jwt_decode(refresh) });
+          // console.log({ access: accessToken, refresh: jwt_decode(refresh) });
 
           if (accessToken.exp < new Date().getTime() / 1000) {
-            // const { access, refresh } = await refreshToken(refreshToken)
+            const { success } = await refreshToken(refresh);
 
-            return false;
+            return success;
           }
 
-          if (refreshToken.exp < new Date().getTime() / 1000) {
+          if (rToken.exp < new Date().getTime() / 1000) {
             return false;
           }
         } catch (error) {
@@ -85,10 +87,10 @@ const AuthProvider: FC = ({ children }) => {
 
     const isLoggedIn = await isSignedIn();
 
-    console.log({ isLoggedIn });
-
     if (isLoggedIn) {
       const userDetails = JSON.parse(userData!) as IUserProps;
+
+      setApiHeaders(userDetails.access);
 
       setAuth({
         isAuthenticated: true,

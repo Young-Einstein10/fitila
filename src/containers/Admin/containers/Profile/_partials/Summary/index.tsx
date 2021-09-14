@@ -28,6 +28,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
     company_valuation,
     description,
     phone,
+    no_of_jobs,
     num_supported_business,
     is_ecosystem,
     is_entrepreneur,
@@ -197,6 +198,12 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     <strong>Company Valuation</strong>:{" "}
                     {numberWithCommas(company_valuation) || "--"}
                   </p>
+
+                  {is_entrepreneur && (
+                    <p>
+                      <strong>Number of Jobs</strong>: {no_of_jobs || "--"}
+                    </p>
+                  )}
                 </Col>
 
                 <Col className="profile-summary-data" span={12}>

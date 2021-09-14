@@ -80,7 +80,7 @@ const MenuItems = props => {
         </NavLink>
       </Menu.Item>
 
-      {auth.user.is_admin && (
+      {auth?.user?.is_admin && (
         <Menu.Item
           icon={<LinkedIcon children={<ContactNavIcon />} to={`/d/listings`} />}
           key="/d/listings"
@@ -100,7 +100,7 @@ const MenuItems = props => {
         </NavLink>
       </Menu.Item> */}
 
-      {/* {auth.isAuthenticated && (
+      {/* {auth?.isAuthenticated && (
         <Menu.Item
           icon={<LinkedIcon children={<AccountsNavIcon />} to="/d/account" />}
           key="/d/account"
@@ -111,7 +111,7 @@ const MenuItems = props => {
         </Menu.Item>
       )} */}
 
-      {auth.user.is_admin && (
+      {auth?.user?.is_admin && (
         <Menu.Item
           icon={<LinkedIcon children={<AboutNavIcon />} to="/d/sectors" />}
           key="/d/sectors"
@@ -149,7 +149,7 @@ const MenuItems = props => {
         </NavLink>
       </Menu.Item>
 
-      {auth.user.is_admin && (
+      {auth?.user?.is_admin && (
         <Menu.Item
           icon={<LinkedIcon children={<UserPlus />} to="/d/administrators" />}
           key="/d/administrators"

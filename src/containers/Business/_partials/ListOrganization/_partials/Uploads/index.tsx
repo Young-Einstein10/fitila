@@ -19,7 +19,7 @@ interface IUploadProps {
 }
 
 const Uploads: FC<IUploadProps> = ({ prev, next }) => {
-  const [num_of_employees_custom, setNum_of_employees_custom] = useState();
+  // const [num_of_employees_custom, setNum_of_employees_custom] = useState();
   const [file, setFile] = useState({
     ceo_image: [],
     compnay_logo: [],
@@ -57,9 +57,9 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
     }
   };
 
-  const onNumberOfEmployeesChange = value => {
-    setNum_of_employees_custom(value);
-  };
+  // const onNumberOfEmployeesChange = value => {
+  //   setNum_of_employees_custom(value);
+  // };
 
   const ceoImageProps = {
     onRemove: file => {
@@ -116,9 +116,9 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
         ...state,
         funding_currency: state.funding_currency || "₦",
         funding_currency_value: state.funding,
-        num_of_employees: num_of_employees_custom
-          ? "Above 1000"
-          : state.num_of_employees,
+        // num_of_employees: num_of_employees_custom
+        //   ? "Above 1000"
+        //   : state.num_of_employees,
         num_of_employees_custom: state.num_of_employees,
       }}
     >

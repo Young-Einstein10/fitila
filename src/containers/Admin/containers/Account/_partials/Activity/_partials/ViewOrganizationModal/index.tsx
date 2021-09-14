@@ -31,9 +31,11 @@ const ViewOrganizationModal: FC<IViewProps> = ({
     phone,
     num_supported_business,
     is_ecosystem,
+    no_of_jobs,
     ecosystem_name,
     sub_ecosystem_name,
     sub_ecosystem_sub_class_name,
+    reason_for_decline,
     cac_doc,
     linkedIn,
     twitter,
@@ -116,6 +118,12 @@ const ViewOrganizationModal: FC<IViewProps> = ({
           <strong>Company Valuation</strong>: {company_valuation || "--"}
         </p>
 
+        {currentOrganization.is_entrepreneur && (
+          <p>
+            <strong>Number of Jobs</strong>: {no_of_jobs || "--"}
+          </p>
+        )}
+
         <p>
           <strong>Sector</strong>: {sector_name || "--"}
         </p>
@@ -186,6 +194,13 @@ const ViewOrganizationModal: FC<IViewProps> = ({
           <strong>Date Listed</strong>:{" "}
           {new Date(date_created).toLocaleString() || "--"}
         </p>
+
+        {reason_for_decline && (
+          <p>
+            <strong>Reason for Decline:</strong>
+            {reason_for_decline}
+          </p>
+        )}
       </div>
     </Modal>
   );

@@ -59,7 +59,7 @@ const Help: FC = props => {
             </Heading>
           }
           buttons={
-            user.is_admin
+            user?.is_admin
               ? [
                   <div key="1" className="page-header-actions">
                     <Button
@@ -114,7 +114,7 @@ const Help: FC = props => {
                         >
                           {d.answer}
 
-                          {user.is_admin && (
+                          {user?.is_admin && (
                             <div className="edit-content-btn">
                               <Button
                                 onClick={() => {

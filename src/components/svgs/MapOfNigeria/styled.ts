@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const SVGWrapper = styled.div`
   path {
-    /* fill: #e0e3e5; //#c2c7cc */
+    fill: #e0e3e5; //#c2c7cc */
     outline: none;
-    /* stroke: #5f6772; */
+    stroke: #5f6772;
     stroke-width: 0.5;
     transition: all 0.2s ease-in-out;
     cursor: pointer;

@@ -8,16 +8,12 @@ import { Profile, Security } from "./_partials/Main";
 import Activity from "./_partials/Activity";
 import Favorites from "./_partials/Favorites";
 import { NavLink, RouteComponentProps } from "react-router-dom";
-import { useApiContext, useAuthContext } from "../../../../context";
+import { useApiContext } from "../../../../context";
 import { IUserProfileProps } from "../../../../context/Api/auth";
 
 const Account: FC<RouteComponentProps> = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState<IUserProfileProps>(null);
-
-  const {
-    auth: { user },
-  } = useAuthContext();
 
   const { auth: api } = useApiContext();
 
@@ -69,7 +65,7 @@ const Account: FC<RouteComponentProps> = () => {
       content: (
         <Row gutter={15}>
           <Col xs={24}>
-            <Profile user={user} />
+            <Profile isLoading={isLoading} user={userData} />
 
             <Security />
 

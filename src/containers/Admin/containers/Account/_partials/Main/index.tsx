@@ -14,9 +14,11 @@ import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import { InputStyled } from "../../../../../Styles";
 import { NavLink } from "react-router-dom";
 import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
-import { IUserProps } from "../../../../../../context/Auth/types";
-import { useApiContext } from "../../../../../../context";
-import { IPasswordProps } from "../../../../../../context/Api/auth";
+import { useApiContext, useAuthContext } from "../../../../../../context";
+import {
+  IPasswordProps,
+  IUserProfileProps,
+} from "../../../../../../context/Api/auth";
 
 const { Option } = Select;
 
@@ -220,8 +222,9 @@ const Security = () => {
   );
 };
 
-const Profile: FC<{ user: IUserProps }> = ({
-  user: { phone, email, first_name, last_name, profile_pics_url },
+const Profile: FC<{ isLoading: boolean; user: IUserProfileProps }> = ({
+  isLoading: loading,
+  user,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState({
@@ -229,6 +232,9 @@ const Profile: FC<{ user: IUserProps }> = ({
   });
   const [form] = Form.useForm();
 
+  const {
+    auth: { user: userDetails },
+  } = useAuthContext();
   const { auth } = useApiContext();
 
   const handleSubmit = async values => {
@@ -286,7 +292,7 @@ const Profile: FC<{ user: IUserProps }> = ({
   };
 
   return (
-    <Cards title="Your Profile">
+    <Cards loading={loading} title="Your Profile">
       <Row>
         <Col span={24}>
           <div
@@ -305,9 +311,9 @@ const Profile: FC<{ user: IUserProps }> = ({
                 alignItems: "center",
               }}
             >
-              {profile_pics_url ? (
+              {user?.profile_pics_url ? (
                 <div style={{ width: "135px", height: "135px" }}>
-                  <img src={profile_pics_url} alt="Avatar" />
+                  <img src={user?.profile_pics_url} alt="Avatar" />
                 </div>
               ) : (
                 <UnknownAvatar />
@@ -328,7 +334,9 @@ const Profile: FC<{ user: IUserProps }> = ({
             <Form
               form={form}
               onFinish={handleSubmit}
-              initialValues={{ first_name, last_name, email, phone }}
+              initialValues={{
+                ...userDetails,
+              }}
               name="profile"
               layout="vertical"
             >

@@ -44,7 +44,7 @@ export default class Organization {
   }
 
   declineOrganization(id, reason) {
-    return this.client.post(`/organizations/decline/${id}`, { reason });
+    return this.client.post(`/organizations/decline/${id}/`, { reason });
   }
 
   deleteOrganization(id) {

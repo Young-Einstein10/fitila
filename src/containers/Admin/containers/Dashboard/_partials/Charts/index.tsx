@@ -12,7 +12,7 @@ const Charts = () => {
       <Row gutter={[16, 16]} style={{ marginTop: "2rem" }}>
         {/* ============= Startups Ranking by State ============= */}
         {/* <Col xs={24} sm={24} md={12} lg={8}>
-          <StateChart />
+          <StateChart />`
         </Col> */}
 
         {/* ============= Female and Male Led Startups ============= */}

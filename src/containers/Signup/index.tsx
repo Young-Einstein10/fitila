@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Select, notification, Button } from "antd";
+import { Form, Select, Button } from "antd";
 import { NavLink } from "react-router-dom";
 import { AuthWrapper } from "../Styles";
 import Heading from "../../components/heading/heading";
@@ -23,13 +23,11 @@ const Signup = ({ signupUser, history, auth }) => {
 
       const res = await signup(values);
 
+      console.log(res.data);
+      const { access, refresh, is_admin, ...rest } = res.data.data;
+
       if (res.status >= 200) {
-        notification.success({
-          message:
-            "Your Account Has Been Created Successfully. Please login to access the Dashboard.",
-        });
-        setIsLoading(false);
-        history.push("/login");
+        history.push("/otpverification", { userDetails: { ...rest } });
       }
     } catch (error) {
       setIsLoading(false);

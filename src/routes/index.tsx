@@ -26,6 +26,7 @@ import NonAuthLayout from "../containers/NonAuthLayout";
 import Signup from "../containers/Signup";
 import ForgotPassword from "../containers/ForgotPassword";
 import ConfirmPassword from "../containers/ForgotPassword/confirm";
+import OTPVerification from "../containers/OTPVerification";
 import { AuthRoute, CustomRoute } from "../utils";
 
 const NotFound = () => {
@@ -66,6 +67,7 @@ const Routes = () => {
 
           <Route path="/signin" component={Signin} />
           <Route path="/signup" component={Signup} />
+          <Route path="/otpverification" component={OTPVerification} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
           <Route path="/forgot-password/:token" component={ConfirmPassword} />
           <Route path="*" component={NotFound} />

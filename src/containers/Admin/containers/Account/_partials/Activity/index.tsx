@@ -87,7 +87,7 @@ const Activity: FC<IActivityProps> = ({
           ...org,
           key: org.id,
           rank: key + 1,
-          status: org.is_approved ? "Approved" : "Declined",
+          status: getOrganizationStatus(org),
           company: org.name,
           ceo_name: {
             name: org.ceo_name,

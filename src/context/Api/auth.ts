@@ -9,6 +9,8 @@ export type IUserData = {
   email: string;
   role: string;
   password: string;
+  profile_pics_url?: string;
+  phone?: string;
 };
 
 export type IUserResponseProps = IUserData & {
@@ -41,7 +43,9 @@ export default class Auth {
     return this.client.post("/account/auth/", userDetails);
   }
 
-  signup(userDetails: IUserData): Promise<AxiosResponse<IUserResponseProps>> {
+  signup(
+    userDetails: IUserData
+  ): Promise<AxiosResponse<{ data: IUserResponseProps }>> {
     return this.client.post("/account/user/add_user/", userDetails);
   }
 
@@ -59,6 +63,14 @@ export default class Auth {
     return this.client.post("/account/auth/social/facebook/", {
       auth_token: token,
     });
+  }
+
+  verifyOTP(otp: string) {
+    return this.client.post("/account/otp/", { otp });
+  }
+
+  resendOTP(email: string) {
+    return this.client.post("/account/otp/new/", { email });
   }
 
   refreshToken(

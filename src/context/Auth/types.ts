@@ -5,7 +5,7 @@ interface ContextProps {
   auth: AuthProps;
   setAuth: React.Dispatch<React.SetStateAction<AuthProps>>;
   login: (userData: UserSigninProps) => Promise<AxiosResponse<{ data: IUserResponseProps}>>;
-  signup: (userData: IUserData) => Promise<AxiosResponse<IUserResponseProps>>;
+  signup: (userData: IUserData) => Promise<AxiosResponse<{data: IUserResponseProps}>>;
   signOut: (history: any) => void;
 }
 

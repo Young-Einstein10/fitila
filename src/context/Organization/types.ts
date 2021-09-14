@@ -9,8 +9,10 @@ interface IOrganizationProps {
   sector: string;
   state: string;
   num_of_employees?: string;
+  no_of_jobs?: number;
   ceo_name?: { name: string, avatar: string };
   description?: string;
+  reason_for_decline?: string;
   ecosystem_name?: string;
   sub_ecosystem_name?: string;
   sub_ecosystem_sub_class?: string,
@@ -22,7 +24,7 @@ interface IOrganizationProps {
   sub_ecosystem?: number;
   sector_name?: string;
   market_cap?: string;
-  business_level?: string;
+  business_level?: BusinessLevelProps;
   company_valuation?: string;
   is_startup?: boolean
   num_supported_business?: number;
@@ -46,6 +48,8 @@ interface IOrganizationProps {
   date_updated?: string
 }
 
+
+type BusinessLevelProps = "Micro" | "Small" | "Medium" | "Startup";
 
 interface IOrganizationStateProps {
   isLoading: boolean;
