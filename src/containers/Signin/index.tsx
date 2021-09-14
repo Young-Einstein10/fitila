@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "antd";
 import { GoogleLogin } from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+// import FacebookLoginComp from "react-facebook-login";
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { NavLink } from "react-router-dom";
 import Heading from "../../components/heading/heading";
-import { ReactComponent as FacebookIcon } from "../../static/svg/facebook.svg";
+// import { ReactComponent as FacebookIcon } from "../../static/svg/facebook.svg";
 import { useApiContext, useAuthContext } from "../../context";
 import { useMountedState } from "../../utils/hooks";
 import { InputStyled, AuthWrapper } from "../Styles";
 import { GoogleIcon } from "../../components/svgs";
 import styled from "styled-components";
 
-const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
+// const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const Login = ({ history, location }) => {
@@ -97,9 +98,9 @@ const Login = ({ history, location }) => {
     }
   };
 
-  const facebookResponse = response => {
-    console.log({ response });
-  };
+  // const facebookResponse = response => {
+  //   console.log({ response });
+  // };
 
   const onFailure = error => {
     console.log(error);
@@ -180,22 +181,29 @@ const Login = ({ history, location }) => {
               )}
             />
 
-            <FacebookLogin
+            {/* <FacebookLogin
               appId={FACEBOOK_APP_ID}
-              autoLoad={false}
               fields="name,email,picture"
               callback={facebookResponse}
+              onClick={() => console.log("This is a click")}
               render={renderProps => (
                 <button
                   className="facebook-signin-btn"
                   onClick={renderProps.onClick}
                   disabled={renderProps.disabled}
-                  {...renderProps}
+                  // {...renderProps}
                 >
                   <FacebookIcon /> <span>Signin with Facebook</span>
                 </button>
               )}
             />
+
+            <FacebookLoginComp
+              appId={FACEBOOK_APP_ID}
+              fields="name,email,picture"
+              onClick={() => console.log("This is a click")}
+              callback={facebookResponse}
+            /> */}
           </SocialSigninWrapper>
         </Form>
       </div>
