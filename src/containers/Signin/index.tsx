@@ -104,11 +104,11 @@ const Login = ({ history, location }) => {
       setIsLoading(true);
 
       const {
-        // accessToken,
-        signedRequest,
+        accessToken,
+        // signedRequest,
       } = response;
 
-      const { status, data } = await api.facebookSignin(signedRequest);
+      const { status, data } = await api.facebookSignin(accessToken);
 
       if (status >= 200 && status < 300) {
         const { access } = data;
