@@ -78,6 +78,7 @@ const CardFrame = Styled(Card)`
     font-weight: 700;
     font-size: 16px;
     color: #1D429C; 
+    text-transform: capitalize;
   }
   .ant-card-head-title .ant-page-header-heading-title{
     font-weight: 700;

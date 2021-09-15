@@ -11,6 +11,7 @@ import {
 } from "../../../../../../../../utils/helpers";
 import { abbreviateNumberShort } from "../../../../../../../../utils/numberAbbreviator";
 import { ChartContainer } from "../FemaleBarChart/styled";
+import { ChartLegend } from "./styled";
 
 interface ILineChartProps {
   height?: number;
@@ -101,8 +102,19 @@ const LineChart: FC<ILineChartProps> = props => {
   isChartLoading = false;
 
   const data = {
-    labels: chartLabels || [],
+    labels: chartLabels.map(l => l.substring(0, 2)) || [],
     datasets: chartDatasets || datasets,
+  };
+
+  options.tooltips.callbacks = {
+    ...options.tooltips.callbacks,
+    title(ctx) {
+      const { index } = ctx[0];
+
+      const originalLabel = chartLabels[index];
+
+      return originalLabel;
+    },
   };
 
   const scales = {
@@ -164,10 +176,16 @@ const LineChart: FC<ILineChartProps> = props => {
           }}
         />
       </ChartContainer>
-      {/* 
-      <div>
-        <p>This is the Legend Container</p>
-      </div> */}
+
+      <ChartLegend className="chart-legend">
+        {chartLabels
+          .map(l => l.substring(0, 2))
+          .map((label, i) => (
+            <p>
+              <strong>{label} = </strong> {chartLabels[i]}
+            </p>
+          ))}
+      </ChartLegend>
     </Cards>
   );
 };
@@ -181,7 +199,6 @@ LineChart.defaultProps = {
       borderWidth: 1,
     },
   ],
-
   options: {
     responsive: true,
     maintainAspectRatio: false,
@@ -204,10 +221,8 @@ LineChart.defaultProps = {
       intersect: false,
       backgroundColor: "#000",
       position: "average",
-      // titleFontColor: "#5A5F7D",
       titleFontSize: 13,
       titleSpacing: 15,
-      // bodyFontColor: "#868EAE",
       bodyFontSize: 12,
       borderColor: "#050505",
       borderWidth: 2,
@@ -221,12 +236,9 @@ LineChart.defaultProps = {
         tooltip.displayColors = false;
       },
       callbacks: {
-        title(ctx) {
-          const { label } = ctx[0];
-          return label;
-        },
         label(t, d) {
           const { value } = t;
+
           return `₦${abbreviateNumberShort(Number(value))}`;
         },
         labelColor(tooltipItem, chart) {

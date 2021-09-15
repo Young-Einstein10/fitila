@@ -7,6 +7,7 @@ const PageHeaderStyle = styled(PageHeader)`
   .ant-page-header-heading-title {
     font-size: 24px;
     font-weight: bold;
+    text-transform: capitalize;
   }
 
   & .ant-page-header {

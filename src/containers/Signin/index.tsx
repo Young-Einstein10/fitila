@@ -97,8 +97,38 @@ const Login = ({ history, location }) => {
     }
   };
 
-  const facebookResponse = response => {
+  const facebookResponse = async response => {
     console.log({ response });
+
+    try {
+      console.log(response);
+      setIsLoading(true);
+
+      const {
+        accessToken,
+        // signedRequest
+      } = response;
+
+      const { status, data } = await api.facebookSignin(accessToken);
+
+      if (status >= 200 && status < 300) {
+        const { access } = data;
+
+        localStorage.setItem("userData", JSON.stringify(data));
+
+        setApiHeaders(access);
+
+        setAuth({
+          isAuthenticated: true,
+          user: data,
+        });
+
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   };
 
   const onFailure = error => {

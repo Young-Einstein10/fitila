@@ -4,7 +4,7 @@ import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
 import CreateAdminModal from "./_partials/CreateAdministrators";
-import { useApiContext } from "../../../../context";
+import { useApiContext, useAuthContext } from "../../../../context";
 import { useMountedState } from "../../../../utils/hooks";
 
 const Administrators = () => {
@@ -13,6 +13,9 @@ const Administrators = () => {
   const [users, setUsers] = useState([]);
 
   const { auth: api } = useApiContext();
+  const {
+    auth: { user },
+  } = useAuthContext();
 
   const isMounted = useMountedState();
 
@@ -111,24 +114,25 @@ const Administrators = () => {
     },
   ];
 
+  const isSPAdmin = user?.is_admin && user?.is_staff;
+
   return (
     <AdminSectionWrapper className="administrators">
       <PageHeader
         title="Administrators"
         buttons={[
-          <div key="1" className="page-header-actions">
-            <Button
-              onClick={() => toggleCreateAdminModal()}
-              size="large"
-              type="primary"
-            >
-              Create Administrators
-            </Button>
-          </div>,
+          isSPAdmin ? (
+            <div key="1" className="page-header-actions">
+              <Button
+                onClick={() => toggleCreateAdminModal()}
+                size="large"
+                type="primary"
+              >
+                Create Administrators
+              </Button>
+            </div>
+          ) : null,
         ]}
-        style={{
-          background: "none",
-        }}
       />
 
       <Main>

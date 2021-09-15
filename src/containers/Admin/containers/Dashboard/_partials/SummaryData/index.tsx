@@ -11,6 +11,25 @@ import {
 const CardStyled = Styled(Card)`
   box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
   border-radius: 4px;
+  flex-direction: column;
+
+  .title {
+    color: #81868C;
+    border-radius: 4px;
+    text-transform: capitalize;
+  }
+
+  .description {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+       font-size: 48px;
+       font-weight: bold;
+       margin-bottom: 0;
+    }
+  }
 `;
 
 const SummaryData: FC<{ currEcosystem: IEcosystemProps }> = ({
@@ -20,26 +39,10 @@ const SummaryData: FC<{ currEcosystem: IEcosystemProps }> = ({
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={12} md={8} lg={8}>
         <CardStyled>
-          <p style={{ color: "#81868C", borderRadius: "4px" }}>
-            Number of Organizations
-          </p>
+          <p className="title">Number of Organizations</p>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                fontSize: "48px",
-                fontWeight: "bold",
-                marginBottom: "0px",
-              }}
-            >
-              {currEcosystem.num_of_organization || 0}
-            </p>
+          <div className="description">
+            <p>{currEcosystem.num_of_organization || 0}</p>
             <Icon1 />
           </div>
         </CardStyled>
@@ -47,26 +50,10 @@ const SummaryData: FC<{ currEcosystem: IEcosystemProps }> = ({
 
       <Col xs={24} sm={12} md={8} lg={8}>
         <CardStyled>
-          <p style={{ color: "#81868C", borderRadius: "4px" }}>
-            Number of States
-          </p>
+          <p className="title">Number of States</p>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                fontSize: "48px",
-                fontWeight: "bold",
-                marginBottom: "0px",
-              }}
-            >
-              {currEcosystem.num_of_states || 0}
-            </p>
+          <div className="description">
+            <p>{currEcosystem.num_of_states || 0}</p>
             <StarIcon />
           </div>
         </CardStyled>
@@ -74,26 +61,10 @@ const SummaryData: FC<{ currEcosystem: IEcosystemProps }> = ({
 
       <Col xs={24} sm={12} md={8} lg={8}>
         <CardStyled>
-          <p style={{ color: "#81868C", borderRadius: "4px" }}>
-            Number of Sectors
-          </p>
+          <p className="title">Number of Sectors</p>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                fontSize: "48px",
-                fontWeight: "bold",
-                marginBottom: "0px",
-              }}
-            >
-              {currEcosystem.num_of_sectors || 0}
-            </p>
+          <div className="description">
+            <p>{currEcosystem.num_of_sectors || 0}</p>
             <HandbagIcon />
           </div>
         </CardStyled>

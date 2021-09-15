@@ -20,6 +20,7 @@ const CardStyled = styled(Card)`
   .title {
     color: #81868c;
     border-radius: 4px;
+    text-transform: capitalize;
   }
 
   .content {
