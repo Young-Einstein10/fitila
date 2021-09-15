@@ -88,6 +88,7 @@ const AuthProvider: FC = ({ children }) => {
     const isLoggedIn = await isSignedIn();
 
     if (isLoggedIn) {
+      const userData = localStorage.getItem("userData");
       const userDetails = JSON.parse(userData!) as IUserProps;
 
       setApiHeaders(userDetails.access);
