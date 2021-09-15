@@ -101,15 +101,14 @@ const Login = ({ history, location }) => {
     console.log({ response });
 
     try {
-      console.log(response);
       setIsLoading(true);
 
       const {
-        accessToken,
-        // signedRequest
+        // accessToken,
+        signedRequest,
       } = response;
 
-      const { status, data } = await api.facebookSignin(accessToken);
+      const { status, data } = await api.facebookSignin(signedRequest);
 
       if (status >= 200 && status < 300) {
         const { access } = data;
@@ -215,7 +214,7 @@ const Login = ({ history, location }) => {
               appId={FACEBOOK_APP_ID}
               fields="name,email,picture"
               callback={facebookResponse}
-              autoLoad
+              autoLoad={false}
               render={renderProps => (
                 <Button
                   icon={<FacebookIcon />}
