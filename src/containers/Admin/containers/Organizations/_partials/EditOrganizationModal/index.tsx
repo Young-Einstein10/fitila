@@ -600,15 +600,12 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
             rules={[
               { type: "number", message: "Only numbers are allowed" },
               {
-                message: "Please input the number of jobs created so far!",
-                required: false,
+                message: "Please enter the number of employees!",
+                required: true,
               },
             ]}
           >
-            <InputNumberStyled
-              placeholder="Number of jobs created"
-              size="large"
-            />
+            <InputNumberStyled placeholder="Number of Employees" size="large" />
           </Form.Item>
         )}
         {/* NUMBER OF JOBS CREATED */}

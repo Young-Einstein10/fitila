@@ -9,6 +9,11 @@ export const SVGWrapper = styled.div`
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 
+    :hover {
+      fill: #65b6a6;
+      stroke: #458c7e;
+    }
+
     &.lowest {
       fill: #e0e3e5;
       stroke: #5f6772;

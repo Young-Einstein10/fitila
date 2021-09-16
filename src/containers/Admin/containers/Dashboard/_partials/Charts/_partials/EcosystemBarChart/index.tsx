@@ -54,10 +54,7 @@ const EcosystemBarChart = props => {
   };
 
   return (
-    <Cards
-      loading={isLoading}
-      title="Jobs created by Ecosystem and Enterpreneurs"
-    >
+    <Cards loading={isLoading} title="Jobs Created By Startups and MSMEs">
       <ChartContainer className="parentContainer">
         <Bar
           data={data}

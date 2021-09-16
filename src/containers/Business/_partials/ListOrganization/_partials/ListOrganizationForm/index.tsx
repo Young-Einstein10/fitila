@@ -582,25 +582,22 @@ const ListOrganizationForm = ({ next }) => {
       )}
       {/* COMPANY VALUATION */}
 
-      {/* NUMBER OF JOBS CREATED */}
+      {/* NUMBER OF EMPLOYEES */}
       {state.is_entrepreneur && (
         <Form.Item
           name="no_of_jobs"
           rules={[
             { type: "number", message: "Only numbers are allowed" },
             {
-              message: "Please input the number of jobs created so far!",
+              message: "Please enter the number of employees!",
               required: true,
             },
           ]}
         >
-          <InputNumberStyled
-            placeholder="Number of jobs created"
-            size="large"
-          />
+          <InputNumberStyled placeholder="Number of Employees" size="large" />
         </Form.Item>
       )}
-      {/* NUMBER OF JOBS CREATED */}
+      {/* NUMBER OF EMPLOYEES */}
 
       {/* NUMBER OF SUPPORTED BUSINESSES */}
       {state.business_type === "Ecosystem Enabler" && (

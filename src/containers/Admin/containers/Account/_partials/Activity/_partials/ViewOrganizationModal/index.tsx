@@ -120,7 +120,7 @@ const ViewOrganizationModal: FC<IViewProps> = ({
 
         {currentOrganization.is_entrepreneur && (
           <p>
-            <strong>Number of Jobs</strong>: {no_of_jobs || "--"}
+            <strong>Number of Employees</strong>: {no_of_jobs || "--"}
           </p>
         )}
 

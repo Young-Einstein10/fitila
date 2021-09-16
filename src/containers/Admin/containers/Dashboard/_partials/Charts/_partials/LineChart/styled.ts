@@ -17,7 +17,6 @@ export const ChartLegend = styled.div`
   p {
     margin-bottom: 0;
     align-self: center;
-    justify-self: center;
 
     @media screen and (max-width: 576px) {
       justify-self: center;

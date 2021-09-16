@@ -205,7 +205,7 @@ const Login = ({ history, location }) => {
                   disabled={renderProps.disabled}
                   {...renderProps}
                 >
-                  Signin with Google
+                  Sign In with Google
                 </Button>
               )}
             />
@@ -222,7 +222,7 @@ const Login = ({ history, location }) => {
                   onClick={renderProps.onClick}
                   {...renderProps}
                 >
-                  Signin with Facebook
+                  Sign In with Facebook
                 </Button>
               )}
             />

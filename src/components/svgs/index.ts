@@ -16,3 +16,5 @@ export * from "./Logo";
 export * from "./EcosystemIcon";
 export * from "./GoogleIcon";
 export * from "./FacebookIcon";
+export * from "./BusinessIcon";
+export * from "./SectorIcon";

@@ -5,11 +5,11 @@ import {
   useOrganizationContext,
   useSectorContext,
 } from "../../../../../../context";
-import {
-  Icon1,
-  StarIcon,
-  HandbagIcon,
-} from "../../../../../../components/svgs";
+import { Icon1, StarIcon } from "../../../../../../components/svgs";
+import { ReactComponent as SectorIcon } from "../../../../../../static/svg/sector_icon.svg";
+import { ReactComponent as StartupIcon } from "../../../../../../static/svg/startup_icon.svg";
+import { ReactComponent as BusinessIcon } from "../../../../../../static/svg/business_icon.svg";
+import { ReactComponent as MoneyIcon } from "../../../../../../static/svg/money_icon.svg";
 import numberWithCommas from "../../../../../../utils/numberFormatter";
 import states from "../../../../../../states.json";
 
@@ -95,7 +95,7 @@ const Summary = () => {
 
           <div className="content">
             <p>{sectors.length}</p>
-            <HandbagIcon />
+            <SectorIcon />
           </div>
         </CardStyled>
       </Col>
@@ -106,7 +106,7 @@ const Summary = () => {
 
           <div className="content">
             <p>{numOfStartUps}</p>
-            <HandbagIcon />
+            <StartupIcon />
           </div>
         </CardStyled>
       </Col>
@@ -120,7 +120,7 @@ const Summary = () => {
 
           <div className="content">
             <p>{numOfFemaleFounders}</p>
-            <HandbagIcon />
+            <BusinessIcon />
           </div>
         </CardStyled>
       </Col>
@@ -133,7 +133,7 @@ const Summary = () => {
 
           <div className="content">
             <p>₦{numberWithCommas(totalFundingDisbursedForSupport) || 0}</p>
-            <HandbagIcon />
+            <MoneyIcon />
           </div>
         </CardStyled>
       </Col>

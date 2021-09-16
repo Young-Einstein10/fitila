@@ -3,14 +3,13 @@ import { Menu } from "antd";
 import { NavLink, useLocation, withRouter } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 import { ReactComponent as DashboardIcon } from "../../static/svg/dashboardIcon.svg";
-import { ReactComponent as OrganizationNavIcon } from "../../static/svg/orgNavIcon.svg";
+// import { ReactComponent as OrganizationNavIcon } from "../../static/svg/orgNavIcon.svg";
 import { ReactComponent as HelpNavIcon } from "../../static/svg/helpNavIcon.svg";
-// import { ReactComponent as AccountsNavIcon } from "../../static/svg/accountsNavIcon.svg";
 import { ReactComponent as ContactNavIcon } from "../../static/svg/contactNavIcon.svg";
-// import { ReactComponent as LogOutNavIcon } from "../../static/svg/logoutNavIcon.svg";
 import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.svg";
+import { ReactComponent as AboutIcon } from "../../static/svg/about_icon.svg";
 import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
-import { EcosystemIcon } from "../../components/svgs";
+import { BusinessIcon, EcosystemIcon, SectorIcon } from "../../components/svgs";
 import { useAuthContext, useEcosystemContext } from "../../context";
 
 const { SubMenu } = Menu;
@@ -68,10 +67,7 @@ const MenuItems = props => {
 
       <Menu.Item
         icon={
-          <LinkedIcon
-            to={`/d/organizations`}
-            children={<OrganizationNavIcon />}
-          />
+          <LinkedIcon to={`/d/organizations`} children={<BusinessIcon />} />
         }
         key="/d/organizations"
       >
@@ -82,7 +78,7 @@ const MenuItems = props => {
 
       {auth?.user?.is_admin && (
         <Menu.Item
-          icon={<LinkedIcon children={<ContactNavIcon />} to={`/d/listings`} />}
+          icon={<LinkedIcon children={<AboutNavIcon />} to={`/d/listings`} />}
           key="/d/listings"
         >
           <NavLink onClick={toggleCollapsed} to={`/d/listings`}>
@@ -113,7 +109,7 @@ const MenuItems = props => {
 
       {auth?.user?.is_admin && (
         <Menu.Item
-          icon={<LinkedIcon children={<AboutNavIcon />} to="/d/sectors" />}
+          icon={<LinkedIcon children={<SectorIcon />} to="/d/sectors" />}
           key="/d/sectors"
         >
           <NavLink onClick={toggleCollapsed} to={`/d/sectors`}>
@@ -132,7 +128,7 @@ const MenuItems = props => {
       </Menu.Item>
 
       <Menu.Item
-        icon={<LinkedIcon children={<AboutNavIcon />} to="/d/about" />}
+        icon={<LinkedIcon children={<AboutIcon />} to="/d/about" />}
         key="/d/about"
       >
         <NavLink onClick={toggleCollapsed} to={`/d/about`}>

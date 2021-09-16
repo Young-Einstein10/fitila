@@ -2,11 +2,7 @@ import React, { FC } from "react";
 import { Row, Col, Card } from "antd";
 import Styled from "styled-components";
 import { IEcosystemProps } from "../../../../../../context/Ecosystem/types";
-import {
-  Icon1,
-  StarIcon,
-  HandbagIcon,
-} from "../../../../../../components/svgs";
+import { Icon1, StarIcon, SectorIcon } from "../../../../../../components/svgs";
 
 const CardStyled = Styled(Card)`
   box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04);
@@ -65,7 +61,7 @@ const SummaryData: FC<{ currEcosystem: IEcosystemProps }> = ({
 
           <div className="description">
             <p>{currEcosystem.num_of_sectors || 0}</p>
-            <HandbagIcon />
+            <SectorIcon width="34" height="34" fill="#0D79DF" />
           </div>
         </CardStyled>
       </Col>
