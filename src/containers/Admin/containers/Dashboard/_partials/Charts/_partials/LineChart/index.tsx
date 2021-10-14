@@ -178,13 +178,15 @@ const LineChart: FC<ILineChartProps> = props => {
       </ChartContainer>
 
       <ChartLegend className="chart-legend">
-        {chartLabels
-          .map(l => l.substring(0, 2))
-          .map((label, i) => (
-            <p>
-              <strong>{label} = </strong> {chartLabels[i]}
-            </p>
-          ))}
+        {chartLabels.length
+          ? chartLabels
+              .map(l => l.substring(0, 2))
+              .map((label, i) => (
+                <p key={i}>
+                  <strong>{label} = </strong> {chartLabels[i]}
+                </p>
+              ))
+          : null}
       </ChartLegend>
     </Cards>
   );

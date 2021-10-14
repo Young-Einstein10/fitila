@@ -1,117 +1,3 @@
-export const stateColors = [
-  {
-    abia: "#9BA2AB",
-  },
-  {
-    adamawa: "#E0E3E5",
-  },
-  {
-    "akwa ibom": "#828B96",
-  },
-  {
-    anambra: "#9BA2AB",
-  },
-  {
-    bauchi: "#E0E3E5",
-  },
-  {
-    benue: "#C2C7CC",
-  },
-  {
-    borno: "#C2C7CC",
-  },
-  {
-    bayelsa: "#828B96",
-  },
-  {
-    "cross river": "#E0E3E5",
-  },
-  {
-    delta: "#828B96",
-  },
-  {
-    ebonyi: "#B1B7BE",
-  },
-  {
-    edo: "#828B96",
-  },
-  {
-    ekiti: "#E0E3E5",
-  },
-  {
-    enugu: "#9BA2AB",
-  },
-  {
-    fct: "#EAE7E7",
-  },
-  {
-    gombe: "#C2C7CC",
-  },
-  {
-    imo: "#B1B7BE",
-  },
-  {
-    jigawa: "#C2C7CC",
-  },
-  {
-    kaduna: "#9BA2AB",
-  },
-  {
-    kebbi: "#B1B7BE",
-  },
-  {
-    kano: "#828B96",
-  },
-  {
-    kogi: "#B1B7BE",
-  },
-  {
-    katsina: "#9BA2AB",
-  },
-  {
-    kwara: "#B1B7BE",
-  },
-  {
-    lagos: "#828B96",
-  },
-  {
-    nasarawa: "#C2C7CC",
-  },
-  {
-    niger: "#B1B7BE",
-  },
-  {
-    ogun: "#9BA2AB",
-  },
-  {
-    ondo: "#9BA2AB",
-  },
-  {
-    osun: "#E0E3E5",
-  },
-  {
-    oyo: "#E0E3E5",
-  },
-  {
-    plateau: "#E0E3E5",
-  },
-  {
-    rivers: "#828B96",
-  },
-  {
-    sokoto: "#C2C7CC",
-  },
-  {
-    taraba: "#C2C7CC",
-  },
-  {
-    yobe: "#B1B7BE",
-  },
-  {
-    zamfara: "#B1B7BE",
-  },
-];
-
 export const colorRanges = {
   lowest: ["#cb7676", "#df2020"],
   low: ["#edcaa6", "#d07e2a"],
@@ -119,3 +5,43 @@ export const colorRanges = {
   high: ["#c8e9e3", "#369494"],
   highest: ["#65b6a6", "#458c7e"],
 };
+
+export const stateJson = [
+  { color: "#253A53", state: "abia" },
+  { color: "#979511", state: "adamawa" },
+  { color: "#B6267A", state: "akwa ibom" },
+  { color: "#E60BE9", state: "anambra" },
+  { color: "#EF06F7", state: "bauchi" },
+  { color: "#69F027", state: "benue" },
+  { color: "#9EF984", state: "borno" },
+  { color: "#9B0739", state: "bayelsa" },
+  { color: "#AD569A", state: "cross river" },
+  { color: "#CCBE30", state: "delta" },
+  { color: "#8874E2", state: "ebonyi" },
+  { color: "#0BDC73", state: "edo" },
+  { color: "#59655A", state: "ekiti" },
+  { color: "#D4AC5A", state: "enugu" },
+  { color: "#435292", state: "abuja" },
+  { color: "#144199", state: "gombe" },
+  { color: "#073217", state: "imo" },
+  { color: "#BE9F67", state: "jigawa" },
+  { color: "#E16B96", state: "kaduna" },
+  { color: "#8474E8", state: "kebbi" },
+  { color: "#5D6778", state: "kano" },
+  { color: "#25DE28", state: "kogi" },
+  { color: "#CA23FB", state: "katsina" },
+  { color: "#9D6D7E", state: "kwara" },
+  { color: "#0A8957", state: "lagos" },
+  { color: "#D00436", state: "nassarawa" },
+  { color: "#99C687", state: "niger" },
+  { color: "#F91949", state: "ogun" },
+  { color: "#1AA2CE", state: "ondo" },
+  { color: "#220407", state: "osun" },
+  { color: "#A6180F", state: "oyo" },
+  { color: "#8ADEC6", state: "plateau" },
+  { color: "#F6726E", state: "rivers" },
+  { color: "#C83AC4", state: "sokoto" },
+  { color: "#84E2D0", state: "taraba" },
+  { color: "#371BC8", state: "yobe" },
+  { color: "#9A9513", state: "zamfara" },
+];

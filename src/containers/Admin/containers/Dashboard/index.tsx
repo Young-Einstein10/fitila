@@ -79,7 +79,6 @@ const Dashboard: FC<RouteComponentProps> = () => {
 
         <Row gutter={15}>
           <Col xs={24}>
-            {/* // more={TableOptions()} */}
             <Cards title={tableHeader}>
               <Table
                 className="table-responsive"

@@ -155,8 +155,8 @@ FemaleBarChart.defaultProps = {
           //   beginAtZero: true,
           //   fontSize: 13,
           //   fontColor: "#182b49",
-          //   max: 400,
-          //   stepSize: 50,
+            // max: 400,
+            // stepSize: 50,
           //   callback(value, index, values) {
           //     return `${value}`;
           //   },
