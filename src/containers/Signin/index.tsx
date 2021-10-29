@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "antd";
 import { GoogleLogin } from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { NavLink } from "react-router-dom";
 import Heading from "../../components/heading/heading";
-import { ReactComponent as FacebookIcon } from "../../static/svg/facebook.svg";
+// import { ReactComponent as FacebookIcon } from "../../static/svg/facebook.svg";
 import { useApiContext, useAuthContext } from "../../context";
 import { useMountedState } from "../../utils/hooks";
 import { InputStyled, AuthWrapper } from "../Styles";
 import { GoogleIcon } from "../../components/svgs";
 import styled from "styled-components";
 
-const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
+// const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;/
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const Login = ({ history, location }) => {
@@ -97,38 +97,38 @@ const Login = ({ history, location }) => {
     }
   };
 
-  const facebookResponse = async response => {
-    console.log({ response });
+  // const facebookResponse = async response => {
+  //   console.log({ response });
 
-    try {
-      setIsLoading(true);
+  //   try {
+  //     setIsLoading(true);
 
-      const {
-        accessToken,
-        // signedRequest,
-      } = response;
+  //     const {
+  //       accessToken,
+  //       // signedRequest,
+  //     } = response;
 
-      const { status, data } = await api.facebookSignin(accessToken);
+  //     const { status, data } = await api.facebookSignin(accessToken);
 
-      if (status >= 200 && status < 300) {
-        const { access } = data;
+  //     if (status >= 200 && status < 300) {
+  //       const { access } = data;
 
-        localStorage.setItem("userData", JSON.stringify(data));
+  //       localStorage.setItem("userData", JSON.stringify(data));
 
-        setApiHeaders(access);
+  //       setApiHeaders(access);
 
-        setAuth({
-          isAuthenticated: true,
-          user: data,
-        });
+  //       setAuth({
+  //         isAuthenticated: true,
+  //         user: data,
+  //       });
 
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-    }
-  };
+  //       setIsLoading(false);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const onFailure = error => {
     console.log(error);
@@ -210,7 +210,7 @@ const Login = ({ history, location }) => {
               )}
             />
 
-            <FacebookLogin
+            {/* <FacebookLogin
               appId={FACEBOOK_APP_ID}
               fields="name,email,picture"
               callback={facebookResponse}
@@ -225,7 +225,7 @@ const Login = ({ history, location }) => {
                   Sign In with Facebook
                 </Button>
               )}
-            />
+            /> */}
           </SocialSigninWrapper>
         </Form>
       </div>
