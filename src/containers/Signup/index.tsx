@@ -23,7 +23,6 @@ const Signup = ({ signupUser, history, auth }) => {
 
       const res = await signup(values);
 
-      console.log(res.data);
       const { access, refresh, is_admin, ...rest } = res.data.data;
 
       if (res.status >= 200) {

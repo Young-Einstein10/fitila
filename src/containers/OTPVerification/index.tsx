@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useHistory, useLocation } from "react-router-dom";
 import { Button, Form, message, Modal } from "antd";
 import { AuthWrapper, InputStyled } from "../Styles";
@@ -15,8 +15,16 @@ const OTPVerification = () => {
 
   const history = useHistory();
   const {
-    state: { email },
-  } = useLocation<IUserData>();
+    state: {
+      userDetails: { email },
+    },
+  } = useLocation<{ userDetails: IUserData }>();
+
+  useEffect(() => {
+    if (!email) {
+      history.push("/signin");
+    }
+  }, [email, history]);
 
   const handleSubmit = async () => {
     try {
@@ -24,9 +32,7 @@ const OTPVerification = () => {
 
       setIsLoading(true);
 
-      const { status, data } = await api.verifyOTP(values.otp);
-
-      console.log(data);
+      const { status } = await api.verifyOTP(values.otp);
 
       if (status >= 200 && status < 300) {
         setIsLoading(false);
@@ -48,9 +54,7 @@ const OTPVerification = () => {
     e.preventDefault();
 
     try {
-      const { status, data } = await api.resendOTP(email);
-
-      console.log(data);
+      const { status } = await api.resendOTP(email);
 
       if (status >= 200 && status < 300) {
         message.success("OTP Verification has been resent successfully.", 5);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Button, Form } from "antd";
+import { Button, Form, Modal } from "antd";
 import styled from "styled-components";
 import Heading from "../../components/heading/heading";
 import { useApiContext } from "../../context";
@@ -8,7 +8,7 @@ import { AuthWrapper, InputStyled } from "../Styles";
 
 const ForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [msg, setMsg] = useState("");
+  const [msg] = useState("");
 
   const [form] = Form.useForm();
   const { auth: api } = useApiContext();
@@ -26,7 +26,9 @@ const ForgotPassword = () => {
       if (status >= 200 && status < 300) {
         setIsLoading(false);
 
-        setMsg("A reset link has to been sent to your email.");
+        Modal.success({
+          title: "A reset link has to been sent to your email.",
+        });
       }
     } catch (error) {
       setIsLoading(false);

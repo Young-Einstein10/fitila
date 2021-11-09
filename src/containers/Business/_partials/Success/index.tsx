@@ -34,7 +34,7 @@ const Success = () => {
                   state.business_type === "Enterpreneur"
                     ? "Business"
                     : "Organization"
-                } on the Enterprise Data Map. A confirmation link has been sent to your email. Please follow the link to complete this process.`}
+                } on the Enterprise DataMap Platform. A confirmation email has been sent to you. `}
               </p>
             </div>
 

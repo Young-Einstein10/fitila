@@ -29,6 +29,15 @@ const AuthProvider: FC = ({ children }) => {
       // Get New access token using refresh token and save update value in local storage
       const { data } = await api.refreshToken(token);
 
+      if (data.detail === "Token is blacklisted") {
+        setIsLoading(false);
+
+        // login again to get new set of tokens
+        setApiHeaders("");
+
+        return { success: false };
+      }
+
       const { access, refresh } = data;
 
       localStorage.setItem(
@@ -110,6 +119,8 @@ const AuthProvider: FC = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {}, []);
+
   const login = async (userData: { email: string; password: string }) => {
     try {
       const res = await api.login(userData);
@@ -123,9 +134,7 @@ const AuthProvider: FC = ({ children }) => {
     try {
       const res = await api.signup(userData);
       return res;
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const signOut = history => {

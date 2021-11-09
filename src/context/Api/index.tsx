@@ -24,6 +24,8 @@ const ApiContext = createContext<ContextProps | undefined>(undefined);
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+const userData = JSON.parse(localStorage.getItem("userData")!);
+
 //Staging endpoint
 const axiosInstance = axios.create({
   baseURL: `${BASE_URL}/api/v1`,
@@ -64,11 +66,62 @@ const ApiProvider: FC = ({ children }) => {
         // Do something with response data
         return response;
       },
-      function(error) {
+      async function(error) {
         console.log(error.response);
         // Do something with response error
         const errorResponse = error.response;
-        // const errorRequest = error.request;
+        const originalConfig = error.config;
+
+        if (errorResponse.data.detail === "Token is blacklisted") {
+          // login again to get new set of tokens
+          setApiHeaders("");
+
+          localStorage.removeItem("userData");
+
+          window.location.href = "/signin";
+
+          dispatch({
+            type: "GET_ERRORS",
+            payload: {
+              message: "Session has expired. Please login again.",
+            },
+          });
+
+          return Promise.reject(error);
+        }
+
+        if (
+          errorResponse.status === 401 &&
+          errorResponse.data.detail !== "Token is blacklisted" &&
+          !originalConfig._retry
+        ) {
+          originalConfig._retry = true;
+
+          try {
+            const { data } = await axiosInstance.post(
+              "/account/auth/token/refresh/",
+              {
+                refresh: userData.refresh,
+              }
+            );
+
+            console.log({ data });
+
+            const { access, refresh } = data;
+
+            localStorage.setItem(
+              "userData",
+              JSON.stringify({ ...userData, access, refresh })
+            );
+
+            originalConfig.headers["authorization"] = `Bearer ${access}`;
+            setApiHeaders(access);
+
+            return axiosInstance(originalConfig);
+          } catch (error) {
+            return Promise.reject(error);
+          }
+        }
 
         errorResponse &&
           dispatch({

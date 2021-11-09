@@ -75,7 +75,9 @@ export default class Auth {
 
   refreshToken(
     refresh: string
-  ): Promise<AxiosResponse<{ refresh: string; access: string }>> {
+  ): Promise<
+    AxiosResponse<{ refresh: string; access: string; detail?: string }>
+  > {
     return this.client.post("/account/auth/token/refresh/", { refresh });
   }
 
@@ -92,10 +94,7 @@ export default class Auth {
   }
 
   confirmPassword(data: { password: string; token: string }) {
-    return this.client.post(
-      "​/account​/user​/forget_password​/confirm​/",
-      data
-    );
+    return this.client.post("/account/user/forget_password/confirm/", data);
   }
 
   validateToken(data: { token: string }) {

@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Button, Form } from "antd";
+import { Button, Form, Modal } from "antd";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import Heading from "../../components/heading/heading";
 import { useApiContext } from "../../context";
 import { AuthWrapper, InputStyled } from "../Styles";
-import styled from "styled-components";
 
 const ConfirmPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [msg, setMsg] = useState("");
 
   const [form] = Form.useForm();
   const { auth: api } = useApiContext();
@@ -28,7 +26,10 @@ const ConfirmPassword = () => {
 
       if (status >= 200 && status < 300) {
         setIsLoading(false);
-        setMsg("Your password has been changed successfully.");
+
+        Modal.success({
+          title: "Your password has been changed successfully.",
+        });
       }
     } catch (error) {
       setIsLoading(false);
@@ -72,24 +73,9 @@ const ConfirmPassword = () => {
             <NavLink to="/signup">Sign up here</NavLink>
           </p>
         </Form>
-
-        {msg && (
-          <StyledAlert className="mt-3 mb-0 text-center" color="success">
-            A Reset Link Has been sent to your email to change your password
-          </StyledAlert>
-        )}
       </div>
     </AuthWrapper>
   );
 };
 
 export default ConfirmPassword;
-
-const StyledAlert = styled.div`
-  margin-top: 3rem;
-  text-align: center;
-  background-color: #68b77a;
-  border: 2px solid #68b77a;
-  border-radius: 8px;
-  padding: 1rem;
-`;
