@@ -24,8 +24,6 @@ const ApiContext = createContext<ContextProps | undefined>(undefined);
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const userData = JSON.parse(localStorage.getItem("userData")!);
-
 //Staging endpoint
 const axiosInstance = axios.create({
   baseURL: `${BASE_URL}/api/v1`,
@@ -96,6 +94,9 @@ const ApiProvider: FC = ({ children }) => {
           !originalConfig._retry
         ) {
           originalConfig._retry = true;
+
+          const stringedAuthData = localStorage.getItem("userData");
+          const userData = JSON.parse(stringedAuthData!);
 
           try {
             const { data } = await axiosInstance.post(
