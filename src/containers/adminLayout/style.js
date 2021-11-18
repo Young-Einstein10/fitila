@@ -250,8 +250,8 @@ const Div = styled.div`
         .ant-menu-submenu {
           padding-left: 3rem;
 
-          @media screen and (max-width: 1200px) and (min-width: 1151px) {
-            padding-left: 0;
+          @media screen and (max-width: 1200px) and (min-width: 1150px) {
+            padding-left: 0px;
           }
 
           .ant-menu-submenu-title {
@@ -443,8 +443,13 @@ const Div = styled.div`
     margin-left: 300px;
     margin-top: 76px;
     transition: 0.3s ease;
+
     @media only screen and (max-width: 1150px) {
       margin-left: auto !important;
+    }
+
+    @media screen and (max-width: 1200px) and (min-width: 1150px) {
+      margin-left: 80px;
     }
 
     .ant-layout-content {
