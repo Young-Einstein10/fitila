@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
 import { Col, Row, Spin } from "antd";
-import { Link } from "react-router-dom";
 import { Geocode } from "./Geocode";
 import {
   useLoadScript,
@@ -219,33 +218,53 @@ const Contact: FC<ContactProps> = props => {
                   <SocialWrapper>
                     {twitter && (
                       <li>
-                        <Link className="facebook-sign" to="#">
+                        <a
+                          className="facebook-sign"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          href={twitter}
+                        >
                           <Twitter />
-                        </Link>
+                        </a>
                       </li>
                     )}
 
                     {facebook && (
                       <li>
-                        <Link className="facebook-sign" to="#">
+                        <a
+                          className="facebook-sign"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          href={facebook}
+                        >
                           <FacebookIcon />
-                        </Link>
+                        </a>
                       </li>
                     )}
 
                     {instagram && (
                       <li>
-                        <Link className="twitter-sign" to="#">
+                        <a
+                          className="twitter-sign"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          href={instagram}
+                        >
                           <Instagram />
-                        </Link>
+                        </a>
                       </li>
                     )}
 
                     {linkedIn && (
                       <li>
-                        <Link className="facebook-sign" to="#">
+                        <a
+                          className="facebook-sign"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          href={linkedIn}
+                        >
                           <LinkedIn />
-                        </Link>
+                        </a>
                       </li>
                     )}
                   </SocialWrapper>
