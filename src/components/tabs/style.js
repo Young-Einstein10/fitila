@@ -74,6 +74,11 @@ const TabBasic = styled(Tabs)`
     background: #fff;
     padding-right: 1.3rem;
     margin-bottom: 0;
+    position: fixed !important;
+    top: 76px;
+    right: 0;
+    left: 300px;
+    z-index: 3;
 
     .ant-tabs-tab {
       margin: 15px 0;
@@ -84,6 +89,10 @@ const TabBasic = styled(Tabs)`
     .ant-tabs-tab:first-child {
       margin-left: 1.3rem;
     }
+  }
+
+  & > .ant-tabs-content-holder {
+    margin-top: 62px;
   }
 `;
 

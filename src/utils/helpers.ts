@@ -20,6 +20,10 @@ export const capitalize = str => {
   }
 };
 
+export const startWithHttp = (url: string) => {
+  return url.startsWith("https") ? url : `https://${url}`;
+};
+
 export function getRandomColor() {
   var letters = "0123456789ABCDEF";
   var color = "#";

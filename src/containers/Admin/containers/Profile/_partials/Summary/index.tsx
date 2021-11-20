@@ -5,7 +5,7 @@ import { IOrganizationProps } from "../../../../../../context/Organization/types
 import { RowStyled, StyledCompanyLogo } from "./styled";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
 import Heading from "../../../../../../components/heading/heading";
-import { capitalize } from "../../../../../../utils/helpers";
+import { capitalize, startWithHttp } from "../../../../../../utils/helpers";
 import numberWithCommas from "../../../../../../utils/numberFormatter";
 
 interface ISummaryProps {
@@ -240,7 +240,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     <strong>LinkedIn</strong>:{" "}
                     {(linkedIn && (
                       <a
-                        href={linkedIn}
+                        href={startWithHttp(linkedIn)}
                         target="_blank"
                         rel="noreferrer noopener"
                       >
@@ -254,7 +254,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     <strong>Twitter</strong>:{" "}
                     {(twitter && (
                       <a
-                        href={twitter}
+                        href={startWithHttp(twitter)}
                         target="_blank"
                         rel="noreferrer noopener"
                       >
@@ -268,7 +268,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     <strong>Facebook</strong>:{" "}
                     {(facebook && (
                       <a
-                        href={facebook}
+                        href={startWithHttp(facebook)}
                         target="_blank"
                         rel="noreferrer noopener"
                       >
@@ -282,7 +282,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     <strong>Website</strong>:{" "}
                     {(website && (
                       <a
-                        href={website}
+                        href={startWithHttp(website)}
                         target="_blank"
                         rel="noreferrer noopener"
                       >

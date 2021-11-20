@@ -16,6 +16,7 @@ import { IOrganizationProps } from "../../../../../../context/Organization/types
 import ErrorMsg from "../../../../../../components/messages/error";
 import { SocialWrapper } from "./styled";
 import { FacebookIcon } from "../../../../../../components/svgs";
+import { startWithHttp } from "../../../../../../utils/helpers";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const sampleAddress = `
@@ -207,7 +208,11 @@ const Contact: FC<ContactProps> = props => {
                   </h2>
                   <p>{address}</p>
 
-                  <a href={website} target="_blank" rel="noreferrer noopener">
+                  <a
+                    href={startWithHttp(website)}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
                     {website}
                   </a>
 
@@ -222,7 +227,7 @@ const Contact: FC<ContactProps> = props => {
                           className="facebook-sign"
                           target="_blank"
                           rel="noreferrer noopener"
-                          href={twitter}
+                          href={startWithHttp(twitter)}
                         >
                           <Twitter />
                         </a>
@@ -235,7 +240,7 @@ const Contact: FC<ContactProps> = props => {
                           className="facebook-sign"
                           target="_blank"
                           rel="noreferrer noopener"
-                          href={facebook}
+                          href={startWithHttp(facebook)}
                         >
                           <FacebookIcon />
                         </a>
@@ -248,7 +253,7 @@ const Contact: FC<ContactProps> = props => {
                           className="twitter-sign"
                           target="_blank"
                           rel="noreferrer noopener"
-                          href={instagram}
+                          href={startWithHttp(instagram)}
                         >
                           <Instagram />
                         </a>
@@ -261,7 +266,7 @@ const Contact: FC<ContactProps> = props => {
                           className="facebook-sign"
                           target="_blank"
                           rel="noreferrer noopener"
-                          href={linkedIn}
+                          href={startWithHttp(linkedIn)}
                         >
                           <LinkedIn />
                         </a>

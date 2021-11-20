@@ -140,11 +140,16 @@ const Segment: FC<RouteComponentProps> = () => {
               <Spin indicator={LoadingSpinner} />
             </SpinnerStyled>
           ) : (
-            <TabBasic defaultActiveKey="1" tabPosition={"top"}>
+            <TabBasic
+              defaultActiveKey="1"
+              tabPosition={"top"}
+              onChange={() => window.scrollTo(0, 0)}
+            >
               {ecosystemTabData.length &&
                 ecosystemTabData.map(item => {
                   const { content: tabContent, tabTitle } = item;
                   counter += 1;
+
                   return (
                     <Child tab={tabTitle} key={counter}>
                       <div>

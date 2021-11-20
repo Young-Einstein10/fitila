@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { TabBasic, Child } from "./style";
 
 const Tab = props => {
-  const { data, tabPosition, color } = props;
+  const { data, tabPosition, color, onChange } = props;
   let counter = 0;
 
   return (
@@ -12,6 +12,7 @@ const Tab = props => {
       color={color && color}
       defaultActiveKey="1"
       tabPosition={tabPosition !== undefined ? tabPosition : "top"}
+      onChange={onChange}
     >
       {data.map(item => {
         const { title, content, icon, tabTitle } = item;
@@ -43,6 +44,7 @@ const Tab = props => {
 Tab.propTypes = {
   color: PropTypes.string,
   tabPosition: PropTypes.string,
+  onChange: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.object),
 };
 
