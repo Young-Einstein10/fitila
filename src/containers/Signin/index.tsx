@@ -131,7 +131,7 @@ const Login = ({ history, location }) => {
   // };
 
   const onFailure = error => {
-    console.log(error);
+    // console.log(error);
   };
 
   return (

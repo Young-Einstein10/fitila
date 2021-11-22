@@ -80,6 +80,14 @@ const TabBasic = styled(Tabs)`
     left: 300px;
     z-index: 3;
 
+    @media only screen and (max-width: 1150px) {
+      left: 0;
+    }
+
+    @media screen and (max-width: 1200px) and (min-width: 1150px) {
+      left: 80px;
+    }
+
     .ant-tabs-tab {
       margin: 15px 0;
       padding: 5px 15px;

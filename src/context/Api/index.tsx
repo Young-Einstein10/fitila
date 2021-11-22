@@ -85,7 +85,7 @@ const ApiProvider: FC = ({ children }) => {
             },
           });
 
-          return Promise.reject(error);
+          // return Promise.reject(error);
         }
 
         if (
@@ -120,7 +120,7 @@ const ApiProvider: FC = ({ children }) => {
 
             return axiosInstance(originalConfig);
           } catch (error) {
-            return Promise.reject(error);
+            // return Promise.reject(error);
           }
         }
 
