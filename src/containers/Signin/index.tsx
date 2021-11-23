@@ -162,7 +162,10 @@ const Login = ({ history, location }) => {
 
           <Form.Item
             name="password"
-            rules={[{ message: "Please input your password", required: true }]}
+            rules={[
+              { message: "Please input your password", required: true },
+              // { min: 8, message: "Password must be at least 8 characters" },
+            ]}
           >
             <InputStyled.Password placeholder="Password" />
           </Form.Item>

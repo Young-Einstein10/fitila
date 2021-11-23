@@ -4,9 +4,11 @@ import { NavLink, useRouteMatch } from "react-router-dom";
 import Heading from "../../components/heading/heading";
 import { useApiContext } from "../../context";
 import { AuthWrapper, InputStyled } from "../Styles";
+import ErrorComponent from "../../components/errorComponent";
 
 const ConfirmPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const [form] = Form.useForm();
   const { auth: api } = useApiContext();
@@ -17,12 +19,11 @@ const ConfirmPassword = () => {
 
   const handleSubmit = async () => {
     try {
+      setErrors([]);
       const values = (await form.validateFields()) as { password: string };
       setIsLoading(true);
 
-      const { status, data } = await api.confirmPassword({ ...values, token });
-
-      console.log(data);
+      const { status } = await api.confirmPassword({ ...values, token });
 
       if (status >= 200 && status < 300) {
         setIsLoading(false);
@@ -30,9 +31,13 @@ const ConfirmPassword = () => {
         Modal.success({
           title: "Your password has been changed successfully.",
         });
+
+        form.resetFields();
       }
     } catch (error) {
       setIsLoading(false);
+
+      setErrors(error.response.data.password);
     }
   };
 
@@ -51,7 +56,10 @@ const ConfirmPassword = () => {
 
           <Form.Item
             name="password"
-            rules={[{ message: "Please input your password", required: true }]}
+            rules={[
+              { message: "Please input your password", required: true },
+              { min: 8, message: "Password must be at least 8 characters" },
+            ]}
           >
             <InputStyled.Password placeholder="Password" />
           </Form.Item>
@@ -73,6 +81,14 @@ const ConfirmPassword = () => {
             <NavLink to="/signup">Sign up here</NavLink>
           </p>
         </Form>
+
+        {errors.length ? (
+          <ErrorComponent className="custom-error-component">
+            {errors.map((error, i) => (
+              <li key={error.substr(0, 4) + i}>{error}</li>
+            ))}
+          </ErrorComponent>
+        ) : null}
       </div>
     </AuthWrapper>
   );

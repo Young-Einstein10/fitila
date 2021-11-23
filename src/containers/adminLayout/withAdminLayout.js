@@ -3,7 +3,6 @@ import { Layout, Button, Row, Col, Breadcrumb } from "antd";
 import { NavLink, Link, withRouter, useHistory } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
 import MenueItems from "./MenueItems";
-// import logo from "../../static/img/logo.png";
 import { ReactComponent as ArrowRight } from "../../static/svg/arrowright.svg";
 import { ReactComponent as ArrowDown } from "../../static/svg/arrowDown.svg";
 import burgermenu from "../../static/svg/burgermenu.svg";
@@ -222,7 +221,6 @@ const ThemeLayout = WrappedComponent => {
                     rtl={rtl}
                     toggleCollapsed={toggleCollapsedMobile}
                   />
-              
                 </Scrollbars>
               </Sider>
             ) : null}

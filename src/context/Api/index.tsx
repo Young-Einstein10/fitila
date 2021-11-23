@@ -70,6 +70,14 @@ const ApiProvider: FC = ({ children }) => {
         const errorResponse = error.response;
         const originalConfig = error.config;
 
+        if (
+          errorResponse.config.url ===
+            "/account/user/forget_password/confirm/" ||
+          errorResponse.config.url === "/account/user/forget_password/"
+        ) {
+          return Promise.reject(error);
+        }
+
         if (errorResponse.data.detail === "Token is blacklisted") {
           // login again to get new set of tokens
           setApiHeaders("");

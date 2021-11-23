@@ -100,7 +100,10 @@ const Signup = ({ signupUser, history, auth }) => {
 
           <Form.Item
             name="password"
-            rules={[{ message: "Please enter your password", required: true }]}
+            rules={[
+              { message: "Please enter your password", required: true },
+              { min: 8, message: "Password must be at least 8 characters" },
+            ]}
           >
             <InputStyled.Password placeholder="Password" />
           </Form.Item>

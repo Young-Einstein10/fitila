@@ -183,6 +183,10 @@ const AuthWrapper = styled.div`
       }
     }
 
+    .custom-error-component{
+      max-width: 420px;
+    }
+
     #forgotPass{
       .forgot-text{
         margin-bottom: 25px;

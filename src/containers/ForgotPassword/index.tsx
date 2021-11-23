@@ -1,27 +1,27 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Form, Modal } from "antd";
-import styled from "styled-components";
 import Heading from "../../components/heading/heading";
 import { useApiContext } from "../../context";
 import { AuthWrapper, InputStyled } from "../Styles";
+import ErrorComponent from "../../components/errorComponent";
 
 const ForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [msg] = useState("");
+  const [errors, setErrors] = useState([]);
 
   const [form] = Form.useForm();
   const { auth: api } = useApiContext();
 
   const handleSubmit = async () => {
     try {
+      setErrors([]);
+
       const values = (await form.validateFields()) as { email: string };
 
       setIsLoading(true);
 
-      const { status, data } = await api.forgotPassword(values);
-
-      console.log(data);
+      const { status } = await api.forgotPassword(values);
 
       if (status >= 200 && status < 300) {
         setIsLoading(false);
@@ -29,9 +29,13 @@ const ForgotPassword = () => {
         Modal.success({
           title: "A reset link has to been sent to your email.",
         });
+
+        form.resetFields();
       }
     } catch (error) {
       setIsLoading(false);
+
+      setErrors(error.response.data.email);
     }
   };
 
@@ -82,23 +86,16 @@ const ForgotPassword = () => {
           </p>
         </Form>
 
-        {msg && (
-          <StyledAlert className="mt-3 mb-0 text-center" color="success">
-            A Reset Link Has been sent to your email to change your password
-          </StyledAlert>
-        )}
+        {errors.length ? (
+          <ErrorComponent className="custom-error-component">
+            {errors.map((error, i) => (
+              <li key={error.substr(0, 4) + i}>{error}</li>
+            ))}
+          </ErrorComponent>
+        ) : null}
       </div>
     </AuthWrapper>
   );
 };
 
 export default ForgotPassword;
-
-const StyledAlert = styled.div`
-  margin-top: 3rem;
-  text-align: center;
-  background-color: #68b77a;
-  border: 2px solid #68b77a;
-  border-radius: 8px;
-  padding: 1rem;
-`;
