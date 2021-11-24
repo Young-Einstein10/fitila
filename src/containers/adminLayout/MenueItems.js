@@ -145,7 +145,7 @@ const MenuItems = props => {
         </NavLink>
       </Menu.Item>
 
-      {auth?.user?.is_admin && (
+      {auth?.user?.is_admin && auth?.user?.is_staff && (
         <Menu.Item
           icon={<LinkedIcon children={<UserPlus />} to="/d/administrators" />}
           key="/d/administrators"

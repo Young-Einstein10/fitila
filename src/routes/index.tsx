@@ -28,12 +28,15 @@ import ForgotPassword from "../containers/ForgotPassword";
 import ConfirmPassword from "../containers/ForgotPassword/confirm";
 import OTPVerification from "../containers/OTPVerification";
 import { AuthRoute, CustomRoute } from "../utils";
+import { useAuthContext } from "../context";
 
 const NotFound = () => {
   return <Redirect to="/" />;
 };
 
 const Routes = () => {
+  const { auth } = useAuthContext();
+
   return (
     <Switch>
       <CustomRoute exact path="/d" component={Dashboard} />
@@ -59,7 +62,10 @@ const Routes = () => {
       <AuthRoute path="/d/sectors" component={Sectors} />
       <AuthRoute path="/d/listings" component={PendingApplication} />
       <AuthRoute path="/d/ecosystem" component={Ecosystem} />
-      <AuthRoute path="/d/administrators" component={Administrators} />
+
+      {auth?.user?.is_admin && auth?.user?.is_staff && (
+        <AuthRoute path="/d/administrators" component={Administrators} />
+      )}
 
       <NonAuthLayout>
         <Switch>
