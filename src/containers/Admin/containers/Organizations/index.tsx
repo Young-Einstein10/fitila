@@ -79,9 +79,7 @@ const Organization: FC<RouteComponentProps> = () => {
         onOk: async () => {
           await deleteOrganization(organizationId);
         },
-        onCancel: () => {
-          console.log("No");
-        },
+        onCancel: () => {},
       });
     }
   };
@@ -93,8 +91,9 @@ const Organization: FC<RouteComponentProps> = () => {
       if (res.status === 204) {
         Modal.success({
           title: "Organization deleted successfully",
-          onOk: () => refetchOrganizations(),
         });
+
+        refetchOrganizations();
       }
     } catch (error) {
       console.log(error);

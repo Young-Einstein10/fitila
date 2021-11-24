@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Row, Col, Table, Space } from "antd";
+import { Button, Row, Col, Table, Space, Modal } from "antd";
 import { PageHeader } from "../../../../components/page-headers/page-headers";
 import { Main } from "../../../AuthLayout/styled";
 import { AdminSectionWrapper } from "../../styled";
@@ -77,7 +77,35 @@ const Administrators = () => {
     }
   };
 
+  const deleteAdministrator = async id => {
+    try {
+      const res = await api.deleteUser(id);
+
+      if (res.status === 204) {
+        Modal.success({
+          title: "Administrator deleted successfully",
+        });
+
+        refetchAdminUsers();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const toggleCreateAdminModal = () => setIsCreateAdminModalOpen(open => !open);
+
+  const handleAdminDelete = id => {
+    if (id) {
+      Modal.confirm({
+        title: "Are you sure?",
+        onOk: async () => {
+          await deleteAdministrator(id);
+        },
+        onCancel: () => {},
+      });
+    }
+  };
 
   const columns: any = [
     {
@@ -107,7 +135,9 @@ const Administrators = () => {
       render: (record, key) => {
         return (
           <Space size="middle">
-            <Button danger>Disable</Button>
+            <Button onClick={() => handleAdminDelete(record.id)} danger>
+              Delete
+            </Button>
           </Space>
         );
       },

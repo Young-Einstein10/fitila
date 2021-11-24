@@ -294,7 +294,9 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
 
                   <p>
                     <strong>Date Listed</strong>:{" "}
-                    {new Date(date_created).toJSON().split("T")[0] || "--"}
+                    {(date_created &&
+                      new Date(date_created).toJSON().split("T")[0]) ||
+                      "--"}
                   </p>
                 </Col>
               </RowStyled>

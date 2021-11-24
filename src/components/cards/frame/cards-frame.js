@@ -1,10 +1,9 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { CardFrame } from "./style";
 import Heading from "../../heading/heading";
-import { Dropdown } from "../../dropdown/dropdown";
-import { ReactComponent as BurgerMenu } from "../../../static/svg/burgermenu.svg";
+// import { Dropdown } from "../../dropdown/dropdown";
+// import { ReactComponent as BurgerMenu } from "../../../static/svg/burgermenu.svg";
 
 const Cards = props => {
   const {
@@ -38,19 +37,13 @@ const Cards = props => {
           bordered={border}
           loading={loading}
           bodypadding={bodypadding && bodypadding}
-          extra={
-            <>
-              {more && (
-                <Dropdown content={more} placement="bottomCenter">
-                  <NavLink to="#">
-                    {!moreText ? <BurgerMenu /> : "More"}
-                  </NavLink>
-                </Dropdown>
-              )}
+          // extra={
+          //   <>
+          //     {more && more}
 
-              {isbutton && isbutton}
-            </>
-          }
+          //     {isbutton && isbutton}
+          //   </>
+          // }
           style={{ ...style }}
           {...rest}
         >

@@ -1,4 +1,4 @@
-import React, { Fragment, FC } from "react";
+import React, { Fragment, FC, ChangeEvent, useRef, useState } from "react";
 import { Button, Row, Spin, Col, Table } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { PageHeader } from "../../../../../../components/page-headers/page-headers";
@@ -11,7 +11,11 @@ import { generateIcons } from "../../functions";
 import { createDataSource, createTableColumns } from "../../../helpers";
 import { useEcosystemContext } from "../../../../../../context";
 import { SpinnerStyled } from "../../../../../Styles";
-import { ISubclassProps } from "../../../../../../context/Ecosystem/types";
+import {
+  ISubclassProps,
+  ISubEcosystem,
+} from "../../../../../../context/Ecosystem/types";
+import SearchInput from "../../../../../../components/searchInput";
 
 const LoadingSpinner = <LoadingOutlined style={{ fontSize: 50 }} spin />;
 
@@ -35,7 +39,40 @@ const Segment: FC<RouteComponentProps> = () => {
     params: { name },
   } = useRouteMatch<{ name: string }>();
 
+  const [, setForceUpdate] = useState(Date.now());
+
   let counter = 0;
+
+  const orgRef = useRef<{ organizations: any[]; name?: string }>({
+    organizations: [],
+  });
+
+  const handleSearch = (
+    e: ChangeEvent<HTMLInputElement>,
+    data: ISubEcosystem
+  ) => {
+    // console.log(data);
+    const filterValue = e.target.value.toLowerCase();
+
+    const result = data.organizations.filter(org => {
+      return Object.keys(org).some(
+        key =>
+          org[key] &&
+          org[key]
+            .toString()
+            .toLowerCase()
+            .includes(filterValue)
+      );
+    });
+
+    orgRef.current = {
+      organizations: result,
+    };
+
+    console.log(orgRef.current);
+
+    setForceUpdate(Date.now());
+  };
 
   const {
     data: ecosystems,
@@ -99,10 +136,20 @@ const Segment: FC<RouteComponentProps> = () => {
             <Fragment>
               <Row key="key" gutter={15} style={{ marginTop: "2rem" }}>
                 <Col xs={24}>
-                  <Cards title={generateTableTitle(subEco.name)}>
+                  <Cards
+                    title={generateTableTitle(subEco.name)}
+                    more={
+                      <SearchInput onChange={e => handleSearch(e, subEco)} />
+                    }
+                  >
                     <Table
                       className="table-responsive"
-                      dataSource={createDataSource(subEco.organizations)}
+                      dataSource={
+                        orgRef.current?.organizations &&
+                        orgRef.current?.organizations?.length
+                          ? createDataSource(orgRef.current.organizations)
+                          : createDataSource(subEco.organizations)
+                      }
                       columns={createTableColumns()}
                     />
                   </Cards>

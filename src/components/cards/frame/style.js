@@ -68,17 +68,41 @@ const CardFrame = Styled(Card)`
 
   .ant-card-head{
     border-color: #F1F2F6; 
+
+    @media screen and (max-width: 460px) {
+      .ant-card-head-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  }
+
+  .ant-card-extra {
+    @media screen and (max-width: 460px) {
+      margin: initial;
+    }
   }
 
   .ant-card-head-extra {
     padding: 12px 0;
   }
+
   .ant-card-head .ant-card-head-title {
     padding: 12px 0;
     font-weight: 700;
     font-size: 16px;
     color: #1D429C; 
     text-transform: capitalize;
+    display: flex;
+
+    @media screen and (max-width: 460px) {
+      justify-content: center;  
+
+
+      & > div {
+        justify-content: center !important;
+      }
+    }
   }
   .ant-card-head-title .ant-page-header-heading-title{
     font-weight: 700;

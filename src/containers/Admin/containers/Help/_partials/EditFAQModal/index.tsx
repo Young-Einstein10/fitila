@@ -44,7 +44,8 @@ const EditFAQModal: FC<IEditFAQModalProps> = ({
 
       setIsLoading(false);
     } catch (error) {
-      throw new Error(error);
+      // throw new Error(error);
+      return error;
     }
   };
 
@@ -54,7 +55,9 @@ const EditFAQModal: FC<IEditFAQModalProps> = ({
       visible={visible}
       onCancel={closeModal}
       footer={[
-        <Button key="cancel">Cancel</Button>,
+        <Button key="cancel" onClick={closeModal}>
+          Cancel
+        </Button>,
         <Button
           loading={isLoading}
           key="create"

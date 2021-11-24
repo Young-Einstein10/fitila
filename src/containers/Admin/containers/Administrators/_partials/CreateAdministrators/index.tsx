@@ -50,7 +50,9 @@ const CreateAdminModal: FC<ICreateAdminProps> = ({
       visible={visible}
       onCancel={closeModal}
       footer={[
-        <Button key="cancel">Cancel</Button>,
+        <Button key="cancel" onClick={closeModal}>
+          Cancel
+        </Button>,
         <Button
           loading={isLoading}
           key="create"

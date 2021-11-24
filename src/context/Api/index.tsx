@@ -65,7 +65,7 @@ const ApiProvider: FC = ({ children }) => {
         return response;
       },
       async function(error) {
-        console.log(error.response);
+        // console.log(error.response);
         // Do something with response error
         const errorResponse = error.response;
         const originalConfig = error.config;
@@ -114,7 +114,7 @@ const ApiProvider: FC = ({ children }) => {
               }
             );
 
-            console.log({ data });
+            // console.log({ data });
 
             const { access, refresh } = data;
 

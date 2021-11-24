@@ -120,7 +120,7 @@ export default class Auth {
     });
   }
 
-  deleteUser() {
-    return this.client.delete(`/account/user/profile`);
+  deleteUser(id: number) {
+    return this.client.delete(`/account/user/${id}`);
   }
 }

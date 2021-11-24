@@ -41,6 +41,10 @@ const secondaryIconColor = "#0D79DF"; // "#e53f4f";
 const btnlg = "56px";
 const btnsm = "36px";
 const btnxs = "29px";
+const inputHeightBase = "56px";
+const inputHeightLg = "50px";
+const inputHeightMd = "48px";
+const inputHeightSm = "40px";
 
 const theme = {
   "primary-icon-color": primaryIconColor,
@@ -160,11 +164,11 @@ const theme = {
   "slider-handle-size": "16px",
 
   // input
-  "input-height-base": "56px",
+  "input-height-base": inputHeightBase,
   "input-border-color": borderColorNormal,
-  "input-height-sm": "30px",
-  "input-height-md": "40px",
-  "input-height-lg": "50px",
+  "input-height-sm": inputHeightSm,
+  "input-height-md": inputHeightMd,
+  "input-height-lg": inputHeightLg,
 
   // rate
   "rate-star-color": warningColor,
