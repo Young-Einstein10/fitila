@@ -1,9 +1,7 @@
 import React, { FC, useState } from "react";
-import { Modal, Form, Button, Select } from "antd";
+import { Modal, Form, Button } from "antd";
 import { InputStyled } from "../../../../../Styles";
 import { useApiContext } from "../../../../../../context";
-
-const { Option } = Select;
 
 interface ICreateAdminProps {
   visible: boolean;
@@ -28,7 +26,7 @@ const CreateAdminModal: FC<ICreateAdminProps> = ({
 
       setIsLoading(true);
 
-      const res = await api.createAdmin(values);
+      const res = await api.createAdmin({ ...values, role: "Admin" });
 
       if (res.status === 201) {
         refetchAdminUsers();
@@ -104,7 +102,7 @@ const CreateAdminModal: FC<ICreateAdminProps> = ({
           <InputStyled placeholder="Phone Number" />
         </Form.Item> */}
 
-        <Form.Item
+        {/* <Form.Item
           name="role"
           rules={[{ message: "Please Select a role", required: true }]}
         >
@@ -113,7 +111,7 @@ const CreateAdminModal: FC<ICreateAdminProps> = ({
             <Option value="User">User Player</Option>
             <Option value="Others">Others</Option>
           </Select>
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           name="password"
