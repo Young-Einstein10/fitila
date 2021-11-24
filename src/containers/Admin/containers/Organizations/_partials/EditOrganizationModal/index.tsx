@@ -805,7 +805,10 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         </StyledFormItem>
 
         <Form.Item name="description">
-          <InputStyled.TextArea placeholder="Organization Description" />
+          <InputStyled.TextArea
+            placeholder="Organization Description"
+            rows={6}
+          />
         </Form.Item>
       </Form>
     </Modal>
