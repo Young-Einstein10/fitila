@@ -41,6 +41,7 @@ const ViewDetails: FC<IViewDetailsProps> = ({
     phone,
     num_supported_business,
     is_ecosystem,
+    is_entrepreneur,
     ecosystem_name,
     sub_ecosystem_name,
     sub_ecosystem_sub_class_name,
@@ -98,8 +99,10 @@ const ViewDetails: FC<IViewDetailsProps> = ({
         </p>
 
         <p>
-          <strong>Business Type</strong>:{" "}
-          {is_ecosystem ? "Ecosystem Player" : "Enterpreneur"}
+          <strong>Business Role</strong>:{" "}
+          {(is_ecosystem && "Ecosystem Player") ||
+            (is_entrepreneur && "Enterpreneur") ||
+            "--"}
         </p>
 
         <p>

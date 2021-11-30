@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext, FC } from "react";
 import { useApiContext } from "../Api";
-import { IOrganizationStateProps } from "./types";
+import { IOrganizationProps, IOrganizationStateProps } from "./types";
 import { useMountedState } from "../../utils/hooks";
 import { capitalize } from "../../utils/helpers";
 
@@ -49,7 +49,7 @@ const OrganizationProvider: FC = ({ children }) => {
           setOrganization(prevOrganizations => ({
             ...prevOrganizations,
             isLoading: false,
-            data,
+            data: [...new Set(data)],
             states,
           }));
         }
@@ -98,9 +98,16 @@ const OrganizationProvider: FC = ({ children }) => {
     }
   };
 
+  const updateOrganization = (updatedOrganization: IOrganizationProps) => {
+    setOrganization(prevOrg => ({
+      ...prevOrg,
+      data: [...prevOrg.data, updatedOrganization],
+    }));
+  };
+
   return (
     <OrganizationContext.Provider
-      value={{ ...organization, refetchOrganizations }}
+      value={{ ...organization, updateOrganization, refetchOrganizations }}
     >
       {children}
     </OrganizationContext.Provider>

@@ -159,8 +159,10 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
           sub_ecosystem_sub_class_name: currSubClass
             ? currSubClass.name
             : values.sub_ecosystem_sub_class,
-          is_ecosystem: currentOrganization.is_ecosystem ? true : false,
-          is_entrepreneur: currentOrganization.is_entrepreneur ? true : false,
+          is_ecosystem:
+            values.business_role === "Ecosystem Player" ? true : false,
+          is_entrepreneur:
+            values.business_role === "Enterpreneur" ? true : false,
         };
       } else {
         userData = {
@@ -170,8 +172,10 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
           ceo_image: file.ceo_image[0],
           sector: selectedSector.id,
           company_valuation: `${values.currency}${values.currency_value}`,
-          is_ecosystem: currentOrganization.is_ecosystem ? true : false,
-          is_entrepreneur: currentOrganization.is_entrepreneur ? true : false,
+          is_ecosystem:
+            values.business_role === "Ecosystem Player" ? true : false,
+          is_entrepreneur:
+            values.business_role === "Enterpreneur" ? true : false,
         };
       }
 
@@ -278,6 +282,8 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
     fileList: file.compnay_logo,
   };
 
+  const { is_entrepreneur, is_ecosystem } = currentOrganization;
+
   return (
     <Modal
       title={<strong>Edit Organization Details</strong>}
@@ -300,6 +306,10 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
         className="list-organization"
         initialValues={{
           ...currentOrganization,
+          business_role:
+            (is_ecosystem && "Ecosystem Player") ||
+            (is_entrepreneur && "Enterpreneur") ||
+            "--",
           cac_doc: Number(currentOrganization.cac_doc),
           sector: currentOrganization.sector_name,
           ceo_name: currentOrganization.ceo_name.name,
@@ -332,6 +342,23 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
           <InputStyled placeholder="Business Name" />
         </Form.Item>
         {/* BUSINESS NAME */}
+
+        {/* BUSINESS ROLE */}
+        <Form.Item
+          name="business_role"
+          rules={[
+            {
+              message: "Please select your business role",
+              required: true,
+            },
+          ]}
+        >
+          <Select placeholder="Business Role">
+            <Option value="Enterpreneur">Enterpreneur</Option>
+            <Option value="Ecosystem Player">Ecosystem Player</Option>
+          </Select>
+        </Form.Item>
+        {/* BUSINESS ROLE */}
 
         {/* CEO/FOUNDER"S NAME */}
         <Form.Item

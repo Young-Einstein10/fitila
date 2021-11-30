@@ -4,6 +4,7 @@ import { InputNumberStyled, InputStyled } from "../../../../../Styles";
 import {
   useApiContext,
   useEcosystemContext,
+  useOrganizationContext,
   useSectorContext,
 } from "../../../../../../context";
 import states from "../../../../../../states.json";
@@ -58,6 +59,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
   >([]);
   const [currSubClass, setCurrSubClass] = useState<ISubclassProps>(null);
   const [is_startUp, setIs_Startup] = useState(false);
+  const { updateOrganization } = useOrganizationContext();
   const { data: ecosystem } = useEcosystemContext();
   const { data: sectors } = useSectorContext();
   const [file, setFile] = useState({
@@ -160,8 +162,10 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           sub_ecosystem_sub_class_name: currSubClass
             ? currSubClass.name
             : values.sub_ecosystem_sub_class,
-          is_ecosystem: currentOrganization.is_ecosystem ? true : false,
-          is_entrepreneur: currentOrganization.is_entrepreneur ? true : false,
+          is_ecosystem:
+            values.business_role === "Ecosystem Player" ? true : false,
+          is_entrepreneur:
+            values.business_role === "Enterpreneur" ? true : false,
         };
       } else {
         userData = {
@@ -171,8 +175,10 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           ceo_image: file.ceo_image[0],
           sector: selectedSector.id,
           company_valuation: `${values.currency}${values.currency_value}`,
-          is_ecosystem: currentOrganization.is_ecosystem ? true : false,
-          is_entrepreneur: currentOrganization.is_entrepreneur ? true : false,
+          is_ecosystem:
+            values.business_role === "Ecosystem Player" ? true : false,
+          is_entrepreneur:
+            values.business_role === "Enterpreneur" ? true : false,
         };
       }
 
@@ -184,12 +190,15 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         }
       }
 
-      const res = await api.editOrganization(currentOrganization.id, formData);
+      const { status, data } = await api.editOrganization(
+        currentOrganization.id,
+        formData
+      );
 
-      if (res.status >= 200 && res.status < 300) {
+      if (status >= 200 && status < 300) {
         setIsLoading(false);
 
-        // refetchUserProfile();
+        updateOrganization(data.data);
 
         Modal.success({
           title: "Organization edited successfully!",
@@ -278,6 +287,8 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
     fileList: file.compnay_logo,
   };
 
+  const { is_entrepreneur, is_ecosystem } = currentOrganization;
+
   return (
     <Modal
       visible={visible}
@@ -303,6 +314,10 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         className="list-organization"
         initialValues={{
           ...currentOrganization,
+          business_role:
+            (is_ecosystem && "Ecosystem Player") ||
+            (is_entrepreneur && "Enterpreneur") ||
+            "--",
           cac_doc: Number(currentOrganization.cac_doc),
           sector: currentOrganization.sector_name,
           ceo_name: currentOrganization.ceo_name.name,
@@ -330,6 +345,23 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           <InputStyled placeholder="Business Name" />
         </Form.Item>
         {/* BUSINESS NAME */}
+
+        {/* BUSINESS ROLE */}
+        <Form.Item
+          name="business_role"
+          rules={[
+            {
+              message: "Please select your business role",
+              required: true,
+            },
+          ]}
+        >
+          <Select placeholder="Business Role">
+            <Option value="Enterpreneur">Enterpreneur</Option>
+            <Option value="Ecosystem Player">Ecosystem Player</Option>
+          </Select>
+        </Form.Item>
+        {/* BUSINESS ROLE */}
 
         {/* CEO/FOUNDER"S NAME */}
         <Form.Item

@@ -1,4 +1,5 @@
-import { AxiosInstance, AxiosRequestConfig } from "axios";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { IOrganizationProps } from "../Organization/types";
 
 export default class Organization {
   client: AxiosInstance;
@@ -31,7 +32,10 @@ export default class Organization {
     });
   }
 
-  editOrganization(id, data) {
+  editOrganization(
+    id,
+    data
+  ): Promise<AxiosResponse<{ data: IOrganizationProps }>> {
     return this.client.put(`/organizations/${id}`, data, {
       headers: {
         "Content-Type": "multipart/form-data",

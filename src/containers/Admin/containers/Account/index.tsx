@@ -55,6 +55,10 @@ const Account: FC<RouteComponentProps> = () => {
     }
   };
 
+  const updateUserData = newData => {
+    setUserData({ ...userData, ...newData });
+  };
+
   let counter = 0;
 
   const data = [
@@ -65,7 +69,11 @@ const Account: FC<RouteComponentProps> = () => {
       content: (
         <Row gutter={15}>
           <Col xs={24}>
-            <Profile isLoading={isLoading} user={userData} />
+            <Profile
+              isLoading={isLoading}
+              updateUserData={updateUserData}
+              user={userData}
+            />
 
             <Security />
 

@@ -142,8 +142,10 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                   </p>
 
                   <p>
-                    <strong>Business Type</strong>:{" "}
-                    {is_ecosystem ? "Ecosystem Player" : "Enterpreneur"}
+                    <strong>Business Role</strong>:{" "}
+                    {(is_ecosystem && "Ecosystem Player") ||
+                      (is_entrepreneur && "Enterpreneur") ||
+                      "--"}
                   </p>
 
                   <p>
@@ -195,7 +197,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                   )}
 
                   <p>
-                    <strong>Company Valuation</strong>:{" "}
+                    <strong>Company Valuation (₦)</strong>:{" "}
                     {numberWithCommas(company_valuation) || "--"}
                   </p>
 

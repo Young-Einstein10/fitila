@@ -1,7 +1,10 @@
 import { Modal, Button } from "antd";
 import React, { FC } from "react";
 import { IOrganizationProps } from "../../../../../../../../context/Organization/types";
-import { capitalize } from "../../../../../../../../utils/helpers";
+import {
+  capitalize,
+  numberWithCommas,
+} from "../../../../../../../../utils/helpers";
 import { IEditEcosystemProps } from "../../../../../Dashboard/_partials/Ecosystem/_partials/EditEcosystemModal";
 
 export type IViewProps = Pick<IEditEcosystemProps, "visible" | "closeModal"> & {
@@ -31,6 +34,7 @@ const ViewOrganizationModal: FC<IViewProps> = ({
     phone,
     num_supported_business,
     is_ecosystem,
+    is_entrepreneur,
     no_of_jobs,
     ecosystem_name,
     sub_ecosystem_name,
@@ -65,8 +69,10 @@ const ViewOrganizationModal: FC<IViewProps> = ({
         </p>
 
         <p>
-          <strong>Business Type</strong>:{" "}
-          {is_ecosystem ? "Ecosystem Player" : "Enterpreneur"}
+          <strong>Business Role</strong>:{" "}
+          {(is_ecosystem && "Ecosystem Player") ||
+            (is_entrepreneur && "Enterpreneur") ||
+            "--"}
         </p>
 
         <p>
@@ -115,7 +121,8 @@ const ViewOrganizationModal: FC<IViewProps> = ({
         )}
 
         <p>
-          <strong>Company Valuation</strong>: {company_valuation || "--"}
+          <strong>Company Valuation</strong>:{" "}
+          {numberWithCommas(company_valuation) || "--"}
         </p>
 
         {currentOrganization.is_entrepreneur && (
@@ -138,7 +145,7 @@ const ViewOrganizationModal: FC<IViewProps> = ({
         </p>
 
         <p>
-          <strong>Funding (₦)</strong>: {funding || "--"}
+          <strong>Funding (₦)</strong>: {numberWithCommas(funding) || "--"}
         </p>
 
         {currentOrganization.is_ecosystem && (

@@ -68,8 +68,6 @@ const Organization: FC<RouteComponentProps> = () => {
     if (!state && organizations.length) {
       setFilteredOrganizations(organizations);
     }
-
-    console.log(location.state);
   }, [organizations, state, location]);
 
   const handleDelete = organizationId => {
@@ -101,7 +99,6 @@ const Organization: FC<RouteComponentProps> = () => {
   };
 
   const handleEdit = currentOrganization => {
-    console.log(currentOrganization);
     setCurrentOrganization(currentOrganization);
     toggleEditModal();
   };

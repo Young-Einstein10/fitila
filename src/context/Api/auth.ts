@@ -112,7 +112,9 @@ export default class Auth {
     return this.client.get(`/account/user/profile`);
   }
 
-  editUserProfile(data?: any) {
+  editUserProfile(
+    data?: any
+  ): Promise<AxiosResponse<{ data: IUserProfileProps }>> {
     return this.client.put(`/account/user/profile`, data, {
       headers: {
         "Content-Type": "multipart/form-data",

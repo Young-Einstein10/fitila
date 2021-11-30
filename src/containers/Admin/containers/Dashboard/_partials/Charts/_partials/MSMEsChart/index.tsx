@@ -5,6 +5,7 @@ import {
   useEcosystemContext,
   useSectorContext,
 } from "../../../../../../../../context";
+import { abbreviateNumberShort } from "../../../../../../../../utils/numberAbbreviator";
 import useChartData from "../../hooks";
 import "./index.less";
 
@@ -41,8 +42,8 @@ const MSMEsChart = props => {
   );
 
   const funding = [
-    { name: "MSMEs", funding: 300, msmesFunding },
-    { name: "Startups", funding: 200, startupFunding },
+    { name: "MSMEs", funding: msmesFunding || 0 },
+    { name: "Startups", funding: startupFunding || 0 },
   ];
 
   const chartLabels = funding.map(sector => sector.name);
@@ -74,7 +75,9 @@ const MSMEsChart = props => {
       <div className="sector-funding-chart">
         <p>
           <span>
-            {funding.reduce((total, item) => total + item.funding, 0)}
+            {`₦${abbreviateNumberShort(
+              funding.reduce((total, item) => total + item.funding, 0)
+            )}`}
           </span>{" "}
           Total Funding
         </p>
@@ -112,6 +115,33 @@ MSMEsChart.defaultProps = {
     animation: {
       animateScale: true,
       animateRotate: true,
+    },
+    tooltips: {
+      mode: "label",
+      intersect: false,
+      backgroundColor: "#000",
+      position: "average",
+      titleFontSize: 13,
+      titleSpacing: 15,
+      bodyFontSize: 12,
+      borderColor: "#050505",
+      borderWidth: 2,
+      bodySpacing: 15,
+      xPadding: 15,
+      yPadding: 15,
+      z: 999999,
+      custom(tooltip) {
+        if (!tooltip) return;
+        // disable displaying the color box;
+        tooltip.displayColors = false;
+      },
+      callbacks: {
+        label: function(tooltipItem, data) {
+          const value = data["datasets"][0]["data"][tooltipItem["index"]];
+
+          return `₦${abbreviateNumberShort(value)}`;
+        },
+      },
     },
   },
 };

@@ -25,8 +25,6 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({
   const handleUpload = async () => {
     setIsUploading(true);
     try {
-      console.log(csvFile);
-
       let data = { file: csvFile[0] };
 
       const formData = new FormData();
@@ -44,12 +42,12 @@ const CSVUploadModal: FC<ICSVUploadModalProps> = ({
 
       const res = await api.upload(formData);
 
-      console.log(res.data);
+      // console.log(res.data);
 
       if (res.status === 200) {
         notification.success({
           message: "Upload Completed.",
-          placement: "bottomRight",
+          placement: "topRight",
         });
       }
       setIsUploading(false);

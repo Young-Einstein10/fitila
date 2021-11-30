@@ -222,10 +222,11 @@ const Security = () => {
   );
 };
 
-const Profile: FC<{ isLoading: boolean; user: IUserProfileProps }> = ({
-  isLoading: loading,
-  user,
-}) => {
+const Profile: FC<{
+  isLoading: boolean;
+  updateUserData: (newData: IUserProfileProps) => void;
+  user: IUserProfileProps;
+}> = ({ isLoading: loading, updateUserData, user }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState({
     profile_pics: [],
@@ -237,7 +238,7 @@ const Profile: FC<{ isLoading: boolean; user: IUserProfileProps }> = ({
   } = useAuthContext();
   const { auth } = useApiContext();
 
-  const handleSubmit = async values => {
+  const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
 
@@ -255,9 +256,9 @@ const Profile: FC<{ isLoading: boolean; user: IUserProfileProps }> = ({
 
       const { status, data } = await auth.editUserProfile(formData);
 
-      console.log(data);
-
       if (status >= 200 && status < 300) {
+        updateUserData(data.data);
+
         setIsLoading(false);
         Modal.success({
           title: "You have successfully edited your profile.",

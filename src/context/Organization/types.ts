@@ -55,6 +55,7 @@ interface IOrganizationStateProps {
   isLoading: boolean;
   data: IOrganizationProps[];
   refetchOrganizations: () => void;
+  updateOrganization: (updatedOrganization: IOrganizationProps) => void
   states: string[],
   sectors?: string[]
 }

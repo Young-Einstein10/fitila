@@ -22,7 +22,7 @@ const Charts = () => {
 
         {/* ============= Funding by MSMEs and Startups ============= */}
         <Col xs={24} sm={24} md={12} lg={8}>
-          <MSMEsChart />
+          <MSMEsChart data={{}} />
         </Col>
 
         {/* ============= Funding by Ecosystem and Enterpreneurs ============= */}
