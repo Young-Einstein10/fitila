@@ -49,7 +49,7 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
 
       console.log(userData);
 
-      setState(userData);
+      setState(prevState => ({ ...prevState, ...userData }));
 
       next();
     } catch (error) {

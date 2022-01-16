@@ -11,13 +11,20 @@ const initialState = {
   ceo_gender: null,
   ceo_image: null,
   company_logo: null,
+
+  // ====== ECOSYSTEM ======
+  ecosystem: null,
   sub_ecosystem: null,
+  // sub_segment: null,
   sub_ecosystem_sub_class: null,
+  selectedEcosystemNames: [],
+  selectedSubEcosystemNames: [],
+  selectedSubClassNames: [],
+  // ====== ECOSYSTEM ======
+
+  sector: null,
   address: undefined,
   state: null,
-  ecosystem: null,
-  sub_segment: null,
-  sector: null,
   business_level: null,
   num_supported_business: null,
   website: null,

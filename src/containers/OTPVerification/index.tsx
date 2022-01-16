@@ -47,6 +47,8 @@ const OTPVerification = () => {
       }
     } catch (error) {
       setIsLoading(false);
+
+      message.error(error.response.data);
     }
   };
 
@@ -113,7 +115,7 @@ const OTPVerification = () => {
               size="large"
               loading={isLoading}
             >
-              Save
+              Verify OTP
             </Button>
           </Form.Item>
 

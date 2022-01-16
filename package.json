@@ -11,6 +11,7 @@
     "feather-icons-react": "^0.4.1",
     "http-proxy-middleware": "^2.0.1",
     "jwt-decode": "^3.1.2",
+    "object-to-formdata": "^4.4.1",
     "react": "^17.0.1",
     "react-chartjs-2": "^2.11.1",
     "react-cool-onclickoutside": "^1.6.2",

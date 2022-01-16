@@ -14,7 +14,7 @@ const FooterStyled = Styled(Button)`
 `;
 
 const Success = () => {
-  const { state } = useContext(BusinessContext);
+  const { state, clearBusinessData } = useContext(BusinessContext);
 
   return (
     <AdminSectionWrapper
@@ -39,7 +39,9 @@ const Success = () => {
             </div>
 
             <FooterStyled className="font-weight-700" type="link">
-              <Link to="/">Go Back Home</Link>
+              <Link to="/" onClick={clearBusinessData}>
+                Go Back Home
+              </Link>
             </FooterStyled>
           </Col>
         </Row>

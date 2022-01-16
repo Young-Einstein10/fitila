@@ -1,11 +1,12 @@
-import React, { useContext, useState, useEffect, FC } from "react";
+import React, { useContext, useState, FC } from "react";
+import { serialize } from "object-to-formdata";
 import { ButtonStyled } from "../../../../../Styles";
-import { capitalize, numberWithCommas } from "../../../../../../utils/helpers";
 import {
-  useApiContext,
-  useEcosystemContext,
-  useSectorContext,
-} from "../../../../../../context";
+  arrToString,
+  capitalize,
+  numberWithCommas,
+} from "../../../../../../utils/helpers";
+import { useApiContext } from "../../../../../../context";
 import { BusinessContext } from "../../../../context";
 import { useHistory } from "react-router-dom";
 
@@ -15,32 +16,28 @@ interface IPreviewProps {
 
 const Preview: FC<IPreviewProps> = ({ prev }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [ecosystem, setEcosystem] = useState([]);
-  const [selectedEcosystem, setSelectedEcosystem] = useState([]);
-  const [selectedSubEcosystem, setSelectedSubEcosystem] = useState([]);
-
   const { organization: api } = useApiContext();
 
   const history = useHistory();
 
-  const { state, clearBusinessData } = useContext(BusinessContext);
+  const { state } = useContext(BusinessContext);
 
   const {
     state: organization_state,
-    ecosystem: ecosystemId,
-    // sub_ecosystem,
-    sub_ecosystem_sub_class_name,
-    sub_segment: subSegmentId,
+    selectedEcosystemNames,
+    selectedSubEcosystemNames,
+    selectedSubClassNames,
+    selectedSectorNames,
+    // sub_ecosystem_sub_class_name,
+    // sub_segment: subSegmentId,
     business_type,
     name,
     description,
-    // headquarters,
     ceo_name,
     ceo_gender,
     ceo_image,
     company_logo,
     address,
-    sector,
     business_level,
     num_supported_business,
     website,
@@ -58,65 +55,32 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
     cac_doc,
   } = state;
 
-  const { data: ecosystemData } = useEcosystemContext();
-  const { data: sectors } = useSectorContext();
-
   const is_startup =
     business_level && business_level.toLowerCase() === "startup";
-
-  useEffect(() => {
-    const getEcosystem = () => {
-      if (!ecosystem.length) {
-        setEcosystem(ecosystemData);
-
-        let selectedecosystem = ecosystemData.filter(
-          eco => eco.id === ecosystemId
-        );
-
-        let selectedSubEcosystem =
-          selectedecosystem.length &&
-          selectedecosystem[0].sub_ecosystem.filter(
-            sub_eco => sub_eco.id === subSegmentId
-          );
-
-        setSelectedEcosystem(selectedecosystem);
-        setSelectedSubEcosystem(selectedSubEcosystem);
-      }
-    };
-
-    getEcosystem();
-  }, [
-    ecosystemData,
-    ecosystem.length,
-    ecosystemId,
-    subSegmentId,
-    selectedEcosystem,
-  ]);
 
   const handleSubmit = () => {
     setIsLoading(true);
 
-    const selectedSector = sectors.find(
-      sector => sector.name.toLowerCase() === state.sector
-    );
+    const { ceo_image, company_logo, ...rest } = state;
 
-    const data = { ...state, sector: selectedSector.id };
+    const data = { ...rest };
     console.log(data);
 
-    const formData = new FormData();
+    // const formData = serialize(data);
 
-    for (const key in data) {
-      if (data[key]) {
-        formData.append(key, data[key]);
-      }
-    }
+    // const formData = new FormData();
+
+    // for (const key in data) {
+    //   if (data[key]) {
+    //     formData.append(key, data[key]);
+    //   }
+    // }
 
     api
-      .addBusiness(formData)
+      .addBusiness(data)
       .then(res => {
         setIsLoading(false);
         if (res && res.status === 201) {
-          clearBusinessData();
           history.push("/business/success");
         }
       })
@@ -174,7 +138,8 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           <p>
             <strong>Ecosystem Segment:</strong>
             <br />
-            {selectedEcosystem.length > 0 && selectedEcosystem[0].name}
+            {/* {selectedEcosystem.length > 0 && selectedEcosystem[0].name} */}
+            {arrToString(selectedEcosystemNames)}
           </p>
         )}
 
@@ -182,7 +147,8 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           <p>
             <strong>Sub-Segment of Ecosystem:</strong>
             <br />
-            {selectedSubEcosystem.length && selectedSubEcosystem[0].name}
+            {/* {selectedSubEcosystem.length && selectedSubEcosystem[0].name} */}
+            {arrToString(selectedSubEcosystemNames)}
           </p>
         )}
 
@@ -190,7 +156,8 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           <p>
             <strong>Sub-Segment SubClass:</strong>
             <br />
-            {sub_ecosystem_sub_class_name || "--"}
+            {/* {sub_ecosystem_sub_class_name || "--"} */}
+            {arrToString(selectedSubClassNames)}
           </p>
         )}
 
@@ -198,7 +165,8 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           <p>
             <strong>Sector:</strong>
             <br />
-            {capitalize(sector)}
+            {/* {capitalize(sector)} */}
+            {arrToString(selectedSectorNames)}
           </p>
         }
 

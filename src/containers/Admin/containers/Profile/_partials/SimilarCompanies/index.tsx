@@ -21,7 +21,7 @@ const SimilarCompanies: FC<ISimilarCompaniesProps> = ({
 
   const isViewingProfile = pathname.split("/").length >= 4 ? true : false;
 
-  const similarCompanies = organizations.filter(
+  const similarCompanies = organizations?.filter(
     organization =>
       organization.sector === selectedOrganization.sector &&
       organization.id !== selectedOrganization.id
@@ -39,11 +39,6 @@ const SimilarCompanies: FC<ISimilarCompaniesProps> = ({
               }}
             >
               <span>Companies in Similar Locations and Sectors</span>
-              {/* <Dropdown overlay={menu}>
-                <TableHeaderButtonStyled type="ghost" size="middle">
-                  Past Month <ArrowDown />
-                </TableHeaderButtonStyled>
-              </Dropdown> */}
             </div>
           }
         >
