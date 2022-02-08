@@ -1,18 +1,24 @@
 import React, { useState } from "react";
-import { Form, Select } from "antd";
+import { Button, Form, Select } from "antd";
 import {
   ISubclassProps,
   ISubEcosystem,
 } from "../../../../../../context/Ecosystem/types";
 import { useEcosystemContext } from "../../../../../../context";
 import { capitalize } from "../../../../../../utils/helpers";
+import { DeleteFilled } from "@ant-design/icons";
+import styled from "styled-components";
 
+const FormItem = Form.Item;
 const Option = Select.Option;
 
 const EcosystemField = ({
   handleFitilaSubClassChange,
   handleFitilaSubEcosystemChange,
   handleFitilaEcosystemChange,
+  removeField,
+  fieldIndex,
+  ...rest
 }) => {
   const [currEcosystem, setCurrEcosystem] = useState("");
   const [subEcosystemSubClass, setSubEcosystemSubClass] = useState<
@@ -32,7 +38,7 @@ const EcosystemField = ({
     if (selectedEcosystem) {
       const { id, name } = selectedEcosystem;
 
-      setSubSegment(selectedEcosystem.sub_ecosystem);
+      setSubSegment(selectedEcosystem.sub_ecosystem ?? []);
       handleFitilaEcosystemChange(id, capitalize(name));
     }
   };
@@ -69,15 +75,17 @@ const EcosystemField = ({
 
   return (
     <>
-      <Form.Item
+      <CustomFormItem
+        className="ecosystem-item"
         label="Ecosystem"
-        name="ecosystem"
-        rules={[
-          {
-            message: "Please select an ecosystem segment!",
-            required: true,
-          },
-        ]}
+        name={`ecosystem${fieldIndex}`}
+        // rules={[
+        //   {
+        //     message: "Please select an ecosystem segment!",
+        //     required: true,
+        //   },
+        // ]}
+        {...rest}
       >
         <Select
           onChange={e => updateSubSegment(e)}
@@ -95,13 +103,19 @@ const EcosystemField = ({
             </Option>
           ))}
         </Select>
-      </Form.Item>
+
+        {fieldIndex > 0 && (
+          <Button type="ghost" onClick={() => removeField(fieldIndex)} danger>
+            <DeleteFilled height="1em" width="1em" />
+          </Button>
+        )}
+      </CustomFormItem>
 
       {/* SUB-ECOSYTEM SEGMENT */}
       {subSegment.length > 0 ? (
         <Form.Item
           label="Sub-Ecosystem"
-          name="sub_ecosystem"
+          name={`sub_ecosystem${fieldIndex}`}
           rules={[
             {
               message: "Please select an ecosystem sub-segment!",
@@ -133,7 +147,7 @@ const EcosystemField = ({
       {subEcosystemSubClass.length > 0 ? (
         <Form.Item
           label="Ecosystem SubClass"
-          name="sub_ecosystem_sub_class"
+          name={`sub_ecosystem_sub_class${fieldIndex}`}
           rules={[
             {
               message: "Please select a sub-segment class!",
@@ -165,3 +179,11 @@ const EcosystemField = ({
 };
 
 export default EcosystemField;
+
+const CustomFormItem = styled(FormItem)`
+  & .ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+`;

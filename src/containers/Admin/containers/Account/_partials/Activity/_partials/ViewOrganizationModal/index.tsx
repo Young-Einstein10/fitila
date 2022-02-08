@@ -36,9 +36,13 @@ const ViewOrganizationModal: FC<IViewProps> = ({
     is_ecosystem,
     is_entrepreneur,
     no_of_jobs,
-    ecosystem_name,
-    sub_ecosystem_name,
-    sub_ecosystem_sub_class_name,
+
+    // ======= ECOSYSTEM ========
+    ecosystem_detail,
+    sub_ecosystem_detail,
+    sub_ecosystem_sub_class_detail,
+    // ======= ECOSYSTEM ========s
+
     reason_for_decline,
     cac_doc,
     linkedIn,
@@ -47,6 +51,54 @@ const ViewOrganizationModal: FC<IViewProps> = ({
     website,
     date_created,
   } = currentOrganization;
+
+  const currEcosystem: any[] = ecosystem_detail?.map(eco => {
+    return {
+      ...eco,
+      currSubEcosystem: sub_ecosystem_detail
+        .filter(subEco => subEco.ecosystem_id === eco.id)
+        .map((subEco: any) => {
+          return {
+            ...subEco,
+            currSubClass: sub_ecosystem_sub_class_detail.filter(
+              subClass => subClass.sub_ecosystem_id === subEco.id
+            ),
+          };
+        }),
+    };
+  });
+
+  const extractName = (arr: any[]) => {
+    return arr.length > 0 ? arr.map(item => item?.name) : "--";
+  };
+
+  const extractEcosystemData = () => {
+    return currEcosystem.map(eco => {
+      return (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            padding: ".5rem 0",
+            alignItems: "flex-start",
+          }}
+        >
+          <p>
+            <strong>Ecosystem</strong>: {eco?.name || "--"}
+          </p>
+          <p>
+            <strong>Sub-Ecosystem</strong>: {extractName(eco?.currSubEcosystem)}
+          </p>
+          <p>
+            <strong>Sub-Ecosystem Sub-Class </strong>:{" "}
+            {eco?.currSubEcosystem.map(subEco =>
+              extractName(subEco?.currSubClass)
+            )}
+          </p>
+        </div>
+      );
+    });
+  };
 
   return (
     <Modal
@@ -87,21 +139,7 @@ const ViewOrganizationModal: FC<IViewProps> = ({
           <strong>Phone</strong> {phone || "--"}
         </p>
 
-        {currentOrganization.is_ecosystem && (
-          <>
-            {" "}
-            <p>
-              <strong>Ecosystem</strong>: {ecosystem_name || "--"}
-            </p>
-            <p>
-              <strong>Sub-Ecosystem</strong>: {sub_ecosystem_name || "--"}
-            </p>
-            <p>
-              <strong>Sub-Ecosystem Sub-Class </strong>:{" "}
-              {sub_ecosystem_sub_class_name || "--"}
-            </p>{" "}
-          </>
-        )}
+        {currentOrganization.is_ecosystem && extractEcosystemData()}
 
         <p>
           <strong>CEO Gender</strong>: {capitalize(ceo_gender) || "--"}

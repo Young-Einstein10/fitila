@@ -19,13 +19,13 @@ export default class Organization {
   addBusiness(data) {
     return this.client.post(
       "/organizations/",
-      data
+      data,
 
-      // {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // }
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
   }
 

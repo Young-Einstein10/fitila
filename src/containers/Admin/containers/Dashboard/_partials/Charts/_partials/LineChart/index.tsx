@@ -41,21 +41,23 @@ const LineChart: FC<ILineChartProps> = props => {
     .sort((a, b) => a.name.localeCompare(b.name))
     .map(sector => {
       const organizationList = organizations.filter(
-        org => org.sector_name.toLowerCase() === sector.name.toLowerCase()
+        org =>
+          org?.sector_detail?.name?.toLowerCase() === sector.name.toLowerCase()
       );
 
+      // const organizationList = organizations.filter(
+      //   org =>
+      //     org?.sector_detail[0]?.name.toLowerCase() ===
+      //     sector.name.toLowerCase()
+      // );
+
       const totalFunding = organizationList.reduce(
-        (total, org) => Number(org.funding ? org.funding : 10000) + total,
+        (total, org) => Number(org.funding ? org.funding : 0) + total,
         0
       );
 
       return { name: sector.name, funding: totalFunding };
     });
-
-  // console.log({
-  //   sectorFundings,
-  //   orgWithoutFunding: organizations.filter(org => !org.funding),
-  // });
 
   // Sector named "Others" should appear last in Chart
   const lastIndex = sectorFundings.findIndex(

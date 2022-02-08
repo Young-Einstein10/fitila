@@ -18,7 +18,6 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
     name,
     ceo_name,
     state,
-    sector_name,
     num_of_employees,
     funding,
     funding_disbursed_for_support,
@@ -32,9 +31,14 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
     num_supported_business,
     is_ecosystem,
     is_entrepreneur,
-    ecosystem_name,
-    sub_ecosystem_name,
-    sub_ecosystem_sub_class_name,
+
+    // ======= ECOSYSTEM ========
+    sector_detail,
+    ecosystem_detail,
+    sub_ecosystem_detail,
+    sub_ecosystem_sub_class_detail,
+    // ======= ECOSYSTEM ========
+
     cac_doc,
     linkedIn,
     twitter,
@@ -42,6 +46,56 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
     website,
     date_created,
   } = selectedOrganization.length && selectedOrganization[0];
+
+  // const extractName = (arr: any[]) => arrToString(arr.map(item => item.name));
+
+  const currEcosystem: any[] = ecosystem_detail?.map(eco => {
+    return {
+      ...eco,
+      currSubEcosystem: sub_ecosystem_detail
+        .filter(subEco => subEco.ecosystem_id === eco.id)
+        .map((subEco: any) => {
+          return {
+            ...subEco,
+            currSubClass: sub_ecosystem_sub_class_detail.filter(
+              subClass => subClass.sub_ecosystem_id === subEco.id
+            ),
+          };
+        }),
+    };
+  });
+
+  const extractName = (arr: any[]) => {
+    return arr.length > 0 ? arr.map(item => item?.name) : "--";
+  };
+
+  const extractEcosystemData = () => {
+    return currEcosystem.map(eco => {
+      return (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            padding: ".5rem 0",
+            alignItems: "flex-start",
+          }}
+        >
+          <p>
+            <strong>Ecosystem</strong>: {eco?.name || "--"}
+          </p>
+          <p>
+            <strong>Sub-Ecosystem</strong>: {extractName(eco?.currSubEcosystem)}
+          </p>
+          <p>
+            <strong>Sub-Ecosystem Sub-Class </strong>:{" "}
+            {eco?.currSubEcosystem.map(subEco =>
+              extractName(subEco?.currSubClass)
+            )}
+          </p>
+        </div>
+      );
+    });
+  };
 
   const ceo_name_label =
     selectedOrganization.length && (is_entrepreneur || !is_ecosystem)
@@ -161,22 +215,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     <strong>Phone</strong> {phone || "--"}
                   </p>
 
-                  {is_ecosystem && (
-                    <>
-                      {" "}
-                      <p>
-                        <strong>Ecosystem</strong>: {ecosystem_name || "--"}
-                      </p>
-                      <p>
-                        <strong>Sub-Ecosystem</strong>:{" "}
-                        {sub_ecosystem_name || "--"}
-                      </p>
-                      <p>
-                        <strong>Sub-Ecosystem Sub-Class </strong>:{" "}
-                        {sub_ecosystem_sub_class_name || "--"}
-                      </p>{" "}
-                    </>
-                  )}
+                  {is_ecosystem && extractEcosystemData()}
 
                   <p>
                     <strong>CEO Gender</strong>:{" "}
@@ -210,7 +249,8 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
 
                 <Col className="profile-summary-data" span={12}>
                   <p>
-                    <strong>Sector</strong>: {sector_name || "--"}
+                    <strong>Sector</strong>:{" "}
+                    {capitalize(sector_detail?.name) || "--"}
                   </p>
 
                   <p>

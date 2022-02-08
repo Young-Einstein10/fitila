@@ -5,6 +5,42 @@ export const numberWithCommas = num => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+export function convertToFormData(data, formData?: FormData, parentKey?: any) {
+  if (data === null || data === undefined) return null;
+
+  formData = formData || new FormData();
+
+  if (
+    typeof data === "object" &&
+    !(data instanceof Date) &&
+    !(data instanceof File)
+  ) {
+    Object.keys(data).forEach(key =>
+      convertToFormData(
+        data[key],
+        formData,
+        !parentKey
+          ? key
+          : data[key] instanceof File
+          ? parentKey
+          : `${parentKey}[${key}]`
+      )
+    );
+  } else {
+    formData.append(parentKey, data);
+  }
+
+  return formData;
+}
+
+export const isMSME = (org: IOrganizationProps) =>
+  org?.business_level?.toLowerCase() === "small" ||
+  org?.business_level?.toLowerCase() === "medium" ||
+  org?.business_level?.toLowerCase() === "micro";
+
+export const isStartUp = (org: IOrganizationProps) =>
+  org?.business_level?.toLowerCase() === "startup";
+
 export const arrToString = (arr: string[]) =>
   arr.length > 0
     ? arr

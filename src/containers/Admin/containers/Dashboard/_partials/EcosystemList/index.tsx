@@ -50,7 +50,7 @@ const EcosystemList: FC = () => {
                         <strong>{segment.name}</strong>
                         <br />
                         <span>
-                          {segment.sub_ecosystem.length} Sub-Ecosystem
+                          {segment?.sub_ecosystem?.length} Sub-Ecosystem
                         </span>
                       </div>
                     </CardSegmentStyled>

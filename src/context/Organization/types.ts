@@ -1,3 +1,12 @@
+import { ISectorProps } from "../Sector/types";
+
+export type IDetailProps = {
+  id: number;
+  name:  string;
+  date_created: string;
+  date_updated: string;
+}
+
 interface IOrganizationProps {
   ceo_image_url: string;
   company_logo_url: string;
@@ -6,23 +15,32 @@ interface IOrganizationProps {
   funding_disbursed_for_support?: number;
   id: number;
   name: string;
-  sector: string;
   state: string;
   num_of_employees?: string;
   no_of_jobs?: number;
   ceo_name?: { name: string, avatar: string };
   description?: string;
   reason_for_decline?: string;
-  ecosystem_name?: string;
+
+  sector: string;
+  sector_name?: string;
+  sector_detail?: ISectorProps
+  
+  // ======= ECOSYSTEM ========
+  ecosystem_name?: string; 
+  ecosystem?: number;
+  ecosystem_detail?: IDetailProps[];
+  sub_ecosystem?: number;
   sub_ecosystem_name?: string;
+  sub_ecosystem_detail?: IDetailProps & { ecosystem_id: number }[];
   sub_ecosystem_sub_class?: string,
   sub_ecosystem_sub_class_name?: string,
+  sub_ecosystem_sub_class_detail?: IDetailProps & { ecosystem_id: number, sub_ecosystem_id: number }[];
+  // ======= ECOSYSTEM ========
+
   user?: any;
   ceo_gender?: string;
   address?: string;
-  ecosystem?: number;
-  sub_ecosystem?: number;
-  sector_name?: string;
   market_cap?: string;
   business_level?: BusinessLevelProps;
   company_valuation?: string;

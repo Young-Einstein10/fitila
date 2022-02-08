@@ -18,7 +18,7 @@ function restructureData(
   subClassData: ISubclassProps[]
 ): IEcosystemProps[] {
   const result = ecosystemData.map(subEco => {
-    const newSubEcosystem = subEco.sub_ecosystem.map(subEcosystem => {
+    const newSubEcosystem = subEco?.sub_ecosystem?.map(subEcosystem => {
       const subClass = subClassData.filter(
         ({ sub_ecosystem }) => subEcosystem.id === sub_ecosystem
       );

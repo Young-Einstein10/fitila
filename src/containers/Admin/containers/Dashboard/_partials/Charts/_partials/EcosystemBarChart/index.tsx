@@ -2,7 +2,11 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import { Cards } from "../../../../../../../../components/cards/frame/cards-frame";
 import { useOrganizationContext } from "../../../../../../../../context";
-import { customTooltips } from "../../../../../../../../utils/helpers";
+import {
+  customTooltips,
+  isMSME,
+  isStartUp,
+} from "../../../../../../../../utils/helpers";
 // import { data as dataset } from "../../../../../../../../data.json";
 import { ChartContainer } from "../FemaleBarChart/styled";
 
@@ -17,12 +21,8 @@ const EcosystemBarChart = props => {
     .filter(org => org.business_level);
 
   // Filter Startup and MSMEs Organizations
-  const startupOrg = entrepreneurOrg.filter(
-    org => org.business_level.toLowerCase() === "startup"
-  );
-  const msmesorg = entrepreneurOrg.filter(
-    org => org.business_level.toLowerCase() !== "startup"
-  );
+  const startupOrg = entrepreneurOrg.filter(org => isStartUp(org));
+  const msmesorg = entrepreneurOrg.filter(org => isMSME(org));
 
   const totalNumOfJobsByStartup = startupOrg.reduce(
     (acc, org) => acc + Number(org.no_of_jobs),

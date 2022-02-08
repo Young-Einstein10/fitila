@@ -16,8 +16,26 @@ import {
   ISubEcosystem,
 } from "../../../../../../context/Ecosystem/types";
 import SearchInput from "../../../../../../components/searchInput";
+import styled from "styled-components";
 
 const LoadingSpinner = <LoadingOutlined style={{ fontSize: 50 }} spin />;
+
+const InfoBox = styled.div`
+  max-width: 600px;
+  margin: 2rem auto;
+  height: 60px;
+  color: #fff;
+  background-color: #0d79df;
+  border: 2px solid #0d79df;
+  box-sizing: border-box;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+`;
 
 const generateTableTitle = title => {
   const template = (
@@ -92,9 +110,9 @@ const Segment: FC<RouteComponentProps> = () => {
   // console.log(currEcosystem);
 
   const ecosystemTabData =
-    currEcosystem.length &&
+    currEcosystem.length > 0 &&
     currEcosystem[0].sub_ecosystem
-      .filter(subEco => subEco.name)
+      ?.filter(subEco => subEco.name)
       .filter(subEco => subEco.name !== "Churches/Mosques")
       .map(subEco => {
         const subClassList = [
@@ -192,7 +210,7 @@ const Segment: FC<RouteComponentProps> = () => {
               tabPosition={"top"}
               onChange={() => window.scrollTo(0, 0)}
             >
-              {ecosystemTabData.length &&
+              {ecosystemTabData?.length ? (
                 ecosystemTabData.map(item => {
                   const { content: tabContent, tabTitle } = item;
                   counter += 1;
@@ -242,7 +260,10 @@ const Segment: FC<RouteComponentProps> = () => {
                       {tabContent}
                     </Child>
                   );
-                })}
+                })
+              ) : (
+                <InfoBox>Ecosystem has no sub-ecosystem.</InfoBox>
+              )}
             </TabBasic>
           )}
         </Col>

@@ -22,17 +22,6 @@ const tableHeader = (
   </div>
 );
 
-// const text = (
-//   <p>
-//     Nam varius risus, donec sed imperdiet cursus sollicitudin leo. Magna mi
-//     viverra sit diam posuere porttitor aliquet venenatis elementum. Quis lorem
-//     nisl vitae nullam eros. Maecenas dui neque ut ultrices consectetur sed orci.
-//     Quis.
-//   </p>
-// );
-
-// var testData = [1, 2, 3, 4, 5, 6, 11, 12, 13, 14, 15, 16];
-
 const Help: FC = props => {
   const [isFaqModalOpen, setIsFaqModalOpen] = useState(false);
   const [isEditFAQModalOpen, setIsEditFAQModalOpen] = useState(false);
@@ -121,6 +110,7 @@ const Help: FC = props => {
                                   setCurrentFAQ(d);
                                   toggleEditFaqModal();
                                 }}
+                                type="primary"
                               >
                                 Edit
                               </Button>
@@ -130,8 +120,6 @@ const Help: FC = props => {
                       </Collapse>
                     </Col>
                   ))}
-
-                  <Divider />
 
                   <Col
                     xs={24}

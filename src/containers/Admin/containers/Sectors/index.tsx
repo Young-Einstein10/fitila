@@ -17,6 +17,13 @@ const Sectors = () => {
   const { sector: api } = useApiContext();
   const { isLoading, data: sectors, refetchSectors } = useSectorContext();
 
+  // Sector named "Others" should appear last in Chart
+  const lastIndex = sectors.findIndex(
+    sector => sector.name.toLowerCase() === "others"
+  );
+
+  const result = sectors.filter((sector, index) => index !== lastIndex);
+
   const toggleAddSectorModal = () => setIsAddSectorModalOpen(open => !open);
 
   const toggleEditSectorModal = () => setIsEditSectorModalOpen(open => !open);
@@ -109,13 +116,15 @@ const Sectors = () => {
             <Cards title={cardHeader}>
               <Table
                 className="table-responsive"
-                dataSource={sectors.map((sector, key) => {
-                  return {
-                    ...sector,
-                    key: key + 1,
-                    name: sector.name,
-                  };
-                })}
+                dataSource={[...result.sort(), sectors[lastIndex]].map(
+                  (sector, key) => {
+                    return {
+                      ...sector,
+                      key: key + 1,
+                      name: sector?.name,
+                    };
+                  }
+                )}
                 columns={columns}
                 loading={isLoading}
               />

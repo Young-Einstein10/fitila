@@ -4,9 +4,10 @@ import { ButtonStyled } from "../../../../../Styles";
 import {
   arrToString,
   capitalize,
+  convertToFormData,
   numberWithCommas,
 } from "../../../../../../utils/helpers";
-import { useApiContext } from "../../../../../../context";
+import { useApiContext, useSectorContext } from "../../../../../../context";
 import { BusinessContext } from "../../../../context";
 import { useHistory } from "react-router-dom";
 
@@ -17,6 +18,7 @@ interface IPreviewProps {
 const Preview: FC<IPreviewProps> = ({ prev }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { organization: api } = useApiContext();
+  const { data: sectors } = useSectorContext();
 
   const history = useHistory();
 
@@ -27,11 +29,11 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
     selectedEcosystemNames,
     selectedSubEcosystemNames,
     selectedSubClassNames,
-    selectedSectorNames,
     // sub_ecosystem_sub_class_name,
     // sub_segment: subSegmentId,
     business_type,
     name,
+    sector,
     description,
     ceo_name,
     ceo_gender,
@@ -61,23 +63,23 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
   const handleSubmit = () => {
     setIsLoading(true);
 
+    const selectedSector = sectors.find(
+      sector => sector.name.toLowerCase() === state.sector
+    );
+
     const { ceo_image, company_logo, ...rest } = state;
 
-    const data = { ...rest };
+    const data = { ...state, sector: selectedSector.id };
     console.log(data);
 
-    // const formData = serialize(data);
+    const formData = convertToFormData(data);
 
-    // const formData = new FormData();
-
-    // for (const key in data) {
-    //   if (data[key]) {
-    //     formData.append(key, data[key]);
-    //   }
-    // }
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
 
     api
-      .addBusiness(data)
+      .addBusiness(formData)
       .then(res => {
         setIsLoading(false);
         if (res && res.status === 201) {
@@ -165,8 +167,7 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
           <p>
             <strong>Sector:</strong>
             <br />
-            {/* {capitalize(sector)} */}
-            {arrToString(selectedSectorNames)}
+            {capitalize(sector)}
           </p>
         }
 

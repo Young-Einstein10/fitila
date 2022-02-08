@@ -22,6 +22,7 @@ import usePlacesAutocomplete from "use-places-autocomplete";
 import useGooglePlacesHook from "../../../../../../utils/useGooglePlacesHook";
 import { AutoCompleteStyled } from "../../../../../../components/autoComplete/style";
 import EcosystemField from "./EcosystemField";
+import styled from "styled-components";
 
 const { Option } = Select;
 const InputGroup = InputStyled.Group;
@@ -90,11 +91,12 @@ const ListOrganizationForm = ({ next }) => {
   });
 
   const [ecosystemFormFields, setEcosystemFormFields] = useState([
-    <EcosystemField
-      handleFitilaEcosystemChange={handleFitilaEcosystemChange}
-      handleFitilaSubEcosystemChange={handleFitilaSubEcosystemChange}
-      handleFitilaSubClassChange={handleFitilaSubClassChange}
-    />,
+    0,
+    // <EcosystemField
+    //   handleFitilaEcosystemChange={handleFitilaEcosystemChange}
+    //   handleFitilaSubEcosystemChange={handleFitilaSubEcosystemChange}
+    //   handleFitilaSubClassChange={handleFitilaSubClassChange}
+    // />,
   ]);
 
   const [form] = Form.useForm();
@@ -214,33 +216,24 @@ const ListOrganizationForm = ({ next }) => {
     }
   };
 
-  const handleSectorChange = (sectorIds: number[]) => {
-    const selectedSectors = sectorIds.map(id =>
-      sectors.find(sector => sector.id === id)
-    );
-    console.log(sectorIds, selectedSectors);
-
-    setState(prevState => ({
-      ...prevState,
-      selectedSectorNames: selectedSectors.map(sector =>
-        capitalize(sector.name)
-      ),
-    }));
-  };
-
   const ceo_name_label =
     state.business_type === "Entrepreneur"
       ? "CEO/Founder's Name"
       : "CEO/DG/Head/Founder's Name";
 
   const addMoreFormField = () => {
+    // setEcosystemFormFields([
+    //   ...ecosystemFormFields,
+    // <EcosystemField
+    //   handleFitilaEcosystemChange={handleFitilaEcosystemChange}
+    //   handleFitilaSubEcosystemChange={handleFitilaSubEcosystemChange}
+    //   handleFitilaSubClassChange={handleFitilaSubClassChange}
+    // />,
+    // ]);
+
     setEcosystemFormFields([
       ...ecosystemFormFields,
-      <EcosystemField
-        handleFitilaEcosystemChange={handleFitilaEcosystemChange}
-        handleFitilaSubEcosystemChange={handleFitilaSubEcosystemChange}
-        handleFitilaSubClassChange={handleFitilaSubClassChange}
-      />,
+      ecosystemFormFields.length,
     ]);
   };
 
@@ -387,34 +380,31 @@ const ListOrganizationForm = ({ next }) => {
       <StyledDivider />
 
       {/* ECOSYTEM SEGMENT */}
-      {state.business_type === "Ecosystem Enabler" &&
-        ecosystemFormFields.map((Field, idx) => (
-          <>
-            {Field}
+      <EcosystemWrapper className="ecosystem-wrapper">
+        {state.business_type === "Ecosystem Enabler" &&
+          ecosystemFormFields.map((fieldIndex, idx) => (
+            <EcosystemField
+              fieldIndex={fieldIndex}
+              removeField={removeFormField}
+              handleFitilaEcosystemChange={handleFitilaEcosystemChange}
+              handleFitilaSubEcosystemChange={handleFitilaSubEcosystemChange}
+              handleFitilaSubClassChange={handleFitilaSubClassChange}
+            />
+          ))}
+      </EcosystemWrapper>
 
-            <Link
-              to="#"
-              onClick={e => {
-                e.preventDefault();
+      <div style={{ marginBottom: "1.5rem" }}>
+        <Link
+          to="#"
+          onClick={e => {
+            e.preventDefault();
 
-                removeFormField(idx);
-              }}
-            >
-              Remove ecosystem
-            </Link>
-          </>
-        ))}
-
-      <Link
-        to="#"
-        onClick={e => {
-          e.preventDefault();
-
-          addMoreFormField();
-        }}
-      >
-        Add another ecosystem
-      </Link>
+            addMoreFormField();
+          }}
+        >
+          Add another ecosystem
+        </Link>
+      </div>
 
       {/* ECOSYTEM SEGMENT */}
 
@@ -467,15 +457,9 @@ const ListOrganizationForm = ({ next }) => {
           },
         ]}
       >
-        <Select
-          mode="multiple"
-          placeholder="Select a Sector"
-          onChange={handleSectorChange}
-          allowClear
-          showSearch
-        >
+        <Select placeholder="Select a Sector" allowClear showSearch>
           {sectors.map((sector, i) => (
-            <Option key={i} value={sector.id}>
+            <Option key={i} value={sector.name.toLowerCase()}>
               {sector.name}
             </Option>
           ))}
@@ -562,23 +546,23 @@ const ListOrganizationForm = ({ next }) => {
       )}
       {/* COMPANY VALUATION */}
 
-      {/* NUMBER OF EMPLOYEES */}
+      {/* NUMBER OF JOBS */}
       {state.is_entrepreneur && (
         <Form.Item
-          label="Number of Jobs"
+          label="Number of Jobs Created"
           name="no_of_jobs"
           rules={[
             { type: "number", message: "Only numbers are allowed" },
             {
-              message: "Please enter the number of employees!",
+              message: "Please enter the number of jobs created!",
               required: true,
             },
           ]}
         >
-          <InputNumberStyled placeholder="Number of Employees" size="large" />
+          <InputNumberStyled placeholder="Number of Jobs" size="large" />
         </Form.Item>
       )}
-      {/* NUMBER OF EMPLOYEES */}
+      {/* NUMBER OF JOBS */}
 
       {/* NUMBER OF SUPPORTED BUSINESSES */}
       {state.business_type === "Ecosystem Enabler" && (
@@ -701,3 +685,13 @@ const ListOrganizationForm = ({ next }) => {
 };
 
 export default ListOrganizationForm;
+
+const EcosystemWrapper = styled.div`
+  .ant-form-item {
+    :last-child {
+      margin-bottom: 12px;
+    }
+  }
+
+  /* margin-bottom: 20px; */
+`;

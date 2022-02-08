@@ -13,10 +13,10 @@ const initialState = {
   company_logo: null,
 
   // ====== ECOSYSTEM ======
-  ecosystem: null,
-  sub_ecosystem: null,
+  ecosystem: [],
+  sub_ecosystem: [],
   // sub_segment: null,
-  sub_ecosystem_sub_class: null,
+  sub_ecosystem_sub_class: [],
   selectedEcosystemNames: [],
   selectedSubEcosystemNames: [],
   selectedSubClassNames: [],

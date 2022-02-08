@@ -111,12 +111,7 @@ const createTableColumns = (
       key: "funding",
 
       render: (record, key) => {
-        // let result = record ? record.split("₦") : [];
-
-        return (
-          // <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
-          <span>{numberWithCommas(record)}</span>
-        );
+        return <span>{numberWithCommas(record)}</span>;
       },
     },
     {
@@ -127,17 +122,6 @@ const createTableColumns = (
       render: (record, key) => {
         return (
           <Space size="middle">
-            {/* Render a anchor link if user is viewing a company profile currently, so when View Profile button in SimilarCompanies is clicked, it'll route to the compnay page */}
-            {/* {isViewingProfile ? (
-              <ViewProfileBtnStyled>
-                <a href={`/d/profile/${record.id}`}>View Profile</a>
-              </ViewProfileBtnStyled>
-            ) : (
-              <ViewProfileBtnStyled>
-                <Link to={`/d/profile/${record.id}`}>View Profile</Link>
-              </ViewProfileBtnStyled>
-            )} */}
-
             <ViewProfileBtnStyled>
               <Link to={`/d/profile/${record.id}`}>View Profile</Link>
             </ViewProfileBtnStyled>
@@ -166,7 +150,7 @@ const createDataSource = (organizationList: IOrganizationProps[]) => {
       company: org.name,
       ceo_name: { name: org.ceo_name, avatar: org.ceo_image_url },
       state: org.state,
-      sectors: org.sector_name || org.sector,
+      sectors: org.sector_detail?.name || "--",
       market_cap: org.market_cap,
       employees: org.num_of_employees,
       funding: org.funding,
@@ -179,22 +163,16 @@ const createDataSource = (organizationList: IOrganizationProps[]) => {
 
 const TableOptions = () => (
   <Fragment>
-    {/* <NavLink to="#">
-      <FeatherIcon size={16} icon="printer" />
-      <span>Printer</span>
-    </NavLink> */}
     <NavLink to="#">
       <FeatherIcon size={16} icon="book-open" />
       <span>PDF</span>
     </NavLink>
-    {/* <NavLink to="#">
-      <FeatherIcon size={16} icon="file-text" />
-      <span>Google Sheets</span>
-    </NavLink> */}
+
     <NavLink to="#">
       <FeatherIcon size={16} icon="x" />
       <span>Excel (XLSX)</span>
     </NavLink>
+
     <NavLink to="#">
       <FeatherIcon size={16} icon="file" />
       <span>CSV</span>
