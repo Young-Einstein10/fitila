@@ -1,5 +1,5 @@
 import React, { FC, useContext, useState } from "react";
-import { Select, Upload, Row, Col, message } from "antd";
+import { Select, Upload, Row, Col } from "antd";
 import {
   ButtonStyled,
   InputNumberStyled,
@@ -74,19 +74,6 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
       });
     },
     beforeUpload: file => {
-      const isJpgOrPng =
-        file.type === "image/jpeg" || file.type === "image/png";
-      if (!isJpgOrPng) {
-        message.error("You can only upload JPG/PNG file!");
-        return false;
-      }
-
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isLt2M) {
-        message.error("Image must smaller than 2MB!");
-        return false;
-      }
-
       setFile(state => ({
         ...state,
         ceo_image: [...state.ceo_image, file],
@@ -109,19 +96,6 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
       });
     },
     beforeUpload: file => {
-      const isJpgOrPng =
-        file.type === "image/jpeg" || file.type === "image/png";
-      if (!isJpgOrPng) {
-        message.error("You can only upload JPG/PNG file!");
-        return false;
-      }
-
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isLt2M) {
-        message.error("Image must smaller than 2MB!");
-        return false;
-      }
-
       setFile(state => ({
         ...state,
         compnay_logo: [...state.compnay_logo, file],

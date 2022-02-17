@@ -3,6 +3,7 @@ import { Bar } from "react-chartjs-2";
 import { Cards } from "../../../../../../../../components/cards/frame/cards-frame";
 import { useOrganizationContext } from "../../../../../../../../context";
 import { customTooltips } from "../../../../../../../../utils/helpers";
+import { data as dataset } from "../../../../../../../../data.json";
 import { ChartContainer } from "./styled";
 import { IOrganizationProps } from "../../../../../../../../context/Organization/types";
 
@@ -22,10 +23,10 @@ function filterOrgByGender(
 const FemaleBarChart = props => {
   const { labels, options, width, height, layout } = props;
 
-  const { isLoading, data: organizations } = useOrganizationContext();
+  const { isLoading } = useOrganizationContext();
 
   // Filter Entrepreneur Organizations
-  const entrepreneurOrg = organizations
+  const entrepreneurOrg = dataset
     .filter(org => org.is_entrepreneur || !org.is_ecosystem)
     .filter(org => org.business_level);
 
@@ -48,7 +49,7 @@ const FemaleBarChart = props => {
 
   const datasets = [
     {
-      data: [startups?.femaleFounders?.length, msmes?.femaleFounders?.length],
+      data: [startups.femaleFounders.length, msmes.femaleFounders.length],
       backgroundColor: "rgba(245, 71, 109, 0.645)",
       borderColor: "rgba(255, 99, 132, 1)",
       borderWidth: 1,
@@ -57,7 +58,7 @@ const FemaleBarChart = props => {
       barPercentage: 0.5,
     },
     {
-      data: [startups?.maleFounders?.length, msmes?.maleFounders?.length],
+      data: [startups.maleFounders.length, msmes.maleFounders.length],
       backgroundColor: "rgba(39, 149, 221, 0.686)",
       borderColor: "rgba(54, 162, 235, 1)",
       borderWidth: 1,
@@ -154,8 +155,8 @@ FemaleBarChart.defaultProps = {
           //   beginAtZero: true,
           //   fontSize: 13,
           //   fontColor: "#182b49",
-          // max: 400,
-          // stepSize: 50,
+            // max: 400,
+            // stepSize: 50,
           //   callback(value, index, values) {
           //     return `${value}`;
           //   },

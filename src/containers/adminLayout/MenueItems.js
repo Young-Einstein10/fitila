@@ -127,14 +127,14 @@ const MenuItems = props => {
         </NavLink>
       </Menu.Item>
 
-      {/* <Menu.Item
+      <Menu.Item
         icon={<LinkedIcon children={<AboutIcon />} to="/d/about" />}
         key="/d/about"
       >
         <NavLink onClick={toggleCollapsed} to={`/d/about`}>
           About
         </NavLink>
-      </Menu.Item> */}
+      </Menu.Item>
 
       <Menu.Item
         icon={<LinkedIcon children={<HelpNavIcon />} to="/d/help" />}
