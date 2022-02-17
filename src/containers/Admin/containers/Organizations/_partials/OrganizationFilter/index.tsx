@@ -5,9 +5,9 @@ import { ReactComponent as FilterOutlined } from "../../../../../../static/svg/f
 import { ReactComponent as SearchIconLeft } from "../../../../../../static/svg/SearchIconLeft.svg";
 import { SelectStyled } from "../../../../../Styles";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
+import CustomSelect from "../../../../../../components/customSelect";
 import { ISectorProps } from "../../../../../../context/Sector/types";
 import { capitalize } from "../../../Dashboard/functions";
-import states from "../../../../../../states.json";
 
 const { Option } = SelectStyled;
 const FormItem = Form.Item;
@@ -33,6 +33,7 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
   state,
   sectors,
   sector,
+  states,
 }) => {
   const [filter, setFilter] = useState<IFilterOption | null>(null);
   const [currentFilterResult, setCurrentFilterResult] = useState<
@@ -203,15 +204,10 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
 
               <Col xs={24} sm={24} md={12} lg={6}>
                 <FormItem style={{ marginBottom: 0 }} name="state_filter">
-                  <SelectStyled
+                  <CustomSelect
                     suffixIcon={<ArrowDown />}
-                    showSearch
-                    placeholder={
-                      <span>
-                        <FilterOutlined style={{ marginRight: "1.5rem" }} />
-                        Filter By States
-                      </span>
-                    }
+                    prefixIcon={<FilterOutlined />}
+                    placeholder="Filter By States"
                     optionFilterProp="children"
                     onSelect={(val: string) => {
                       setFilter("state");
@@ -224,25 +220,20 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                     disabled={isOrganizationLoading}
                   >
                     {states.map((state, key) => (
-                      <Option key={key} value={state.name}>
-                        {state.name}
+                      <Option key={key} value={state}>
+                        {state}
                       </Option>
                     ))}
-                  </SelectStyled>
+                  </CustomSelect>
                 </FormItem>
               </Col>
 
               <Col style={{ marginBottom: 0 }} xs={24} sm={24} md={12} lg={6}>
                 <FormItem style={{ marginBottom: 0 }} name="sector_filter">
-                  <SelectStyled
+                  <CustomSelect
                     suffixIcon={<ArrowDown />}
-                    showSearch
-                    placeholder={
-                      <span>
-                        <FilterOutlined style={{ marginRight: "1.5rem" }} />
-                        Filter By Sectors
-                      </span>
-                    }
+                    prefixIcon={<FilterOutlined />}
+                    placeholder="Filter By Sectors"
                     optionFilterProp="children"
                     onSelect={(val: string) => {
                       setFilter("sector");
@@ -260,7 +251,7 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                         {sector.name}
                       </Option>
                     ))}
-                  </SelectStyled>
+                  </CustomSelect>
                 </FormItem>
               </Col>
             </Row>

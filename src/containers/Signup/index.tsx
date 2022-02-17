@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import { Form, Select, Button } from "antd";
 import { NavLink } from "react-router-dom";
-import { AuthWrapper } from "../Styles";
+import { AuthWrapper, SocialSigninWrapper } from "../Styles";
+import { GoogleLogin } from "react-google-login";
 import Heading from "../../components/heading/heading";
 import { InputStyled } from "../Styles";
-import { useAuthContext } from "../../context";
+import { useApiContext, useAuthContext } from "../../context";
 import { IUserData } from "../../context/Api/auth";
+import { GoogleIcon } from "../../components/svgs";
 
 const { Option } = Select;
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
-const Signup = ({ signupUser, history, auth }) => {
+const Signup = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [form] = Form.useForm();
 
   const { signup } = useAuthContext();
+  const { setApiHeaders, auth: api } = useApiContext();
+
+  const { setAuth } = useAuthContext();
 
   const handleSubmit = async values => {
     try {
@@ -34,6 +40,39 @@ const Signup = ({ signupUser, history, auth }) => {
       console.log(error);
     }
   };
+
+  const googleResponse = async response => {
+    try {
+      console.log(response);
+      setIsLoading(true);
+
+      const {
+        tokenObj: { id_token },
+      } = response;
+
+      const { status, data } = await api.googleSignin(id_token);
+
+      if (status >= 200 && status < 300) {
+        const { access } = data;
+
+        localStorage.setItem("userData", JSON.stringify(data));
+
+        setApiHeaders(access);
+
+        setAuth({
+          isAuthenticated: true,
+          user: data,
+        });
+
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  const onFailure = error => {};
 
   return (
     <AuthWrapper>
@@ -123,6 +162,26 @@ const Signup = ({ signupUser, history, auth }) => {
           <p className="auth-notice">
             Signed Up Already? <NavLink to="/signin">Signin in here</NavLink>
           </p>
+
+          <SocialSigninWrapper>
+            <GoogleLogin
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Login"
+              onSuccess={googleResponse}
+              onFailure={onFailure}
+              render={renderProps => (
+                <Button
+                  icon={<GoogleIcon />}
+                  className="google-signin-btn"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  {...renderProps}
+                >
+                  Sign Up with Google
+                </Button>
+              )}
+            />
+          </SocialSigninWrapper>
         </Form>
       </div>
     </AuthWrapper>

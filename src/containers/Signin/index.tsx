@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form } from "antd";
+import { Button, Form, Select } from "antd";
 import { GoogleLogin } from "react-google-login";
 // import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { NavLink } from "react-router-dom";
@@ -7,9 +7,8 @@ import Heading from "../../components/heading/heading";
 // import { ReactComponent as FacebookIcon } from "../../static/svg/facebook.svg";
 import { useApiContext, useAuthContext } from "../../context";
 import { useMountedState } from "../../utils/hooks";
-import { InputStyled, AuthWrapper } from "../Styles";
+import { InputStyled, AuthWrapper, SocialSigninWrapper } from "../Styles";
 import { GoogleIcon } from "../../components/svgs";
-import styled from "styled-components";
 
 // const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;/
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -237,36 +236,3 @@ const Login = ({ history, location }) => {
 };
 
 export default Login;
-
-const SocialSigninWrapper = styled.div`
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .google-signin-btn,
-  .facebook-signin-btn {
-    height: 40px;
-    border: 1px solid #e3e6ef;
-    border-radius: 4px;
-    background: none;
-    padding: 0 12px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s;
-
-    :hover {
-      border: ${({ theme }) => `1px solid ${theme["primary-color"]}`};
-    }
-
-    svg {
-      margin-right: 10px;
-    }
-  }
-
-  button:last-child {
-    margin-top: 1rem;
-  }
-`;

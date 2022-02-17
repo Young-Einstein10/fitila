@@ -5,7 +5,7 @@ import {
   Organizations,
   States,
   Help,
-  About,
+  // About,
   Contact,
   Administrators,
   Profile,
@@ -48,7 +48,7 @@ const Routes = () => {
       />
       <CustomRoute path="/d/states" component={States} />
       <CustomRoute path="/d/contact" component={Contact} />
-      <CustomRoute path="/d/about" component={About} />
+      {/* <CustomRoute path="/d/about" component={About} /> */}
       <CustomRoute path="/d/help" component={Help} />
       <CustomRoute path="/d/privacy" component={PrivacyPolicy} />
       <CustomRoute path="/d/terms" component={TermsConditions} />
