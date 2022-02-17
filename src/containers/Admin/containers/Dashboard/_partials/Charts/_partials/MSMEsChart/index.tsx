@@ -1,10 +1,8 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Cards } from "../../../../../../../../components/cards/frame/cards-frame";
-import {
-  useEcosystemContext,
-  useSectorContext,
-} from "../../../../../../../../context";
+import { useOrganizationContext } from "../../../../../../../../context";
+import { isMSME, isStartUp } from "../../../../../../../../utils/helpers";
 import { abbreviateNumberShort } from "../../../../../../../../utils/numberAbbreviator";
 import useChartData from "../../hooks";
 import "./index.less";
@@ -12,38 +10,22 @@ import "./index.less";
 const MSMEsChart = props => {
   const { labels, datasets, options, width, height } = props;
 
-  const { isLoading: isSectorLoading } = useSectorContext();
-  const { isLoading, data: ecosystem } = useEcosystemContext();
+  const {
+    isLoading: isOrganizationLoading,
+    data: organizations,
+  } = useOrganizationContext();
 
-  const msmesAndStartupsOrg = ecosystem.find(
-    ecosystem => ecosystem.name === "MSMEs and Startups"
-  );
+  const totalFundingRaisedByMSMEs = organizations
+    .filter(org => isMSME(org))
+    .reduce((total, org) => (org.funding ? Number(org.funding) : 0) + total, 0);
 
-  const msmesOrg = msmesAndStartupsOrg
-    ? msmesAndStartupsOrg.sub_ecosystem.find(
-        subEco => subEco.name.toLowerCase() === "msmes"
-      )
-    : null;
-
-  const startupOrg = msmesAndStartupsOrg
-    ? msmesAndStartupsOrg.sub_ecosystem.find(
-        subEco => subEco.name.toLowerCase() === "startups"
-      )
-    : null;
-
-  const msmesFunding = msmesOrg?.organizations.reduce(
-    (total, org) => (org.funding ? Number(org.funding) : 0) + total,
-    0
-  );
-
-  const startupFunding = startupOrg?.organizations.reduce(
-    (total, org) => (org.funding ? Number(org.funding) : 0) + total,
-    0
-  );
+  const totalFundingRaisedByStartups = organizations
+    .filter(org => isStartUp(org))
+    .reduce((total, org) => (org.funding ? Number(org.funding) : 0) + total, 0);
 
   const funding = [
-    { name: "MSMEs", funding: msmesFunding || 0 },
-    { name: "Startups", funding: startupFunding || 0 },
+    { name: "MSMEs", funding: totalFundingRaisedByMSMEs || 0 },
+    { name: "Startups", funding: totalFundingRaisedByStartups || 0 },
   ];
 
   const chartLabels = funding.map(sector => sector.name);
@@ -68,7 +50,7 @@ const MSMEsChart = props => {
 
   return (
     <Cards
-      loading={isSectorLoading || isLoading}
+      loading={isOrganizationLoading}
       title="Funding raised by MSMEs and Startups"
       size="large"
     >

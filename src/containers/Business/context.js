@@ -17,9 +17,9 @@ const initialState = {
   sub_ecosystem: null,
   // sub_segment: null,
   sub_ecosystem_sub_class: null,
-  selectedEcosystemNames: [],
-  selectedSubEcosystemNames: [],
-  selectedSubClassNames: [],
+  selectedEcosystemNames: null,
+  selectedSubEcosystemNames: null,
+  selectedSubClassNames: null,
   // ====== ECOSYSTEM ======
 
   sector: null,

@@ -9,7 +9,7 @@ export default class Organization {
   }
 
   getOrganization() {
-    return this.client.get("/organizations");
+    return this.client.get("/organizations/");
   }
 
   getPendingOrganization(config?: AxiosRequestConfig) {

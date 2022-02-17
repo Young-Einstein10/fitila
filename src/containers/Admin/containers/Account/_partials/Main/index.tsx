@@ -8,10 +8,11 @@ import {
   Upload,
   notification,
   Modal,
+  message,
 } from "antd";
 import { ReactComponent as UnknownAvatar } from "../../../../../../static/svg/unknownAvatar.svg";
 import { Cards } from "../../../../../../components/cards/frame/cards-frame";
-import { InputStyled } from "../../../../../Styles";
+import { AvatarStyled, InputStyled } from "../../../../../Styles";
 import { NavLink } from "react-router-dom";
 import { ViewProfileBtnStyled } from "../../../Dashboard/styled";
 import { useApiContext, useAuthContext } from "../../../../../../context";
@@ -83,12 +84,6 @@ export const Deactivate = () => (
             </NavLink>
           </p>
         </div>
-
-        <Form name="Deactivate" layout="vertical">
-          <Form.Item name="password" label="We’re open to suggestions">
-            <InputStyled.TextArea placeholder="Send Us a Message" />
-          </Form.Item>
-        </Form>
 
         <Button
           type="link"
@@ -283,6 +278,20 @@ const Profile: FC<{
       });
     },
     beforeUpload: file => {
+      const isJpgOrPng =
+        file.type === "image/jpeg" || file.type === "image/png";
+
+      if (!isJpgOrPng) {
+        message.error("You can only upload JPG/PNG file!");
+        return false;
+      }
+
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        message.error("Image must be smaller than 2MB!");
+        return false;
+      }
+
       setFile(state => ({
         ...state,
         profile_pics: [...state.profile_pics, file],
@@ -313,9 +322,9 @@ const Profile: FC<{
               }}
             >
               {user?.profile_pics_url ? (
-                <div style={{ width: "135px", height: "135px" }}>
+                <AvatarStyled>
                   <img src={user?.profile_pics_url} alt="Avatar" />
-                </div>
+                </AvatarStyled>
               ) : (
                 <UnknownAvatar />
               )}

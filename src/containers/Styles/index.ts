@@ -1,6 +1,17 @@
 import { Input, InputNumber, Button, Select } from "antd";
 import styled from "styled-components";
 
+const AvatarStyled = styled.div`
+  width: 200px;
+  height: 200px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+`;
+
 const InputStyled = styled(Input)`
   background-color: #f9f9f9;
   border-radius: 6px;
@@ -343,6 +354,7 @@ const ActionButtonStyled = styled(Button)`
 `;
 
 export {
+  AvatarStyled,
   InputStyled,
   InputNumberStyled,
   ButtonStyled,

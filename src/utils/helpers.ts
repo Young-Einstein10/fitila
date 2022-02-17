@@ -20,6 +20,14 @@ export const getTotalFunding = (arr: IOrganizationProps[]) => {
   );
 };
 
+export const isMSME = (org: IOrganizationProps) =>
+  org?.business_level?.toLowerCase() === "small" ||
+  org?.business_level?.toLowerCase() === "medium" ||
+  org?.business_level?.toLowerCase() === "micro";
+
+export const isStartUp = (org: IOrganizationProps) =>
+  org?.business_level?.toLowerCase() === "startup";
+
 export const capitalize = str => {
   if (typeof str === "string") {
     return str.replace(/\b\w/g, c => c.toUpperCase());

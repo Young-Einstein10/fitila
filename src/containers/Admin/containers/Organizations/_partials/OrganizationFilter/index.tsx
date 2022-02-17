@@ -8,6 +8,7 @@ import { IOrganizationProps } from "../../../../../../context/Organization/types
 import { ISectorProps } from "../../../../../../context/Sector/types";
 import { capitalize } from "../../../Dashboard/functions";
 import states from "../../../../../../states.json";
+import CustomSelect from "../../../../../../components/customSelect";
 
 const { Option } = SelectStyled;
 const FormItem = Form.Item;
@@ -203,24 +204,20 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
 
               <Col xs={24} sm={24} md={12} lg={6}>
                 <FormItem style={{ marginBottom: 0 }} name="state_filter">
-                  <SelectStyled
+                  <CustomSelect
                     suffixIcon={<ArrowDown />}
-                    showSearch
-                    placeholder={
-                      <span>
-                        <FilterOutlined style={{ marginRight: "1.5rem" }} />
-                        Filter By States
-                      </span>
-                    }
-                    optionFilterProp="children"
+                    prefixIcon={<FilterOutlined />}
+                    // showSearch
+                    placeholder="Filter By States"
+                    // optionFilterProp="children"
                     onSelect={(val: string) => {
                       setFilter("state");
                       filterOrganizations(val, "state");
                     }}
-                    filterOption={(input, option) =>
-                      option.value.toLowerCase().indexOf(input.toLowerCase()) >=
-                      0
-                    }
+                    // filterOption={(input, option) =>
+                    //   option.value.toLowerCase().indexOf(input.toLowerCase()) >=
+                    //   0
+                    // }
                     disabled={isOrganizationLoading}
                   >
                     {states.map((state, key) => (
@@ -228,31 +225,27 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                         {state.name}
                       </Option>
                     ))}
-                  </SelectStyled>
+                  </CustomSelect>
                 </FormItem>
               </Col>
 
               <Col style={{ marginBottom: 0 }} xs={24} sm={24} md={12} lg={6}>
                 <FormItem style={{ marginBottom: 0 }} name="sector_filter">
-                  <SelectStyled
+                  <CustomSelect
                     suffixIcon={<ArrowDown />}
-                    showSearch
-                    placeholder={
-                      <span>
-                        <FilterOutlined style={{ marginRight: "1.5rem" }} />
-                        Filter By Sectors
-                      </span>
-                    }
-                    optionFilterProp="children"
+                    prefixIcon={<FilterOutlined />}
+                    // showSearch
+                    placeholder="Filter By Sectors"
+                    // optionFilterProp="children"
                     onSelect={(val: string) => {
                       setFilter("sector");
 
                       filterOrganizations(val, "sector");
                     }}
-                    filterOption={(input, option) =>
-                      option.value.toLowerCase().indexOf(input.toLowerCase()) >=
-                      0
-                    }
+                    // filterOption={(input, option) =>
+                    //   option.value.toLowerCase().indexOf(input.toLowerCase()) >=
+                    //   0
+                    // }
                     disabled={isOrganizationLoading}
                   >
                     {sectors.map((sector, key) => (
@@ -260,7 +253,7 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                         {sector.name}
                       </Option>
                     ))}
-                  </SelectStyled>
+                  </CustomSelect>
                 </FormItem>
               </Col>
             </Row>
