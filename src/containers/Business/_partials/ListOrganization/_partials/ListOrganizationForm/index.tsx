@@ -236,6 +236,7 @@ const ListOrganizationForm = ({ next }) => {
     >
       {/* BUSINESS NAME */}
       <Form.Item
+        label="Name"
         name="name"
         rules={[
           {
@@ -250,6 +251,7 @@ const ListOrganizationForm = ({ next }) => {
 
       {/* CEO/FOUNDER"S NAME */}
       <Form.Item
+        label={ceo_name_label}
         name="ceo_name"
         rules={[
           {
@@ -264,6 +266,7 @@ const ListOrganizationForm = ({ next }) => {
 
       {/* CEO/FOUNDER"S NAME */}
       <Form.Item
+        label="CEO Gender"
         name="ceo_gender"
         rules={[
           {
@@ -281,6 +284,7 @@ const ListOrganizationForm = ({ next }) => {
 
       {/* ADDRESS */}
       <Form.Item
+        label="Address"
         name="address"
         rules={[
           {
@@ -318,6 +322,7 @@ const ListOrganizationForm = ({ next }) => {
 
       {/* STATE */}
       <Form.Item
+        label="State"
         name="state"
         rules={[
           {
@@ -349,6 +354,7 @@ const ListOrganizationForm = ({ next }) => {
       {/* ECOSYTEM SEGMENT */}
       {state.business_type === "Ecosystem Enabler" && (
         <Form.Item
+          label="Ecosystem"
           name="ecosystem"
           rules={[
             {
@@ -380,6 +386,7 @@ const ListOrganizationForm = ({ next }) => {
       {/* SUB-ECOSYTEM SEGMENT */}
       {state.business_type === "Ecosystem Enabler" && subSegment.length > 0 ? (
         <Form.Item
+          label="Sub-Ecosystem"
           name="sub_ecosystem"
           rules={[
             {
@@ -412,6 +419,7 @@ const ListOrganizationForm = ({ next }) => {
       {state.business_type === "Ecosystem Enabler" &&
       subEcosystemSubClass.length > 0 ? (
         <Form.Item
+          label="Ecosystem Sub-Class"
           name="sub_ecosystem_sub_class"
           rules={[
             {
@@ -443,7 +451,7 @@ const ListOrganizationForm = ({ next }) => {
       {state.business_type === "Ecosystem Enabler" &&
         currEcosystem === "Funding" &&
         subSegment.length > 0 && (
-          <Form.Item name="funding" style={{ marginBottom: 0 }}>
+          <Form.Item name="funding" label="Funding" style={{ marginBottom: 0 }}>
             <InputGroup compact style={{ display: "flex" }}>
               <Form.Item name="funding_disbursed_currency">
                 <Select>
@@ -478,6 +486,7 @@ const ListOrganizationForm = ({ next }) => {
 
       {/* BUSINESS SECTOR */}
       <Form.Item
+        label="Sector"
         name="sector"
         rules={[
           {
@@ -507,6 +516,7 @@ const ListOrganizationForm = ({ next }) => {
       {/* BUSINESS LEVEL */}
       {state.business_type === "Entrepreneur" && (
         <Form.Item
+          label="Business Level"
           name="business_level"
           rules={[
             {
@@ -545,7 +555,7 @@ const ListOrganizationForm = ({ next }) => {
 
       {/* COMPANY VALUATION */}
       {state.business_type === "Entrepreneur" && is_startUp && (
-        <Form.Item>
+        <Form.Item label="Company Valuation">
           <InputGroup className="d-flex" compact>
             <Form.Item name="currency">
               <Select>
@@ -585,6 +595,7 @@ const ListOrganizationForm = ({ next }) => {
       {/* NUMBER OF EMPLOYEES */}
       {state.is_entrepreneur && (
         <Form.Item
+          label="Number of Employees"
           name="no_of_jobs"
           rules={[
             { type: "number", message: "Only numbers are allowed" },
@@ -602,6 +613,7 @@ const ListOrganizationForm = ({ next }) => {
       {/* NUMBER OF SUPPORTED BUSINESSES */}
       {state.business_type === "Ecosystem Enabler" && (
         <Form.Item
+          label="Number of Supported Businesses"
           name="num_supported_business"
           rules={[
             { type: "number", message: "Only numbers are allowed" },
@@ -624,6 +636,7 @@ const ListOrganizationForm = ({ next }) => {
       {state.business_type === "Ecosystem Enabler" &&
         num_supported_business === "Above 1000" && (
           <Form.Item
+            label="NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000"
             name="num_supported_business_custom"
             rules={[
               {
@@ -639,13 +652,14 @@ const ListOrganizationForm = ({ next }) => {
       {/* NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000 */}
 
       {/* WEBSITE */}
-      <Form.Item name="website">
+      <Form.Item label="Website" name="website">
         <InputStyled placeholder="Website Address" />
       </Form.Item>
       {/* WEBSITE */}
 
       {/* ORGANIZATION EMAIL */}
       <Form.Item
+        label="Email"
         name="email"
         rules={[
           {
@@ -664,6 +678,7 @@ const ListOrganizationForm = ({ next }) => {
       <Divider />
       {/* ORGANIZATION PHONE */}
       <Form.Item
+        label="Phone"
         name="phone"
         rules={[
           {
@@ -682,7 +697,7 @@ const ListOrganizationForm = ({ next }) => {
         { name: "Twitter Url", key: "twitter" },
         { name: "LinkedIn Url", key: "linkedin" },
       ].map((inputField, key) => (
-        <Form.Item key={key} name={inputField.key}>
+        <Form.Item label={inputField.name} key={key} name={inputField.key}>
           <InputStyled placeholder={inputField.name} />
         </Form.Item>
       ))}
@@ -691,6 +706,7 @@ const ListOrganizationForm = ({ next }) => {
       {["Url 1", "Url 2", "Url 3"].map((url, key) => (
         <Form.Item
           key={key}
+          label={url}
           name={url
             .toLowerCase()
             .split(" ")

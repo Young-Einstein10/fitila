@@ -182,9 +182,7 @@ const EditListedOrganization: FC<IEditListedOrgProps> = ({
       const formData = new FormData();
 
       for (const key in userData) {
-        if (userData[key]) {
-          formData.append(key, userData[key]);
-        }
+        formData.append(key, userData[key]);
       }
 
       const res = await api.editOrganization(currentOrganization.id, formData);

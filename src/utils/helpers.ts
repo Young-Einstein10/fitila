@@ -5,12 +5,28 @@ export const numberWithCommas = num => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+export const arrToString = (arr: string[]) =>
+  arr.length > 0
+    ? arr
+        .toString()
+        .split(",")
+        .join(", ")
+    : "";
+
 export const getTotalFunding = (arr: IOrganizationProps[]) => {
   return arr.reduce(
     (total, org) => Number(org.funding ? org.funding : 0) + total,
     0
   );
 };
+
+export const isMSME = (org: IOrganizationProps) =>
+  org?.business_level?.toLowerCase() === "small" ||
+  org?.business_level?.toLowerCase() === "medium" ||
+  org?.business_level?.toLowerCase() === "micro";
+
+export const isStartUp = (org: IOrganizationProps) =>
+  org?.business_level?.toLowerCase() === "startup";
 
 export const capitalize = str => {
   if (typeof str === "string") {

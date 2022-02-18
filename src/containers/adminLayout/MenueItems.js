@@ -7,7 +7,7 @@ import { ReactComponent as DashboardIcon } from "../../static/svg/dashboardIcon.
 import { ReactComponent as HelpNavIcon } from "../../static/svg/helpNavIcon.svg";
 import { ReactComponent as ContactNavIcon } from "../../static/svg/contactNavIcon.svg";
 import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.svg";
-import { ReactComponent as AboutIcon } from "../../static/svg/about_icon.svg";
+// import { ReactComponent as AboutIcon } from "../../static/svg/about_icon.svg";
 import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
 import { BusinessIcon, EcosystemIcon, SectorIcon } from "../../components/svgs";
 import { useAuthContext, useEcosystemContext } from "../../context";
@@ -127,14 +127,14 @@ const MenuItems = props => {
         </NavLink>
       </Menu.Item>
 
-      <Menu.Item
+      {/* <Menu.Item
         icon={<LinkedIcon children={<AboutIcon />} to="/d/about" />}
         key="/d/about"
       >
         <NavLink onClick={toggleCollapsed} to={`/d/about`}>
           About
         </NavLink>
-      </Menu.Item>
+      </Menu.Item> */}
 
       <Menu.Item
         icon={<LinkedIcon children={<HelpNavIcon />} to="/d/help" />}

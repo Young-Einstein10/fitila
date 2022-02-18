@@ -162,10 +162,10 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           sub_ecosystem_sub_class_name: currSubClass
             ? currSubClass.name
             : values.sub_ecosystem_sub_class,
-          is_ecosystem:
-            values.business_role === "Ecosystem Player" ? true : false,
           is_entrepreneur:
             values.business_role === "Enterpreneur" ? true : false,
+          is_ecosystem:
+            values.business_role === "Ecosystem Player" ? true : false,
         };
       } else {
         userData = {
@@ -175,19 +175,17 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           ceo_image: file.ceo_image[0],
           sector: selectedSector.id,
           company_valuation: `${values.currency}${values.currency_value}`,
-          is_ecosystem:
-            values.business_role === "Ecosystem Player" ? true : false,
           is_entrepreneur:
             values.business_role === "Enterpreneur" ? true : false,
+          is_ecosystem:
+            values.business_role === "Ecosystem Player" ? true : false,
         };
       }
 
       const formData = new FormData();
 
       for (const key in userData) {
-        if (userData[key]) {
-          formData.append(key, userData[key]);
-        }
+        formData.append(key, userData[key]);
       }
 
       const { status, data } = await api.editOrganization(
@@ -198,7 +196,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
       if (status >= 200 && status < 300) {
         setIsLoading(false);
 
-        updateOrganization(data.data);
+        updateOrganization({ ...data.data });
 
         Modal.success({
           title: "Organization edited successfully!",

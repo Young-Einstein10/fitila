@@ -9,7 +9,7 @@ export default class Organization {
   }
 
   getOrganization() {
-    return this.client.get("/organizations");
+    return this.client.get("/organizations/");
   }
 
   getPendingOrganization(config?: AxiosRequestConfig) {
@@ -17,11 +17,16 @@ export default class Organization {
   }
 
   addBusiness(data) {
-    return this.client.post("/organizations/", data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    return this.client.post(
+      "/organizations/",
+      data
+
+      // {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      // }
+    );
   }
 
   upload(data) {

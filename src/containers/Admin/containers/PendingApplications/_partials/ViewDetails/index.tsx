@@ -1,7 +1,10 @@
 import React, { FC, useState } from "react";
 import { Modal, Button } from "antd";
 import { IOrganizationProps } from "../../../../../../context/Organization/types";
-import { useApiContext } from "../../../../../../context";
+import {
+  useApiContext,
+  useOrganizationContext,
+} from "../../../../../../context";
 import { capitalize } from "../../../../../../utils/helpers";
 import numberWithCommas from "../../../../../../utils/numberFormatter";
 
@@ -23,6 +26,7 @@ const ViewDetails: FC<IViewDetailsProps> = ({
   const [isApprovalLoading, setIsApprovalLoading] = useState(false);
 
   const { organization: api } = useApiContext();
+  const { refetchOrganizations } = useOrganizationContext();
 
   const {
     id,
@@ -67,6 +71,7 @@ const ViewDetails: FC<IViewDetailsProps> = ({
           onOk: () => closeModal(),
         });
         refetchPendingApplications();
+        refetchOrganizations();
       }
     } catch (error) {
       console.log(error);

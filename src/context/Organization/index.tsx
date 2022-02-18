@@ -99,10 +99,18 @@ const OrganizationProvider: FC = ({ children }) => {
   };
 
   const updateOrganization = (updatedOrganization: IOrganizationProps) => {
-    setOrganization(prevOrg => ({
-      ...prevOrg,
-      data: [...prevOrg.data, updatedOrganization],
-    }));
+    // setOrganization(prevOrg => ({
+    //   ...prevOrg,
+    //   data: [...prevOrg.data, updatedOrganization],
+    // }));
+
+    setOrganization({
+      ...organization,
+      data: [
+        ...organization.data.filter(org => org.id !== updatedOrganization.id),
+        updatedOrganization,
+      ],
+    });
   };
 
   return (

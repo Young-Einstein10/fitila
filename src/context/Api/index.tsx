@@ -73,7 +73,8 @@ const ApiProvider: FC = ({ children }) => {
         if (
           errorResponse.config.url ===
             "/account/user/forget_password/confirm/" ||
-          errorResponse.config.url === "/account/user/forget_password/"
+          errorResponse.config.url === "/account/user/forget_password/" ||
+          errorResponse.config.url === "/account/otp/"
         ) {
           return Promise.reject(error);
         }

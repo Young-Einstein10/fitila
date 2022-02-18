@@ -11,7 +11,6 @@ import { ReactComponent as StartupIcon } from "../../../../../../static/svg/star
 import { ReactComponent as BusinessIcon } from "../../../../../../static/svg/business_icon.svg";
 import { ReactComponent as MoneyIcon } from "../../../../../../static/svg/money_icon.svg";
 import numberWithCommas from "../../../../../../utils/numberFormatter";
-import states from "../../../../../../states.json";
 
 const CardStyled = styled(Card)`
   /* box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04); */
@@ -48,7 +47,7 @@ const CardStyled = styled(Card)`
 `;
 
 const Summary = () => {
-  const { data: organizations } = useOrganizationContext();
+  const { data: organizations, states } = useOrganizationContext();
   const { data: sectors } = useSectorContext();
 
   const numOfStartUps = organizations.filter(org => org.is_startup === true)

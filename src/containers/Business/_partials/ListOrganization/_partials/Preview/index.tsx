@@ -8,6 +8,7 @@ import {
 } from "../../../../../../context";
 import { BusinessContext } from "../../../../context";
 import { useHistory } from "react-router-dom";
+import { Col, Row } from "antd";
 
 interface IPreviewProps {
   prev: () => void;
@@ -334,15 +335,25 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
         </p>
       </div>
 
-      <ButtonStyled
-        size="large"
-        htmlType="submit"
-        type="primary"
-        loading={isLoading}
-        onClick={() => handleSubmit()}
-      >
-        Submit
-      </ButtonStyled>
+      <Row gutter={8}>
+        <Col span={12}>
+          <ButtonStyled type="primary" size="large" onClick={() => prev()}>
+            Previous
+          </ButtonStyled>
+        </Col>
+
+        <Col span={12}>
+          <ButtonStyled
+            size="large"
+            htmlType="submit"
+            type="primary"
+            loading={isLoading}
+            onClick={() => handleSubmit()}
+          >
+            Submit
+          </ButtonStyled>
+        </Col>
+      </Row>
     </div>
   );
 };
