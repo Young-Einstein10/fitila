@@ -96,8 +96,6 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         subSegment => subSegment.name === currentOrganization.sub_ecosystem_name
       );
 
-      //   console.log({ selectedSubEcosystem });
-
       if (selectedSubEcosystem.length > 0) {
         setSubEcosystemSubClass(selectedSubEcosystem[0].sub_class);
       }
@@ -136,7 +134,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         delete currentOrganization.ceo_image_url;
       }
 
-      let userData = {};
+      let userData: any = {};
 
       if (currentOrganization.is_ecosystem) {
         selectedSubEcosystem = selectedEcosystem[0].sub_ecosystem.filter(
@@ -182,10 +180,18 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         };
       }
 
+      const { ceo_image, company_logo, ...rest } = userData;
+
       const formData = new FormData();
 
-      for (const key in userData) {
-        formData.append(key, userData[key]);
+      if (file.ceo_image.length === 0 || file.compnay_logo.length === 0) {
+        for (const key in rest) {
+          formData.append(key, userData[key]);
+        }
+      } else {
+        for (const key in userData) {
+          formData.append(key, userData[key]);
+        }
       }
 
       const { status, data } = await api.editOrganization(
