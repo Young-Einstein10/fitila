@@ -46,7 +46,7 @@ const Routes = () => {
         component={Organizations}
       />
       <CustomRoute path="/d/states" component={States} />
-      <CustomRoute path="/d/contact" component={Contact} />
+      {/* <CustomRoute path="/d/contact" component={Contact} /> */}
       {/* <CustomRoute path="/d/about" component={About} /> */}
       <CustomRoute path="/d/help" component={Help} />
       <CustomRoute path="/d/privacy" component={PrivacyPolicy} />

@@ -5,7 +5,6 @@ import FeatherIcon from "feather-icons-react";
 import { ReactComponent as DashboardIcon } from "../../static/svg/dashboardIcon.svg";
 // import { ReactComponent as OrganizationNavIcon } from "../../static/svg/orgNavIcon.svg";
 import { ReactComponent as HelpNavIcon } from "../../static/svg/helpNavIcon.svg";
-import { ReactComponent as ContactNavIcon } from "../../static/svg/contactNavIcon.svg";
 import { ReactComponent as AboutNavIcon } from "../../static/svg/aboutNavIcon.svg";
 // import { ReactComponent as AboutIcon } from "../../static/svg/about_icon.svg";
 import { ReactComponent as UserPlus } from "../../static/svg/user.svg";
@@ -118,14 +117,14 @@ const MenuItems = props => {
         </Menu.Item>
       )}
 
-      <Menu.Item
+      {/* <Menu.Item
         icon={<LinkedIcon children={<ContactNavIcon />} to="/d/contact" />}
         key="/d/contact"
       >
         <NavLink onClick={toggleCollapsed} to={`/d/contact`}>
           Contact
         </NavLink>
-      </Menu.Item>
+      </Menu.Item> */}
 
       {/* <Menu.Item
         icon={<LinkedIcon children={<AboutIcon />} to="/d/about" />}

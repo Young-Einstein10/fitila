@@ -50,6 +50,9 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
   closeModal,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [currOrganization, setCurrOrganization] = useState({
+    ...currentOrganization,
+  });
   const [subSegment, setSubSegment] = useState<ISubEcosystem[]>([]);
   const [currEcosystem, setCurrEcosystem] = useState("");
   const [num_supported_business] = useState();
@@ -72,35 +75,31 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
   const { organization: api } = useApiContext();
 
   useEffect(() => {
-    if (currentOrganization.ecosystem_name) {
-      setCurrEcosystem(currentOrganization.ecosystem_name);
+    if (currOrganization.ecosystem_name) {
+      setCurrEcosystem(currOrganization.ecosystem_name);
       const selectedEcosystem = ecosystem.filter(
-        eco => eco.name === currentOrganization.ecosystem_name
+        eco => eco.name === currOrganization.ecosystem_name
       );
 
       setSubSegment(selectedEcosystem[0].sub_ecosystem);
     }
 
-    if (currentOrganization.is_startup) {
-      setIs_Startup(currentOrganization.is_startup);
+    if (currOrganization.is_startup) {
+      setIs_Startup(currOrganization.is_startup);
     }
-  }, [
-    currentOrganization.ecosystem_name,
-    currentOrganization.is_startup,
-    ecosystem,
-  ]);
+  }, [currOrganization.ecosystem_name, currOrganization.is_startup, ecosystem]);
 
   useEffect(() => {
-    if (currentOrganization.sub_ecosystem_name) {
+    if (currOrganization.sub_ecosystem_name) {
       const selectedSubEcosystem = subSegment.filter(
-        subSegment => subSegment.name === currentOrganization.sub_ecosystem_name
+        subSegment => subSegment.name === currOrganization.sub_ecosystem_name
       );
 
       if (selectedSubEcosystem.length > 0) {
         setSubEcosystemSubClass(selectedSubEcosystem[0].sub_class);
       }
     }
-  }, [currentOrganization.sub_ecosystem_name, subSegment]);
+  }, [currOrganization.sub_ecosystem_name, subSegment]);
 
   const handleSubmit = async () => {
     try {
@@ -127,22 +126,22 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
       let selectedSubEcosystem = [];
 
       if (file.compnay_logo.length) {
-        delete currentOrganization.company_logo_url;
+        delete currOrganization.company_logo_url;
       }
 
       if (file.ceo_image.length) {
-        delete currentOrganization.ceo_image_url;
+        delete currOrganization.ceo_image_url;
       }
 
       let userData: any = {};
 
-      if (currentOrganization.is_ecosystem) {
+      if (currOrganization.is_ecosystem) {
         selectedSubEcosystem = selectedEcosystem[0].sub_ecosystem.filter(
           sub_eco => sub_eco.name === values.sub_ecosystem
         );
 
         userData = {
-          ...currentOrganization,
+          ...currOrganization,
           ...values,
           sector: selectedSector.id,
           funding: values.funding_currency_value
@@ -167,7 +166,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         };
       } else {
         userData = {
-          ...currentOrganization,
+          ...currOrganization,
           ...values,
           company_logo: file.compnay_logo.length ? file.compnay_logo[0] : "",
           ceo_image: file.ceo_image[0],
@@ -186,16 +185,20 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
 
       if (file.ceo_image.length === 0 || file.compnay_logo.length === 0) {
         for (const key in rest) {
-          formData.append(key, userData[key]);
+          if (rest[key]) {
+            formData.append(key, userData[key]);
+          }
         }
       } else {
         for (const key in userData) {
-          formData.append(key, userData[key]);
+          if (userData[key]) {
+            formData.append(key, userData[key]);
+          }
         }
       }
 
       const { status, data } = await api.editOrganization(
-        currentOrganization.id,
+        currOrganization.id,
         formData
       );
 
@@ -228,6 +231,19 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
     }
   };
 
+  const handleBusinessRole = val => {
+    console.log(val);
+
+    const is_entrepreneur = val === "Enterpreneur" ? true : false;
+    const is_ecosystem = val === "Ecosystem Player" ? true : false;
+
+    setCurrOrganization({
+      ...currOrganization,
+      is_entrepreneur,
+      is_ecosystem,
+    });
+  };
+
   const handleSubClassChange = value => {
     const currSubClass = subEcosystemSubClass.find(
       subclass => subclass.name.toLowerCase() === value
@@ -243,7 +259,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
     setSubSegment(selectedEcosystem[0].sub_ecosystem);
   };
 
-  const ceo_name_label = currentOrganization.is_entrepreneur
+  const ceo_name_label = currOrganization.is_entrepreneur
     ? "CEO/Founder's Name"
     : "CEO/DG/Head/Founder's Name";
 
@@ -291,7 +307,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
     fileList: file.compnay_logo,
   };
 
-  const { is_entrepreneur, is_ecosystem } = currentOrganization;
+  const { is_entrepreneur, is_ecosystem } = currOrganization;
 
   return (
     <Modal
@@ -317,23 +333,23 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         layout="vertical"
         className="list-organization"
         initialValues={{
-          ...currentOrganization,
+          ...currOrganization,
           business_role:
             (is_ecosystem && "Ecosystem Player") ||
             (is_entrepreneur && "Enterpreneur") ||
             "--",
-          cac_doc: Number(currentOrganization.cac_doc),
-          sector: currentOrganization.sector_name,
-          ceo_name: currentOrganization.ceo_name.name,
+          cac_doc: Number(currOrganization.cac_doc),
+          sector: currOrganization.sector_name,
+          ceo_name: currOrganization.ceo_name.name,
           is_startUp: is_startUp ? "Yes" : "No",
           currency: "₦",
-          num_supported_business: +currentOrganization.num_supported_business,
-          ecosystem: currentOrganization.ecosystem_name,
-          sub_ecosystem: currentOrganization.sub_ecosystem_name,
+          num_supported_business: +currOrganization.num_supported_business,
+          ecosystem: currOrganization.ecosystem_name,
+          sub_ecosystem: currOrganization.sub_ecosystem_name,
           funding_currency: "₦",
-          funding_currency_value: currentOrganization.funding,
+          funding_currency_value: currOrganization.funding,
           sub_ecosystem_sub_class:
-            currentOrganization.sub_ecosystem_sub_class_name,
+            currOrganization.sub_ecosystem_sub_class_name,
         }}
       >
         {/* BUSINESS NAME */}
@@ -360,7 +376,10 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
             },
           ]}
         >
-          <Select placeholder="Business Role">
+          <Select
+            onChange={val => handleBusinessRole(val)}
+            placeholder="Business Role"
+          >
             <Option value="Enterpreneur">Enterpreneur</Option>
             <Option value="Ecosystem Player">Ecosystem Player</Option>
           </Select>
@@ -433,7 +452,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* STATE */}
 
         {/* ECOSYTEM SEGMENT */}
-        {currentOrganization.is_ecosystem && (
+        {currOrganization.is_ecosystem && (
           <Form.Item
             name="ecosystem"
             rules={[
@@ -459,7 +478,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* ECOSYTEM SEGMENT */}
 
         {/* SUB-ECOSYTEM SEGMENT */}
-        {currentOrganization.is_ecosystem && subSegment.length > 0 ? (
+        {currOrganization.is_ecosystem && subSegment.length > 0 ? (
           <Form.Item
             name="sub_ecosystem"
             rules={[
@@ -485,7 +504,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* SUB-ECOSYTEM SEGMENT */}
 
         {/* SUB-CLASS */}
-        {currentOrganization.is_ecosystem && subEcosystemSubClass.length > 0 ? (
+        {currOrganization.is_ecosystem && subEcosystemSubClass.length > 0 ? (
           <Form.Item
             name="sub_ecosystem_sub_class"
             rules={[
@@ -510,7 +529,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         ) : null}
         {/* SUB-CLASS */}
 
-        {currentOrganization.is_ecosystem &&
+        {currOrganization.is_ecosystem &&
           currEcosystem === "Funding" &&
           subSegment.length > 0 && (
             <Form.Item name="funding" style={{ marginBottom: 0 }}>
@@ -567,7 +586,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* BUSINESS SECTOR */}
 
         {/* BUSINESS LEVEL */}
-        {currentOrganization.is_entrepreneur && (
+        {currOrganization.is_entrepreneur && (
           <Form.Item
             name="business_level"
             rules={[
@@ -591,7 +610,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* BUSINESS LEVEL */}
 
         {/* COMPANY VALUATION */}
-        {currentOrganization.is_entrepreneur && is_startUp && (
+        {currOrganization.is_entrepreneur && is_startUp && (
           <Form.Item name="company_valuation">
             <InputGroup compact style={{ display: "flex" }}>
               <Form.Item name="currency">
@@ -630,7 +649,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* COMPANY VALUATION */}
 
         {/* NUMBER OF JOBS CREATED */}
-        {currentOrganization.is_entrepreneur && (
+        {currOrganization.is_entrepreneur && (
           <Form.Item
             name="no_of_jobs"
             rules={[
@@ -647,7 +666,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* NUMBER OF JOBS CREATED */}
 
         {/* NUMBER OF SUPPORTED BUSINESSES */}
-        {currentOrganization.is_ecosystem && (
+        {currOrganization.is_ecosystem && (
           <Form.Item
             name="num_supported_business"
             rules={[
@@ -669,7 +688,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
         {/* NUMBER OF SUPPORTED BUSINESSES */}
 
         {/* NUMBER OF SUPPORTED BUSINESSES: ABOVE 1000 */}
-        {currentOrganization.is_ecosystem &&
+        {currOrganization.is_ecosystem &&
           num_supported_business === "Above 1000" && (
             <Form.Item
               name="num_supported_business_custom"
@@ -762,7 +781,7 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
           <InputNumberStyled placeholder="Business RC Number" />
         </Form.Item>
 
-        {currentOrganization.is_entrepreneur && (
+        {currOrganization.is_entrepreneur && (
           <Form.Item name="funding" style={{ marginBottom: 0 }}>
             <InputGroup compact style={{ display: "flex" }}>
               <Form.Item name="funding_currency">
@@ -802,8 +821,8 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
               className="styled-img"
               width={50}
               height={50}
-              src={currentOrganization.company_logo_url}
-              alt={currentOrganization.name}
+              src={currOrganization.company_logo_url}
+              alt={currOrganization.name}
               rounded
             />
           ) : null}
@@ -824,8 +843,8 @@ const EditOrganizationModal: FC<IEditOrganizationProps> = ({
               className="styled-img"
               width={50}
               height={50}
-              src={currentOrganization.ceo_image_url}
-              alt={currentOrganization.ceo_name.name}
+              src={currOrganization.ceo_image_url}
+              alt={currOrganization.ceo_name.name}
               rounded
             />
           ) : null}
