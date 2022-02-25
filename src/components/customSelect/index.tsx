@@ -6,11 +6,18 @@ type CustomSelectProps = SelectProps<any> & {
   prefixIcon?: ReactNode;
 };
 
-const CustomSelect = ({ prefixIcon, children, ...rest }: CustomSelectProps) => {
+const CustomSelect = ({
+  prefixIcon,
+  children,
+  placeholder,
+  ...rest
+}: CustomSelectProps) => {
   return (
     <SelectWrapper>
       {prefixIcon && <div className="prefix-icon-wrapper">{prefixIcon}</div>}
-      <Select {...rest}>{children}</Select>
+      <Select placeholder={placeholder} {...rest}>
+        {children}
+      </Select>
     </SelectWrapper>
   );
 };

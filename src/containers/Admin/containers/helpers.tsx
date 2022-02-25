@@ -104,6 +104,7 @@ const createTableColumns = (
       title: "Employees",
       dataIndex: "employees",
       key: "employees",
+      align: "center",
     },
     {
       title: "Funding (₦)",
@@ -168,7 +169,7 @@ const createDataSource = (organizationList: IOrganizationProps[]) => {
       state: org.state,
       sectors: org.sector_name || org.sector,
       market_cap: org.market_cap,
-      employees: org.num_of_employees,
+      employees: org.no_of_jobs,
       funding: org.funding,
       id: org.id,
     };

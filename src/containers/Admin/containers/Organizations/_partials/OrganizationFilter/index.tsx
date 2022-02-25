@@ -25,7 +25,7 @@ interface IOrganizationFilterProps {
   sector?: string;
 }
 
-type IFilterOption = "name" | "state" | "sector" | "search";
+type IFilterOption = "name" | "state" | "sector" | "role" | "search";
 
 const OrganizationFilter: FC<IOrganizationFilterProps> = ({
   isOrganizationLoading,
@@ -40,6 +40,8 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
     IOrganizationProps[]
   >([]);
 
+  const [form] = Form.useForm();
+
   useEffect(() => {
     if (state) {
       const result = organizations
@@ -50,6 +52,8 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
         );
 
       setFilteredOrganizations(result);
+
+      form.setFieldsValue({ state_filter: capitalize(state) });
     }
 
     if (sector) {
@@ -68,11 +72,11 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
         setFilteredOrganizations(result);
       }, 1000);
     }
-  }, [state, organizations, setFilteredOrganizations, sector]);
+  }, [state, organizations, setFilteredOrganizations, form, sector]);
 
   const clearFilters = () => {
     setFilter(null);
-
+    form.resetFields();
     setFilteredOrganizations(organizations);
   };
 
@@ -84,7 +88,7 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
       return;
     } else {
       if (filterMethod === "state") {
-        if (filter === "search" || filter === "sector") {
+        if (filter === "search" || filter === "sector" || filter === "role") {
           const result = currentFilterResult
             .map(organization => organization)
             .filter(
@@ -109,7 +113,7 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
       }
 
       if (filterMethod === "sector") {
-        if (filter === "search" || filter === "state") {
+        if (filter === "search" || filter === "state" || filter === "role") {
           const result = currentFilterResult
             .map(organization => organization)
             .filter(
@@ -131,6 +135,49 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
 
           setCurrentFilterResult(result);
           setFilteredOrganizations(result);
+        }
+      }
+
+      if (filterMethod === "role") {
+        const isEcosystem = filterValue.toLowerCase() === "ecosystem player";
+        const isEnterpreneur = filterValue.toLowerCase() === "enterpreneur";
+
+        if (filter === "search" || filter === "state" || filter === "sector") {
+          if (isEcosystem) {
+            const result = currentFilterResult
+              .map(organization => organization)
+              .filter(organization => organization.is_ecosystem);
+
+            setCurrentFilterResult(result);
+            setFilteredOrganizations(result);
+          }
+
+          if (isEnterpreneur) {
+            const result = currentFilterResult
+              .map(organization => organization)
+              .filter(organization => organization.is_entrepreneur);
+
+            setCurrentFilterResult(result);
+            setFilteredOrganizations(result);
+          }
+        } else {
+          if (isEcosystem) {
+            const result = organizations
+              .map(organization => organization)
+              .filter(organization => organization.is_ecosystem);
+
+            setCurrentFilterResult(result);
+            setFilteredOrganizations(result);
+          }
+
+          if (isEnterpreneur) {
+            const result = organizations
+              .map(organization => organization)
+              .filter(organization => organization.is_entrepreneur);
+
+            setCurrentFilterResult(result);
+            setFilteredOrganizations(result);
+          }
         }
       }
 
@@ -178,14 +225,15 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
         <Col span={24} className="p-0">
           <Form
             layout="vertical"
-            initialValues={{
-              state_filter: capitalize(state),
-              sector_filter: capitalize(sector),
-            }}
+            form={form}
+            // initialValues={{
+            //   state_filter: capitalize(state),
+            //   sector_filter: capitalize(sector),
+            // }}
           >
             <Row gutter={[16, 16]}>
               {!state && (
-                <Col xs={24} sm={24} md={12} lg={12}>
+                <Col xs={24} sm={24} md={12} lg={6}>
                   <FormItem style={{ marginBottom: 0 }} name="search_filter">
                     <Input
                       onChange={e => {
@@ -207,13 +255,12 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                   <CustomSelect
                     suffixIcon={<ArrowDown />}
                     prefixIcon={<FilterOutlined />}
-                    // showSearch
                     placeholder="Filter By States"
-                    // optionFilterProp="children"
                     onSelect={(val: string) => {
                       setFilter("state");
                       filterOrganizations(val, "state");
                     }}
+                    // optionFilterProp="children"
                     // filterOption={(input, option) =>
                     //   option.value.toLowerCase().indexOf(input.toLowerCase()) >=
                     //   0
@@ -234,23 +281,42 @@ const OrganizationFilter: FC<IOrganizationFilterProps> = ({
                   <CustomSelect
                     suffixIcon={<ArrowDown />}
                     prefixIcon={<FilterOutlined />}
-                    // showSearch
                     placeholder="Filter By Sectors"
-                    // optionFilterProp="children"
                     onSelect={(val: string) => {
                       setFilter("sector");
 
                       filterOrganizations(val, "sector");
                     }}
-                    // filterOption={(input, option) =>
-                    //   option.value.toLowerCase().indexOf(input.toLowerCase()) >=
-                    //   0
-                    // }
                     disabled={isOrganizationLoading}
                   >
                     {sectors.map((sector, key) => (
                       <Option key={key} value={sector.name}>
                         {sector.name}
+                      </Option>
+                    ))}
+                  </CustomSelect>
+                </FormItem>
+              </Col>
+
+              <Col style={{ marginBottom: 0 }} xs={24} sm={24} md={12} lg={6}>
+                <FormItem
+                  style={{ marginBottom: 0 }}
+                  name="business_role_filter"
+                >
+                  <CustomSelect
+                    suffixIcon={<ArrowDown />}
+                    prefixIcon={<FilterOutlined />}
+                    placeholder="Filter By Business Role"
+                    onSelect={(val: string) => {
+                      setFilter("role");
+
+                      filterOrganizations(val, "role");
+                    }}
+                    disabled={isOrganizationLoading}
+                  >
+                    {["Enterpreneur", "Ecosystem Player"].map((player, key) => (
+                      <Option key={key} value={player.toLowerCase()}>
+                        {player}
                       </Option>
                     ))}
                   </CustomSelect>
