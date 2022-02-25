@@ -16,10 +16,8 @@ interface ISummaryProps {
 const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
   const {
     name,
-    ceo_name,
     state,
     sector_name,
-    num_of_employees,
     funding,
     funding_disbursed_for_support,
     address,
@@ -152,10 +150,10 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     <strong>Description</strong>: {description || "--"}
                   </p>
 
-                  <p>
+                  {/* <p>
                     <strong>CEO/Founder</strong>:{" "}
                     {(ceo_name && ceo_name.name) || "--"}
-                  </p>
+                  </p> */}
 
                   <p>
                     <strong>Phone</strong> {phone || "--"}
@@ -213,9 +211,9 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     <strong>Sector</strong>: {sector_name || "--"}
                   </p>
 
-                  <p>
+                  {/* <p>
                     <strong>Employees</strong>: {num_of_employees || "--"}
-                  </p>
+                  </p> */}
 
                   <p>
                     <strong>Number of Supported Businesses</strong>:{" "}
