@@ -22,8 +22,7 @@ interface ContextProps extends ApiProps {
 
 const ApiContext = createContext<ContextProps | undefined>(undefined);
 
-const BASE_URL =
-  "https://api.enterprisedatamap.org" || process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 //Staging endpoint
 const axiosInstance = axios.create({
