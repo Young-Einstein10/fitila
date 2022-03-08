@@ -127,7 +127,7 @@ const Summary = () => {
       <Col xs={24} sm={12} md={8} lg={8}>
         <CardStyled className="long">
           <p className="title">
-            Funding disbursed by Enterpreneurship Support Organizations
+            Funding disbursed by Enterprise Support Organizations
           </p>
 
           <div className="content">
