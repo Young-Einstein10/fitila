@@ -617,11 +617,11 @@ const ListOrganizationForm = ({ next }) => {
           name="num_supported_business"
           rules={[
             { type: "number", message: "Only numbers are allowed" },
-            {
-              message:
-                "Please input the number of businesses you've supported!",
-              required: true,
-            },
+            // {
+            //   message:
+            //     "Please input the number of businesses you've supported!",
+            //   required: true,
+            // },
           ]}
         >
           <InputNumberStyled
