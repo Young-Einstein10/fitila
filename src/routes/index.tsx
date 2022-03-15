@@ -5,7 +5,6 @@ import {
   Organizations,
   States,
   Help,
-  Contact,
   Administrators,
   Profile,
   PrivacyPolicy,
