@@ -158,12 +158,12 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
 
       <Form.Item
         name="ceo_image"
-        rules={[
-          {
-            message: "Please upload your ceo/founder image!",
-            required: true,
-          },
-        ]}
+        // rules={[
+        //   {
+        //     message: "Please upload your ceo/founder image!",
+        //     required: true,
+        //   },
+        // ]}
       >
         <Upload {...ceoImageProps} listType="picture">
           <UploadButtonStyled size="large">

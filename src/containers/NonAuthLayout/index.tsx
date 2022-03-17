@@ -16,8 +16,6 @@ import {
   LayoutStyled,
 } from "./styled";
 import "./styles.less";
-import { useAuthContext } from "../../context";
-// import { DownOutlined } from "@ant-design/icons";
 import { Popover } from "../../components/popup/popup";
 import { UserDropdown } from "../adminLayout/style";
 import { Logo } from "../../components/svgs";
@@ -25,10 +23,6 @@ import { Logo } from "../../components/svgs";
 const { Content } = Layout;
 
 const NonAuthLayout: FC = ({ children }) => {
-  const {
-    auth: { isAuthenticated },
-  } = useAuthContext();
-
   const toggleMenuContent = (
     <ul className="toggle-menu-content">
       <li style={{ marginBottom: "1.5rem" }}>
@@ -37,33 +31,29 @@ const NonAuthLayout: FC = ({ children }) => {
         </BusinessButton>
       </li>
 
-      {isAuthenticated ? (
-        <li>
-          <BusinessButton size="large" type="link">
-            <NavLink to="/d">See Dashboard</NavLink>
-          </BusinessButton>
-        </li>
-      ) : (
-        <>
-          <li style={{ marginBottom: "1.5rem" }}>
-            <NavLink to="/signin">
-              <BusinessButton size="large">
-                <UserIcon style={{ marginRight: "10px" }} />
-                Sign In
-              </BusinessButton>
-            </NavLink>
-          </li>
+      <li style={{ marginBottom: "1.5rem" }}>
+        <BusinessButton size="large">
+          <NavLink to="/d">See Dashboard</NavLink>
+        </BusinessButton>
+      </li>
 
-          <li>
-            <NavLink to="/signup">
-              <BusinessButton size="large">
-                <UserIcon style={{ marginRight: "10px" }} />
-                Sign Up
-              </BusinessButton>
-            </NavLink>
-          </li>
-        </>
-      )}
+      <li style={{ marginBottom: "1.5rem" }}>
+        <NavLink to="/signin">
+          <BusinessButton size="large">
+            <UserIcon style={{ marginRight: "10px" }} />
+            Sign In
+          </BusinessButton>
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink to="/signup">
+          <BusinessButton size="large">
+            <UserIcon style={{ marginRight: "10px" }} />
+            Sign Up
+          </BusinessButton>
+        </NavLink>
+      </li>
     </ul>
   );
 
@@ -107,23 +97,21 @@ const NonAuthLayout: FC = ({ children }) => {
                 <NavLink to="/business">List Your Organization</NavLink>
               </BusinessButton>
 
-              {isAuthenticated ? (
-                <BusinessButton size="large">
-                  <NavLink to="/d">See Dashboard</NavLink>
-                </BusinessButton>
-              ) : (
-                <Popover
-                  placement="bottomRight"
-                  action="click"
-                  content={userContent}
-                >
-                  <ButtonStyled size="large">
-                    <UserIcon />
-                    <strong>Account</strong>
-                    <ArrowDown />
-                  </ButtonStyled>
-                </Popover>
-              )}
+              <BusinessButton size="large">
+                <NavLink to="/d">See Dashboard</NavLink>
+              </BusinessButton>
+
+              <Popover
+                placement="bottomRight"
+                action="click"
+                content={userContent}
+              >
+                <ButtonStyled size="large">
+                  <UserIcon />
+                  <strong>Account</strong>
+                  <ArrowDown />
+                </ButtonStyled>
+              </Popover>
             </div>
 
             <div className="toggle-menu">
