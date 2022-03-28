@@ -158,7 +158,7 @@ const Help: FC = props => {
                           Send Us A Message
                         </Heading>
 
-                        <p>
+                        <p style={{ fontSize: "16px" }}>
                           For complaints and/or suggestions, kindly reach out to
                           us by clicking the button below:{" "}
                         </p>
