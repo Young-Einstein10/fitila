@@ -58,7 +58,7 @@ const createTableColumns = (
       key: "company",
     },
     {
-      title: "CEO/Founder",
+      title: "CEO/DG/Head/Founder",
       dataIndex: "ceo_name",
       key: "ceo_name",
 
@@ -101,25 +101,30 @@ const createTableColumns = (
       key: "sectors",
     },
     {
-      title: "Employees",
-      dataIndex: "employees",
-      key: "employees",
-      align: "center",
+      title: "Business Type",
+      dataIndex: "business_type",
+      key: "business_type",
     },
-    {
-      title: "Funding (₦)",
-      dataIndex: "funding",
-      key: "funding",
+    // {
+    //   title: "Employees",
+    //   dataIndex: "employees",
+    //   key: "employees",
+    //   align: "center",
+    // },
+    // {
+    //   title: "Funding (₦)",
+    //   dataIndex: "funding",
+    //   key: "funding",
 
-      render: (record, key) => {
-        // let result = record ? record.split("₦") : [];
+    //   render: (record, key) => {
+    //     // let result = record ? record.split("₦") : [];
 
-        return (
-          // <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
-          <span>{numberWithCommas(record)}</span>
-        );
-      },
-    },
+    //     return (
+    //       // <span>{`${result.length ? numberWithCommas(result[1]) : ""}`}</span>
+    //       <span>{numberWithCommas(record)}</span>
+    //     );
+    //   },
+    // },
     {
       title: "Actions",
       key: "action",
@@ -128,17 +133,6 @@ const createTableColumns = (
       render: (record, key) => {
         return (
           <Space size="middle">
-            {/* Render a anchor link if user is viewing a company profile currently, so when View Profile button in SimilarCompanies is clicked, it'll route to the compnay page */}
-            {/* {isViewingProfile ? (
-              <ViewProfileBtnStyled>
-                <a href={`/d/profile/${record.id}`}>View Profile</a>
-              </ViewProfileBtnStyled>
-            ) : (
-              <ViewProfileBtnStyled>
-                <Link to={`/d/profile/${record.id}`}>View Profile</Link>
-              </ViewProfileBtnStyled>
-            )} */}
-
             <ViewProfileBtnStyled>
               <Link to={`/d/profile/${record.id}`}>View Profile</Link>
             </ViewProfileBtnStyled>
@@ -158,12 +152,23 @@ const createTableColumns = (
   return columns;
 };
 
+function getBusinessType(org: IOrganizationProps) {
+  if (org.is_ecosystem) {
+    return "Ecosystem Enabler";
+  }
+
+  if (org.is_entrepreneur) {
+    return "Entrepreneur";
+  }
+}
+
 const createDataSource = (organizationList: IOrganizationProps[]) => {
   const dataSource = organizationList.map((org, key) => {
     return {
       ...org,
       key: org.id,
       rank: key + 1,
+      business_type: getBusinessType(org),
       company: org.name,
       ceo_name: { name: org.ceo_name, avatar: org.ceo_image_url },
       state: org.state,

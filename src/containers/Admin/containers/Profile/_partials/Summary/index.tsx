@@ -24,7 +24,6 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
     business_level,
     ceo_gender,
     company_valuation,
-    description,
     phone,
     no_of_jobs,
     num_supported_business,
@@ -75,7 +74,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                   <Heading as="h1" fontSize="32px" className="font-weight-700">
                     {selectedOrganization[0] && selectedOrganization[0].name}
                   </Heading>
-                  <p style={{ marginBottom: 0 }}>
+                  <p style={{ marginBottom: 0, textAlign: "justify" }}>
                     {selectedOrganization[0] &&
                       selectedOrganization[0].description}
                   </p>
@@ -133,7 +132,7 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                 </div>
               }
             >
-              <RowStyled>
+              <RowStyled gutter={24}>
                 <Col className="profile-summary-data" span={12}>
                   <p>
                     <strong>Company</strong>: {name || "--"}
@@ -144,10 +143,6 @@ const Summary: FC<ISummaryProps> = ({ selectedOrganization, isLoading }) => {
                     {(is_ecosystem && "Ecosystem Player") ||
                       (is_entrepreneur && "Enterpreneur") ||
                       "--"}
-                  </p>
-
-                  <p>
-                    <strong>Description</strong>: {description || "--"}
                   </p>
 
                   {/* <p>

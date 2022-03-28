@@ -86,7 +86,7 @@ const ListOrganization = () => {
                   margin="0 0 2rem 0"
                   className="text-center"
                 >
-                  List your {state.business_type}
+                  List your business
                   <br /> ({state.business_type})
                 </Heading>
 

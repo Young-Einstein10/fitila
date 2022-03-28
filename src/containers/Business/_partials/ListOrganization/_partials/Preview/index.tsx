@@ -102,7 +102,7 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
     );
 
     const data = { ...state, sector: selectedSector.id };
-    console.log(data);
+    // console.log(data);
 
     const formData = new FormData();
 

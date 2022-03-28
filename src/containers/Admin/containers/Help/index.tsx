@@ -44,8 +44,6 @@ const Help: FC = props => {
   const { isLoading, data } = useFAQContext();
   const [form] = Form.useForm();
 
-  const handleSubmit = () => {};
-
   const toggleAddFaqModal = () => setIsFaqModalOpen(open => !open);
   const toggleEditFaqModal = () => setIsEditFAQModalOpen(open => !open);
 
@@ -159,39 +157,23 @@ const Help: FC = props => {
                         >
                           Send Us A Message
                         </Heading>
+
+                        <p>
+                          For complaints and/or suggestions, kindly reach out to
+                          us by clicking the button below:{" "}
+                        </p>
                       </div>
 
-                      <Form
-                        form={form}
-                        onFinish={handleSubmit}
-                        className="uploads"
-                        layout="vertical"
-                      >
-                        <Form.Item name="firstname">
-                          <InputStyled placeholder="First Name" />
-                        </Form.Item>
-
-                        <Form.Item name="lastname">
-                          <InputStyled placeholder="Last Name" />
-                        </Form.Item>
-
-                        <Form.Item name="message">
-                          <InputStyled.TextArea
-                            placeholder="Message"
-                            style={{ height: "165px" }}
-                          />
-                        </Form.Item>
-
-                        <Form.Item>
-                          <ButtonStyled
-                            htmlType="submit"
-                            type="primary"
-                            size="large"
-                          >
-                            Send
-                          </ButtonStyled>
-                        </Form.Item>
-                      </Form>
+                      <a href="mailto:research@fatefoundation.org">
+                        <ButtonStyled
+                          htmlType="submit"
+                          type="primary"
+                          size="large"
+                          style={{ width: "150px" }}
+                        >
+                          Send
+                        </ButtonStyled>
+                      </a>
                     </div>
                   </Col>
                 </Row>

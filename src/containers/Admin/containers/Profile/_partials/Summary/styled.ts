@@ -98,6 +98,7 @@ const StyledCompanyLogo = styled.div`
 
   .company-image-wrapper {
     width: 100px;
+    flex-shrink: 0;
     margin-right: 1.2rem;
 
     img {

@@ -176,11 +176,11 @@ const Uploads: FC<IUploadProps> = ({ prev, next }) => {
         name="cac_doc"
         style={{ width: "100%" }}
         rules={[
-          { type: "number", message: "Only numbers are allowed" },
-          // {
-          //   message: "Please input your Business RC Number!",
-          //   required: true,
-          // },
+          // { type: "number", message: "Only numbers are allowed" },
+          {
+            message: "Please input your Business RC Number!",
+            required: true,
+          },
         ]}
       >
         <InputNumberStyled placeholder="Business RC Number" />

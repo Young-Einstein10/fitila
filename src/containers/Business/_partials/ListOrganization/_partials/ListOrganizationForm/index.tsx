@@ -104,7 +104,7 @@ const ListOrganizationForm = ({ next }) => {
         subSegment => subSegment.name === state.sub_ecosystem_name
       );
 
-      console.log({ selectedSubEcosystem });
+      // console.log({ selectedSubEcosystem });
 
       if (selectedSubEcosystem.length > 0) {
         setSubEcosystemSubClass(selectedSubEcosystem[0].sub_class);
@@ -138,7 +138,7 @@ const ListOrganizationForm = ({ next }) => {
     try {
       const values = await form.validateFields();
 
-      console.log({ values });
+      // console.log({ values });
 
       if (values.num_supported_business === "Above 1000") {
         values.num_supported_business = values.num_supported_business_custom;
@@ -194,7 +194,7 @@ const ListOrganizationForm = ({ next }) => {
       //   userData.company_valuation = values.currency_value;
       // }
 
-      console.log({ userData });
+      // console.log({ userData });
 
       setState(userData);
       // Move to Next Step
@@ -266,11 +266,11 @@ const ListOrganizationForm = ({ next }) => {
 
       {/* CEO/FOUNDER"S NAME */}
       <Form.Item
-        label="CEO Gender"
+        label="Gender"
         name="ceo_gender"
         rules={[
           {
-            message: "Please select CEO/DG/Founder's gender",
+            message: "Please select gender",
             required: true,
           },
         ]}

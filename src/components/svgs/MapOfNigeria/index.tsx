@@ -2,6 +2,7 @@ import React, { FC, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import { IOrganizationProps } from "../../../context/Organization/types";
+import { isMSME, isStartUp } from "../../../utils/helpers";
 import PathStyled from "./styled";
 
 type IMapProps = {
@@ -19,7 +20,7 @@ const ranges = {
   low: [21, 50],
   average: [51, 120],
   high: [121, 250],
-  highest: [251, "*"]
+  highest: [251, "*"],
 };
 
 export function getClassName(numOfOrganizations?: number) {
@@ -344,13 +345,8 @@ export const MapOfNigeria: FC<IMapProps> = ({ statesData }) => {
           );
 
           const startups =
-            state.organizations.filter(
-              org => org?.business_level?.toLowerCase() === "startup"
-            ) || [];
-          const msmes =
-            state.organizations.filter(
-              org => org?.business_level?.toLowerCase() !== "startup"
-            ) || [];
+            state.organizations.filter(org => isStartUp(org)) || [];
+          const msmes = state.organizations.filter(org => isMSME(org)) || [];
 
           return (
             <div>

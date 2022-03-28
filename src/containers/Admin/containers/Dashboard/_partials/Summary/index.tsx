@@ -15,6 +15,7 @@ import numberWithCommas from "../../../../../../utils/numberFormatter";
 const CardStyled = styled(Card)`
   /* box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04); */
   border-radius: 4px;
+  min-height: 135px;
 
   .title {
     color: #81868c;
@@ -50,12 +51,17 @@ const Summary = () => {
   const { data: organizations, states } = useOrganizationContext();
   const { data: sectors } = useSectorContext();
 
+  const totalNumOfSupportedBusinesses = organizations
+    .filter(org => org.is_ecosystem)
+    .reduce(
+      (total, org) =>
+        Number(org.num_supported_business ? org.num_supported_business : 0) +
+        total,
+      0
+    );
+
   const numOfStartUps = organizations.filter(org => org.is_startup === true)
     .length;
-
-  const numOfFemaleFounders = organizations.filter(
-    org => org.ceo_gender.toLowerCase() === "female"
-  ).length;
 
   const totalFundingDisbursedForSupport = organizations.reduce(
     (total, { funding_disbursed_for_support }) =>
@@ -118,7 +124,7 @@ const Summary = () => {
           </p>
 
           <div className="content">
-            <p>{numOfFemaleFounders}</p>
+            <p>{totalNumOfSupportedBusinesses}</p>
             <BusinessIcon />
           </div>
         </CardStyled>
