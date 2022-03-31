@@ -37,7 +37,7 @@ export const capitalize = str => {
 };
 
 export const startWithHttp = (url: string) => {
-  return url.startsWith("https") ? url : `https://${url}`;
+  return url.startsWith("https" || "http") ? url : `https://${url}`;
 };
 
 export function getRandomColor() {
