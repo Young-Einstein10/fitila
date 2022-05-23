@@ -161,8 +161,8 @@ const ListOrganizationForm = ({ next }) => {
           ...state,
           ...values,
           // is_startup: is_startUp,
-          funding_disbursed_for_support: values.funding_disbursed_support
-            ? values.funding_disbursed_support
+          funding_disbursed_for_support: values.funding_disbursed_for_support
+            ? values.funding_disbursed_for_support
             : 0,
           ecosystem: selectedEcosystem[0].id,
           ecosystem_name: selectedEcosystem[0].name,

@@ -173,10 +173,12 @@ const ViewDetails: FC<IViewDetailsProps> = ({
           {num_supported_business || "--"}
         </p>
 
-        <p>
-          <strong>Funding (₦)</strong>:{" "}
-          {is_ecosystem ? "N/A" : funding && numberWithCommas(funding)}
-        </p>
+        {currentListing.is_entrepreneur && (
+          <p>
+            <strong>Funding (₦)</strong>:{" "}
+            {is_ecosystem ? "N/A" : funding && numberWithCommas(funding)}
+          </p>
+        )}
 
         {currentListing.is_ecosystem && (
           <p>

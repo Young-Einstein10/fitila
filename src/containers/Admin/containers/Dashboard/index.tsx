@@ -18,7 +18,13 @@ const Dashboard: FC<RouteComponentProps> = () => {
   const {
     isLoading: isOrganizationLoading,
     data: organizations,
+    refetchOrganizations,
   } = useOrganizationContext();
+
+  useEffect(() => {
+    refetchOrganizations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const statesData = states.map((state, idx) => {
     const organizationList = organizations.filter(

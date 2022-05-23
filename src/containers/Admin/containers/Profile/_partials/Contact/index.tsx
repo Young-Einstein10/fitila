@@ -208,13 +208,15 @@ const Contact: FC<ContactProps> = props => {
                   </h2>
                   <p>{address}</p>
 
-                  <a
-                    href={startWithHttp(website)}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    {website}
-                  </a>
+                  {website && (
+                    <a
+                      href={startWithHttp(website)}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      {website}
+                    </a>
+                  )}
 
                   <p>
                     <span>{phone}</span>

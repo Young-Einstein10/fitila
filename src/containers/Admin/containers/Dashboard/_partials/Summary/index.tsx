@@ -11,6 +11,7 @@ import { ReactComponent as StartupIcon } from "../../../../../../static/svg/star
 import { ReactComponent as BusinessIcon } from "../../../../../../static/svg/business_icon.svg";
 import { ReactComponent as MoneyIcon } from "../../../../../../static/svg/money_icon.svg";
 import numberWithCommas from "../../../../../../utils/numberFormatter";
+import { isStartUp } from "../../../../../../utils/helpers";
 
 const CardStyled = styled(Card)`
   /* box-shadow: 0px 2px 8px rgba(53, 55, 81, 0.04); */
@@ -60,8 +61,11 @@ const Summary = () => {
       0
     );
 
-  const numOfStartUps = organizations.filter(org => org.is_startup === true)
-    .length;
+  const numOfStartUps = organizations.filter(org => isStartUp(org)).length;
+
+  console.log({
+    numOfStartUps: organizations.filter(org => org.business_level),
+  });
 
   const totalFundingDisbursedForSupport = organizations.reduce(
     (total, { funding_disbursed_for_support }) =>
@@ -124,7 +128,7 @@ const Summary = () => {
           </p>
 
           <div className="content">
-            <p>{totalNumOfSupportedBusinesses}</p>
+            <p>{numberWithCommas(totalNumOfSupportedBusinesses)}</p>
             <BusinessIcon />
           </div>
         </CardStyled>

@@ -41,6 +41,8 @@ const MSMEsChart = props => {
     chartDatasets[0].data.push(sector.funding);
   });
 
+  console.log({ funding });
+
   const { ref } = useChartData();
 
   const dataInfo = {

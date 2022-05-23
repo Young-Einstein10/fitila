@@ -48,6 +48,7 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
     num_of_employees,
     funding_currency,
     funding_currency_value,
+    funding_disbursed_for_support,
     company_valuation,
     currency,
     email,
@@ -194,6 +195,16 @@ const Preview: FC<IPreviewProps> = ({ prev }) => {
             {sub_ecosystem_sub_class_name || "--"}
           </p>
         )}
+
+        {business_type === "Ecosystem Enabler" &&
+          funding_disbursed_for_support && (
+            <p>
+              <strong>Funding Disbursed for Support:</strong>
+              <br />
+              {currency}
+              {numberWithCommas(funding_disbursed_for_support)}
+            </p>
+          )}
 
         {
           <p>
